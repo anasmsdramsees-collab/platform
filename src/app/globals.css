@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --color-void: #0b0c0e;
+  --color-void-2: #0e1013;
+  --color-graphite: #17181c;
+  --color-graphite-2: #1f2126;
+  --color-chrome: #c7ccd3;
+  --color-chrome-dim: #8b9099;
+  --color-platinum: #ecedef;
+  --color-ion: #4c8dff;
+  --color-slate: #6b707a;
+  --color-hairline: rgba(199, 204, 211, 0.14);
+  --color-hairline-strong: rgba(199, 204, 211, 0.28);
+}
+
+@theme inline {
+  --color-void: var(--color-void);
+  --color-void-2: var(--color-void-2);
+  --color-graphite: var(--color-graphite);
+  --color-graphite-2: var(--color-graphite-2);
+  --color-chrome: var(--color-chrome);
+  --color-chrome-dim: var(--color-chrome-dim);
+  --color-platinum: var(--color-platinum);
+  --color-ion: var(--color-ion);
+  --color-slate: var(--color-slate);
+  --color-hairline: var(--color-hairline);
+  --color-hairline-strong: var(--color-hairline-strong);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+html[dir="rtl"] {
+  --font-display: var(--font-display-ar);
+  --font-body: var(--font-body-ar);
+}
+
+body {
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--color-ion);
+  color: var(--color-void);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

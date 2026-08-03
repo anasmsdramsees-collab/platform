@@ -8,6 +8,7 @@ import type { Locale } from "@/lib/i18n/config";
 import { useSpeechRecognition } from "@/lib/hooks/use-speech-recognition";
 import { useHomeControls } from "@/lib/home-controls-context";
 import { parseVoiceCommand } from "@/lib/voice-commands";
+import { assetPath } from "@/lib/base-path";
 
 function useClock() {
   const [time, setTime] = useState("");
@@ -155,7 +156,7 @@ export default function HeroLightsPanel({
 
         {/* Bezel wordmark */}
         <div className="flex justify-center pt-2 pb-1">
-          <Image src="/brand/logo.png" alt="SYNTRA" width={1349} height={503} className="h-2.5 w-auto opacity-70" />
+          <Image src={assetPath("/brand/logo.png")} alt="SYNTRA" width={1349} height={503} className="h-2.5 w-auto opacity-70" />
         </div>
       </div>
 

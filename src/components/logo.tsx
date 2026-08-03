@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n/config";
+import { assetPath } from "@/lib/base-path";
 
 export default function Logo({ locale, className = "" }: { locale: Locale; className?: string }) {
   return (
@@ -10,7 +11,7 @@ export default function Logo({ locale, className = "" }: { locale: Locale; class
       className={`block ${className}`}
     >
       <Image
-        src="/brand/logo.png"
+        src={assetPath("/brand/logo.png")}
         alt="SYNTRA — Smart Living. Seamlessly Connected."
         width={1349}
         height={503}

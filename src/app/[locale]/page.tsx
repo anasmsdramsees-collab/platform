@@ -5,6 +5,7 @@ import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { productCatalog } from "@/lib/products";
 import HeroLightsPanel from "@/components/hero-lights-panel";
+import { assetPath } from "@/lib/base-path";
 
 export async function generateMetadata({
   params,
@@ -70,7 +71,7 @@ export default async function HomePage({
         {/* Hero product visual */}
         <div className="relative mt-4 aspect-[1536/852] w-full sm:mt-10">
           <Image
-            src="/brand/hero-products.jpg"
+            src={assetPath("/brand/hero-products.jpg")}
             alt="The SYNTRA SMART ecosystem — hub, panel, lock, switch, sensors, camera, doorbell and more"
             fill
             priority

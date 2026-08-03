@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "bash scripts/build-pages.sh",
     "start": "next start",
     "lint": "eslint"
   },

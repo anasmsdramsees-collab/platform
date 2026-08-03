@@ -6,13 +6,26 @@ const en: Dictionary = {
     titleProducts: "Products — SYNTRA SMART",
     titleAbout: "About — SYNTRA SMART",
     titleContact: "Contact — SYNTRA SMART",
+    titleApps: "Apps — SYNTRA SMART",
+    titleSyntraTv: "SYNTRA TV — SYNTRA SMART",
+    titleHomeAssistant: "SYNTRA Home Assistant — SYNTRA SMART",
     description:
       "SYNTRA SMART engineers the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language.",
   },
   nav: {
     products: "Products",
+    apps: "Apps",
     about: "About",
     contact: "Contact",
+  },
+  common: {
+    comingLabel: "In development",
+    platformsLabel: "Platforms",
+    howItWorksLabel: "How it works",
+    notifyTitle: "Be first to know when it ships.",
+    notifySubtitle: "Reach out and we'll add you to the early-access list.",
+    notifyButton: "Get in touch",
+    backToApps: "All apps",
   },
   hero: {
     eyebrow: "Smart Home · IoT · AI",
@@ -81,6 +94,7 @@ const en: Dictionary = {
   footer: {
     tagline: "Smart Living. Seamlessly Connected.",
     products: "Products",
+    apps: "Apps",
     company: "Company",
     contact: "Contact",
     rights: "All rights reserved.",
@@ -90,6 +104,99 @@ const en: Dictionary = {
     title: "The full SYNTRA portfolio",
     subtitle:
       "Fourteen categories, one design language — matte black or matte white, hidden fasteners, a single blue status light across the entire range.",
+  },
+  appsPage: {
+    eyebrow: "SYNTRA Apps",
+    title: "Control it from anywhere the household already looks.",
+    subtitle:
+      "The phone app was only ever the start. SYNTRA is moving onto the biggest screen in the house, and opening up to the platform power users already trust.",
+    cards: [
+      {
+        slug: "syntra-tv",
+        name: "SYNTRA TV",
+        tagline: "The whole home, on the biggest screen in the house.",
+        desc: "A dashboard, camera wall and scene controller built for Android TV, Apple TV and the remote already in your hand.",
+        status: "In development — targeting 2026",
+      },
+      {
+        slug: "home-assistant",
+        name: "SYNTRA Home Assistant",
+        tagline: "One app for every SYNTRA device — open by design.",
+        desc: "The SYNTRA mobile app for iOS and Android, plus a native integration for the open-source Home Assistant platform.",
+        status: "In development — targeting 2026",
+      },
+    ],
+  },
+  syntraTvPage: {
+    hero: {
+      eyebrow: "SYNTRA Apps · SYNTRA TV",
+      title: "The whole home, on the biggest screen in the house.",
+      subtitle:
+        "Cameras, scenes, climate and lighting — laid out for a TV and driven entirely by the remote already sitting on the couch.",
+    },
+    platforms: ["Android TV", "Apple TV", "Samsung Tizen", "LG webOS"],
+    features: [
+      { name: "Live camera wall", desc: "Every SYNTRA Cam and Doorbell in a grid, switched full-screen with a single click." },
+      { name: "Remote-first control", desc: "Every scene, light and lock reachable with a D-pad — no on-screen keyboard, no phone required." },
+      { name: "Doorbell pop-in", desc: "A ring or motion event drops a live picture-in-picture feed over whatever's playing, then clears itself." },
+      { name: "Whole-home dashboard", desc: "Climate, energy use and open/closed status for every room, at a glance from the sofa." },
+      { name: "Voice through the remote", desc: "Hold the mic button and ask — the same intelligence behind the SYNTRA app and the Touch Panel." },
+      { name: "Multi-room switching", desc: "Jump between rooms and hubs without leaving the app, for properties with more than one screen." },
+    ],
+    howItWorks: [
+      { step: "01", title: "Pair with your hub", desc: "Sign in with the same SYNTRA account already running your Hub Pro or Hub Max." },
+      { step: "02", title: "Launch on the big screen", desc: "Install from your TV's app store — no separate box or dongle required." },
+      { step: "03", title: "Control with the remote", desc: "Navigate scenes, cameras and rooms with the remote you already have, or just speak." },
+    ],
+    screen: {
+      eyebrow: "On screen",
+      title: "Built for a couch, not a desk.",
+      items: [
+        { name: "Home", desc: "Rooms, scenes and today's energy summary in one glance." },
+        { name: "Cameras", desc: "A live grid of every feed, one click from full-screen." },
+        { name: "Rooms", desc: "Lighting, climate and curtains, grouped exactly like the house is." },
+        { name: "Notifications", desc: "A running log of every ring, alert and sensor trigger." },
+      ],
+    },
+    status: "In development — targeting a 2026 launch alongside SYNTRA OS 1.0.",
+  },
+  homeAssistantPage: {
+    hero: {
+      eyebrow: "SYNTRA Apps · SYNTRA Home Assistant",
+      title: "One app for every SYNTRA device — open by design.",
+      subtitle:
+        "The everyday SYNTRA app for iOS and Android, built on the same open standards that already power Hub Pro's embedded Home Assistant OS.",
+    },
+    platforms: ["iOS", "Android", "Home Assistant (HACS)", "Matter"],
+    features: [
+      { name: "Every room, one app", desc: "Hubs, switches, sensors, locks and cameras — controlled from a single SYNTRA account." },
+      { name: "Scenes & automations", desc: "Build routines that span every device category without writing a line of code." },
+      { name: "Guest access", desc: "Share time-boxed access to a lock, a room or the whole home, and revoke it just as easily." },
+      { name: "Push alerts", desc: "A leak, an open door, a triggered smoke sensor — pushed the instant it happens." },
+      { name: "Energy dashboard", desc: "Live and historical consumption, per device and per room." },
+      { name: "Local-first control", desc: "Commands run on the hub first — the app keeps working even if the internet doesn't." },
+    ],
+    openSection: {
+      eyebrow: "Open by Design",
+      title: "It also speaks Home Assistant, natively.",
+      paragraphs: [
+        "Every SYNTRA Hub Pro already ships with an embedded Home Assistant OS, so local automations keep running with or without the cloud.",
+        "SYNTRA Home Assistant extends that with a native integration published through HACS — every SYNTRA device shows up as a first-class entity, ready for your own automations, dashboards and YAML.",
+        "No walled garden, no proprietary bridge to reverse-engineer. If the household already runs Home Assistant, SYNTRA joins it — it doesn't replace it.",
+      ],
+      items: [
+        { name: "HACS integration", desc: "Install the SYNTRA custom component straight from the Home Assistant Community Store." },
+        { name: "Auto-discovered entities", desc: "Every hub, switch, sensor and lock appears automatically, fully typed." },
+        { name: "Full automation access", desc: "Use SYNTRA devices as triggers or actions in any Home Assistant automation." },
+        { name: "Matter certified", desc: "Every device also speaks Matter, for compatibility beyond Home Assistant too." },
+      ],
+    },
+    howItWorks: [
+      { step: "01", title: "Set up your hub", desc: "Hub Mini, Pro or Max — the app finds it on the network in seconds." },
+      { step: "02", title: "Control everything", desc: "Every room and device, organized the way the household actually uses them." },
+      { step: "03", title: "Bring your own platform", desc: "Optionally add the HACS integration and keep using Home Assistant as the front end." },
+    ],
+    status: "In development — targeting a 2026 launch alongside SYNTRA OS 1.0.",
   },
   aboutPage: {
     hero: {

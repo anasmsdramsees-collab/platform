@@ -5,6 +5,7 @@ import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { productCatalog } from "@/lib/products";
 import HeroLightsPanel from "@/components/hero-lights-panel";
+import SyntraTvMockup from "@/components/syntra-tv-mockup";
 import { assetPath } from "@/lib/base-path";
 
 export async function generateMetadata({
@@ -206,6 +207,51 @@ export default async function HomePage({
                 <p className="font-mono text-sm text-platinum">{p.name}</p>
                 <p className="mt-2 text-sm text-chrome-dim">{p.desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Apps teaser */}
+      <section className="border-b border-hairline">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
+              {dict.appsPage.eyebrow}
+            </p>
+            <h2 className="font-display mt-3 text-3xl font-bold text-platinum sm:text-4xl">
+              {dict.appsPage.title}
+            </h2>
+            <p className="mt-4 text-chrome-dim">{dict.appsPage.subtitle}</p>
+          </div>
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {dict.appsPage.cards.map((card) => (
+              <Link
+                key={card.slug}
+                href={`/${locale}/apps/${card.slug}`}
+                className="group block overflow-hidden border border-hairline bg-void transition-colors hover:border-hairline-strong"
+              >
+                <div className="relative aspect-video overflow-hidden border-b border-hairline">
+                  {card.slug === "home-assistant" ? (
+                    <Image
+                      src={assetPath("/brand/app-home-dashboard.jpg")}
+                      alt={card.name}
+                      fill
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  ) : (
+                    <SyntraTvMockup locale={locale} />
+                  )}
+                </div>
+                <div className="p-6 sm:p-8">
+                  <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
+                    {card.status}
+                  </p>
+                  <p className="font-display mt-4 text-xl font-bold text-platinum">{card.name}</p>
+                  <p className="mt-2 text-sm text-chrome-dim">{card.tagline}</p>
+                </div>
+              </Link>
             ))}
           </div>
         </div>

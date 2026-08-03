@@ -14,6 +14,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
 
   const links = [
     { href: `/${locale}/products`, label: dict.nav.products },
+    { href: `/${locale}/apps`, label: dict.nav.apps },
     { href: `/${locale}/about`, label: dict.nav.about },
     { href: `/${locale}/contact`, label: dict.nav.contact },
   ];

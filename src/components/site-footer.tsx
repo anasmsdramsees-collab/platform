@@ -12,7 +12,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
           <Logo locale={locale} />
           <p className="mt-4 font-mono text-[12.5px] text-slate">{dict.footer.tagline}</p>
         </div>
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
           <div>
             <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
               {dict.footer.products}
@@ -22,6 +22,23 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               className="mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum"
             >
               {dict.nav.products}
+            </Link>
+          </div>
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
+              {dict.footer.apps}
+            </p>
+            <Link
+              href={`/${locale}/apps/syntra-tv`}
+              className="mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              SYNTRA TV
+            </Link>
+            <Link
+              href={`/${locale}/apps/home-assistant`}
+              className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              {locale === "ar" ? "سنترا هوم أسيستنت" : "SYNTRA Home Assistant"}
             </Link>
           </div>
           <div>

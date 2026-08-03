@@ -4,10 +4,23 @@ export interface Dictionary {
     titleProducts: string;
     titleAbout: string;
     titleContact: string;
+    titleApps: string;
+    titleSyntraTv: string;
+    titleHomeAssistant: string;
     description: string;
+  };
+  common: {
+    comingLabel: string;
+    platformsLabel: string;
+    howItWorksLabel: string;
+    notifyTitle: string;
+    notifySubtitle: string;
+    notifyButton: string;
+    backToApps: string;
   };
   nav: {
     products: string;
+    apps: string;
     about: string;
     contact: string;
   };
@@ -50,6 +63,7 @@ export interface Dictionary {
   footer: {
     tagline: string;
     products: string;
+    apps: string;
     company: string;
     contact: string;
     rights: string;
@@ -58,6 +72,39 @@ export interface Dictionary {
     eyebrow: string;
     title: string;
     subtitle: string;
+  };
+  appsPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    cards: {
+      slug: "syntra-tv" | "home-assistant";
+      name: string;
+      tagline: string;
+      desc: string;
+      status: string;
+    }[];
+  };
+  syntraTvPage: {
+    hero: { eyebrow: string; title: string; subtitle: string };
+    platforms: string[];
+    features: { name: string; desc: string }[];
+    howItWorks: { step: string; title: string; desc: string }[];
+    screen: { eyebrow: string; title: string; items: { name: string; desc: string }[] };
+    status: string;
+  };
+  homeAssistantPage: {
+    hero: { eyebrow: string; title: string; subtitle: string };
+    platforms: string[];
+    features: { name: string; desc: string }[];
+    openSection: {
+      eyebrow: string;
+      title: string;
+      paragraphs: string[];
+      items: { name: string; desc: string }[];
+    };
+    howItWorks: { step: string; title: string; desc: string }[];
+    status: string;
   };
   aboutPage: {
     hero: { eyebrow: string; title: string; subtitle: string };

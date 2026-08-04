@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { assetPath } from "@/lib/base-path";
 
 export async function generateMetadata({
   params,
@@ -37,7 +39,14 @@ export default async function HomeAssistantPage({
       {/* Hero */}
       <section className="border-b border-hairline">
         <div className="mx-auto max-w-4xl px-5 py-16 text-center sm:px-8 sm:py-20">
-          <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
+          <Image
+            src={assetPath("/brand/app-icon-home.png")}
+            alt="SYNTRA Home"
+            width={443}
+            height={465}
+            className="mx-auto h-14 w-auto rounded-xl sm:h-16"
+          />
+          <p className="mt-6 font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
             {t.hero.eyebrow}
           </p>
           <h1 className="font-display mt-3 text-balance text-4xl font-bold text-platinum sm:text-5xl">

@@ -248,7 +248,20 @@ export default async function HomePage({
                   <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
                     {card.status}
                   </p>
-                  <p className="font-display mt-4 text-xl font-bold text-platinum">{card.name}</p>
+                  <div className="mt-4 flex items-center gap-3">
+                    <Image
+                      src={assetPath(
+                        card.slug === "home-assistant"
+                          ? "/brand/app-icon-home.png"
+                          : "/brand/app-icon-tv.png"
+                      )}
+                      alt=""
+                      width={64}
+                      height={64}
+                      className="h-8 w-8 rounded-md"
+                    />
+                    <p className="font-display text-xl font-bold text-platinum">{card.name}</p>
+                  </div>
                   <p className="mt-2 text-sm text-chrome-dim">{card.tagline}</p>
                 </div>
               </Link>

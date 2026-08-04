@@ -6,7 +6,6 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import SinaWidget from "@/components/sina-widget";
-import CurtainsOverlay from "@/components/curtains-overlay";
 import EnergyReminder from "@/components/energy-reminder";
 import { HomeControlsProvider } from "@/lib/home-controls-context";
 
@@ -81,7 +80,6 @@ export default async function LocaleLayout({
           <SiteNav locale={locale} dict={dict} />
           <main className="flex-1">{children}</main>
           <SiteFooter locale={locale} dict={dict} />
-          <CurtainsOverlay dict={dict.lightsPanel} />
           <EnergyReminder dict={dict.energyReminder} />
           <SinaWidget dict={dict.sina} locale={locale} />
         </HomeControlsProvider>

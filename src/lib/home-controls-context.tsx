@@ -1,7 +1,9 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { HomeAction } from "@/lib/voice-commands";
+
+const CURTAINS_STORAGE_KEY = "syntra:curtainsOpen";
 
 interface HomeControlsValue {
   lightsOn: boolean;
@@ -18,7 +20,16 @@ const HomeControlsContext = createContext<HomeControlsValue | null>(null);
 export function HomeControlsProvider({ children }: { children: ReactNode }) {
   const [lightsOn, setLightsOn] = useState(true);
   const [climateOn, setClimateOn] = useState(true);
-  const [curtainsOpen, setCurtainsOpen] = useState(false);
+  const [curtainsOpen, setCurtainsOpenState] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem(CURTAINS_STORAGE_KEY) === "true") setCurtainsOpenState(true);
+  }, []);
+
+  function setCurtainsOpen(v: boolean) {
+    setCurtainsOpenState(v);
+    localStorage.setItem(CURTAINS_STORAGE_KEY, String(v));
+  }
 
   function applyAction(action: HomeAction) {
     if (action.kind === "lights") setLightsOn(action.value);

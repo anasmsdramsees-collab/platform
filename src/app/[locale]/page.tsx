@@ -5,6 +5,7 @@ import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { productCatalog } from "@/lib/products";
 import HeroLightsPanel from "@/components/hero-lights-panel";
+import CurtainsOverlay from "@/components/curtains-overlay";
 import SyntraTvMockup from "@/components/syntra-tv-mockup";
 import { assetPath } from "@/lib/base-path";
 
@@ -30,6 +31,7 @@ export default async function HomePage({
 
   return (
     <>
+      <CurtainsOverlay dict={dict.lightsPanel} />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-hairline">
         <div

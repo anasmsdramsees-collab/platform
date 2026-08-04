@@ -12,11 +12,16 @@ export interface Dictionary {
   common: {
     comingLabel: string;
     platformsLabel: string;
+    specsLabel: string;
+    appsLabel: string;
     howItWorksLabel: string;
     notifyTitle: string;
     notifySubtitle: string;
     notifyButton: string;
     backToApps: string;
+    openAppButton: string;
+    livePreviewLabel: string;
+    livePreviewNote: string;
   };
   nav: {
     products: string;
@@ -88,6 +93,8 @@ export interface Dictionary {
   syntraTvPage: {
     hero: { eyebrow: string; title: string; subtitle: string };
     platforms: string[];
+    specs: string[];
+    apps: string[];
     features: { name: string; desc: string }[];
     howItWorks: { step: string; title: string; desc: string }[];
     screen: { eyebrow: string; title: string; items: { name: string; desc: string }[] };

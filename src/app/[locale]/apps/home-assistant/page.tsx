@@ -54,7 +54,22 @@ export default async function HomeAssistantPage({
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-chrome-dim">{t.hero.subtitle}</p>
 
-          <p className="mt-8 font-mono text-[11px] uppercase tracking-widest text-slate">
+          <div className="mt-8 flex flex-col items-center gap-3">
+            <a
+              href={assetPath("/app/home-assistant/index.html")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md bg-platinum px-7 py-3 text-sm font-semibold text-void transition-opacity hover:opacity-90"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-ion" />
+              {c.openAppButton}
+            </a>
+            <p className="max-w-sm font-mono text-[11px] text-slate">
+              {c.livePreviewLabel} — {c.livePreviewNote}
+            </p>
+          </div>
+
+          <p className="mt-10 font-mono text-[11px] uppercase tracking-widest text-slate">
             {c.platformsLabel}
           </p>
           <div className="mt-3 flex flex-wrap items-center justify-center gap-2">

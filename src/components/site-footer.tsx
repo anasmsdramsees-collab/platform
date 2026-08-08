@@ -38,7 +38,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               href={`/${locale}/apps/home-assistant`}
               className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
             >
-              {locale === "ar" ? "سيلترا هوم أسيستنت" : "Syltra Home Assistant"}
+              {locale === "ar" ? "سيلترا هوم" : "Syltra Home"}
             </Link>
           </div>
           <div>

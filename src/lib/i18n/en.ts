@@ -8,7 +8,7 @@ const en: Dictionary = {
     titleContact: "Contact — Syltra SMART",
     titleApps: "Apps — Syltra SMART",
     titleSyntraTv: "Syltra TV — Syltra SMART",
-    titleHomeAssistant: "Syltra Home Assistant — Syltra SMART",
+    titleHomeAssistant: "Syltra Home — Syltra SMART",
     description:
       "Syltra SMART engineers the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language.",
   },
@@ -126,7 +126,7 @@ const en: Dictionary = {
       },
       {
         slug: "home-assistant",
-        name: "Syltra Home Assistant",
+        name: "Syltra Home",
         tagline: "One app for every Syltra device — open by design.",
         desc: "The Syltra mobile app for iOS and Android, plus a native integration for the open-source Home Assistant platform.",
         status: "In development — targeting 2026",
@@ -171,7 +171,7 @@ const en: Dictionary = {
   },
   homeAssistantPage: {
     hero: {
-      eyebrow: "Syltra Apps · Syltra Home Assistant",
+      eyebrow: "Syltra Apps · Syltra Home",
       title: "One app for every Syltra device — open by design.",
       subtitle:
         "The everyday Syltra app for iOS and Android, built on the same open standards that already power Hub Pro's embedded Home Assistant OS.",
@@ -190,7 +190,7 @@ const en: Dictionary = {
       title: "It also speaks Home Assistant, natively.",
       paragraphs: [
         "Every Syltra Hub Pro already ships with an embedded Home Assistant OS, so local automations keep running with or without the cloud.",
-        "Syltra Home Assistant extends that with a native integration published through HACS — every Syltra device shows up as a first-class entity, ready for your own automations, dashboards and YAML.",
+        "Syltra Home extends that with a native integration published through HACS — every Syltra device shows up as a first-class entity, ready for your own automations, dashboards and YAML.",
         "No walled garden, no proprietary bridge to reverse-engineer. If the household already runs Home Assistant, Syltra joins it — it doesn't replace it.",
       ],
       items: [

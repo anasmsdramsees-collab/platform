@@ -156,7 +156,7 @@ export default function HeroLightsPanel({
 
         {/* Bezel wordmark */}
         <div className="flex justify-center pt-2 pb-1">
-          <Image src={assetPath("/brand/logo.png")} alt="SYNTRA" width={1349} height={503} className="h-2.5 w-auto opacity-70" />
+          <Image src={assetPath("/brand/logo.png")} alt="Syltra" width={1349} height={503} className="h-2.5 w-auto opacity-70" />
         </div>
       </div>
 

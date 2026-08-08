@@ -41,7 +41,7 @@ export default async function SyntraTvPage({
         <div className="mx-auto max-w-4xl px-5 py-16 text-center sm:px-8 sm:py-20">
           <Image
             src={assetPath("/brand/app-icon-tv.png")}
-            alt="SYNTRA TV"
+            alt="Syltra TV"
             width={410}
             height={410}
             className="mx-auto h-14 w-auto rounded-xl sm:h-16"

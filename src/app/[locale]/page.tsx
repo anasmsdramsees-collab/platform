@@ -75,7 +75,7 @@ export default async function HomePage({
         <div className="relative mt-4 aspect-[1536/852] w-full sm:mt-10">
           <Image
             src={assetPath("/brand/hero-products.jpg")}
-            alt="The SYNTRA SMART ecosystem — hub, panel, lock, switch, sensors, camera, doorbell and more"
+            alt="The Syltra SMART ecosystem — hub, panel, lock, switch, sensors, camera, doorbell and more"
             fill
             priority
             sizes="100vw"
@@ -127,7 +127,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* Why SYNTRA */}
+      {/* Why Syltra */}
       <section className="border-b border-hairline">
         <div className="mx-auto max-w-4xl px-5 py-20 sm:px-8">
           <p className="text-center font-mono text-[12px] tracking-[0.14em] text-slate uppercase">

@@ -2,15 +2,15 @@ import type { Dictionary } from "./dictionary";
 
 const en: Dictionary = {
   meta: {
-    titleHome: "SYNTRA SMART — Smart Living. Seamlessly Connected.",
-    titleProducts: "Products — SYNTRA SMART",
-    titleAbout: "About — SYNTRA SMART",
-    titleContact: "Contact — SYNTRA SMART",
-    titleApps: "Apps — SYNTRA SMART",
-    titleSyntraTv: "SYNTRA TV — SYNTRA SMART",
-    titleHomeAssistant: "SYNTRA Home Assistant — SYNTRA SMART",
+    titleHome: "Syltra SMART — Smart Living. Seamlessly Connected.",
+    titleProducts: "Products — Syltra SMART",
+    titleAbout: "About — Syltra SMART",
+    titleContact: "Contact — Syltra SMART",
+    titleApps: "Apps — Syltra SMART",
+    titleSyntraTv: "Syltra TV — Syltra SMART",
+    titleHomeAssistant: "Syltra Home Assistant — Syltra SMART",
     description:
-      "SYNTRA SMART engineers the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language.",
+      "Syltra SMART engineers the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language.",
   },
   nav: {
     products: "Products",
@@ -31,7 +31,7 @@ const en: Dictionary = {
     openAppButton: "Open the app",
     livePreviewLabel: "Live preview",
     livePreviewNote:
-      "A real, running build — sign in with your SYNTRA account. Content shown is placeholder/test data, not the final licensed catalog.",
+      "A real, running build — sign in with your Syltra account. Content shown is placeholder/test data, not the final licensed catalog.",
   },
   hero: {
     eyebrow: "Smart Home · IoT · AI",
@@ -39,7 +39,7 @@ const en: Dictionary = {
     subtitle:
       "One ecosystem for the connected home — devices, AI and cloud infrastructure, unified under a single premium standard.",
     ctaProducts: "Explore the ecosystem",
-    ctaAbout: "About SYNTRA",
+    ctaAbout: "About Syltra",
   },
   stats: [
     { value: "<10ms", label: "Local response latency" },
@@ -63,8 +63,8 @@ const en: Dictionary = {
     ],
   },
   why: {
-    eyebrow: "Why SYNTRA",
-    title: "Five reasons the world is moving to SYNTRA.",
+    eyebrow: "Why Syltra",
+    title: "Five reasons the world is moving to Syltra.",
     items: [
       { name: "One Ecosystem", desc: "Every device, one intelligence layer — no fragmented apps." },
       { name: "Open by Design", desc: "Native Matter, Z-Wave, Zigbee, Thread and Home Assistant." },
@@ -82,7 +82,7 @@ const en: Dictionary = {
   protocols: {
     eyebrow: "Connectivity",
     title: "Six protocols. One standard.",
-    subtitle: "Every SYNTRA device speaks the same language, natively — no bridges, no walled gardens.",
+    subtitle: "Every Syltra device speaks the same language, natively — no bridges, no walled gardens.",
     items: [
       { name: "Matter", desc: "The unifying smart-home standard, certified across the full portfolio." },
       { name: "Z-Wave", desc: "Low-power mesh built for reliability at scale, across large properties." },
@@ -107,38 +107,38 @@ const en: Dictionary = {
   },
   productsPage: {
     eyebrow: "Product Categories",
-    title: "The full SYNTRA portfolio",
+    title: "The full Syltra portfolio",
     subtitle:
       "Fourteen categories, one design language — matte black or matte white, hidden fasteners, a single blue status light across the entire range.",
   },
   appsPage: {
-    eyebrow: "SYNTRA Apps",
+    eyebrow: "Syltra Apps",
     title: "Control it from anywhere the household already looks.",
     subtitle:
-      "The phone app was only ever the start. SYNTRA is moving onto the biggest screen in the house, and opening up to the platform power users already trust.",
+      "The phone app was only ever the start. Syltra is moving onto the biggest screen in the house, and opening up to the platform power users already trust.",
     cards: [
       {
         slug: "syntra-tv",
-        name: "SYNTRA TV",
+        name: "Syltra TV",
         tagline: "Entertainment. Anytime. Anywhere.",
-        desc: "One interface for live channels, movies, series, apps and AI recommendations — built to work seamlessly with the rest of the SYNTRA ecosystem.",
+        desc: "One interface for live channels, movies, series, apps and AI recommendations — built to work seamlessly with the rest of the Syltra ecosystem.",
         status: "In development — targeting 2026",
       },
       {
         slug: "home-assistant",
-        name: "SYNTRA Home Assistant",
-        tagline: "One app for every SYNTRA device — open by design.",
-        desc: "The SYNTRA mobile app for iOS and Android, plus a native integration for the open-source Home Assistant platform.",
+        name: "Syltra Home Assistant",
+        tagline: "One app for every Syltra device — open by design.",
+        desc: "The Syltra mobile app for iOS and Android, plus a native integration for the open-source Home Assistant platform.",
         status: "In development — targeting 2026",
       },
     ],
   },
   syntraTvPage: {
     hero: {
-      eyebrow: "SYNTRA Apps · SYNTRA TV",
+      eyebrow: "Syltra Apps · Syltra TV",
       title: "Entertainment. Anytime. Anywhere.",
       subtitle:
-        "A dark, Netflix-quality entertainment home screen — live channels, movies, series, apps and AI recommendations, running on the same Hub, SYNA voice assistant and account as the rest of the smart home.",
+        "A dark, Netflix-quality entertainment home screen — live channels, movies, series, apps and AI recommendations, running on the same Hub, SYLA voice assistant and account as the rest of the smart home.",
     },
     platforms: ["Android TV", "Apple TV", "Samsung Tizen", "LG webOS"],
     specs: ["4K Ultra HD", "HDR10+", "Dolby Vision · Atmos", "Wi-Fi 6"],
@@ -146,14 +146,14 @@ const en: Dictionary = {
     features: [
       { name: "A world of content", desc: "Movies, series, live channels and every favorite streaming app, in one place." },
       { name: "Cinematic quality", desc: "4K Ultra HD with HDR10+ and immersive surround sound." },
-      { name: "Your home within reach", desc: "Full control of every connected SYNTRA device, directly from the TV screen." },
-      { name: "Smart voice assistant", desc: "Natural voice control through SYNA, in Arabic and English." },
+      { name: "Your home within reach", desc: "Full control of every connected Syltra device, directly from the TV screen." },
+      { name: "Smart voice assistant", desc: "Natural voice control through SYLA, in Arabic and English." },
       { name: "Privacy & security", desc: "Full data protection, with complete control over what's shared." },
     ],
     howItWorks: [
-      { step: "01", title: "Pair with your hub", desc: "Sign in with the same SYNTRA account already running your Hub Pro or Hub Max." },
+      { step: "01", title: "Pair with your hub", desc: "Sign in with the same Syltra account already running your Hub Pro or Hub Max." },
       { step: "02", title: "Launch on the big screen", desc: "Install from your TV's app store — no separate box or dongle required." },
-      { step: "03", title: "Watch, listen or control the home", desc: "Navigate with the remote you already have, or just speak to SYNA." },
+      { step: "03", title: "Watch, listen or control the home", desc: "Navigate with the remote you already have, or just speak to SYLA." },
     ],
     screen: {
       eyebrow: "Everything in one place",
@@ -167,18 +167,18 @@ const en: Dictionary = {
         { name: "AI", desc: "Smart recommendations, voice search and a personalized experience." },
       ],
     },
-    status: "In development — targeting a 2026 launch alongside SYNTRA OS 1.0.",
+    status: "In development — targeting a 2026 launch alongside Syltra OS 1.0.",
   },
   homeAssistantPage: {
     hero: {
-      eyebrow: "SYNTRA Apps · SYNTRA Home Assistant",
-      title: "One app for every SYNTRA device — open by design.",
+      eyebrow: "Syltra Apps · Syltra Home Assistant",
+      title: "One app for every Syltra device — open by design.",
       subtitle:
-        "The everyday SYNTRA app for iOS and Android, built on the same open standards that already power Hub Pro's embedded Home Assistant OS.",
+        "The everyday Syltra app for iOS and Android, built on the same open standards that already power Hub Pro's embedded Home Assistant OS.",
     },
     platforms: ["iOS", "Android", "Home Assistant (HACS)", "Matter"],
     features: [
-      { name: "Every room, one app", desc: "Hubs, switches, sensors, locks and cameras — controlled from a single SYNTRA account." },
+      { name: "Every room, one app", desc: "Hubs, switches, sensors, locks and cameras — controlled from a single Syltra account." },
       { name: "Scenes & automations", desc: "Build routines that span every device category without writing a line of code." },
       { name: "Guest access", desc: "Share time-boxed access to a lock, a room or the whole home, and revoke it just as easily." },
       { name: "Push alerts", desc: "A leak, an open door, a triggered smoke sensor — pushed the instant it happens." },
@@ -189,14 +189,14 @@ const en: Dictionary = {
       eyebrow: "Open by Design",
       title: "It also speaks Home Assistant, natively.",
       paragraphs: [
-        "Every SYNTRA Hub Pro already ships with an embedded Home Assistant OS, so local automations keep running with or without the cloud.",
-        "SYNTRA Home Assistant extends that with a native integration published through HACS — every SYNTRA device shows up as a first-class entity, ready for your own automations, dashboards and YAML.",
-        "No walled garden, no proprietary bridge to reverse-engineer. If the household already runs Home Assistant, SYNTRA joins it — it doesn't replace it.",
+        "Every Syltra Hub Pro already ships with an embedded Home Assistant OS, so local automations keep running with or without the cloud.",
+        "Syltra Home Assistant extends that with a native integration published through HACS — every Syltra device shows up as a first-class entity, ready for your own automations, dashboards and YAML.",
+        "No walled garden, no proprietary bridge to reverse-engineer. If the household already runs Home Assistant, Syltra joins it — it doesn't replace it.",
       ],
       items: [
-        { name: "HACS integration", desc: "Install the SYNTRA custom component straight from the Home Assistant Community Store." },
+        { name: "HACS integration", desc: "Install the Syltra custom component straight from the Home Assistant Community Store." },
         { name: "Auto-discovered entities", desc: "Every hub, switch, sensor and lock appears automatically, fully typed." },
-        { name: "Full automation access", desc: "Use SYNTRA devices as triggers or actions in any Home Assistant automation." },
+        { name: "Full automation access", desc: "Use Syltra devices as triggers or actions in any Home Assistant automation." },
         { name: "Matter certified", desc: "Every device also speaks Matter, for compatibility beyond Home Assistant too." },
       ],
     },
@@ -205,21 +205,21 @@ const en: Dictionary = {
       { step: "02", title: "Control everything", desc: "Every room and device, organized the way the household actually uses them." },
       { step: "03", title: "Bring your own platform", desc: "Optionally add the HACS integration and keep using Home Assistant as the front end." },
     ],
-    status: "In development — targeting a 2026 launch alongside SYNTRA OS 1.0.",
+    status: "In development — targeting a 2026 launch alongside Syltra OS 1.0.",
   },
   aboutPage: {
     hero: {
-      eyebrow: "About SYNTRA",
+      eyebrow: "About Syltra",
       title: "One ecosystem. Every connected space.",
       subtitle:
-        "SYNTRA SMART is a global smart-technology company engineering the connected home, building and city of the future.",
+        "Syltra SMART is a global smart-technology company engineering the connected home, building and city of the future.",
     },
     story: {
       eyebrow: "Our Story",
       title: "Built to end the fragmentation.",
       paragraphs: [
-        "SYNTRA SMART began with a simple frustration: the smart home industry had built brilliant devices and a broken experience — dozens of apps, competing standards, hubs that never spoke to one another.",
-        "We started SYNTRA to end that fragmentation. One ecosystem. One intelligence layer. One design language — engineered from the silicon up to work as a single, seamless system.",
+        "Syltra SMART began with a simple frustration: the smart home industry had built brilliant devices and a broken experience — dozens of apps, competing standards, hubs that never spoke to one another.",
+        "We started Syltra to end that fragmentation. One ecosystem. One intelligence layer. One design language — engineered from the silicon up to work as a single, seamless system.",
         "What began as a small engineering team in Riyadh is now building the infrastructure for smart living across the Gulf, Europe and beyond.",
       ],
     },
@@ -246,9 +246,9 @@ const en: Dictionary = {
     chairman: {
       eyebrow: "Chairman's Message",
       quote:
-        "Every industry reaches a point where convenience is no longer enough — where intelligence becomes the standard. SYNTRA SMART was built for that moment. We did not set out to make another smart plug or another app. We set out to build the operating layer for how homes, businesses and cities will run for the next fifty years — quietly, securely and beautifully. From Riyadh to the world, our mission is simple: give every space the intelligence to take care of itself, and give every person back the time technology was always meant to create.",
+        "Every industry reaches a point where convenience is no longer enough — where intelligence becomes the standard. Syltra SMART was built for that moment. We did not set out to make another smart plug or another app. We set out to build the operating layer for how homes, businesses and cities will run for the next fifty years — quietly, securely and beautifully. From Riyadh to the world, our mission is simple: give every space the intelligence to take care of itself, and give every person back the time technology was always meant to create.",
       name: "Anas Elimam",
-      role: "Founder & Chairman, SYNTRA SMART",
+      role: "Founder & Chairman, Syltra SMART",
     },
     facts: [
       { value: "2023", label: "Founded" },
@@ -260,8 +260,8 @@ const en: Dictionary = {
       eyebrow: "Global Expansion",
       title: "From Riyadh to the world.",
       items: [
-        { year: "2026", text: "Global launch — Saudi Arabia & GCC, SYNTRA OS 1.0." },
-        { year: "2027", text: "Wider MENA expansion, SYNTRA AI 2.0." },
+        { year: "2026", text: "Global launch — Saudi Arabia & GCC, Syltra OS 1.0." },
+        { year: "2027", text: "Wider MENA expansion, Syltra AI 2.0." },
         { year: "2028", text: "Europe entry, industrial & enterprise product line." },
         { year: "2029", text: "North America market entry." },
         { year: "2030", text: "Global network — 1M+ connected spaces worldwide." },
@@ -271,7 +271,7 @@ const en: Dictionary = {
   contactPage: {
     eyebrow: "Contact",
     title: "Let's build the future of living, together.",
-    subtitle: "For partnerships, distribution or press — reach the SYNTRA SMART team directly.",
+    subtitle: "For partnerships, distribution or press — reach the Syltra SMART team directly.",
     hqLabel: "Headquarters",
     hqValue: "Riyadh, Kingdom of Saudi Arabia",
     emailLabel: "Email",
@@ -280,18 +280,18 @@ const en: Dictionary = {
     corporateValue: "+966 (0) 11 000 0000",
   },
   sina: {
-    launcherLabel: "Chat with Sina",
-    title: "Sina",
-    subtitle: "SYNTRA SMART assistant",
-    greeting: "Hi, I'm Sina — SYNTRA SMART's assistant. Ask me about any product, spec, or how the ecosystem fits together.",
-    placeholder: "Ask Sina anything about SYNTRA…",
+    launcherLabel: "Chat with Syla",
+    title: "Syla",
+    subtitle: "Syltra SMART assistant",
+    greeting: "Hi, I'm Syla — Syltra SMART's assistant. Ask me about any product, spec, or how the ecosystem fits together.",
+    placeholder: "Ask Syla anything about Syltra…",
     send: "Send",
-    thinking: "Sina is thinking…",
-    disclaimer: "Sina can make mistakes. Check important details with hello@syntrasmart.com.",
-    unavailable: "Sina isn't connected yet — check back soon.",
-    error: "Something went wrong on Sina's end. Please try again.",
+    thinking: "Syla is thinking…",
+    disclaimer: "Syla can make mistakes. Check important details with hello@syntrasmart.com.",
+    unavailable: "Syla isn't connected yet — check back soon.",
+    error: "Something went wrong on Syla's end. Please try again.",
     close: "Close",
-    mic: "Speak to Sina",
+    mic: "Speak to Syla",
     listening: "Listening…",
     voiceReplies: "Voice replies",
   },
@@ -300,7 +300,7 @@ const en: Dictionary = {
     dismiss: "Got it",
   },
   lightsPanel: {
-    label: "SYNTRA Touch Panel",
+    label: "Syltra Touch Panel",
     room: "Living Room",
     on: "On",
     off: "Off",

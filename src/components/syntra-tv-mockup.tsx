@@ -16,7 +16,7 @@ export default function SyntraTvMockup({ locale }: { locale: Locale }) {
     <div className="flex h-full w-full flex-col bg-void" dir={isAr ? "rtl" : "ltr"}>
       <div className="flex items-center justify-between border-b border-hairline px-4 py-2.5 sm:px-5">
         <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-chrome-dim">
-          SYNTRA TV
+          Syltra TV
         </span>
         <div className="hidden items-center gap-4 font-mono text-[10px] uppercase tracking-widest sm:flex">
           {tabs.map((tab, i) => (

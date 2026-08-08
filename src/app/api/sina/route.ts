@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { buildSinaSystemPrompt } from "@/lib/sina/system-prompt";
+import { buildSylaSystemPrompt } from "@/lib/sina/system-prompt";
 
 export const runtime = "nodejs";
 
@@ -61,14 +61,14 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         model: process.env.SINA_MODEL || DEFAULT_MODEL,
         max_tokens: 600,
-        system: buildSinaSystemPrompt(),
+        system: buildSylaSystemPrompt(),
         messages: messages.map((m) => ({ role: m.role, content: m.content })),
       }),
     });
 
     if (!res.ok) {
       const detail = await res.text().catch(() => "");
-      console.error("Sina: Anthropic API error", res.status, detail);
+      console.error("Syla: Anthropic API error", res.status, detail);
       return NextResponse.json({ error: "upstream_error" }, { status: 502 });
     }
 
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ reply });
   } catch (err) {
-    console.error("Sina: request failed", err);
+    console.error("Syla: request failed", err);
     return NextResponse.json({ error: "request_failed" }, { status: 500 });
   }
 }

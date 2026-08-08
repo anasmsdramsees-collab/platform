@@ -16,7 +16,7 @@ const COMMANDS: CommandDef[] = [
   },
   {
     action: { kind: "navigate", path: "about" },
-    phrases: ["about syntra", "about page", "who are you", "من نحن", "عن سنترا", "عن الشركة"],
+    phrases: ["about syntra", "about page", "who are you", "من نحن", "عن سيلترا", "عن الشركة"],
   },
   {
     action: { kind: "navigate", path: "contact" },

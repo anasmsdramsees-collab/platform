@@ -37,6 +37,14 @@ yarn-error.log*
 # vercel
 .vercel
 
+# standalone sibling projects that sometimes land in this folder —
+# not part of the Next.js site, never meant to be committed here
+/syntra-home/
+/syntra-home-app/
+/syntra-tv-app/
+/website/
+/system/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

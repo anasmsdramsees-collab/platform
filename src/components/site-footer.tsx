@@ -32,13 +32,13 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               href={`/${locale}/apps/syntra-tv`}
               className="mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum"
             >
-              SYNTRA TV
+              Syltra TV
             </Link>
             <Link
               href={`/${locale}/apps/home-assistant`}
               className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
             >
-              {locale === "ar" ? "سنترا هوم أسيستنت" : "SYNTRA Home Assistant"}
+              {locale === "ar" ? "سيلترا هوم أسيستنت" : "Syltra Home Assistant"}
             </Link>
           </div>
           <div>
@@ -67,7 +67,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
       </div>
       <div className="mx-auto max-w-6xl px-5 pb-10 sm:px-8">
         <p className="font-mono text-[11px] text-slate">
-          © {year} SYNTRA SMART®. {dict.footer.rights}
+          © {year} Syltra SMART®. {dict.footer.rights}
         </p>
       </div>
     </footer>

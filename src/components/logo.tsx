@@ -7,12 +7,12 @@ export default function Logo({ locale, className = "" }: { locale: Locale; class
   return (
     <Link
       href={`/${locale}`}
-      aria-label="SYNTRA SMART"
+      aria-label="Syltra SMART"
       className={`block ${className}`}
     >
       <Image
         src={assetPath("/brand/logo.png")}
-        alt="SYNTRA — Smart Living. Seamlessly Connected."
+        alt="Syltra — Smart Living. Seamlessly Connected."
         width={1349}
         height={503}
         priority

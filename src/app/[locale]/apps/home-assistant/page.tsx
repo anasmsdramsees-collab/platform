@@ -41,7 +41,7 @@ export default async function HomeAssistantPage({
         <div className="mx-auto max-w-4xl px-5 py-16 text-center sm:px-8 sm:py-20">
           <Image
             src={assetPath("/brand/app-icon-home.png")}
-            alt="SYNTRA Home"
+            alt="Syltra Home"
             width={443}
             height={465}
             className="mx-auto h-14 w-auto rounded-xl sm:h-16"

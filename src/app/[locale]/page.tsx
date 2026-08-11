@@ -7,6 +7,7 @@ import { productCatalog } from "@/lib/products";
 import HeroLightsPanel from "@/components/hero-lights-panel";
 import CurtainsOverlay from "@/components/curtains-overlay";
 import SyntraTvMockup from "@/components/syntra-tv-mockup";
+import ProtocolOrbit from "@/components/protocol-orbit";
 import { assetPath } from "@/lib/base-path";
 
 export async function generateMetadata({
@@ -203,6 +204,7 @@ export default async function HomePage({
             </h2>
             <p className="mt-4 text-chrome-dim">{dict.protocols.subtitle}</p>
           </div>
+          <ProtocolOrbit items={dict.protocols.items} />
           <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden bg-hairline sm:grid-cols-3">
             {dict.protocols.items.map((p) => (
               <div key={p.name} className="bg-void p-6">

@@ -55,3 +55,27 @@ body {
     scroll-behavior: smooth;
   }
 }
+
+/* Protocol orbit rings (homepage "Connectivity" section) */
+@keyframes orbit-cw {
+  from { transform: rotate(var(--start-angle)); }
+  to   { transform: rotate(calc(var(--start-angle) + 360deg)); }
+}
+@keyframes orbit-ccw {
+  from { transform: rotate(var(--start-angle)); }
+  to   { transform: rotate(calc(var(--start-angle) - 360deg)); }
+}
+@keyframes counter-cw {
+  from { transform: rotate(var(--counter-offset, 0deg)); }
+  to   { transform: rotate(calc(var(--counter-offset, 0deg) - 360deg)); }
+}
+@keyframes counter-ccw {
+  from { transform: rotate(var(--counter-offset, 0deg)); }
+  to   { transform: rotate(calc(var(--counter-offset, 0deg) + 360deg)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring, .orbit-badge {
+    animation: none !important;
+  }
+}

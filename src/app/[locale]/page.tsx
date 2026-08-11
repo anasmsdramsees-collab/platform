@@ -8,6 +8,7 @@ import HeroLightsPanel from "@/components/hero-lights-panel";
 import CurtainsOverlay from "@/components/curtains-overlay";
 import SyntraTvMockup from "@/components/syntra-tv-mockup";
 import ProtocolOrbit from "@/components/protocol-orbit";
+import RibbonMesh from "@/components/ribbon-mesh";
 import { assetPath } from "@/lib/base-path";
 
 export async function generateMetadata({
@@ -35,11 +36,12 @@ export default async function HomePage({
       <CurtainsOverlay dict={dict.lightsPanel} />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-hairline">
+        <RibbonMesh />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(60% 50% at 50% 0%, rgba(76,141,255,0.10), transparent 70%)",
+              "radial-gradient(60% 50% at 50% 0%, rgba(11,12,14,0.35), rgba(11,12,14,0.85) 70%)",
           }}
         />
         <div className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">

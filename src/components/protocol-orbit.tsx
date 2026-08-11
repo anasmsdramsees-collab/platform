@@ -5,9 +5,9 @@ interface ProtocolItem {
   name: string;
 }
 
-const RINGS: { size: string; duration: number; radiusPad: number }[] = [
-  { size: "w-64 h-64 sm:w-80 sm:h-80", duration: 22, radiusPad: 0 },
-  { size: "w-96 h-96 sm:w-[26rem] sm:h-[26rem]", duration: 32, radiusPad: 0 },
+const RINGS: { size: string; duration: number }[] = [
+  { size: "w-56 h-56 sm:w-72 sm:h-72", duration: 22 },
+  { size: "w-80 h-80 sm:w-[22rem] sm:h-[22rem]", duration: 32 },
 ];
 
 export default function ProtocolOrbit({ items }: { items: ProtocolItem[] }) {
@@ -16,8 +16,8 @@ export default function ProtocolOrbit({ items }: { items: ProtocolItem[] }) {
   const rings = [ring1, ring2];
 
   return (
-    <div className="relative mx-auto flex h-[24rem] w-full max-w-lg items-end justify-center sm:h-[30rem]">
-      <div className="pointer-events-none absolute bottom-0 left-1/2 aspect-square w-40 -translate-x-1/2 translate-y-1/2 sm:w-56">
+    <div className="relative mx-auto flex h-[26rem] w-full max-w-lg items-center justify-center sm:h-[32rem]">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-32 -translate-x-1/2 -translate-y-1/2 sm:w-44">
         <ParticleSphere />
       </div>
 
@@ -31,7 +31,7 @@ export default function ProtocolOrbit({ items }: { items: ProtocolItem[] }) {
         return (
           <div
             key={ringIndex}
-            className={`orbit-ring absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 rounded-full border border-hairline ${orbit.size}`}
+            className={`orbit-ring absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-hairline ${orbit.size}`}
           >
             {ringItems.map((item, i) => {
               const angle = i * step;

@@ -9,6 +9,7 @@ import CurtainsOverlay from "@/components/curtains-overlay";
 import SyntraTvMockup from "@/components/syntra-tv-mockup";
 import ProtocolOrbit from "@/components/protocol-orbit";
 import RibbonMesh from "@/components/ribbon-mesh";
+import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 
 export async function generateMetadata({
@@ -55,18 +56,20 @@ export default async function HomePage({
             {dict.hero.subtitle}
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
+            <HoverBorderGradientLink
               href={`/${locale}/products`}
-              className="rounded-md bg-platinum px-6 py-3 text-sm font-semibold text-void transition-opacity hover:opacity-90"
+              className="bg-platinum text-void"
+              containerClassName="gap-0"
             >
               {dict.hero.ctaProducts}
-            </Link>
-            <Link
+            </HoverBorderGradientLink>
+            <HoverBorderGradientLink
               href={`/${locale}/about`}
-              className="rounded-md border border-hairline-strong px-6 py-3 text-sm font-semibold text-platinum transition-colors hover:bg-graphite"
+              className="bg-void text-platinum"
+              containerClassName="gap-0"
             >
               {dict.hero.ctaAbout}
-            </Link>
+            </HoverBorderGradientLink>
           </div>
 
           <div className="relative z-[35] mt-10">

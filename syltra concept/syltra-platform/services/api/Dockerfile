@@ -8,8 +8,8 @@ ENV NODE_ENV=production
 COPY package*.json ./
 COPY .npmrc* ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies (skip postinstall)
+RUN npm install --ignore-scripts
 
 # Copy source
 COPY . .

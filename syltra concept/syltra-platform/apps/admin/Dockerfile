@@ -8,15 +8,15 @@ ENV NODE_ENV=development
 COPY package*.json ./
 COPY .npmrc* ./
 
-# Install dependencies
-RUN npm install
+# Install (skip postinstall)
+RUN npm install --ignore-scripts
 
-# Copy project
+# Copy everything
 COPY . .
 
-# Build
-RUN npm run build --workspace=@syltra/admin
+# Build with npm script
+RUN npm run admin:build
 
 EXPOSE 3000
 
-CMD ["npm", "start", "--workspace=@syltra/admin"]
+CMD ["npm", "run", "admin:start"]

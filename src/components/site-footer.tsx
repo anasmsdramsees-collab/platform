@@ -51,6 +51,12 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
             >
               {dict.nav.about}
             </Link>
+            <Link
+              href={`/${locale}/faq`}
+              className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              {dict.nav.faq}
+            </Link>
           </div>
           <div>
             <p className="font-mono text-[11px] uppercase tracking-widest text-slate">

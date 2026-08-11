@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { isLocale, locales, type Locale } from "@/lib/i18n/config";
 import { findProductBySlug, allProductSlugs } from "@/lib/products";
 import ProductImagePlaceholder from "@/components/product-image-placeholder";
+import JsonLd from "@/components/json-ld";
+import { siteUrl, siteName } from "@/lib/site-config";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -51,6 +53,22 @@ export default async function ProductDetailPage({
 
   return (
     <section>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product.name,
+          description: copy.description,
+          brand: { "@type": "Brand", name: siteName },
+          category: categoryCopy.name,
+          url: `${siteUrl}/${locale}/products/${product.slug}`,
+          additionalProperty: copy.specs.map((spec) => ({
+            "@type": "PropertyValue",
+            name: spec.label,
+            value: spec.value,
+          })),
+        }}
+      />
       <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 font-mono text-xs text-slate">

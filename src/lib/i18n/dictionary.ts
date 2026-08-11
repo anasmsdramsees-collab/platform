@@ -5,6 +5,7 @@ export interface Dictionary {
     titleAbout: string;
     titleContact: string;
     titleApps: string;
+    titleFaq: string;
     titleSyntraTv: string;
     titleHomeAssistant: string;
     description: string;
@@ -27,6 +28,7 @@ export interface Dictionary {
     products: string;
     apps: string;
     about: string;
+    faq: string;
     contact: string;
   };
   hero: {
@@ -133,6 +135,12 @@ export interface Dictionary {
     webLabel: string;
     corporateLabel: string;
     corporateValue: string;
+  };
+  faqPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    items: { q: string; a: string }[];
   };
   sina: {
     launcherLabel: string;

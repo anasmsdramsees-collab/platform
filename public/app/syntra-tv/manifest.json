@@ -1,11 +1,11 @@
 {
-    "name": "SYNTRA TV",
-    "short_name": "SYNTRA TV",
+    "name": "SYLTRA TV",
+    "short_name": "SYLTRA TV",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0B0C0E",
     "theme_color": "#0B0C0E",
-    "description": "SYNTRA TV — live TV, movies, series, and your SYNTRA smart home, one screen.",
+    "description": "SYLTRA TV — live TV, movies, series, and your SYLTRA smart home, one screen.",
     "orientation": "landscape-primary",
     "prefer_related_applications": false,
     "icons": [

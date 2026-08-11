@@ -1,11 +1,11 @@
-# SYNTRA TV Prompt
+# SYLTRA TV Prompt
 
 You are a senior software architect.
 
-Build a production-ready streaming platform named **SYNTRA TV**.
+Build a production-ready streaming platform named **SYLTRA TV**.
 
 ## Goal
-Create a premium OTT platform integrated with SYNTRA Smart Home.
+Create a premium OTT platform integrated with SYLTRA Smart Home.
 
 ## Stack
 - Flutter

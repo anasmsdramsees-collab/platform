@@ -100472,7 +100472,7 @@ throw A.f(new A.Vi(n,b,new A.z7(p,d,o)))},
 ST(a){this.avW(0,"expected "+a+".",0,this.c)}}
 A.Vl.prototype={
 nw(a,b){var s=null,r=b.hH($.b_f(),t.aq),q=A.cJ(12),p=A.aRp(new A.ic(4,A.cJ(10),B.h6),s,B.q9,s,new A.ic(4,A.cJ(10),B.h6),B.eF,!0,new A.ic(4,A.cJ(10),B.EE),B.a27,B.cQ)
-return new A.wT(r,"SYNTRA TV",A.yq(B.Eh,B.am,new A.vC(s,B.eF,s,s,0,B.ad,new A.cN(q,B.h6)),B.Gv,B.IY,new A.wc(A.b1U(s,s,B.aW,s,s,s,s,s,s,B.bu,s,s,B.qa,s,new A.cN(A.cJ(10),B.t),s,s,s,B.a0f,s)),p,B.LZ,new A.xa(A.aSj(s,s,s,s,s,s,s,s,s,B.aW,s,s,B.qa,s,new A.cN(A.cJ(10),B.t),B.ED,s,s,s,s)),B.bu,B.Zj,new A.yi(A.aMR(s,s,s,s,s,s,s,s,s,B.bC,s,s,s,s,s,s,s,s,s,s)),B.a3B,!0),!1,s)}}
+return new A.wT(r,"SYLTRA TV",A.yq(B.Eh,B.am,new A.vC(s,B.eF,s,s,0,B.ad,new A.cN(q,B.h6)),B.Gv,B.IY,new A.wc(A.b1U(s,s,B.aW,s,s,s,s,s,s,B.bu,s,s,B.qa,s,new A.cN(A.cJ(10),B.t),s,s,s,B.a0f,s)),p,B.LZ,new A.xa(A.aSj(s,s,s,s,s,s,s,s,s,B.aW,s,s,B.qa,s,new A.cN(A.cJ(10),B.t),B.ED,s,s,s,s)),B.bu,B.Zj,new A.yi(A.aMR(s,s,s,s,s,s,s,s,s,B.bC,s,s,s,s,s,s,s,s,s,s)),B.a3B,!0),!1,s)}}
 A.vq.prototype={
 k(a){return this.a},
 $icd:1}
@@ -100506,7 +100506,7 @@ if((h?null:i.c)===401&&n.c!=null)n.c.$0()
 g=h?null:i.a
 if(t.f.b(g)&&J.bk(g,"message")!=null){f=J.bk(g,"message")
 e=t.j.b(f)?J.aKP(f,", "):J.dv(f)}else{k=k.c
-e=k===B.pV||k===B.pW?"Can't reach SYNTRA. Check your connection.":"Something went wrong. Please try again."}throw A.f(new A.vq(e))}else throw d
+e=k===B.pV||k===B.pW?"Can't reach SYLTRA. Check your connection.":"Something went wrong. Please try again."}throw A.f(new A.vq(e))}else throw d
 s=6
 break
 case 3:s=2
@@ -100988,7 +100988,7 @@ case 6:case 1:return A.E(q,r)
 case 2:return A.D(o.at(-1),r)}})
 return A.F($async$ve,r)},
 H(a){var s,r,q,p=this,o=null,n=A.aLY("assets/logo/syntra_tv_icon.png",96,96),m=A.Y(a).ok.e,l=t.p
-m=A.cE(A.b([n,B.bZ,A.bH("SYNTRA TV",o,o,o,m==null?o:m.aun(4),B.bJ,o),B.fM,A.bH("One account for your whole SYNTRA home",o,o,o,A.Y(a).ok.z,B.bJ,o)],l),B.H,B.A,B.L,B.R)
+m=A.cE(A.b([n,B.bZ,A.bH("SYLTRA TV",o,o,o,m==null?o:m.aun(4),B.bJ,o),B.fM,A.bH("One account for your whole SYLTRA home",o,o,o,A.Y(a).ok.z,B.bJ,o)],l),B.H,B.A,B.L,B.R)
 n=A.asB(!1,p.x,B.r1,B.nq,!1,o,o,new A.aB9())
 s=A.asB(!0,p.y,B.Lt,o,!0,new A.aBa(p),B.jl,new A.aBb())
 r=p.z
@@ -101177,7 +101177,7 @@ break
 case 6:case 1:return A.E(q,r)
 case 2:return A.D(o.at(-1),r)}})
 return A.F($async$vF,r)},
-H(a){var s=this,r=null,q=A.aPw(r),p=A.bH("Create your account",r,r,r,A.Y(a).ok.e,r,r),o=A.bH("Same account works across SYNTRA HOME and SYNTRA TV.",r,r,r,A.Y(a).ok.z,r,r),n=A.asB(!1,s.x,B.r1,B.nq,!1,r,r,new A.aEk()),m=A.asB(!0,s.y,B.Lu,r,!0,new A.aEl(s),B.jl,new A.aEm()),l=s.z,k=l?r:s.gaqg()
+H(a){var s=this,r=null,q=A.aPw(r),p=A.bH("Create your account",r,r,r,A.Y(a).ok.e,r,r),o=A.bH("Same account works across SYLTRA HOME and SYLTRA TV.",r,r,r,A.Y(a).ok.z,r,r),n=A.asB(!1,s.x,B.r1,B.nq,!1,r,r,new A.aEk()),m=A.asB(!0,s.y,B.Lu,r,!0,new A.aEl(s),B.jl,new A.aEm()),l=s.z,k=l?r:s.gaqg()
 k=A.aLA(l?B.D1:B.a3R,k)
 return A.xJ(q,r,A.j5(!0,A.cY(A.ara(A.aR3(A.cE(A.b([p,B.D0,o,B.Za,n,B.bZ,m,B.cN,k,B.bZ,A.Vt(B.a3X,l?r:new A.aEn(a),r)],t.p),B.bS,B.A,B.aI,B.R),s.w),r,B.qb),r,r),B.ad,!0),r)}}
 A.aEi.prototype={
@@ -109201,7 +109201,7 @@ B.a41=new A.dd("Stream URL (test data \u2014 playback not wired up yet)",null,B.
 B.a42=new A.dd("More Info",null,null,null,null,null,null,null,null)
 B.a43=new A.dd("Log out",null,null,null,null,null,null,null,null)
 B.a2b=new A.q(!0,B.bC,null,null,null,null,11,B.aR,null,1.2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a44=new A.dd("SYNTRA ORIGINAL",null,B.a2b,null,null,null,null,null,null)
+B.a44=new A.dd("SYLTRA ORIGINAL",null,B.a2b,null,null,null,null,null,null)
 B.a45=new A.dd("Page Not Found",null,B.jp,null,null,null,null,null,null)
 B.a46=new A.dd("Search",null,B.nu,null,null,null,null,null,null)
 B.a48=new A.dd("Home",null,null,null,null,null,null,null,null)
@@ -109543,7 +109543,7 @@ B.jT=new A.zT(3,"started")
 B.YW=new A.I(100,0)
 B.a7B=new A.nQ(B.YW,B.as,B.ec,null,null)
 B.a7C=new A.nQ(B.B,B.as,B.ec,null,null)
-B.a7F=new A.v_("Account type","Shared with SYNTRA HOME",null)
+B.a7F=new A.v_("Account type","Shared with SYLTRA HOME",null)
 B.a7E=new A.v_("Content","Preview data \u2014 no live TV/VOD provider connected yet",null)
 B.a7D=new A.v_("Version","0.1.0",null)
 B.NR=s([B.a7E,B.a7D],t.p)

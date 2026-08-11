@@ -38,12 +38,18 @@ yarn-error.log*
 .vercel
 
 # standalone sibling projects that sometimes land in this folder —
-# not part of the Next.js site, never meant to be committed here
+# not part of the Next.js site, never meant to be committed here.
+# New ones keep appearing (and get renamed with the brand); if you add or
+# rename a sibling app here, update this list too (a general glob is unsafe —
+# it would also hide real subfolders like src/app or public/app).
 /syntra-home/
+/syltra-home/
 /syntra-home-app/
-/syntra-tv-app/
+/syltra-home-app/
+/syltra-tv-app/
 /website/
 /system/
+/syltra concept/
 
 # typescript
 *.tsbuildinfo

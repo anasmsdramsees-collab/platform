@@ -7,7 +7,9 @@ import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import SinaWidget from "@/components/sina-widget";
 import EnergyReminder from "@/components/energy-reminder";
+import JsonLd from "@/components/json-ld";
 import { HomeControlsProvider } from "@/lib/home-controls-context";
+import { siteUrl, siteName, contactEmail } from "@/lib/site-config";
 
 const unbounded = Unbounded({
   variable: "--font-display",
@@ -76,6 +78,22 @@ export default async function LocaleLayout({
       className={`${unbounded.variable} ${manrope.variable} ${plexMono.variable} ${cairo.variable} ${plexSansArabic.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-void text-platinum">
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: siteName,
+            url: siteUrl,
+            logo: `${siteUrl}/brand/logo.png`,
+            description: dict.meta.description,
+            email: contactEmail,
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Riyadh",
+              addressCountry: "SA",
+            },
+          }}
+        />
         <HomeControlsProvider>
           <SiteNav locale={locale} dict={dict} />
           <main className="flex-1">{children}</main>

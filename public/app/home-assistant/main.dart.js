@@ -99900,7 +99900,7 @@ throw A.e(new A.Ur(n,b,new A.yS(p,d,o)))},
 SD(a){this.av_(0,"expected "+a+".",0,this.c)}}
 A.Uw.prototype={
 l9(a,b){var s=null,r=b.fA($.aX2(),t.aq),q=A.kU(12),p=A.aOx(new A.hU(4,A.kU(10),B.jE),s,B.Hm,s,new A.hU(4,A.kU(10),B.jE),B.jP,!0,new A.hU(4,A.kU(10),B.Cz),B.Wm,B.Bf)
-return new A.wJ(r,"SYNTRA HOME",A.y9(B.Cc,B.am,new A.qS(s,B.jP,s,s,0,B.O,new A.cS(q,B.jE)),B.F0,B.GK,new A.w3(A.aZA(s,s,B.bS,s,s,s,s,s,s,B.dF,s,s,B.oJ,s,new A.cS(A.kU(10),B.t),s,s,s,B.UC,s)),p,B.Je,new A.wX(A.b0E(s,s,s,s,s,s,s,s,s,B.bS,s,s,B.oJ,s,new A.cS(A.kU(10),B.t),B.Cy,s,s,s,s)),B.dF,B.SG,new A.ub(A.aJT(s,s,s,s,s,s,s,s,s,B.eF,s,s,s,s,s,s,s,s,s,s)),B.XI,!0),!1,s)}}
+return new A.wJ(r,"SYLTRA HOME",A.y9(B.Cc,B.am,new A.qS(s,B.jP,s,s,0,B.O,new A.cS(q,B.jE)),B.F0,B.GK,new A.w3(A.aZA(s,s,B.bS,s,s,s,s,s,s,B.dF,s,s,B.oJ,s,new A.cS(A.kU(10),B.t),s,s,s,B.UC,s)),p,B.Je,new A.wX(A.b0E(s,s,s,s,s,s,s,s,s,B.bS,s,s,B.oJ,s,new A.cS(A.kU(10),B.t),B.Cy,s,s,s,s)),B.dF,B.SG,new A.ub(A.aJT(s,s,s,s,s,s,s,s,s,B.eF,s,s,s,s,s,s,s,s,s,s)),B.XI,!0),!1,s)}}
 A.hF.prototype={
 k(a){return this.a},
 $icE:1}
@@ -99969,7 +99969,7 @@ if((o?null:p.c)===401&&this.c!=null)this.c.$0()
 s=o?null:p.a
 if(t.f.b(s)&&J.bp(s,"message")!=null){r=J.bp(s,"message")
 q=t.j.b(r)?J.aI8(r,", "):J.d2(r)}else{p=a.c
-q=p===B.oy||p===B.oz?"Can't reach SYNTRA Home Assistant. Check your connection.":"Something went wrong. Please try again."}return new A.hF(q)}}
+q=p===B.oy||p===B.oz?"Can't reach SYLTRA Home Assistant. Check your connection.":"Something went wrong. Please try again."}return new A.hF(q)}}
 A.a6k.prototype={
 $2(a,b){return this.a3X(a,b)},
 a3X(a,b){var s=0,r=A.M(t.H),q=this,p,o
@@ -100505,7 +100505,7 @@ $0(){return A.aOa(this.b,"/hubs/"+this.a.c.a,t.X)},
 $S:0}
 A.Y8.prototype={
 J(a){var s=null
-return new A.bw(B.dK,A.e7(A.eV(A.b([B.If,B.bk,A.bJ("No hubs yet",s,s,s,s,A.O(a).ok.r,s,s),B.iG,A.bJ("Pair your SYNTRA Hub to start controlling your home.",s,s,s,s,A.O(a).ok.z,B.bw,s)],t.p),B.a9,B.a2,B.ao),s,s),s)}}
+return new A.bw(B.dK,A.e7(A.eV(A.b([B.If,B.bk,A.bJ("No hubs yet",s,s,s,s,A.O(a).ok.r,s,s),B.iG,A.bJ("Pair your SYLTRA Hub to start controlling your home.",s,s,s,s,A.O(a).ok.z,B.bw,s)],t.p),B.a9,B.a2,B.ao),s,s),s)}}
 A.yR.prototype={
 J(a){var s=null
 return A.e7(new A.bw(B.dK,A.eV(A.b([A.bJ(this.c,s,s,s,s,A.O(a).ok.z,B.bw,s),B.bk,A.aPm(B.Bj,this.d)],t.p),B.a9,B.a2,B.ao),s),s,s)}}
@@ -100550,7 +100550,7 @@ case 6:case 1:return A.K(q,r)
 case 2:return A.J(o.at(-1),r)}})
 return A.L($async$vi,r)},
 J(a){var s,r,q,p=this,o=null,n=A.aOm("assets/logo/syntra_home_icon.png",96,96),m=A.O(a).ok.e,l=t.p
-m=A.eV(A.b([n,B.bk,A.bJ("SYNTRA HOME",o,o,o,o,m==null?o:m.atu(4),B.bw,o),B.Sz,A.bJ("Control Your Life",o,o,o,o,A.O(a).ok.z,B.bw,o)],l),B.a9,B.a2,B.c2)
+m=A.eV(A.b([n,B.bk,A.bJ("SYLTRA HOME",o,o,o,o,m==null?o:m.atu(4),B.bw,o),B.Sz,A.bJ("Control Your Life",o,o,o,o,A.O(a).ok.z,B.bw,o)],l),B.a9,B.a2,B.c2)
 n=A.np(!1,p.x,B.pp,o,o,B.ms,!1,o,o,B.b4,o,new A.azc())
 s=A.np(!0,p.y,B.IG,o,o,o,!0,o,new A.azd(p),B.b4,B.iK,new A.aze())
 r=p.z
@@ -100694,7 +100694,7 @@ break
 case 6:case 1:return A.K(q,r)
 case 2:return A.J(o.at(-1),r)}})
 return A.L($async$vt,r)},
-J(a){var s=this,r=null,q=A.AB(r,r,r),p=A.bJ("Create your account",r,r,r,r,A.O(a).ok.e,r,r),o=A.bJ("One account for every SYNTRA hub in your home.",r,r,r,r,A.O(a).ok.z,r,r),n=A.np(!1,s.x,B.pp,r,r,B.ms,!1,r,r,B.b4,r,new A.aB6()),m=A.np(!0,s.y,B.IL,r,r,r,!0,r,new A.aB7(s),B.b4,B.iK,new A.aB8()),l=s.z,k=l?r:s.gan7()
+J(a){var s=this,r=null,q=A.AB(r,r,r),p=A.bJ("Create your account",r,r,r,r,A.O(a).ok.e,r,r),o=A.bJ("One account for every SYLTRA hub in your home.",r,r,r,r,A.O(a).ok.z,r,r),n=A.np(!1,s.x,B.pp,r,r,B.ms,!1,r,r,B.b4,r,new A.aB6()),m=A.np(!0,s.y,B.IL,r,r,r,!0,r,new A.aB7(s),B.b4,B.iK,new A.aB8()),l=s.z,k=l?r:s.gan7()
 k=A.Pg(l?B.fx:B.Yb,k)
 return A.tK(q,r,A.kl(!0,A.e7(A.xH(A.acJ(A.eV(A.b([p,B.iG,o,B.Sx,n,B.bk,m,B.fy,k,B.bk,A.i2(B.Yc,r,r,l?r:new A.aB9(a),r,r)],t.p),B.cg,B.a2,B.ao),s.w),r,B.T,B.oK,r,B.a7),r,r),B.O,!0),r,r)}}
 A.aB4.prototype={

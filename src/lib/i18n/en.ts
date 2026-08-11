@@ -9,6 +9,7 @@ const en: Dictionary = {
     titleApps: "Apps — Syltra SMART",
     titleSyntraTv: "Syltra TV — Syltra SMART",
     titleHomeAssistant: "Syltra Home — Syltra SMART",
+    titleFaq: "FAQ — Syltra SMART",
     description:
       "Syltra SMART engineers the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language.",
   },
@@ -16,6 +17,7 @@ const en: Dictionary = {
     products: "Products",
     apps: "Apps",
     about: "About",
+    faq: "FAQ",
     contact: "Contact",
   },
   common: {
@@ -278,6 +280,45 @@ const en: Dictionary = {
     webLabel: "Web",
     corporateLabel: "Corporate",
     corporateValue: "+966 (0) 11 000 0000",
+  },
+  faqPage: {
+    eyebrow: "FAQ",
+    title: "Questions, answered directly.",
+    subtitle: "Everything people ask us most about the ecosystem, the apps and what's next.",
+    items: [
+      {
+        q: "What is Syltra SMART?",
+        a: "Syltra SMART is a global smart-technology company engineering the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language across hubs, switches, sensors, security and two companion apps.",
+      },
+      {
+        q: "What connectivity protocols does Syltra support?",
+        a: "Every Syltra device speaks Matter, Z-Wave, Zigbee, Wi-Fi, Bluetooth LE and Thread natively — no bridges, no walled gardens, and no dependency on any single standard.",
+      },
+      {
+        q: "Who or what is Syla?",
+        a: "Syla is Syltra's built-in AI voice assistant. It runs inside the Syltra Home app, the Touch Panel and Syltra TV, and understands both Arabic and English.",
+      },
+      {
+        q: "What's the difference between Syltra Home and Syltra TV?",
+        a: "Syltra Home is the everyday mobile app for iOS and Android that controls every device in the house. Syltra TV brings that same smart-home control to the biggest screen in the house, alongside live channels, movies, series and apps.",
+      },
+      {
+        q: "Does Syltra work with Home Assistant?",
+        a: "Yes. Every Syltra Hub Pro ships with an embedded Home Assistant OS, and Syltra Home extends that with a native integration published through HACS, on top of full Matter certification.",
+      },
+      {
+        q: "When is Syltra SMART launching?",
+        a: "Global launch is targeted for 2026 alongside SYLTRA OS 1.0, starting in Saudi Arabia and the GCC, with wider MENA and international expansion to follow.",
+      },
+      {
+        q: "Where is Syltra SMART based?",
+        a: "Syltra SMART is headquartered in Riyadh, Kingdom of Saudi Arabia.",
+      },
+      {
+        q: "How do I get in touch or request early access?",
+        a: "Reach the team directly through the contact page — partnerships, distribution and press inquiries are all welcome.",
+      },
+    ],
   },
   sina: {
     launcherLabel: "Chat with Syla",

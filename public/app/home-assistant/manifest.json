@@ -1,11 +1,11 @@
 {
-    "name": "SYNTRA HOME",
-    "short_name": "SYNTRA HOME",
+    "name": "SYLTRA HOME",
+    "short_name": "SYLTRA HOME",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0B0C0E",
     "theme_color": "#0B0C0E",
-    "description": "SYNTRA HOME — control every SYNTRA SMART device from your phone.",
+    "description": "SYLTRA HOME — control every SYLTRA SMART device from your phone.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

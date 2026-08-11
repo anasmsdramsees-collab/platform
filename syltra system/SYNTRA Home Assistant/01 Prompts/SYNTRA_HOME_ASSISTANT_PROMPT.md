@@ -1,12 +1,12 @@
-# SYNTRA Home Assistant Prompt
+# SYLTRA Home Assistant Prompt
 
 You are a senior IoT software architect.
 
-Build **SYNTRA Home Assistant** using Home Assistant as the backend engine.
+Build **SYLTRA Home Assistant** using Home Assistant as the backend engine.
 
 ## Rules
 - Do not expose the default Home Assistant UI.
-- Build a completely custom SYNTRA interface.
+- Build a completely custom SYLTRA interface.
 - Communicate with Home Assistant through REST API and WebSocket.
 - Home Assistant runs in the background.
 
@@ -36,7 +36,7 @@ Build **SYNTRA Home Assistant** using Home Assistant as the backend engine.
 - Settings
 
 ## Integration
-Integrate directly with SYNTRA TV and SYNTRA Cloud.
+Integrate directly with SYLTRA TV and SYLTRA Cloud.
 
 ## Output
 Generate production-ready code, clean architecture, documentation, APIs, tests and deployment.

@@ -77,7 +77,7 @@ export default async function LocaleLayout({
       dir={dir}
       className={`${unbounded.variable} ${manrope.variable} ${plexMono.variable} ${cairo.variable} ${plexSansArabic.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-void text-platinum">
+      <body className="min-h-full flex flex-col bg-void text-platinum pb-24 sm:pb-0">
         <JsonLd
           data={{
             "@context": "https://schema.org",

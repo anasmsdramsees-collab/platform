@@ -1,10 +1,22 @@
 "use client";
 
+import { useEffect } from "react";
 import { useHomeControls } from "@/lib/home-controls-context";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 
 export default function CurtainsOverlay({ dict }: { dict: Dictionary["lightsPanel"] }) {
   const { curtainsOpen, setCurtainsOpen } = useHomeControls();
+
+  useEffect(() => {
+    if (!curtainsOpen) {
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [curtainsOpen]);
 
   return (
     <div

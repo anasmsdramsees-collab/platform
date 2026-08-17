@@ -1,7 +1,9 @@
-import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
+import SyntraTvMockup from "@/components/syntra-tv-mockup";
+import { assetPath } from "@/lib/base-path";
 
 export async function generateMetadata({
   params,
@@ -37,23 +39,46 @@ export default async function AppsPage({
       </div>
 
       <div className="mx-auto max-w-6xl px-5 pb-24 sm:px-8">
-        <div className="grid grid-cols-1 gap-px overflow-hidden bg-hairline sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {a.cards.map((card) => (
-            <Link
+            <div
               key={card.slug}
-              href={`/${locale}/apps/${card.slug}`}
-              className="group bg-void p-8 transition-colors hover:bg-graphite sm:p-10"
+              className="overflow-hidden border border-hairline bg-void"
             >
-              <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
-                {card.status}
-              </p>
-              <p className="font-display mt-4 text-2xl font-bold text-platinum">{card.name}</p>
-              <p className="mt-3 text-chrome-dim">{card.tagline}</p>
-              <p className="mt-3 text-sm text-chrome-dim">{card.desc}</p>
-              <p className="mt-6 font-mono text-sm text-ion transition-opacity group-hover:opacity-80">
-                {locale === "ar" ? "التفاصيل" : "Learn more"} →
-              </p>
-            </Link>
+              <div className="relative aspect-video overflow-hidden border-b border-hairline">
+                {card.slug === "home-assistant" ? (
+                  <Image
+                    src={assetPath("/brand/app-home-dashboard.jpg")}
+                    alt={card.name}
+                    fill
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    className="object-cover object-top"
+                  />
+                ) : (
+                  <SyntraTvMockup locale={locale} />
+                )}
+              </div>
+              <div className="p-8 sm:p-10">
+                <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
+                  {card.status}
+                </p>
+                <div className="mt-4 flex items-center gap-3">
+                  <Image
+                    src={assetPath(
+                      card.slug === "home-assistant"
+                        ? "/brand/app-icon-home.png"
+                        : "/brand/app-icon-tv.png"
+                    )}
+                    alt=""
+                    width={64}
+                    height={64}
+                    className="h-8 w-8 rounded-md"
+                  />
+                  <p className="font-display text-2xl font-bold text-platinum">{card.name}</p>
+                </div>
+                <p className="mt-3 text-chrome-dim">{card.tagline}</p>
+              </div>
+            </div>
           ))}
         </div>
       </div>

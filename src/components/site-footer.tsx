@@ -29,13 +29,13 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               {dict.footer.apps}
             </p>
             <Link
-              href={`/${locale}/apps/syntra-tv`}
+              href={`/${locale}/apps`}
               className="mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum"
             >
               Syltra TV
             </Link>
             <Link
-              href={`/${locale}/apps/home-assistant`}
+              href={`/${locale}/apps`}
               className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
             >
               {locale === "ar" ? "سيلترا هوم" : "Syltra Home"}

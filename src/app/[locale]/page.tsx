@@ -235,10 +235,9 @@ export default async function HomePage({
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
             {dict.appsPage.cards.map((card) => (
-              <Link
+              <div
                 key={card.slug}
-                href={`/${locale}/apps/${card.slug}`}
-                className="group block overflow-hidden border border-hairline bg-void transition-colors hover:border-hairline-strong"
+                className="overflow-hidden border border-hairline bg-void"
               >
                 <div className="relative aspect-video overflow-hidden border-b border-hairline">
                   {card.slug === "home-assistant" ? (
@@ -247,7 +246,7 @@ export default async function HomePage({
                       alt={card.name}
                       fill
                       sizes="(min-width: 640px) 50vw, 100vw"
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                      className="object-cover object-top"
                     />
                   ) : (
                     <SyntraTvMockup locale={locale} />
@@ -273,7 +272,7 @@ export default async function HomePage({
                   </div>
                   <p className="mt-2 text-sm text-chrome-dim">{card.tagline}</p>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

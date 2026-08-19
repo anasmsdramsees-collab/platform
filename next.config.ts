@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const isStaticExport = process.env.STATIC_EXPORT === "1";
-const basePath = isStaticExport ? "/syntrasmart" : "";
+// Custom domain (syltraone.com) serves from the root — no basePath needed.
+const basePath = "";
 
 const nextConfig: NextConfig = {
   env: {

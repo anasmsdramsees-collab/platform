@@ -1,3 +1,3 @@
-export const siteUrl = "https://syntrasmart.com";
+export const siteUrl = "https://syltraone.com";
 export const siteName = "Syltra SMART";
-export const contactEmail = "hello@syntrasmart.com";
+export const contactEmail = "hello@syltraone.com";

@@ -13,8 +13,8 @@ export async function generateMetadata({
   return { title: dict.meta.titleContact, description: dict.meta.description };
 }
 
-const EMAIL = "hello@syntrasmart.com";
-const WEB = "www.syntrasmart.com";
+const EMAIL = "hello@syltraone.com";
+const WEB = "www.syltraone.com";
 
 export default async function ContactPage({
   params,

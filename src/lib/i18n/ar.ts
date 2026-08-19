@@ -328,7 +328,7 @@ const ar: Dictionary = {
     placeholder: "اسأل سيلا عن أي حاجة في سيلترا…",
     send: "إرسال",
     thinking: "سيلا بتفكر…",
-    disclaimer: "سيلا ممكن تخطئ أحيانًا. تأكد من التفاصيل المهمة عبر hello@syltraone.com.",
+    disclaimer: "سيلا ممكن تخطئ أحيانًا. تأكد من التفاصيل المهمة عبر info@syltraone.com.",
     unavailable: "سيلا لسه مش متصلة — جرّب تاني قريبًا.",
     error: "حصلت مشكلة عند سيلا. جرّب تاني.",
     close: "إغلاق",

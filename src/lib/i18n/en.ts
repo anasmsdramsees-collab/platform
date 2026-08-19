@@ -328,7 +328,7 @@ const en: Dictionary = {
     placeholder: "Ask Syla anything about Syltra…",
     send: "Send",
     thinking: "Syla is thinking…",
-    disclaimer: "Syla can make mistakes. Check important details with hello@syltraone.com.",
+    disclaimer: "Syla can make mistakes. Check important details with info@syltraone.com.",
     unavailable: "Syla isn't connected yet — check back soon.",
     error: "Something went wrong on Syla's end. Please try again.",
     close: "Close",

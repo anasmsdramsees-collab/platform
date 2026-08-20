@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import type { Locale } from "@/lib/i18n/config";
 import { useHomeControls } from "@/lib/home-controls-context";
 import { parseVoiceCommand } from "@/lib/voice-commands";
-import { applySylaVoice } from "@/lib/tts-voice";
+import { applySylaVoice, normalizeForSpeech } from "@/lib/tts-voice";
 
 type Phase = "off" | "passive" | "listening" | "thinking" | "speaking";
 
@@ -74,7 +74,7 @@ export default function SylaWake({ locale }: { locale: Locale }) {
         return;
       }
       window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
+      const u = new SpeechSynthesisUtterance(normalizeForSpeech(text, lang));
       applySylaVoice(u, lang);
       u.onend = () => onEnd?.();
       u.onerror = () => onEnd?.();

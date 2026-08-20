@@ -55,6 +55,19 @@ export function pickFemaleVoice(lang: string): SpeechSynthesisVoice | null {
   );
 }
 
+// Rewrite words the TTS engine mispronounces before speaking.
+// Only affects the spoken audio, never the text shown on screen.
+export function normalizeForSpeech(text: string, lang: string): string {
+  if (lang.toLowerCase().startsWith("ar")) {
+    return text
+      .replace(/سيلترا وان/g, "سِلْترا وان")
+      .replace(/سيلترا/g, "سِلْترا")
+      .replace(/\bسيلا\b/g, "سِيلا")
+      .replace(/\bSyla\b/gi, "سِيلا");
+  }
+  return text.replace(/\bSyla\b/g, "Seela").replace(/\bSyltra\b/g, "Siltra");
+}
+
 // Configure an utterance to sound like Syla: female voice when available,
 // otherwise nudge pitch up so a default male voice reads softer.
 export function applySylaVoice(u: SpeechSynthesisUtterance, lang: string) {

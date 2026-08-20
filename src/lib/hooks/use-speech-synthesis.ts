@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { applySylaVoice } from "@/lib/tts-voice";
+import { applySylaVoice, normalizeForSpeech } from "@/lib/tts-voice";
 
 export function useSpeechSynthesis(lang: string) {
   const [supported, setSupported] = useState(false);
@@ -19,7 +19,7 @@ export function useSpeechSynthesis(lang: string) {
     (text: string) => {
       if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
+      const utterance = new SpeechSynthesisUtterance(normalizeForSpeech(text, lang));
       applySylaVoice(utterance, lang);
       utterance.rate = 1;
       utterance.onstart = () => setSpeaking(true);

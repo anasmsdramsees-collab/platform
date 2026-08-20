@@ -24,6 +24,14 @@ const WAKE_WORDS = [
   "hey sila",
   "cela",
   "sella",
+  // Frequent mishearings of the name by the speech recognizer
+  "سيري",
+  "سيرى",
+  "سيلى",
+  "siri",
+  "seela",
+  "sela",
+  "cila",
 ];
 
 const STORAGE_KEY = "syla_wake_enabled";

@@ -6,6 +6,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import SinaWidget from "@/components/sina-widget";
+import SylaWake from "@/components/syla-wake";
 import EnergyReminder from "@/components/energy-reminder";
 import JsonLd from "@/components/json-ld";
 import { HomeControlsProvider } from "@/lib/home-controls-context";
@@ -100,6 +101,7 @@ export default async function LocaleLayout({
           <SiteFooter locale={locale} dict={dict} />
           <EnergyReminder dict={dict.energyReminder} />
           <SinaWidget dict={dict.sina} locale={locale} />
+          <SylaWake locale={locale} />
         </HomeControlsProvider>
       </body>
     </html>

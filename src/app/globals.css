@@ -79,3 +79,21 @@ body {
     animation: none !important;
   }
 }
+
+/* Syla wake-word overlay (Siri-style wave) */
+@keyframes syla-bounce {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+.syla-bar {
+  display: inline-block;
+  width: 7px;
+  height: 52px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #4c8dff, #a56bff 55%, #ff5f8f);
+  animation: syla-bounce 0.9s ease-in-out infinite;
+  box-shadow: 0 0 18px rgba(76, 141, 255, 0.55);
+}
+.syla-bar-slow {
+  animation-duration: 1.6s;
+}

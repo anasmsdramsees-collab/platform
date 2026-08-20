@@ -1,0 +1,13 @@
+{
+  "deadletter_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+  "error": "Entity sensor.unmapped_thing maps to no known device or capability.",
+  "home_id": "home_example",
+  "occurred_at": "2026-08-20T19:31:00Z",
+  "original_subject": null,
+  "payload": {},
+  "reason_codes": [
+    "UNMAPPED_ENTITY"
+  ],
+  "service": "edge-agent",
+  "subject": "syltra.device.state.changed"
+}

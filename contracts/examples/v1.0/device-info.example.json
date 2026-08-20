@@ -1,0 +1,10 @@
+{
+  "device_id": "ac_living",
+  "entity_ids": [
+    "climate.living_room"
+  ],
+  "manufacturer": "Example",
+  "model": "AC-1",
+  "name": "Living room air conditioner",
+  "room_id": "living_room"
+}

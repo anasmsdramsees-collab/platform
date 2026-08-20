@@ -26,6 +26,8 @@ from syltra_contracts import (
     Recommendation,
 )
 
+from syltra_feedback_service import metrics
+
 logger = logging.getLogger(__name__)
 
 REJECTION_PENALTY = 0.15
@@ -156,6 +158,8 @@ class FeedbackService:
             or "unknown"
         )
         self._apply(home_id, rec_type, record)
+        metrics.RESPONSES.labels(kind=kind.value, source=source.value).inc()
+        self._publish_standing(home_id, rec_type)
         self.audit.append(
             {
                 "occurred_at": moment.isoformat(),
@@ -216,6 +220,18 @@ class FeedbackService:
         standing.adjustment = round(standing.adjustment, 4)
 
     # ── queries ──
+
+    def _publish_standing(self, home_id: str, recommendation_type: str) -> None:
+        """Mirror this household's standing into the gauges (spec §29)."""
+        metrics.SUPPRESSED_TYPES.labels(home_id=home_id).set(len(self.suppressed_types(home_id)))
+        metrics.TYPES_NEEDING_SUSPENSION.labels(home_id=home_id).set(
+            len(self.types_needing_suspension(home_id))
+        )
+        rate = self.standing(home_id, recommendation_type).acceptance_rate
+        if rate is not None:
+            metrics.ACCEPTANCE_RATE.labels(
+                home_id=home_id, recommendation_type=recommendation_type
+            ).set(rate)
 
     def standing(self, home_id: str, recommendation_type: str) -> TypeStanding:
         return self._standing[home_id].get(

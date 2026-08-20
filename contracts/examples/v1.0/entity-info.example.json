@@ -1,0 +1,6 @@
+{
+  "capability": "climate.target_temperature",
+  "device_id": "ac_living",
+  "entity_id": "climate.living_room",
+  "room_id": "living_room"
+}

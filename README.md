@@ -45,7 +45,7 @@ All workflows run through the `Makefile`:
 |---|---|
 | `make bootstrap` | Install development prerequisites: pinned Python via `uv`, all workspace packages, dev tools. |
 | `make config-check` | Validate configuration and environment (env file presence, compose file syntax, no secrets in `.env.example`). |
-| `make contracts` | Regenerate JSON Schemas in `contracts/jsonschema/` from the contract models. |
+| `make contracts` | Regenerate every contract artifact: JSON Schemas, the worked examples in `contracts/examples/`, and the OpenAPI document in `contracts/openapi/`. Tests fail the build if a checked-in copy drifts. |
 | `make tokens` | Regenerate the design-system CSS from `tokens.json` (guidelines §24). A test fails if the checked-in CSS drifts. |
 | `make contrast` | Report the WCAG contrast ratio of every token pair in both themes; exits non-zero if any pair fails. |
 | `make observe` | Start Prometheus and Grafana behind the `observability` profile; the dashboard lands on `127.0.0.1:3001`. |

@@ -200,11 +200,16 @@ Scoped, understood, nobody blocked on a decision.
 
 | Gap | Consequence | Size |
 |---|---|---|
-| `contracts/openapi/` is empty | Spec §21 requires an OpenAPI specification as an artifact. FastAPI serves it live at `/v1/openapi.json`; nothing exports a versioned copy the way `make contracts` does for JSON Schemas | small |
-| `contracts/examples/` is empty | Spec §8 places contract examples here; the JSON Schemas exist without worked examples | small |
 | Update and rollback is designed, not implemented | `docs/architecture/DEPLOYMENT.md` describes the sequence. Spec §22 Phase 8 asked for a *design*, so this is beyond what the MVP required — but a pilot hub will eventually need updating | medium |
-| Feedback Service has no metrics module | Not one of §29's fourteen, but it is the one remaining service with no instrumentation | small |
 | The console polls every 15 seconds | `/v1/stream` exists and nothing uses it. Polling is simple and works; a pilot watching live state would prefer the stream | medium |
+
+### Closed
+
+| Was | Now |
+|---|---|
+| `contracts/openapi/` empty | `make contracts` writes `contracts/openapi/v1.0/syltra-local-api.openapi.json` from the app itself; a test fails the build when a route changes without regenerating. The WebSocket `/v1/stream` is absent because OpenAPI 3.1 cannot describe one, and a test asserts that absence so it stays a known limitation |
+| `contracts/examples/` empty | Eighteen worked examples in `contracts/examples/v1.0/`, all one evening in one synthetic home, cross-referenced by id so following `recommendation_id` from recommendation to decision to feedback works. Each re-validates through the model it came from |
+| Feedback Service uninstrumented | `services/feedback-service/src/syltra_feedback_service/metrics.py`. §19.2 advances a household on the strength of its feedback, so the ladder was being climbed on evidence nothing counted |
 
 ---
 
@@ -219,13 +224,17 @@ implies models are exported there and they are not.
 | `models/definitions`, `models/training`, `models/evaluation`, `models/exported` | `services/adaptive-engine/src/` |
 | `simulator/devices`, `simulator/scenarios`, `simulator/fixtures` | `simulator/src/syltra_simulator/` |
 | `infrastructure/docker` | a `Dockerfile` per service |
-| `contracts/openapi`, `contracts/examples` | nothing — see §4 |
 | `services/cloud-connector` | nothing — see §2.3 |
 
-*Closing it:* either move the content, or delete the placeholders and note the
-divergence in `SYSTEM_OVERVIEW.md`. The second is probably right; the layout in
-§8 was a suggestion and the packages settled where a Python workspace wants
-them.
+`contracts/openapi` and `contracts/examples` are no longer on this list; they
+hold their artifacts.
+
+Each remaining directory now carries a README naming where its content actually
+lives, and `tests/contract/test_layout_divergence.py` fails the build if one of
+those pointers stops resolving or if a listed directory quietly gains content.
+Deleting the placeholders was the other option and would have been tidier; it
+would also have removed the only place a reader looking for `models/exported/`
+would think to look.
 
 ---
 
@@ -284,8 +293,8 @@ Recorded so nobody re-opens them as oversights.
 | Unverified against reality | 6 | a real home, a real Home Assistant, a person |
 | Awaiting your decision | 6 | you |
 | Needs a person | 3 | scheduling |
-| Known engineering gaps | 5 | nobody — pick them up any time |
-| Structural divergence | 5 dirs | a tidy-up |
+| Known engineering gaps | 2 | nobody — pick them up any time |
+| Structural divergence | 3 groups | explained in place, not resolved |
 
 Nothing in §1 through §5 is a *critical blocker* in the sense of §32 item 18:
 the platform runs, its safety guarantees hold, and its tests pass. §1.1 and §1.2

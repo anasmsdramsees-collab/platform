@@ -1,0 +1,16 @@
+{
+  "decision": "ALLOW",
+  "decision_id": "55555555-5555-4555-8555-555555555555",
+  "evaluated_at": "2026-08-20T19:30:00Z",
+  "evidence": {},
+  "expires_at": "2026-08-20T19:45:00Z",
+  "home_id": "home_example",
+  "input_hash": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+  "policy_version": "1.0.0",
+  "reason_codes": [
+    "WITHIN_POLICY"
+  ],
+  "recommendation_id": "44444444-4444-4444-8444-444444444444",
+  "required_approval_from": null,
+  "safety_class": "COMFORT"
+}

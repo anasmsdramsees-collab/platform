@@ -16,6 +16,7 @@ import pathlib
 import pkgutil
 import re
 from datetime import timedelta
+from uuid import uuid4
 
 import pytest
 from prometheus_client import REGISTRY
@@ -30,6 +31,7 @@ METRICS_MODULES = [
     "syltra_context_engine.metrics",
     "syltra_digital_twin.metrics",
     "syltra_edge_agent.metrics",
+    "syltra_feedback_service.metrics",
     "syltra_policy_safety.metrics",
     "syltra_risk_engine.metrics",
 ]
@@ -97,6 +99,10 @@ def test_every_service_that_decides_or_acts_is_instrumented() -> None:
         "syltra_action_orchestrator.metrics",
         "syltra_risk_engine.metrics",
         "syltra_automation_engine.metrics",
+        # Not one of §29's fourteen, and the last service with no instrumentation
+        # at all. §19.2 advances a household on the strength of its feedback, so
+        # the ladder was being climbed on evidence nothing counted.
+        "syltra_feedback_service.metrics",
     ):
         assert importlib.util.find_spec(module) is not None, module
 
@@ -183,6 +189,36 @@ async def test_an_observe_only_refusal_is_counted() -> None:
 
     after = R.get_sample_value(name, labels)
     assert after is not None and after > (before or 0.0)
+
+
+async def test_a_response_and_its_standing_are_counted() -> None:
+    from prometheus_client import REGISTRY as R
+    from syltra_contracts import FeedbackKind
+    from syltra_feedback_service import FeedbackService
+
+    labels = {"kind": "NEVER_REPEAT", "source": "USER"}
+    before = R.get_sample_value("syltra_feedback_responses_total", labels)
+
+    service = FeedbackService()
+    for _ in range(3):
+        service.record(
+            home_id="home_metrics",
+            recommendation_id=uuid4(),
+            kind=FeedbackKind.NEVER_REPEAT,
+            recommendation_type="climate.precondition",
+        )
+
+    after = R.get_sample_value("syltra_feedback_responses_total", labels)
+    assert after is not None
+    assert after > (before or 0.0)
+
+    # NEVER_REPEAT is a standing instruction to stop, so the gauge a dashboard
+    # would alert on has to move with it — a counter alone would not show that
+    # the household has switched something off.
+    suppressed = R.get_sample_value(
+        "syltra_feedback_suppressed_types", {"home_id": "home_metrics"}
+    )
+    assert suppressed is not None and suppressed >= 1.0
 
 
 # ── the dashboard queries metrics that exist ──

@@ -1255,3 +1255,59 @@ control path with a tolerated cloud call and confirmed both tests fail.
 
 What remains open is the same claim about the deployed stack: these run in one
 process against the mock Home Assistant, with no containers. §1.6 now says so.
+
+## Closing the engineering gaps
+
+Asked to finish anything outstanding, I worked `docs/GAPS.md` §4 and §5 — the
+entries blocked on nobody. Three of the five closed.
+
+**The OpenAPI document.** Spec §21 asks for a specification as an artifact.
+FastAPI served one live at `/v1/openapi.json`, which is enough to read and not
+enough to depend on: it exists only while the hub runs, and it changes the
+moment a route does. `make contracts` now writes a versioned copy, generated
+from an empty platform so no household value can leak into it, and a test fails
+the build when a route changes without regeneration.
+
+Two things that document cannot do are asserted rather than left implicit: the
+set of routes outside a home scope is fixed with a recorded reason for each, so
+a new unscoped endpoint fails the build; and `/v1/stream` is absent because
+OpenAPI 3.1 has no way to describe a WebSocket. A reader would otherwise
+conclude the endpoint does not exist.
+
+**The worked examples.** Eighteen documents in `contracts/examples/v1.0/`, and
+deliberately not eighteen unrelated blobs: they are one evening in one synthetic
+home — a motion reading opens a context, a model proposes 23 °C, policy allows
+it, the device confirms, the resident accepts — with ids shared across every
+document that references them. A test follows `recommendation_id` from the
+recommendation to the decision to the feedback record, because that is the thing
+a schema alone cannot teach.
+
+**A defect the existing suite caught immediately.** The first draft used reason
+codes I had invented: `COMFORT_CLASS_AUTOMATABLE`, `WITHIN_COMFORT_BAND`,
+`HUMIDITY_SUSTAINED_ABOVE_BASELINE`. All six read plausibly and none is emitted
+by any service. `test_every_emitted_reason_code_is_translated` failed on them
+within seconds — it scans `libs/*/src` too, so the examples entered the same
+vocabulary check as the live API. They now use `ROOM_MOTION_DETECTED`,
+`WITHIN_POLICY`, `ADVISORY_PENDING_CONFIRMATION` and `UNMAPPED_ENTITY`, each one
+real and translated in both languages.
+
+**Feedback Service metrics.** The last service with no instrumentation. §19.2
+advances a household up the learning ladder on the strength of its feedback, so
+that evidence was being weighed with nothing counting it. `SUPPRESSED_TYPES` is
+the gauge worth watching: a household refusing a recommendation type outright is
+the platform being told to stop, which is better seen on a dashboard than
+discovered in a complaint.
+
+**The empty directories.** §5 offered two options and I took the second-guessing
+one deliberately: each now carries a README naming where its content actually
+lives, rather than being deleted. An empty `models/exported/` makes a claim —
+"models are exported, and this is where they land" — and both halves are wrong.
+Deleting it removes the claim and also removes the only place a reader looking
+for exported models would think to look. A test checks every path those READMEs
+name still resolves, because a pointer nobody checks is a pointer that rots.
+
+Two entries stay open, both medium and neither blocked on anything but time:
+update-and-rollback is designed but not implemented, and the console still polls
+every 15 seconds while `/v1/stream` sits unused.
+
+Full suite: 1000 passed, 28 skipped (the skips need Docker).

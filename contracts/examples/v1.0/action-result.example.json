@@ -1,0 +1,15 @@
+{
+  "action_id": "66666666-6666-4666-8666-666666666666",
+  "attempts": [],
+  "audit_recorded": true,
+  "compensated": false,
+  "completed_at": "2026-08-20T19:30:03Z",
+  "correlation_id": "22222222-2222-4222-8222-222222222222",
+  "decision_id": "55555555-5555-4555-8555-555555555555",
+  "home_id": "home_example",
+  "idempotency_key": "home_example:ac_living:climate.target_temperature:1787254200",
+  "observed_value": 23.0,
+  "reason_codes": [],
+  "status": "SUCCEEDED",
+  "verified": true
+}

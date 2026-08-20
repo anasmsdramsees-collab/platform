@@ -1,0 +1,27 @@
+{
+  "action_id": "66666666-6666-4666-8666-666666666666",
+  "correlation_id": "22222222-2222-4222-8222-222222222222",
+  "created_at": "2026-08-20T19:30:00Z",
+  "decision_id": "55555555-5555-4555-8555-555555555555",
+  "expected_state": {
+    "capability": "climate.target_temperature",
+    "operator": "equals",
+    "value": 23.0
+  },
+  "expires_at": "2026-08-20T19:32:00Z",
+  "home_id": "home_example",
+  "idempotency_key": "home_example:ac_living:climate.target_temperature:1787254200",
+  "max_attempts": 2,
+  "metadata": {},
+  "origin": "adaptive",
+  "previous_value": 26.0,
+  "reversible": true,
+  "safety_class": "COMFORT",
+  "target": {
+    "capability": "climate.target_temperature",
+    "device_id": "ac_living",
+    "room_id": "living_room"
+  },
+  "timeout_seconds": 10.0,
+  "value": 23.0
+}

@@ -36,8 +36,10 @@ simulate: ## Run the deterministic smart-home simulation (no infrastructure need
 simulate-list: ## List available simulator scenarios
 	uv run syltra-simulate --list
 
-contracts: ## Regenerate JSON Schemas from the contract models
+contracts: ## Regenerate every contract artifact (schemas, examples, OpenAPI)
 	uv run python -m syltra_contracts.schema_export
+	uv run python -m syltra_contracts.example_export
+	uv run python -m syltra_api_gateway.openapi_export
 
 console: ## Run the console and component catalogue locally (dev token printed)
 	uv run python -m syltra_api_gateway.devserver

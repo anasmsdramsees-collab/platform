@@ -245,7 +245,7 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={assetPath("/brand/syla-icon.png")}
+              src={assetPath("/brand/syla-icon.png?v=2")}
               alt=""
               className="h-16 w-16 rounded-full"
             />

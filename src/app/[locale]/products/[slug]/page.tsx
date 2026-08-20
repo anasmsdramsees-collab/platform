@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!found) return {};
   const copy = locale === "ar" ? found.product.ar : found.product.en;
   return {
-    title: `${found.product.name} — Syltra SMART`,
+    title: `${found.product.name} — Syltra One`,
     description: copy.tagline,
   };
 }

@@ -2,16 +2,16 @@ import type { Dictionary } from "./dictionary";
 
 const en: Dictionary = {
   meta: {
-    titleHome: "Syltra SMART — Smart Living. Seamlessly Connected.",
-    titleProducts: "Products — Syltra SMART",
-    titleAbout: "About — Syltra SMART",
-    titleContact: "Contact — Syltra SMART",
-    titleApps: "Apps — Syltra SMART",
-    titleSyntraTv: "Syltra TV — Syltra SMART",
-    titleHomeAssistant: "Syltra Home — Syltra SMART",
-    titleFaq: "FAQ — Syltra SMART",
+    titleHome: "Syltra One — Smart Living. Seamlessly Connected.",
+    titleProducts: "Products — Syltra One",
+    titleAbout: "About — Syltra One",
+    titleContact: "Contact — Syltra One",
+    titleApps: "Apps — Syltra One",
+    titleSyntraTv: "Syltra TV — Syltra One",
+    titleHomeAssistant: "Syltra Home — Syltra One",
+    titleFaq: "FAQ — Syltra One",
     description:
-      "Syltra SMART engineers the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language.",
+      "Syltra One engineers the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language.",
   },
   nav: {
     products: "Products",
@@ -214,13 +214,13 @@ const en: Dictionary = {
       eyebrow: "About Syltra",
       title: "One ecosystem. Every connected space.",
       subtitle:
-        "Syltra SMART is a global smart-technology company engineering the connected home, building and city of the future.",
+        "Syltra One is a global smart-technology company engineering the connected home, building and city of the future.",
     },
     story: {
       eyebrow: "Our Story",
       title: "Built to end the fragmentation.",
       paragraphs: [
-        "Syltra SMART began with a simple frustration: the smart home industry had built brilliant devices and a broken experience — dozens of apps, competing standards, hubs that never spoke to one another.",
+        "Syltra One began with a simple frustration: the smart home industry had built brilliant devices and a broken experience — dozens of apps, competing standards, hubs that never spoke to one another.",
         "We started Syltra to end that fragmentation. One ecosystem. One intelligence layer. One design language — engineered from the silicon up to work as a single, seamless system.",
         "What began as a small engineering team in Riyadh is now building the infrastructure for smart living across the Gulf, Europe and beyond.",
       ],
@@ -246,11 +246,11 @@ const en: Dictionary = {
       ],
     },
     chairman: {
-      eyebrow: "Chairman's Message",
+      eyebrow: "CEO's Message",
       quote:
-        "Every industry reaches a point where convenience is no longer enough — where intelligence becomes the standard. Syltra SMART was built for that moment. We did not set out to make another smart plug or another app. We set out to build the operating layer for how homes, businesses and cities will run for the next fifty years — quietly, securely and beautifully. From Riyadh to the world, our mission is simple: give every space the intelligence to take care of itself, and give every person back the time technology was always meant to create.",
+        "Every industry reaches a point where convenience is no longer enough — where intelligence becomes the standard. Syltra One was built for that moment. We did not set out to make another smart plug or another app. We set out to build the operating layer for how homes, businesses and cities will run for the next fifty years — quietly, securely and beautifully. From Riyadh to the world, our mission is simple: give every space the intelligence to take care of itself, and give every person back the time technology was always meant to create.",
       name: "Anas Elimam",
-      role: "Founder & Chairman, Syltra SMART",
+      role: "Founder & CEO, Syltra One",
     },
     facts: [
       { value: "2023", label: "Founded" },
@@ -273,7 +273,7 @@ const en: Dictionary = {
   contactPage: {
     eyebrow: "Contact",
     title: "Let's build the future of living, together.",
-    subtitle: "For partnerships, distribution or press — reach the Syltra SMART team directly.",
+    subtitle: "For partnerships, distribution or press — reach the Syltra One team directly.",
     hqLabel: "Headquarters",
     hqValue: "Riyadh, Kingdom of Saudi Arabia",
     emailLabel: "Email",
@@ -287,8 +287,8 @@ const en: Dictionary = {
     subtitle: "Everything people ask us most about the ecosystem, the apps and what's next.",
     items: [
       {
-        q: "What is Syltra SMART?",
-        a: "Syltra SMART is a global smart-technology company engineering the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language across hubs, switches, sensors, security and two companion apps.",
+        q: "What is Syltra One?",
+        a: "Syltra One is a global smart-technology company engineering the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language across hubs, switches, sensors, security and two companion apps.",
       },
       {
         q: "What connectivity protocols does Syltra support?",
@@ -307,12 +307,12 @@ const en: Dictionary = {
         a: "Yes. Every Syltra Hub Pro ships with an embedded Home Assistant OS, and Syltra Home extends that with a native integration published through HACS, on top of full Matter certification.",
       },
       {
-        q: "When is Syltra SMART launching?",
+        q: "When is Syltra One launching?",
         a: "Global launch is targeted for 2026 alongside SYLTRA OS 1.0, starting in Saudi Arabia and the GCC, with wider MENA and international expansion to follow.",
       },
       {
-        q: "Where is Syltra SMART based?",
-        a: "Syltra SMART is headquartered in Riyadh, Kingdom of Saudi Arabia.",
+        q: "Where is Syltra One based?",
+        a: "Syltra One is headquartered in Riyadh, Kingdom of Saudi Arabia.",
       },
       {
         q: "How do I get in touch or request early access?",
@@ -323,8 +323,8 @@ const en: Dictionary = {
   sina: {
     launcherLabel: "Chat with Syla",
     title: "Syla",
-    subtitle: "Syltra SMART assistant",
-    greeting: "Hi, I'm Syla — Syltra SMART's assistant. Ask me about any product, spec, or how the ecosystem fits together.",
+    subtitle: "Syltra One assistant",
+    greeting: "Hi, I'm Syla — Syltra One's assistant. Ask me about any product, spec, or how the ecosystem fits together.",
     placeholder: "Ask Syla anything about Syltra…",
     send: "Send",
     thinking: "Syla is thinking…",

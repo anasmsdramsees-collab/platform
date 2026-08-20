@@ -73,7 +73,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
       </div>
       <div className="mx-auto max-w-6xl px-5 pb-10 sm:px-8">
         <p className="font-mono text-[11px] text-slate">
-          © {year} Syltra SMART®. {dict.footer.rights}
+          © {year} Syltra One®. {dict.footer.rights}
         </p>
       </div>
     </footer>

@@ -81,7 +81,7 @@ export default async function HomePage({
         <div className="relative mt-4 aspect-[1536/852] w-full sm:mt-10">
           <Image
             src={assetPath("/brand/hero-products.jpg")}
-            alt="The Syltra SMART ecosystem — hub, panel, lock, switch, sensors, camera, doorbell and more"
+            alt="The Syltra One ecosystem — hub, panel, lock, switch, sensors, camera, doorbell and more"
             fill
             priority
             sizes="100vw"

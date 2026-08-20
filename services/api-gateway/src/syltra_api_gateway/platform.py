@@ -20,6 +20,7 @@ from syltra_automation_engine import AutomationEngine
 from syltra_risk_engine import RiskEngineService
 from syltra_security import UserDirectory
 
+from syltra_api_gateway.energy import EnergyHistory
 from syltra_api_gateway.stream import StreamHub
 
 
@@ -48,6 +49,9 @@ class Platform:
     # Who the household is. Empty by default: a hub with no members is a hub
     # nobody has claimed yet, which is the honest starting state.
     users: UserDirectory = field(default_factory=UserDirectory)
+    # Measured power over time. Empty until something records into it; an empty
+    # series is reported as empty rather than as a flat line at zero.
+    energy: EnergyHistory = field(default_factory=EnergyHistory)
     risk_driver: Any = None
     risk_driver_tolerance_seconds: float = 10.0
     hub_id: str = "hub_dev_001"

@@ -27,6 +27,7 @@ from syltra_security import Role, TokenStore
 
 from syltra_api_gateway.api import create_app
 from syltra_api_gateway.dependencies import RateLimiter
+from syltra_api_gateway.energy import EnergyHistory
 from syltra_api_gateway.platform import Platform
 
 logger = logging.getLogger(__name__)
@@ -86,6 +87,7 @@ def build_platform() -> Platform:
     policy = PolicyService()
     policy.set_policy(HOME, HomePolicy())
     gateway = _DemoGateway()
+    energy = EnergyHistory()
 
     seeded = [
         ("motion_living", "living_room", "occupancy.motion", True, None),
@@ -110,6 +112,8 @@ def build_platform() -> Platform:
         )
         context.twin.apply(envelope)
         adaptive.observe(envelope)
+        if capability == "energy.power":
+            energy.record(HOME, float(value), now, device_id=device_id, room_id=room)
 
     for event in comfort_history(days=21):
         adaptive.observe(event.model_copy(update={"home_id": HOME}))
@@ -169,6 +173,7 @@ def build_platform() -> Platform:
         policy=policy,
         orchestrator=orchestrator,
         feedback=FeedbackService(),
+        energy=energy,
         # The isolation path is wired here, so a confirmed gas hazard closes the
         # valve rather than describing one. It stays harmless in development
         # because the orchestrator refuses every LIFE_SAFETY_CRITICAL actuator

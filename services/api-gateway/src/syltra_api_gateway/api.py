@@ -11,7 +11,7 @@ response that carries reason codes carries both: `reason_codes` for machines and
 """
 
 import asyncio
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Annotated, Any
 from uuid import UUID
@@ -34,6 +34,7 @@ from syltra_api_gateway.dependencies import (
     check_read,
     get_rate_limiter,
 )
+from syltra_api_gateway.energy import Resolution
 from syltra_api_gateway.errors import bad_request, conflict, forbidden, not_found
 from syltra_api_gateway.platform import Platform
 from syltra_api_gateway.stream import HEARTBEAT_SECONDS
@@ -739,6 +740,43 @@ def create_app(
             ],
             "dispatched": False,
         }
+
+    # ── energy over time (spec §17.11, §27 criterion 9) ──
+
+    @app.get("/v1/homes/{home_id}/energy/history", tags=["energy"])
+    async def energy_history(
+        home_id: str,
+        principal: PrincipalDep,
+        locale: LocaleDep,
+        resolution: Annotated[str, Query(description="minute, hour or day")] = "hour",
+        hours: Annotated[int, Query(ge=1, le=24 * 90)] = 24,
+        device_id: Annotated[str | None, Query()] = None,
+    ) -> dict[str, Any]:
+        """Measured power over time, with its gaps named rather than filled.
+
+        Spec §17.11 forbids estimating a measurement, so an interval nothing
+        reported in is listed under `missing` instead of appearing as a zero.
+        A chart drawn from this has holes, and the holes are the honest part.
+        """
+        check_read(home_id, principal)
+        try:
+            bucket_size = Resolution(resolution)
+        except ValueError as exc:
+            known = ", ".join(r.value for r in Resolution)
+            raise bad_request(
+                "UNKNOWN_RESOLUTION", f"{resolution!r} is not a resolution. Known: {known}"
+            ) from exc
+
+        end = datetime.now(tz=UTC)
+        series = platform.energy.series(
+            home_id, bucket_size, end - timedelta(hours=hours), end, device_id=device_id
+        )
+        view = series.as_view()
+        earliest = platform.energy.earliest(home_id)
+        # A household that has just installed the hub has no history, and that
+        # is a different thing from a household whose meter stopped reporting.
+        view["recording_since"] = earliest.isoformat() if earliest else None
+        return view
 
     # ── users and roles (spec §21, UI-5) ──
 

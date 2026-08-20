@@ -84,24 +84,35 @@ rendering the wrong colour on correct geometry.
 
 ---
 
-### 1.6 The offline claim has never been tested offline
+### 1.6 The offline claim is proven in-process, not as a deployed stack
 
 Spec §0 rule 4 says loss of internet must not stop local control. The build
 honours it structurally: no service calls an external host, the console loads no
 CDN asset or remote font, the models are trained locally and no pretrained
 weights are fetched, and `services/cloud-connector/` is empty.
 
-But no test cuts the network and asserts the platform still works. The tests
-matching "offline" are about a *device* going offline, not the house losing its
-internet. The claim rests on inspection, not on a run.
+`tests/safety/test_offline_operation.py` now tests it rather than asserting it.
+The guard there models an unplugged router rather than a disabled socket layer —
+loopback keeps working, everything else fails with ENETUNREACH and a dead
+resolver — and the control path is built and run inside it. Each test asserts
+twice: that the device really changed, and that nothing *reached* for the
+internet at all. The second is the one that matters, because a component that
+tries a cloud call and tolerates the timeout would pass the first.
 
-Two things sit outside the platform's control and will not be fixed by testing
-it: Home Assistant integrations that are themselves cloud-based will stop when
-the line drops, and a NOTIFY step routed to mobile push needs the internet to
-reach a phone. Both are properties of what you connect, not of SYLTRA.
+What is still unproven is the same claim about the **deployed stack**. Those
+tests run in one process against the mock Home Assistant, with no containers, no
+NATS and no PostgreSQL. They show the logic needs no internet. They do not show
+that six containers on a real host behave the same way when the interface goes
+down — which is the form of the claim that a pilot actually depends on, and
+which shares its root with §1.1.
 
-*Closing it:* run the stack with the network interface down, exercise a local
-control path end to end, and assert on it in `tests/safety/`.
+Two things sit outside the platform's control and no test will change them:
+Home Assistant integrations that are themselves cloud-based will stop when the
+line drops, and a NOTIFY step routed to mobile push needs the internet to reach
+a phone. Both are properties of what you connect, not of SYLTRA.
+
+*Closing it:* `make up`, take the host's network interface down, drive a control
+path through the API, and confirm it completes.
 
 ---
 

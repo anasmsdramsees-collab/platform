@@ -1220,5 +1220,38 @@ are complete. What remains needs a decision or a person, not more code.
 
 ### Housekeeping
 
-7. **Commit the work.** Per spec §0 rule 19 nothing has been committed, across
-   the entire build.
+7. **Merge the branch.** The build lives on `claude/syltra-code-master-build-58095f`
+   and is committed there. Merging into `main` is a decision, not a task.
+
+## Testing the offline claim
+
+Asked whether the platform runs without internet, I answered from inspection —
+no service calls an external host, no CDN asset, no fetched model weights — and
+then recorded in `docs/GAPS.md` §1.6 that nothing had ever *tested* it.
+
+That was too strong. `tests/safety/test_degraded_modes.py` already ran the
+governor and the risk engine with `socket.socket` replaced by a raiser, which is
+a stronger claim than an outage and a narrower one: those two components open no
+socket at all. The local control path is different — controlling a light
+legitimately talks to Home Assistant, NATS and PostgreSQL, all on this machine —
+so "no sockets" is the wrong assertion for it.
+
+`tests/safety/test_offline_operation.py` makes the right one. Its guard models
+an unplugged router rather than a disabled socket layer: loopback keeps working,
+everything else fails with ENETUNREACH and a dead resolver, and every attempt to
+leave the machine is recorded. The recommendation → policy → device →
+verification chain is built and run inside it.
+
+Each test asserts twice — the device really changed, and nothing reached for the
+internet at all. Only the second distinguishes *working offline* from
+*degrading gracefully*, and only the first of those is what §0 rule 4 asks for.
+
+Three of the six tests test the guard rather than the platform: that it blocks
+and records an outbound connection, that it blocks name resolution, and that it
+leaves loopback alone. Without them a guard that silently stopped guarding would
+make the other three pass while proving nothing — the §6 pattern in
+`docs/GAPS.md`, which has caught this build more than once. I also mutated the
+control path with a tolerated cloud call and confirmed both tests fail.
+
+What remains open is the same claim about the deployed stack: these run in one
+process against the mock Home Assistant, with no containers. §1.6 now says so.

@@ -135,6 +135,11 @@ Start with **[docs/PLATFORM_OVERVIEW.md](docs/PLATFORM_OVERVIEW.md)** — what
 SYLTRA is, how a fact becomes an action, what each component does, and what is
 deliberately not built. It assumes no knowledge of the codebase.
 
+Then **[docs/GAPS.md](docs/GAPS.md)** — everything known to be missing,
+unverified, or untrue, organised by who can close it. Read §1 first: it is the
+only section describing things that might already be wrong rather than merely
+absent.
+
 ### Status and roadmap
 
 Progress, per-phase acceptance results, and known gaps are tracked in

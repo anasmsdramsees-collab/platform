@@ -309,6 +309,9 @@ broker, no network — which is the point of it.
   holds a placeholder. Nothing depends on it.
 
 ### Never tested against reality
+
+*(The full inventory is in [`docs/GAPS.md`](GAPS.md).)*
+
 **No part of this has run in a real home.** Every test is synthetic; the
 simulator is deterministic; Home Assistant was verified in a container.
 
@@ -332,6 +335,7 @@ so that closing it can start safely.
 | Something is wrong in production | `docs/operations/RUNBOOK.md` |
 | Going into a real home | `docs/pilot/PILOT_CHECKLIST.md` |
 | Changing the interface | `docs/ui/DESIGN_SYSTEM.md` |
+| **What is missing or unverified** | **`docs/GAPS.md`** |
 
 ---
 

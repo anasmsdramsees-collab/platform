@@ -101,3 +101,36 @@ misses, including one that runs through a second automation.
 - The visual builder §17.8 describes is **not** built by this decision. The
   types are what a builder would produce; the builder itself, its version
   history and its rollback are separate work.
+
+
+## Amendment, 2026-08-20: scheduled triggers
+
+`AT_TIME` joins the four trigger kinds. It stores an hour, a minute and a set of
+weekdays — deliberately not a cron expression. A cron string is a small
+language, and this ADR refused to put a language in an automation for the same
+reason it refused an interpreter: the moment a household can write one, somebody
+can write one that surprises them, and nothing can read it back to them in
+Arabic.
+
+**Whose clock.** The household's. A schedule is stored as a wall-clock time plus
+an IANA timezone, and the firing instant is derived when it is needed.
+Converting to UTC at save time bakes in an offset that stops being true — an
+automation saved in a Dublin summer fires an hour wrong all winter. Every
+*recorded* instant is UTC; only the intent is local.
+
+**Firing once.** The mechanism is a fire key: the local date and time an
+occurrence belongs to, `2026-08-20T19:00`, recorded once served. Comparing keys
+rather than timestamps makes the hard cases fall out — a restart re-derives the
+same key and finds it served; a clock moved backwards re-derives a served key
+and does nothing; a clock jumped forwards finds the key unserved and runs late,
+which for a light is the right answer and is stated as a choice rather than left
+as an accident; a doubled daylight-saving hour has one key and fires once.
+
+**Bounded lateness.** A hub restored from a backup must not run a fortnight of
+missed evening routines in one burst. Occurrences older than the catch-up window
+are recorded as skipped with a reason, so the household can see the routine did
+not happen instead of discovering it.
+
+Critical capabilities remain unavailable to scheduled automations, exactly as to
+every other kind: `AutomationAction` still refuses anything outside NON_CRITICAL
+and COMFORT at construction.

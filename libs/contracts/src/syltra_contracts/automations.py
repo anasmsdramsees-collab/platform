@@ -65,6 +65,15 @@ class TriggerKind(StrEnum):
     THRESHOLD_ABOVE = "THRESHOLD_ABOVE"
     THRESHOLD_BELOW = "THRESHOLD_BELOW"
     CONTEXT_STARTED = "CONTEXT_STARTED"
+    AT_TIME = "AT_TIME"
+    """A time of day in the household's own timezone.
+
+    Stored as an hour and minute plus a set of weekdays rather than as a cron
+    expression. A cron string is a small language, and ADR-009 refused to put a
+    language in an automation for the same reason it refused an interpreter:
+    the moment a household can write one, somebody can write one that surprises
+    them, and nothing can read it back to them in Arabic.
+    """
     """A deterministic context becomes active — quiet hours begin."""
 
 
@@ -87,9 +96,26 @@ class AutomationTrigger(BaseModel):
     room_id: str | None = None
     value: Any = None
     context_type: str | None = None
+    #: Local wall-clock time, in the household's timezone. Not UTC: a person
+    #: who asks for 7pm means 7pm on their own clock, in summer and in winter.
+    at_hour: int | None = None
+    at_minute: int | None = None
+    #: Days it may fire on, 0 = Monday. Empty means every day.
+    weekdays: tuple[int, ...] = ()
 
     @model_validator(mode="after")
     def _needs_what_it_watches(self) -> "AutomationTrigger":
+        if self.kind is TriggerKind.AT_TIME:
+            if self.at_hour is None or self.at_minute is None:
+                msg = "an AT_TIME trigger must name an hour and a minute"
+                raise ValueError(msg)
+            if not 0 <= self.at_hour <= 23 or not 0 <= self.at_minute <= 59:
+                msg = f"{self.at_hour:02d}:{self.at_minute:02d} is not a time of day"
+                raise ValueError(msg)
+            if any(day not in range(7) for day in self.weekdays):
+                msg = "weekdays are 0 (Monday) through 6 (Sunday)"
+                raise ValueError(msg)
+            return self
         if self.kind is TriggerKind.CONTEXT_STARTED:
             if not self.context_type:
                 msg = "a CONTEXT_STARTED trigger must name a context type"

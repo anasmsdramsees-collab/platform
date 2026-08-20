@@ -52,7 +52,6 @@ export default function SylaWake({ locale }: { locale: Locale }) {
   const [enabled, setEnabled] = useState(false);
   const [phase, setPhase] = useState<Phase>("off");
   const [transcript, setTranscript] = useState("");
-  const [reply, setReply] = useState("");
 
   const recRef = useRef<Recognition | null>(null);
   const phaseRef = useRef<Phase>("off");
@@ -93,7 +92,6 @@ export default function SylaWake({ locale }: { locale: Locale }) {
 
   const backToPassive = useCallback(() => {
     setTranscript("");
-    setReply("");
     setPhase(enabledRef.current ? "passive" : "off");
     try {
       recRef.current?.start();
@@ -121,7 +119,6 @@ export default function SylaWake({ locale }: { locale: Locale }) {
           applyAction(action);
         }
         setPhase("speaking");
-        setReply(t.done);
         speak(t.done, backToPassive);
         return;
       }
@@ -136,11 +133,9 @@ export default function SylaWake({ locale }: { locale: Locale }) {
         const data = await res.json();
         const answer: string = res.ok && data.reply ? data.reply : t.error;
         setPhase("speaking");
-        setReply(answer);
         speak(answer, backToPassive);
       } catch {
         setPhase("speaking");
-        setReply(t.error);
         speak(t.error, backToPassive);
       }
     },
@@ -155,8 +150,9 @@ export default function SylaWake({ locale }: { locale: Locale }) {
     setSupported(Boolean(SR));
     if (!SR) return;
 
-    const saved = localStorage.getItem(STORAGE_KEY) === "1";
-    if (saved) setEnabled(true);
+    // On by default, like Siri: listen unless the visitor explicitly turned it off.
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved !== "0") setEnabled(true);
   }, []);
 
   useEffect(() => {
@@ -305,11 +301,6 @@ export default function SylaWake({ locale }: { locale: Locale }) {
             {transcript && (
               <p className="font-display text-lg font-bold text-platinum drop-shadow-lg sm:text-xl">
                 {transcript}
-              </p>
-            )}
-            {phase === "speaking" && reply && (
-              <p className="max-h-40 overflow-hidden text-sm leading-relaxed text-chrome-dim">
-                {reply}
               </p>
             )}
             {phase === "thinking" && (

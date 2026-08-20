@@ -8,6 +8,7 @@ import { useSpeechRecognition } from "@/lib/hooks/use-speech-recognition";
 import { useSpeechSynthesis } from "@/lib/hooks/use-speech-synthesis";
 import { useHomeControls } from "@/lib/home-controls-context";
 import { parseVoiceCommand } from "@/lib/voice-commands";
+import { assetPath } from "@/lib/base-path";
 
 interface Message {
   role: "user" | "assistant";
@@ -222,21 +223,35 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
       )}
 
       {/* Launcher */}
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label={dict.launcherLabel}
-        className="flex h-14 w-14 items-center justify-center rounded-full border border-hairline-strong bg-platinum text-void shadow-lg transition-transform hover:scale-105"
-      >
-        {open ? (
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M18 6 6 18M6 6l12 12" />
-          </svg>
-        ) : (
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M4 12a8 8 0 1 1 3.2 6.4L4 20l1.2-3.6A7.96 7.96 0 0 1 4 12Z" />
-          </svg>
+      <div className="flex flex-col items-center gap-2">
+        {!open && (
+          <span className="syla-try rounded-full border border-ion/40 bg-void/80 px-3.5 py-1.5 font-mono text-[11px] font-semibold text-ion backdrop-blur-sm">
+            {locale === "ar" ? "جرب سيلا" : "Try Syla"}
+          </span>
         )}
-      </button>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-label={dict.launcherLabel}
+          className={`syla-launcher relative flex h-16 w-16 items-center justify-center rounded-full transition-transform hover:scale-105 ${
+            open ? "syla-launcher-open" : ""
+          }`}
+        >
+          {open ? (
+            <span className="flex h-14 w-14 items-center justify-center rounded-full border border-hairline-strong bg-graphite text-platinum">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </span>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={assetPath("/brand/syla-icon.png")}
+              alt=""
+              className="h-16 w-16 rounded-full"
+            />
+          )}
+        </button>
+      </div>
     </div>
   );
 }

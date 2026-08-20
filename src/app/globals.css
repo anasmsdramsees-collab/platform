@@ -97,3 +97,23 @@ body {
 .syla-bar-slow {
   animation-duration: 1.6s;
 }
+
+/* Syla launcher glow + label */
+@keyframes syla-glow {
+  0%, 100% { box-shadow: 0 0 18px rgba(76, 141, 255, 0.55), 0 0 44px rgba(76, 141, 255, 0.25); transform: scale(1); }
+  50% { box-shadow: 0 0 30px rgba(76, 141, 255, 0.9), 0 0 70px rgba(76, 141, 255, 0.45); transform: scale(1.05); }
+}
+.syla-launcher {
+  animation: syla-glow 2.4s ease-in-out infinite;
+}
+.syla-launcher-open {
+  animation: none;
+  box-shadow: none;
+}
+@keyframes syla-try-bob {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(-4px); opacity: 0.85; }
+}
+.syla-try {
+  animation: syla-try-bob 2.4s ease-in-out infinite;
+}

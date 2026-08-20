@@ -52,12 +52,21 @@ export default function CurtainsOverlay({ dict }: { dict: Dictionary["lightsPane
 
       {/* Instructional message */}
       <div
-        className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 transition-opacity duration-300"
+        className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-4 transition-opacity duration-300"
         style={{ opacity: curtainsOpen ? 0 : 1 }}
       >
         <p className="font-display text-xl font-bold text-chrome-dim sm:text-2xl">
           {dict.curtainsOverlayMessage}
         </p>
+        <button
+          onClick={() => setCurtainsOpen(true)}
+          tabIndex={curtainsOpen ? -1 : 0}
+          className={`rounded-lg bg-platinum px-8 py-3.5 text-sm font-bold text-void shadow-2xl transition-transform hover:scale-105 ${
+            curtainsOpen ? "pointer-events-none" : "pointer-events-auto"
+          }`}
+        >
+          {dict.curtainsOverlayOpen}
+        </button>
         <p className="font-mono text-xs text-slate">{dict.curtainsOverlayHint}</p>
       </div>
     </div>

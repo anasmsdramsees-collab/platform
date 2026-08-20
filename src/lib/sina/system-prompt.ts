@@ -1,4 +1,4 @@
-import { productCatalog } from "@/lib/products";
+import { productCatalog } from "../products";
 
 function buildCatalogReference(): string {
   return productCatalog

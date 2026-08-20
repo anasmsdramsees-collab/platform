@@ -178,5 +178,6 @@ export interface Dictionary {
     curtainsClosed: string;
     curtainsOverlayMessage: string;
     curtainsOverlayHint: string;
+    curtainsOverlayOpen: string;
   };
 }

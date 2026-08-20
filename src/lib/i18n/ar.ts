@@ -355,7 +355,8 @@ const ar: Dictionary = {
     curtainsOpen: "مفتوحة",
     curtainsClosed: "مغلقة",
     curtainsOverlayMessage: "الستائر مقفولة.",
-    curtainsOverlayHint: "افتح الستائر من لوحة التحكم.",
+    curtainsOverlayHint: "أو اضغط في أي مكان على الشاشة.",
+    curtainsOverlayOpen: "افتح الستائر",
   },
 };
 

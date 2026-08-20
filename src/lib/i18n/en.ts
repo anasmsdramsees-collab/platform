@@ -355,7 +355,8 @@ const en: Dictionary = {
     curtainsOpen: "Open",
     curtainsClosed: "Closed",
     curtainsOverlayMessage: "Curtains closed.",
-    curtainsOverlayHint: "Open the curtains from the control panel.",
+    curtainsOverlayHint: "Or tap anywhere on the screen.",
+    curtainsOverlayOpen: "Open the curtains",
   },
 };
 

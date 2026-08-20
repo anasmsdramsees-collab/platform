@@ -208,19 +208,34 @@ export default function SylaWake({ locale }: { locale: Locale }) {
       }
     };
 
+    let running = false;
+    let disposed = false;
+    rec.onstart = () => {
+      running = true;
+    };
     rec.onend = () => {
+      running = false;
       // Chrome stops after silence; keep the ear open unless we're mid-reply.
       const current = phaseRef.current;
-      if (enabledRef.current && (current === "passive" || current === "listening")) {
-        try {
-          rec.start();
-        } catch {
-          /* ignore */
-        }
+      if (!disposed && enabledRef.current && (current === "passive" || current === "listening")) {
+        setTimeout(() => {
+          if (!disposed && !running) {
+            try {
+              rec.start();
+            } catch {
+              /* ignore */
+            }
+          }
+        }, 300);
       }
     };
-    rec.onerror = () => {
-      /* onend will handle restart */
+    rec.onerror = (e: any) => {
+      running = false;
+      if (e?.error === "not-allowed" || e?.error === "service-not-allowed") {
+        // Mic permission denied: stop trying, turn the toggle off.
+        setEnabled(false);
+      }
+      /* other errors: onend handles the restart */
     };
 
     recRef.current = rec;
@@ -231,7 +246,22 @@ export default function SylaWake({ locale }: { locale: Locale }) {
       /* ignore */
     }
 
+    // Watchdog: if the recognizer silently died (tab was hidden, engine
+    // hiccup, reply finished), bring it back while the wake word is enabled.
+    const watchdog = setInterval(() => {
+      const current = phaseRef.current;
+      if (!disposed && enabledRef.current && !running && (current === "passive" || current === "listening")) {
+        try {
+          rec.start();
+        } catch {
+          /* ignore */
+        }
+      }
+    }, 3000);
+
     return () => {
+      disposed = true;
+      clearInterval(watchdog);
       rec.onend = null;
       rec.stop();
     };

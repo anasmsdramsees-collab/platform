@@ -105,6 +105,24 @@ export default function SylaWake({ locale }: { locale: Locale }) {
     }
   }, []);
 
+  // After a reply, keep the conversation open: stay listening for a follow-up
+  // command for a while before dropping back to passive wake-word mode.
+  const openFollowUp = useCallback(() => {
+    if (!enabledRef.current) {
+      setPhase("off");
+      return;
+    }
+    setTranscript("");
+    setPhase("listening");
+    try {
+      recRef.current?.start();
+    } catch {
+      /* already started */
+    }
+    if (silenceTimer.current) clearTimeout(silenceTimer.current);
+    silenceTimer.current = setTimeout(() => backToPassive(), 12000);
+  }, [backToPassive]);
+
   const processQuery = useCallback(
     async (query: string) => {
       if (silenceTimer.current) clearTimeout(silenceTimer.current);
@@ -124,7 +142,7 @@ export default function SylaWake({ locale }: { locale: Locale }) {
           applyAction(action);
         }
         setPhase("speaking");
-        speak(t.done, backToPassive);
+        speak(t.done, openFollowUp);
         return;
       }
 
@@ -138,13 +156,13 @@ export default function SylaWake({ locale }: { locale: Locale }) {
         const data = await res.json();
         const answer: string = res.ok && data.reply ? data.reply : t.error;
         setPhase("speaking");
-        speak(answer, backToPassive);
+        speak(answer, openFollowUp);
       } catch {
         setPhase("speaking");
-        speak(t.error, backToPassive);
+        speak(t.error, openFollowUp);
       }
     },
-    [applyAction, backToPassive, locale, router, speak, t.done, t.error]
+    [applyAction, backToPassive, openFollowUp, locale, router, speak, t.done, t.error]
   );
 
   // Build the continuous recognizer once enabled.

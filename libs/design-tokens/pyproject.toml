@@ -1,0 +1,13 @@
+[project]
+name = "syltra-design-tokens"
+version = "0.1.0"
+description = "SYLTRA design token loading and WCAG contrast verification"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/syltra_design_tokens"]

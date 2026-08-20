@@ -1,0 +1,32 @@
+[project]
+name = "syltra-action-orchestrator"
+version = "0.1.0"
+description = "SYLTRA Action Orchestrator: idempotent, verified, reversible device actions"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.34",
+    "prometheus-client>=0.21",
+    "pydantic-settings>=2.8",
+    "nats-py>=2.10",
+    "syltra-contracts",
+    "syltra-eventing",
+    "syltra-observability",
+    "syltra-policy-safety",
+]
+
+[project.scripts]
+syltra-action-orchestrator = "syltra_action_orchestrator.main:run"
+
+[tool.uv.sources]
+syltra-contracts = { workspace = true }
+syltra-eventing = { workspace = true }
+syltra-observability = { workspace = true }
+syltra-policy-safety = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/syltra_action_orchestrator"]

@@ -54,3 +54,47 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ── SYLTRA Adaptive Edge Platform (Python monorepo) ──
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.python-version.local
+
+# tooling caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# local runtime data (never commit household or broker data)
+/data/
+/config/home-assistant/.storage/
+/config/home-assistant/home-assistant_v2.db*
+/config/home-assistant/*.log*
+/config/home-assistant/secrets.yaml
+/config/home-assistant/.HA_VERSION
+/config/home-assistant/blueprints/
+/config/home-assistant/deps/
+/config/home-assistant/tts/
+
+# model artifacts built locally (exported models are promoted deliberately)
+/models/training/**/output/
+*.joblib
+
+# secrets and certificates — defense in depth on top of the .env* rule above
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Local operator artifacts — never committed
+backups/
+diagnostics/

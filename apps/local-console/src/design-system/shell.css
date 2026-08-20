@@ -1,0 +1,341 @@
+/* SYLTRA application shell (guidelines §9.2, §4).
+ *
+ * One persistent sidebar, one top bar, one content region. §4 forbids two
+ * competing sidebars, so there is exactly one place a navigation item can live.
+ *
+ * Written in logical properties, so `dir="rtl"` moves the sidebar to the right
+ * and mirrors the whole shell without a second stylesheet. No colour literals.
+ */
+
+/* ── the shell ── */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: var(--layout-sidebar-expanded) minmax(0, 1fr);
+  grid-template-rows: var(--layout-topbar-height) minmax(0, 1fr);
+  grid-template-areas:
+    "sidebar topbar"
+    "sidebar content";
+  min-block-size: 100vh;
+  transition: grid-template-columns var(--motion-standard) var(--motion-ease);
+}
+
+[data-sidebar="collapsed"] .app-shell {
+  grid-template-columns: var(--layout-sidebar-collapsed) minmax(0, 1fr);
+}
+
+/* Below the tablet-wide breakpoint the expanded sidebar costs more width than
+ * the content can spare, so it collapses to icons. §9.1 requires 768px to stay
+ * usable, not identical. */
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: var(--layout-sidebar-collapsed) minmax(0, 1fr);
+  }
+}
+
+/* ── sidebar ── */
+
+.app-sidebar {
+  grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  background: var(--surface);
+  border-inline-end: var(--control-border-width) solid var(--border);
+  overflow: hidden;
+}
+
+.app-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  block-size: var(--layout-topbar-height);
+  flex: none;
+  padding-inline: var(--space-4);
+  border-block-end: var(--control-border-width) solid var(--border);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* The mark is a brand asset and never mirrors (§10.2, §11). */
+.app-sidebar__mark {
+  inline-size: var(--space-8);
+  block-size: var(--space-8);
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--accent);
+  color: var(--background);
+  font-weight: var(--weight-semibold);
+  transform: none !important;
+}
+
+.app-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-block-size: var(--density-control-height, var(--control-height-comfortable));
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: var(--type-body-size);
+  cursor: pointer;
+  text-align: start;
+  inline-size: 100%;
+}
+
+.nav-item:hover {
+  background: var(--surface-raised);
+  color: var(--text-primary);
+}
+
+/* The current page is marked by more than colour: a bar on the inline start
+ * edge, which survives greyscale and forced colors (§6.5, §22). */
+.nav-item[aria-current="page"] {
+  background: var(--surface-raised);
+  color: var(--accent);
+  font-weight: var(--weight-medium);
+  box-shadow: inset 3px 0 0 0 var(--accent);
+}
+
+[dir="rtl"] .nav-item[aria-current="page"] {
+  box-shadow: inset -3px 0 0 0 var(--accent);
+}
+
+.nav-item__icon {
+  inline-size: var(--space-5);
+  flex: none;
+  text-align: center;
+}
+
+/* When the sidebar collapses the label must stop taking space *without*
+ * leaving the accessible name behind. `display: none` would remove it from the
+ * accessibility tree and every navigation item would be announced as its icon
+ * glyph; clipping keeps the name and drops the width. */
+.nav-item__label {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[data-sidebar="collapsed"] .nav-item__label,
+[data-sidebar="collapsed"] .app-sidebar__wordmark {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .nav-item__label,
+  .app-sidebar__wordmark {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+[data-sidebar="collapsed"] .nav-item,
+[data-sidebar="collapsed"] .app-sidebar__brand {
+  justify-content: center;
+  padding-inline: 0;
+}
+
+/* An item the role cannot reach is not rendered. An item the *platform* cannot
+ * serve yet is rendered and marked, because hiding it would make the console
+ * look finished (§20). */
+.nav-item[data-unavailable] {
+  color: var(--text-disabled);
+}
+
+.nav-item[data-unavailable]::after {
+  content: "";
+  inline-size: var(--space-2);
+  block-size: var(--space-2);
+  margin-inline-start: auto;
+  border-radius: var(--radius-round);
+  border: var(--control-border-width) dashed currentColor;
+  flex: none;
+}
+
+.app-sidebar__footer {
+  flex: none;
+  padding: var(--space-2);
+  border-block-start: var(--control-border-width) solid var(--border);
+}
+
+/* ── top bar ── */
+
+.app-topbar {
+  grid-area: topbar;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-inline: var(--layout-content-padding-inline);
+  background: var(--surface);
+  border-block-end: var(--control-border-width) solid var(--border);
+  min-inline-size: 0;
+}
+
+/* §4: workspace and property selection stay at the top, on the inline start
+ * side; account controls sit at the inline end. */
+.app-topbar__scope {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-inline-size: 0;
+}
+
+.app-topbar__account {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-inline-start: auto;
+}
+
+.app-topbar__user {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  text-align: end;
+  white-space: nowrap;
+}
+
+.app-topbar__role {
+  color: var(--text-tertiary);
+  font-size: var(--type-caption-size);
+}
+
+/* At the minimum width the account text is the first thing worth losing; the
+ * controls beside it are not. */
+@media (max-width: 900px) {
+  .app-topbar__user {
+    display: none;
+  }
+
+  .app-topbar {
+    padding-inline: var(--space-4);
+  }
+}
+
+/* ── content region ── */
+
+.app-content {
+  grid-area: content;
+  min-inline-size: 0;
+  padding-inline: var(--layout-content-padding-inline);
+  padding-block: var(--layout-content-padding-block);
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .app-content {
+    padding-inline: var(--space-4);
+  }
+}
+
+/* §9.3: critical risk banners stay at the top of the content region, above
+ * whatever the current view is. */
+.app-content__banners {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-block-end: var(--space-5);
+}
+
+.app-content__banners:empty {
+  display: none;
+}
+
+/* ── breadcrumbs (§4: only when hierarchy exceeds two levels) ── */
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-end: var(--space-4);
+  font-size: var(--type-caption-size);
+  color: var(--text-tertiary);
+}
+
+.breadcrumbs a {
+  color: var(--text-secondary);
+}
+
+/* The separator is content, not decoration, so it mirrors with the text. It is
+ * marked aria-hidden at the usage site. */
+.breadcrumbs li + li::before {
+  content: "/";
+  margin-inline-end: var(--space-2);
+  color: var(--text-disabled);
+}
+
+/* ── page header ── */
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-block-end: var(--space-5);
+}
+
+.page-header__title {
+  font-size: var(--type-page-title-size);
+  line-height: var(--type-page-title-line);
+  font-weight: var(--type-page-title-weight);
+  margin: 0;
+}
+
+.page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-inline-start: auto;
+}
+
+/* ── metric row (§9.3: no more than four in a row) ── */
+
+/* `auto-fit` alone would fit six cards at 1440px, which §9.3 forbids. Raising
+ * the track minimum to a quarter of the available inline size caps the row at
+ * four however wide the screen gets, while still dropping to three, two and one
+ * as it narrows. */
+.metric-row {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(max(14rem, calc((100% - 3 * var(--layout-grid-gap)) / 4)), 1fr)
+  );
+  gap: var(--layout-grid-gap);
+  margin-block-end: var(--space-6);
+}
+
+.metric-row > * {
+  min-inline-size: 0;
+}

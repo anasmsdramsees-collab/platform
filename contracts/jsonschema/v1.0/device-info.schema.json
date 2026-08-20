@@ -1,0 +1,72 @@
+{
+  "$id": "https://contracts.syltra.local/1.0/device-info.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "A physical or logical device, vendor-neutral.",
+  "properties": {
+    "device_id": {
+      "title": "Device Id",
+      "type": "string"
+    },
+    "entity_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Entity Ids",
+      "type": "array"
+    },
+    "manufacturer": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Manufacturer"
+    },
+    "model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model"
+    },
+    "name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Name"
+    },
+    "room_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Room Id"
+    }
+  },
+  "required": [
+    "device_id"
+  ],
+  "title": "DeviceInfo",
+  "type": "object"
+}

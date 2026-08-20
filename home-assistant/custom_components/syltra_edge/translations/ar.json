@@ -1,0 +1,41 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "الاتصال بـ SYLTRA Edge",
+        "description": "أدخل العنوان المحلي لوكيل SYLTRA Edge. يبقى هذا داخل شبكة منزلك.",
+        "data": {
+          "edge_url": "عنوان SYLTRA Edge",
+          "verify_tls": "التحقق من شهادة TLS"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "تعذّر الوصول إلى SYLTRA Edge على هذا العنوان.",
+      "invalid_scheme": "يجب أن يبدأ العنوان بـ http:// أو https://.",
+      "invalid_host": "هذا العنوان لا يحتوي على اسم مضيف."
+    },
+    "abort": {
+      "already_configured": "وكيل SYLTRA Edge هذا مُعدّ مسبقاً."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "خيارات SYLTRA Edge",
+        "data": { "verify_tls": "التحقق من شهادة TLS" }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "edge_connection": { "name": "اتصال Edge" }
+    }
+  },
+  "services": {
+    "refresh_health": {
+      "name": "تحديث حالة SYLTRA Edge",
+      "description": "استعلام فوري عن حالة وكيل SYLTRA Edge."
+    }
+  }
+}

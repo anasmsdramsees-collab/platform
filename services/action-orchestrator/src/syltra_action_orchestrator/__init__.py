@@ -1,0 +1,22 @@
+"""SYLTRA Action Orchestrator (spec §14.7).
+
+The only component that commands a device. Every action is idempotent,
+traceable, time-bounded, verified against the device's reported state, and
+reversible where the capability supports it (spec §0 rule 15).
+"""
+
+from syltra_action_orchestrator.orchestrator import (
+    ActionOrchestrator,
+    ActionRefused,
+    AuditEntry,
+    OrchestratorConfig,
+    build_action_request,
+)
+
+__all__ = [
+    "ActionOrchestrator",
+    "ActionRefused",
+    "AuditEntry",
+    "OrchestratorConfig",
+    "build_action_request",
+]

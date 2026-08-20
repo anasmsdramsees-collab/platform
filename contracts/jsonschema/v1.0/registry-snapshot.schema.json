@@ -1,0 +1,208 @@
+{
+  "$defs": {
+    "DeviceInfo": {
+      "additionalProperties": true,
+      "description": "A physical or logical device, vendor-neutral.",
+      "properties": {
+        "device_id": {
+          "title": "Device Id",
+          "type": "string"
+        },
+        "entity_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Entity Ids",
+          "type": "array"
+        },
+        "manufacturer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Manufacturer"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "room_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Room Id"
+        }
+      },
+      "required": [
+        "device_id"
+      ],
+      "title": "DeviceInfo",
+      "type": "object"
+    },
+    "EntityInfo": {
+      "additionalProperties": true,
+      "description": "A single addressable signal or control surface on a device.",
+      "properties": {
+        "capability": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Capability"
+        },
+        "device_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Id"
+        },
+        "entity_id": {
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "room_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Room Id"
+        }
+      },
+      "required": [
+        "entity_id"
+      ],
+      "title": "EntityInfo",
+      "type": "object"
+    },
+    "EntityState": {
+      "additionalProperties": true,
+      "description": "Point-in-time state of an entity as reported by the integration runtime.",
+      "properties": {
+        "attributes": {
+          "additionalProperties": true,
+          "title": "Attributes",
+          "type": "object"
+        },
+        "available": {
+          "default": true,
+          "title": "Available",
+          "type": "boolean"
+        },
+        "entity_id": {
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "last_updated": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Updated"
+        },
+        "state": {
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entity_id",
+        "state"
+      ],
+      "title": "EntityState",
+      "type": "object"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/registry-snapshot.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Devices + entities + states at one instant, for twin bootstrap.",
+  "properties": {
+    "devices": {
+      "items": {
+        "$ref": "#/$defs/DeviceInfo"
+      },
+      "title": "Devices",
+      "type": "array"
+    },
+    "entities": {
+      "items": {
+        "$ref": "#/$defs/EntityInfo"
+      },
+      "title": "Entities",
+      "type": "array"
+    },
+    "states": {
+      "items": {
+        "$ref": "#/$defs/EntityState"
+      },
+      "title": "States",
+      "type": "array"
+    },
+    "taken_at": {
+      "format": "date-time",
+      "title": "Taken At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "taken_at",
+    "devices",
+    "entities",
+    "states"
+  ],
+  "title": "RegistrySnapshot",
+  "type": "object"
+}

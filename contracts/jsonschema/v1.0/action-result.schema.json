@@ -1,0 +1,169 @@
+{
+  "$defs": {
+    "ActionAttempt": {
+      "additionalProperties": true,
+      "description": "One dispatch attempt, recorded whether it succeeded or not.",
+      "properties": {
+        "attempt": {
+          "minimum": 1,
+          "title": "Attempt",
+          "type": "integer"
+        },
+        "dispatched": {
+          "default": false,
+          "title": "Dispatched",
+          "type": "boolean"
+        },
+        "failure_kind": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FailureKind"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "finished_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Finished At"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "started_at": {
+          "format": "date-time",
+          "title": "Started At",
+          "type": "string"
+        },
+        "verified": {
+          "default": false,
+          "title": "Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "attempt",
+        "started_at"
+      ],
+      "title": "ActionAttempt",
+      "type": "object"
+    },
+    "ActionStatus": {
+      "enum": [
+        "REQUESTED",
+        "DISPATCHED",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELLED",
+        "EXPIRED"
+      ],
+      "title": "ActionStatus",
+      "type": "string"
+    },
+    "FailureKind": {
+      "description": "Whether a failure may be retried.\n\nRetrying a transport timeout is reasonable; retrying a refusal, an unknown\ntarget, or a policy violation is not \u2014 it would just repeat a command the\nsystem already established it should not send (spec \u00a714.7: retry only safe\nretryable failures).",
+      "enum": [
+        "TRANSIENT",
+        "PERMANENT"
+      ],
+      "title": "FailureKind",
+      "type": "string"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/action-result.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "The complete, immutable outcome of an action (spec \u00a714.7).",
+  "properties": {
+    "action_id": {
+      "format": "uuid",
+      "title": "Action Id",
+      "type": "string"
+    },
+    "attempts": {
+      "items": {
+        "$ref": "#/$defs/ActionAttempt"
+      },
+      "title": "Attempts",
+      "type": "array"
+    },
+    "audit_recorded": {
+      "default": true,
+      "title": "Audit Recorded",
+      "type": "boolean"
+    },
+    "compensated": {
+      "default": false,
+      "title": "Compensated",
+      "type": "boolean"
+    },
+    "completed_at": {
+      "format": "date-time",
+      "title": "Completed At",
+      "type": "string"
+    },
+    "correlation_id": {
+      "format": "uuid",
+      "title": "Correlation Id",
+      "type": "string"
+    },
+    "decision_id": {
+      "format": "uuid",
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "home_id": {
+      "title": "Home Id",
+      "type": "string"
+    },
+    "idempotency_key": {
+      "title": "Idempotency Key",
+      "type": "string"
+    },
+    "observed_value": {
+      "default": null,
+      "title": "Observed Value"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "status": {
+      "$ref": "#/$defs/ActionStatus"
+    }
+  },
+  "required": [
+    "action_id",
+    "idempotency_key",
+    "decision_id",
+    "home_id",
+    "correlation_id",
+    "status",
+    "completed_at"
+  ],
+  "title": "ActionResult",
+  "type": "object"
+}

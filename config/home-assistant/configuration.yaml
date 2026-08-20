@@ -1,0 +1,8 @@
+# Home Assistant Core — SYLTRA development instance.
+# HA runs UNMODIFIED (ADR-001); this file only holds development configuration.
+# Runtime state (.storage/, databases, logs) is gitignored — see .gitignore.
+
+default_config:
+
+logger:
+  default: warning

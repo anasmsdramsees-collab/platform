@@ -1,0 +1,505 @@
+{
+  "$id": "https://contracts.syltra.local/1.0/capability-registry.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Canonical capabilities and their declared properties (spec \u00a710).",
+  "properties": {
+    "breaker.state": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [
+          "on",
+          "off",
+          "tripped"
+        ],
+        "confirmation": "DETERMINISTIC_SAFETY_RULE",
+        "data_type": "ENUM",
+        "freshness_seconds": 120,
+        "maximum": null,
+        "minimum": null,
+        "reversible": false,
+        "safety_class": "LIFE_SAFETY_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "camera.recording": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [],
+        "confirmation": "USER_APPROVAL",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 300,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "SECURITY_SENSITIVE",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "climate.mode": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [
+          "off",
+          "cool",
+          "heat",
+          "auto",
+          "dry",
+          "fan_only"
+        ],
+        "confirmation": "NONE",
+        "data_type": "ENUM",
+        "freshness_seconds": 900,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "climate.target_temperature": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 900,
+        "maximum": 30,
+        "minimum": 16,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": "C"
+      },
+      "type": "object"
+    },
+    "contact.open": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 900,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "SECURITY_SENSITIVE",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "cover.position": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 900,
+        "maximum": 100,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": "%"
+      },
+      "type": "object"
+    },
+    "device.battery": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 86400,
+        "maximum": 100,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "NON_CRITICAL",
+        "unit": "%"
+      },
+      "type": "object"
+    },
+    "device.online": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 600,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "NON_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "energy.consumption": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 3600,
+        "maximum": null,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "NON_CRITICAL",
+        "unit": "kWh"
+      },
+      "type": "object"
+    },
+    "energy.current": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 300,
+        "maximum": 1000,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "NON_CRITICAL",
+        "unit": "A"
+      },
+      "type": "object"
+    },
+    "energy.power": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 300,
+        "maximum": 100000,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "NON_CRITICAL",
+        "unit": "W"
+      },
+      "type": "object"
+    },
+    "energy.voltage": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 300,
+        "maximum": 1000,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "NON_CRITICAL",
+        "unit": "V"
+      },
+      "type": "object"
+    },
+    "environment.air_quality": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 900,
+        "maximum": 500,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "environment.humidity": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 900,
+        "maximum": 100,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": "%"
+      },
+      "type": "object"
+    },
+    "environment.illuminance": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 900,
+        "maximum": 200000,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": "lx"
+      },
+      "type": "object"
+    },
+    "environment.temperature": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 900,
+        "maximum": 100,
+        "minimum": -50,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": "C"
+      },
+      "type": "object"
+    },
+    "garage.state": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [
+          "open",
+          "closed",
+          "opening",
+          "closing",
+          "stopped"
+        ],
+        "confirmation": "USER_APPROVAL",
+        "data_type": "ENUM",
+        "freshness_seconds": 300,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "SECURITY_SENSITIVE",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "light.brightness": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "NUMBER",
+        "freshness_seconds": 900,
+        "maximum": 100,
+        "minimum": 0,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": "%"
+      },
+      "type": "object"
+    },
+    "light.power": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 900,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "lock.state": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [
+          "locked",
+          "unlocked",
+          "locking",
+          "unlocking",
+          "jammed"
+        ],
+        "confirmation": "USER_APPROVAL",
+        "data_type": "ENUM",
+        "freshness_seconds": 300,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "SECURITY_SENSITIVE",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "notification.send": {
+      "const": {
+        "access": "WRITE",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "STRING",
+        "freshness_seconds": 60,
+        "maximum": null,
+        "minimum": null,
+        "reversible": false,
+        "safety_class": "NON_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "occupancy.motion": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 300,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "NON_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "occupancy.presence": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 600,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "NON_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "safety.co_alarm": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 120,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "LIFE_SAFETY_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "safety.gas_alarm": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 120,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "LIFE_SAFETY_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "safety.heat_alarm": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 120,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "LIFE_SAFETY_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "safety.smoke_alarm": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 120,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "LIFE_SAFETY_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "safety.water_leak": {
+      "const": {
+        "access": "READ",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 300,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "SAFETY_RELATED",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "siren.state": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [
+          "on",
+          "off"
+        ],
+        "confirmation": "DETERMINISTIC_SAFETY_RULE",
+        "data_type": "ENUM",
+        "freshness_seconds": 120,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "SAFETY_RELATED",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "switch.power": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [],
+        "confirmation": "NONE",
+        "data_type": "BOOLEAN",
+        "freshness_seconds": 900,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "COMFORT",
+        "unit": null
+      },
+      "type": "object"
+    },
+    "valve.state": {
+      "const": {
+        "access": "READ_WRITE",
+        "allowed_values": [
+          "open",
+          "closed",
+          "opening",
+          "closing"
+        ],
+        "confirmation": "DETERMINISTIC_SAFETY_RULE",
+        "data_type": "ENUM",
+        "freshness_seconds": 120,
+        "maximum": null,
+        "minimum": null,
+        "reversible": true,
+        "safety_class": "LIFE_SAFETY_CRITICAL",
+        "unit": null
+      },
+      "type": "object"
+    }
+  },
+  "title": "SYLTRA capability registry",
+  "type": "object"
+}

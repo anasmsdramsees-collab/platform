@@ -1,0 +1,45 @@
+{
+  "$id": "https://contracts.syltra.local/1.0/entity-state.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Point-in-time state of an entity as reported by the integration runtime.",
+  "properties": {
+    "attributes": {
+      "additionalProperties": true,
+      "title": "Attributes",
+      "type": "object"
+    },
+    "available": {
+      "default": true,
+      "title": "Available",
+      "type": "boolean"
+    },
+    "entity_id": {
+      "title": "Entity Id",
+      "type": "string"
+    },
+    "last_updated": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Last Updated"
+    },
+    "state": {
+      "title": "State",
+      "type": "string"
+    }
+  },
+  "required": [
+    "entity_id",
+    "state"
+  ],
+  "title": "EntityState",
+  "type": "object"
+}

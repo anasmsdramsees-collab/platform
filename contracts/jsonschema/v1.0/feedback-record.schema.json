@@ -1,0 +1,105 @@
+{
+  "$defs": {
+    "FeedbackKind": {
+      "description": "The responses a household may give (spec \u00a714.8).",
+      "enum": [
+        "ACCEPT",
+        "REJECT",
+        "NOT_NOW",
+        "MODIFY",
+        "UNDO",
+        "NEVER_REPEAT"
+      ],
+      "title": "FeedbackKind",
+      "type": "string"
+    },
+    "FeedbackSource": {
+      "enum": [
+        "USER",
+        "AUTOMATION_ECHO",
+        "SYSTEM"
+      ],
+      "title": "FeedbackSource",
+      "type": "string"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/feedback-record.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "action_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Action Id"
+    },
+    "actor": {
+      "default": "occupant",
+      "title": "Actor",
+      "type": "string"
+    },
+    "feedback_id": {
+      "format": "uuid",
+      "title": "Feedback Id",
+      "type": "string"
+    },
+    "home_id": {
+      "title": "Home Id",
+      "type": "string"
+    },
+    "kind": {
+      "$ref": "#/$defs/FeedbackKind"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "modified_value": {
+      "default": null,
+      "title": "Modified Value"
+    },
+    "note": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Note"
+    },
+    "recommendation_id": {
+      "format": "uuid",
+      "title": "Recommendation Id",
+      "type": "string"
+    },
+    "recorded_at": {
+      "format": "date-time",
+      "title": "Recorded At",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/FeedbackSource",
+      "default": "USER"
+    }
+  },
+  "required": [
+    "feedback_id",
+    "home_id",
+    "recommendation_id",
+    "kind",
+    "recorded_at"
+  ],
+  "title": "FeedbackRecord",
+  "type": "object"
+}

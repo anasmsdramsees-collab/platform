@@ -1,0 +1,32 @@
+{
+  "$id": "https://contracts.syltra.local/1.0/event-types.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Closed set of event types (spec \u00a711.2).",
+  "enum": [
+    "action.cancelled",
+    "action.dispatched",
+    "action.failed",
+    "action.requested",
+    "action.succeeded",
+    "context.updated",
+    "device.availability.changed",
+    "device.discovered",
+    "device.removed",
+    "device.state.changed",
+    "feedback.recorded",
+    "manual.override.detected",
+    "model.activated",
+    "model.rolled_back",
+    "model.trained",
+    "policy.decision.created",
+    "preference.updated",
+    "recommendation.created",
+    "recommendation.expired",
+    "risk.state.changed",
+    "routine.discovered",
+    "system.health.changed",
+    "twin.state.updated"
+  ],
+  "title": "SYLTRA event types",
+  "type": "string"
+}

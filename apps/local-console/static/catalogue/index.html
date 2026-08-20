@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark" data-density="comfortable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SYLTRA Design System — Component Catalogue</title>
+<!--
+  The living style guide for the SYLTRA platform surface (guidelines rule 19,
+  ADR-008). Every component is rendered here in every state, and the page can be
+  switched between themes, directions and densities without reloading — which is
+  the point: a component that only survives one combination is not finished.
+
+  Nothing on this page styles a component. If a specimen looks wrong here, the
+  design system is wrong, not the catalogue.
+-->
+<link rel="stylesheet" href="/design-system/tokens/tokens.css">
+<link rel="stylesheet" href="/design-system/themes/dark-theme.css">
+<link rel="stylesheet" href="/design-system/themes/light-theme.css">
+<link rel="stylesheet" href="/design-system/typography/typography.css">
+<link rel="stylesheet" href="/design-system/tokens/motion.css">
+<link rel="stylesheet" href="/design-system/foundation.css">
+<link rel="stylesheet" href="/design-system/primitives.css">
+<link rel="stylesheet" href="/design-system/shell.css">
+<link rel="stylesheet" href="/design-system/domain.css">
+<link rel="stylesheet" href="catalogue.css">
+</head>
+<body class="catalogue">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="catalogue__bar">
+  <div class="catalogue__brand">
+    <span class="catalogue__wordmark">SYLTRA</span>
+    <span class="catalogue__tagline">Design system — component catalogue</span>
+  </div>
+
+  <label class="catalogue__control" for="theme">
+    Theme
+    <select class="select" id="theme">
+      <option value="dark">Dark</option>
+      <option value="light">Light</option>
+    </select>
+  </label>
+
+  <label class="catalogue__control" for="direction">
+    Direction
+    <select class="select" id="direction">
+      <option value="ltr">English — LTR</option>
+      <option value="rtl">العربية — RTL</option>
+    </select>
+  </label>
+
+  <label class="catalogue__control" for="density">
+    Density
+    <select class="select" id="density">
+      <option value="comfortable">Comfortable</option>
+      <option value="compact">Compact</option>
+    </select>
+  </label>
+</header>
+
+<div class="catalogue__body">
+  <nav class="catalogue__nav" aria-label="Catalogue sections">
+    <a href="#shell">Shell</a>
+    <a href="#colour">Colour</a>
+    <a href="#type">Typography</a>
+    <a href="#space">Spacing &amp; radius</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#inputs">Inputs</a>
+    <a href="#cards">Cards</a>
+    <a href="#badges">Status badges</a>
+    <a href="#tables">Tables &amp; tabs</a>
+    <a href="#overlays">Overlays</a>
+    <a href="#states">System states</a>
+    <a href="#risk">Risk &amp; safety</a>
+    <a href="#domain">Domain</a>
+    <a href="#critical">Critical actions</a>
+    <a href="#dataquality">Data quality</a>
+    <a href="#states20">Data states</a>
+    <a href="#bidi">Bidirectional</a>
+  </nav>
+
+  <main class="catalogue__main" id="main">
+
+    <!-- ── shell ── -->
+    <section class="section" id="shell">
+      <h2>Application shell</h2>
+      <p class="section__intent">
+        One persistent sidebar, one top bar, one content region — §4 forbids two
+        competing sidebars, so there is exactly one place a navigation item can
+        live. The specimen below is the real shell inside a bounded frame; it
+        mirrors, collapses and re-themes with the controls at the top of this
+        page. Switch to Arabic and the sidebar moves to the right.
+      </p>
+
+      <div class="specimen">
+        <div class="specimen__label">Shell, expanded
+          <span class="specimen__note">264px sidebar · 64px top bar · §9.2</span>
+        </div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="shell-frame">
+            <div class="app-shell">
+              <aside class="app-sidebar">
+                <div class="app-sidebar__brand">
+                  <span class="app-sidebar__mark icon-universal" aria-hidden="true">S</span>
+                  <span class="app-sidebar__wordmark">SYLTRA</span>
+                </div>
+                <nav class="app-nav" aria-label="Specimen navigation">
+                  <a class="nav-item" href="#shell" aria-current="page">
+                    <span class="nav-item__icon" aria-hidden="true">◧</span>
+                    <span class="nav-item__label">Overview</span>
+                  </a>
+                  <a class="nav-item" href="#shell">
+                    <span class="nav-item__icon" aria-hidden="true">⌂</span>
+                    <span class="nav-item__label">Devices</span>
+                  </a>
+                  <a class="nav-item" href="#shell">
+                    <span class="nav-item__icon" aria-hidden="true">△</span>
+                    <span class="nav-item__label">Risk Centre</span>
+                  </a>
+                  <a class="nav-item" href="#shell" data-unavailable>
+                    <span class="nav-item__icon" aria-hidden="true">▤</span>
+                    <span class="nav-item__label">Installations</span>
+                  </a>
+                </nav>
+              </aside>
+
+              <header class="app-topbar">
+                <div class="app-topbar__scope">
+                  <label class="sr-only" for="spec-workspace">Workspace</label>
+                  <select class="select" id="spec-workspace"><option>Demo workspace</option></select>
+                  <label class="sr-only" for="spec-property">Property</label>
+                  <select class="select" id="spec-property"><option>Villa 12</option></select>
+                </div>
+                <div class="app-topbar__account">
+                  <span class="app-topbar__user">
+                    <span>Demo owner</span>
+                    <span class="app-topbar__role">Owner</span>
+                  </span>
+                  <button class="btn btn--ghost" type="button">Sign out</button>
+                </div>
+              </header>
+
+              <main class="app-content">
+                <div class="app-content__banners">
+                  <div class="risk-banner risk-banner--watch" role="status">
+                    <strong>Watch — advisory</strong> — banners stay at the top of the content region (§9.3).
+                  </div>
+                </div>
+                <nav aria-label="Breadcrumb">
+                  <ol class="breadcrumbs">
+                    <li><a href="#shell">Properties</a></li>
+                    <li><a href="#shell">Villa 12</a></li>
+                    <li>Kitchen</li>
+                  </ol>
+                </nav>
+                <div class="page-header">
+                  <h3 class="page-header__title">Kitchen</h3>
+                  <div class="page-header__actions">
+                    <button class="btn btn--secondary" type="button">Export</button>
+                  </div>
+                </div>
+                <div class="metric-row">
+                  <article class="card"><h4 class="card__title">Temperature</h4>
+                    <p class="type-metric numeric">23.4 °C</p></article>
+                  <article class="card"><h4 class="card__title">Humidity</h4>
+                    <p class="type-metric numeric">41 %</p></article>
+                  <article class="card"><h4 class="card__title">Devices</h4>
+                    <p class="type-metric numeric">6</p></article>
+                  <article class="card"><h4 class="card__title">Power</h4>
+                    <p class="type-metric numeric">310 W</p></article>
+                </div>
+              </main>
+            </div>
+          </div>
+          <p class="type-caption">
+            The metric row never exceeds four across, however wide the screen (§9.3).
+            The dashed marker on <em>Installations</em> means the platform cannot
+            serve that view yet — hiding it would make the console look finished.
+          </p>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">Shell, collapsed
+          <span class="specimen__note">72px · labels are clipped, not removed, so the accessible name survives</span>
+        </div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="shell-frame" data-sidebar="collapsed">
+            <div class="app-shell">
+              <aside class="app-sidebar">
+                <div class="app-sidebar__brand">
+                  <span class="app-sidebar__mark icon-universal" aria-hidden="true">S</span>
+                  <span class="app-sidebar__wordmark">SYLTRA</span>
+                </div>
+                <nav class="app-nav" aria-label="Collapsed specimen navigation">
+                  <a class="nav-item" href="#shell" aria-current="page">
+                    <span class="nav-item__icon" aria-hidden="true">◧</span>
+                    <span class="nav-item__label">Overview</span>
+                  </a>
+                  <a class="nav-item" href="#shell">
+                    <span class="nav-item__icon" aria-hidden="true">⌂</span>
+                    <span class="nav-item__label">Devices</span>
+                  </a>
+                  <a class="nav-item" href="#shell">
+                    <span class="nav-item__icon" aria-hidden="true">△</span>
+                    <span class="nav-item__label">Risk Centre</span>
+                  </a>
+                </nav>
+              </aside>
+              <header class="app-topbar">
+                <div class="app-topbar__scope">
+                  <label class="sr-only" for="spec-property-2">Property</label>
+                  <select class="select" id="spec-property-2"><option>Villa 12</option></select>
+                </div>
+              </header>
+              <main class="app-content">
+                <p class="type-body">Content keeps its full width; only the navigation narrows.</p>
+              </main>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── colour ── -->
+    <section class="section" id="colour">
+      <h2>Colour</h2>
+      <p class="section__intent">
+        Every colour on the platform comes from a token. The ratios below are
+        computed live from the rendered page, so switching theme re-measures
+        rather than re-stating. The bar is 4.5:1 for text and 3:1 for essential
+        boundaries and controls.
+      </p>
+
+      <div class="specimen">
+        <div class="specimen__label">Surfaces and text
+          <span class="specimen__note">measured against the current theme</span>
+        </div>
+        <div class="specimen__stage">
+          <div class="swatches" data-swatches="background,surface,surface-raised,surface-overlay,border,border-strong,text-primary,text-secondary,text-tertiary,text-disabled,accent,accent-hover,accent-pressed,focus-ring"></div>
+        </div>
+        <div class="contrast-summary" data-contrast-summary></div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">Semantic status
+          <span class="specimen__note">§6.2 — green is semantic only, never a brand colour</span>
+        </div>
+        <div class="specimen__stage">
+          <div class="swatches" data-swatches="status-success,status-warning,status-critical,status-info,status-unknown,status-offline"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── typography ── -->
+    <section class="section" id="type">
+      <h2>Typography</h2>
+      <p class="section__intent">
+        Inter for Latin, IBM Plex Sans Arabic for Arabic, and a monospace family
+        for identifiers. Arabic carries more leading than the Latin equivalent;
+        switch the direction control to see the same ramp reset itself.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Type ramp</div>
+        <div class="specimen__stage specimen__stage--column" data-type-ramp></div>
+      </div>
+    </section>
+
+    <!-- ── spacing ── -->
+    <section class="section" id="space">
+      <h2>Spacing &amp; radius</h2>
+      <p class="section__intent">
+        A 4px base scale. Nothing in the platform uses a spacing value that is
+        not on this ruler.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Spacing scale</div>
+        <div class="specimen__stage"><div class="ruler" data-space-ruler></div></div>
+      </div>
+      <div class="specimen">
+        <div class="specimen__label">Radius scale</div>
+        <div class="specimen__stage" data-radius-samples></div>
+      </div>
+    </section>
+
+    <!-- ── buttons ── -->
+    <section class="section" id="buttons">
+      <h2>Buttons</h2>
+      <p class="section__intent">
+        One primary action per view. Destructive and safety-critical actions are
+        visually distinct and never one-click: the critical variant is the
+        confirmation step, not the trigger.
+      </p>
+
+      <div class="specimen">
+        <div class="specimen__label">Variants</div>
+        <div class="specimen__stage">
+          <button class="btn btn--primary" type="button">Apply recommendation</button>
+          <button class="btn btn--secondary" type="button">Review details</button>
+          <button class="btn btn--ghost" type="button">Dismiss</button>
+          <button class="btn btn--destructive" type="button">Delete schedule</button>
+          <button class="btn btn--critical-confirm" type="button">Hold to confirm shutoff</button>
+          <button class="btn btn--icon" type="button" aria-label="Refresh">⟳</button>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">States
+          <span class="specimen__note">loading preserves width, so nothing reflows mid-action</span>
+        </div>
+        <div class="specimen__stage">
+          <button class="btn btn--primary" type="button"><span class="btn__label">Apply</span></button>
+          <button class="btn btn--primary" type="button" disabled><span class="btn__label">Apply</span></button>
+          <button class="btn btn--primary" type="button" aria-busy="true"><span class="btn__label">Apply</span></button>
+          <button class="btn btn--secondary" type="button" disabled><span class="btn__label">Review</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── inputs ── -->
+    <section class="section" id="inputs">
+      <h2>Inputs</h2>
+      <p class="section__intent">
+        Every field carries a visible label. Errors are described in text, never
+        by border colour alone.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Field states</div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="field">
+            <label class="field__label" for="c-name">Zone name</label>
+            <input class="input" id="c-name" type="text" value="Living room" dir="auto">
+            <span class="field__help">Shown throughout the console and to SILA.</span>
+          </div>
+
+          <div class="field">
+            <label class="field__label field__required" for="c-thr">Comfort threshold</label>
+            <input class="input" id="c-thr" type="text" value="24" inputmode="decimal"
+                   aria-describedby="c-thr-err" aria-invalid="true">
+            <span class="field__error" id="c-thr-err">Enter a value between 16 and 30.</span>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="c-mode">Adaptation mode</label>
+            <select class="select" id="c-mode">
+              <option>Observe only</option>
+              <option>Recommend</option>
+              <option>Act with approval</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="c-note">Note</label>
+            <textarea class="textarea" id="c-note" rows="3" dir="auto"></textarea>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="c-switch">Quiet hours</label>
+            <button class="switch" id="c-switch" type="button" role="switch" aria-checked="true">
+              <span class="switch__track"><span class="switch__thumb"></span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── cards ── -->
+    <section class="section" id="cards">
+      <h2>Cards</h2>
+      <p class="section__intent">
+        The unit of the dashboard. A card states what is true, how confident the
+        platform is, and what it will do — in that order.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Card grid
+          <span class="specimen__note">uncapped, unlike the metric row — a device list is as long as the home</span>
+        </div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="card-grid">
+            <article class="card">
+              <h3 class="card__title">Evening cooling</h3>
+              <p class="type-body">Cool the living room before you usually arrive.</p>
+              <h4 class="muted">Why</h4>
+              <ul class="reasons">
+                <li>You have arrived between 18:10 and 18:40 on 14 of the last 20 weekdays.</li>
+                <li>The living room is above your usual comfort range at that hour.</li>
+              </ul>
+              <p class="evidence">Observed over 20 days · confidence 0.82</p>
+            </article>
+            <article class="card">
+              <h3 class="card__title">Utility humidity</h3>
+              <p class="type-body">Rising for three days.</p>
+              <ul class="reasons"><li>Humidity above 68 % since Monday.</li></ul>
+            </article>
+            <article class="card">
+              <h3 class="card__title">Hall motion</h3>
+              <p class="type-body">No motion recorded since 02:10.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">Card</div>
+        <div class="specimen__stage">
+          <article class="card">
+            <h3 class="card__title">Kitchen</h3>
+            <p class="type-metric-large numeric">23.4 °C</p>
+            <p class="type-caption">Updated <span class="numeric">2</span> minutes ago</p>
+            <p class="type-caption identifier">sensor.kitchen_temp_01</p>
+          </article>
+
+          <article class="card">
+            <h3 class="card__title">Evening cooling</h3>
+            <p class="type-body">Cool the living room 20 minutes before you usually arrive.</p>
+            <span class="badge badge--advisory">Advisory — needs your approval</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── badges ── -->
+    <section class="section" id="badges">
+      <h2>Status badges</h2>
+      <p class="section__intent">
+        Status is never carried by colour alone: each badge pairs its colour with
+        a shape, and the advisory badge is additionally dashed. Switch your OS to
+        high-contrast mode and every badge keeps its meaning.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Device and system states</div>
+        <div class="specimen__stage">
+          <span class="badge badge--online">Online</span>
+          <span class="badge badge--offline">Offline</span>
+          <span class="badge badge--stale">Stale</span>
+          <span class="badge badge--unknown">Unknown</span>
+          <span class="badge badge--degraded">Degraded</span>
+          <span class="badge badge--error">Error</span>
+          <span class="badge badge--updating">Updating</span>
+          <span class="badge badge--commissioning">Commissioning</span>
+          <span class="badge badge--disabled">Disabled</span>
+          <span class="badge badge--removed">Removed</span>
+        </div>
+      </div>
+      <div class="specimen">
+        <div class="specimen__label">Advisory, confirmed, shadow
+          <span class="specimen__note">dashed, solid, dotted — three cues that survive greyscale</span>
+        </div>
+        <div class="specimen__stage">
+          <span class="badge badge--advisory">Advisory</span>
+          <span class="badge badge--confirmed">Confirmed</span>
+          <span class="badge badge--shadow">Shadow mode</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── tables and tabs ── -->
+    <section class="section" id="tables">
+      <h2>Tables &amp; tabs</h2>
+      <p class="section__intent">
+        Numeric columns are tabular and direction-isolated, so an Arabic row
+        cannot reorder a reading.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Tabs</div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="tabs" role="tablist">
+            <button class="tab" type="button" role="tab" aria-selected="true">Devices</button>
+            <button class="tab" type="button" role="tab" aria-selected="false">Automations</button>
+            <button class="tab" type="button" role="tab" aria-selected="false">History</button>
+          </div>
+        </div>
+      </div>
+      <div class="specimen">
+        <div class="specimen__label">Table</div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="table-scroll table-scroll--pinned-header" tabindex="0" role="region" aria-label="Device table">
+          <table class="table">
+            <thead>
+              <tr><th scope="col">Device</th><th scope="col">Zone</th>
+                  <th scope="col">Reading</th><th scope="col">State</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Thermostat</td><td>Living room</td>
+                  <td class="numeric">22.8 °C</td><td><span class="badge badge--online">Online</span></td></tr>
+              <tr><td>Gas detector</td><td>Kitchen</td>
+                  <td class="numeric">0 ppm</td><td><span class="badge badge--online">Online</span></td></tr>
+              <tr><td>Water leak</td><td>Utility</td>
+                  <td class="numeric">—</td><td><span class="badge badge--stale">Stale</span></td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── overlays ── -->
+    <section class="section" id="overlays">
+      <h2>Overlays</h2>
+      <p class="section__intent">
+        Dialogs, drawers and toasts are the only components that carry elevation.
+        Shown here inline so their surfaces can be inspected in both themes.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Dialog, drawer, toast</div>
+        <div class="specimen__stage">
+          <div class="dialog" role="group" aria-label="Dialog specimen">
+            <h3 class="card__title">Confirm shutoff</h3>
+            <p class="type-body">This closes the main water valve. Manual control stays available.</p>
+            <div class="row">
+              <button class="btn btn--ghost" type="button">Cancel</button>
+              <button class="btn btn--critical-confirm" type="button">Hold to confirm</button>
+            </div>
+          </div>
+          <div class="drawer" role="group" aria-label="Drawer specimen">
+            <h3 class="card__title">Device detail</h3>
+            <p class="type-caption identifier">sensor.utility_leak_02</p>
+          </div>
+          <div class="toast" role="status">Recommendation applied.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── system states ── -->
+    <section class="section" id="states">
+      <h2>System states</h2>
+      <p class="section__intent">
+        Empty, loading, stale and error are designed states, not accidents. The
+        platform says what it does not know, and says it in the user's language.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Loading</div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="skeleton" style="block-size: var(--space-6);"></div>
+          <div class="skeleton" style="block-size: var(--space-6); inline-size: 60%;"></div>
+          <div class="progress"><div class="progress__fill" style="inline-size: 45%;"></div></div>
+        </div>
+      </div>
+      <div class="specimen">
+        <div class="specimen__label">Empty, stale and error</div>
+        <div class="specimen__stage specimen__stage--column">
+          <p class="state-notice">No recommendations yet. SYLTRA is still learning this home.</p>
+          <p class="stale-notice">Last reading was 41 minutes ago. This value may be out of date.</p>
+          <p class="state-notice state-notice--error">Could not reach the adaptive service. Local control is unaffected.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── risk ── -->
+    <section class="section" id="risk">
+      <h2>Risk &amp; safety</h2>
+      <p class="section__intent">
+        The most important distinction in the product: an inferred watch is not a
+        confirmed hazard, and the interface never lets the two look alike. A
+        confirmed hazard comes only from a certified alarm.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Risk banners</div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="risk-banner risk-banner--info" role="status">
+            <strong>Informational</strong> — Utility humidity has been rising for three days.
+          </div>
+          <div class="risk-banner risk-banner--watch" role="status">
+            <strong>Watch — advisory</strong> — Unusual electrical draw in the utility room.
+            SYLTRA has not confirmed a fault and will not act on this alone.
+          </div>
+          <div class="risk-banner" role="alert">
+            <strong>Confirmed — gas alarm, kitchen</strong> — Certified detector reporting.
+            Follow your household safety procedure.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── domain components ── -->
+    <section class="section" id="domain">
+      <h2>Domain components</h2>
+      <p class="section__intent">
+        The components that know what SYLTRA is about. Each one shows what §13
+        specifies it contains — and, as importantly, what it does not: a room
+        card is not every room metric, and a confidence is never a certainty.
+      </p>
+
+      <div class="specimen">
+        <div class="specimen__label">Property status header
+          <span class="specimen__note">§13.1</span>
+        </div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="property-header">
+            <div class="property-header__identity">
+              <h3 class="property-header__name">Villa 12</h3>
+              <span class="type-caption identifier">home_dev_001</span>
+            </div>
+            <div class="fact"><span class="fact__label">Local time</span><span class="fact__value numeric">18:42</span></div>
+            <div class="fact"><span class="fact__label">Occupancy</span><span class="fact__value">Occupied</span></div>
+            <div class="fact"><span class="fact__label">Mode</span><span class="fact__value">Home</span></div>
+            <div class="fact"><span class="fact__label">Hub</span><span class="fact__value"><span class="badge badge--online">Online</span></span></div>
+            <div class="fact"><span class="fact__label">Cloud</span><span class="fact__value"><span class="badge badge--offline">Not connected</span></span></div>
+            <div class="fact"><span class="fact__label">Active risks</span><span class="fact__value numeric">0</span></div>
+            <div class="fact"><span class="fact__label">Updated</span><span class="fact__value numeric">12s ago</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">Room card
+          <span class="specimen__note">§13.2 — three metrics at most, so the detail view keeps a reason to exist</span>
+        </div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="card-grid">
+            <a class="room-card" href="#domain">
+              <div class="room-card__head">
+                <h3 class="room-card__name">Living room</h3>
+                <span class="badge badge--online">Occupied</span>
+              </div>
+              <div class="room-card__metrics">
+                <div class="fact"><span class="fact__label">Temperature</span><span class="fact__value numeric">27.4 °C</span></div>
+                <div class="fact"><span class="fact__label">Humidity</span><span class="fact__value numeric">41 %</span></div>
+                <div class="fact"><span class="fact__label">Lights on</span><span class="fact__value numeric">1</span></div>
+              </div>
+              <p class="type-caption muted">5 devices</p>
+            </a>
+            <a class="room-card" href="#domain">
+              <div class="room-card__head">
+                <h3 class="room-card__name">Kitchen</h3>
+                <span class="badge badge--stale">Stale</span>
+              </div>
+              <div class="room-card__metrics">
+                <div class="fact"><span class="fact__label">Temperature</span><span class="fact__value numeric">—</span></div>
+              </div>
+              <p class="type-caption muted">2 devices · 1 not reporting</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">Device row
+          <span class="specimen__note">§13.3, §14 — offline shows last seen, stale shows the age of the data</span>
+        </div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Device row specimens">
+          <table class="table">
+            <thead><tr><th scope="col">Device</th><th scope="col">Room</th>
+              <th scope="col">State</th><th scope="col">Availability</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="device-name"><span class="device-type" aria-hidden="true">◈</span>Living room AC</span></td>
+                <td>Living room</td><td class="numeric">24.0 °C</td>
+                <td><span class="badge badge--online">Online</span></td>
+              </tr>
+              <tr>
+                <td><span class="device-name"><span class="device-type" aria-hidden="true">◉</span>Kitchen gas detector</span></td>
+                <td>Kitchen</td><td>Clear</td>
+                <td><span class="state-with-age"><span class="badge badge--stale">Stale</span>
+                  <span class="state-age">41 minutes old</span></span></td>
+              </tr>
+              <tr>
+                <td><span class="device-name"><span class="device-type" aria-hidden="true">◎</span>Utility meter</span></td>
+                <td>Utility</td><td class="numeric">—</td>
+                <td><span class="state-with-age"><span class="badge badge--offline">Offline</span>
+                  <span class="state-age">Last seen 3 hours ago</span></span></td>
+              </tr>
+              <tr>
+                <td><span class="device-name"><span class="device-type" aria-hidden="true">◌</span>Hall smoke alarm</span></td>
+                <td>Hall</td><td>—</td>
+                <td><span class="badge badge--unknown">Unknown</span></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <p class="type-caption">
+            Unknown is shown, never hidden (§14). A blank cell would read as
+            “nothing wrong”, which is exactly what the platform does not know.
+          </p>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">Context indicator
+          <span class="specimen__note">§13.5 — confidence as a level, with the number beside it</span>
+        </div>
+        <div class="specimen__stage">
+          <div class="context-card">
+            <h3 class="card__title">Home occupied</h3>
+            <div class="confidence">
+              <span class="confidence__level">High confidence</span>
+              <span class="confidence__value">0.95</span>
+              <span class="confidence__track"><span class="confidence__fill" style="inline-size: 95%"></span></span>
+            </div>
+            <p class="muted">2 pieces of evidence · expires in 5 minutes</p>
+            <ul class="reasons">
+              <li>Motion detected</li>
+              <li>A resident’s device is at home</li>
+            </ul>
+            <p class="type-caption identifier">rule:home_occupied@1.0.0</p>
+          </div>
+          <div class="context-card" data-stale>
+            <h3 class="card__title">Sleeping</h3>
+            <div class="confidence">
+              <span class="confidence__level">Low confidence</span>
+              <span class="confidence__value">0.41</span>
+              <span class="confidence__track"><span class="confidence__fill" style="inline-size: 41%"></span></span>
+            </div>
+            <p class="muted">Evidence has not refreshed for 22 minutes</p>
+            <span class="badge badge--stale">Stale</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">Recommendation card
+          <span class="specimen__note">§13.4 — advisory until a person approves it</span>
+        </div>
+        <div class="specimen__stage">
+          <div class="recommendation">
+            <h3 class="recommendation__proposal">Set the living room to 25.2 °C</h3>
+            <div class="confidence">
+              <span class="confidence__level">Moderate confidence</span>
+              <span class="confidence__value">0.86</span>
+              <span class="confidence__track"><span class="confidence__fill" style="inline-size: 86%"></span></span>
+            </div>
+            <div class="recommendation__targets">
+              <span class="badge badge--advisory">Needs your approval</span>
+              <span class="badge badge--unknown">1 device</span>
+            </div>
+            <h4 class="muted">Why</h4>
+            <ul class="reasons">
+              <li>You usually do this at this time</li>
+              <li>Adjusted to stay within the safe range</li>
+            </ul>
+            <p class="expiry">Suggested 18:30 · expires 18:45</p>
+            <div class="recommendation__actions">
+              <button class="btn btn--primary" type="button">Approve</button>
+              <button class="btn btn--secondary" type="button">Not now</button>
+              <button class="btn btn--ghost" type="button">Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">Risk case card
+          <span class="specimen__note">§13.6, §15 — a confirmed hazard is not a louder advisory</span>
+        </div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="risk-card" data-advisory>
+            <h3 class="card__title">Electrical — utility</h3>
+            <span class="badge badge--advisory">Watch — advisory</span>
+            <p class="muted">SYLTRA has not confirmed a fault and will not act on this alone.</p>
+            <ul class="reasons"><li>Unusual power draw for this hour</li></ul>
+          </div>
+          <div class="risk-card" data-confirmed>
+            <h3 class="card__title">Gas — kitchen</h3>
+            <span class="badge badge--confirmed">Confirmed</span>
+            <p class="muted">Confirmed by a certified detector, not by a model.</p>
+            <p class="type-caption identifier">rule:gas_confirmed@1.0.0</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen__label">Filters and detail list
+          <span class="specimen__note">§17.6, §17.7</span>
+        </div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="filters">
+            <div class="filter">
+              <label class="filter__label" for="cat-room">Room</label>
+              <select class="select" id="cat-room"><option>All rooms</option></select>
+            </div>
+            <div class="filter">
+              <label class="filter__label" for="cat-avail">Availability</label>
+              <select class="select" id="cat-avail"><option>All</option></select>
+            </div>
+            <span class="filter-summary">9 of 9 devices</span>
+          </div>
+          <dl class="detail-list">
+            <dt>Room</dt><dd>Living room</dd>
+            <dt>Last update</dt><dd class="numeric">12 seconds ago</dd>
+            <dt>Capabilities</dt><dd>Temperature, target temperature</dd>
+          </dl>
+          <div class="diagnostics">
+            <p class="diagnostics__label">Technician diagnostics — shown only with the diagnostics permission</p>
+            <dl class="detail-list">
+              <dt>Device id</dt><dd class="identifier">ac_living</dd>
+              <dt>Capability</dt><dd class="identifier">climate.target_temperature</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── §21 critical actions ── -->
+    <section class="section" id="critical">
+      <h2>Critical-action confirmation</h2>
+      <p class="section__intent">
+        For locks, valves, breakers, sirens, security modes and emergency
+        responses. §21 lists ten things this must show and eight patterns it
+        must not use. The SYLTRA console commands no actuators today, so
+        <strong>this is not wired to anything</strong> — it exists here so the
+        first one built is reviewed rather than invented under time pressure.
+      </p>
+
+      <div class="specimen">
+        <div class="specimen__label">The ten required disclosures
+          <span class="specimen__note">target · location · current state · intended state · impact · permission · reversibility · confirmation · progress · outcome</span>
+        </div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="critical-confirm" role="group" aria-label="Critical action confirmation specimen">
+            <h3 class="critical-confirm__title">Close the main water valve</h3>
+            <p class="muted">Utility room · Villa 12</p>
+
+            <div class="state-change">
+              <span class="state-change__from">
+                <span class="state-change__label">Current state</span>
+                <span class="state-change__value">Open</span>
+              </span>
+              <span class="state-change__arrow icon-directional" aria-hidden="true">➜</span>
+              <span class="state-change__to">
+                <span class="state-change__label">Intended state</span>
+                <span class="state-change__value">Closed</span>
+              </span>
+            </div>
+
+            <dl class="critical-confirm__facts">
+              <dt>Expected impact</dt>
+              <dd>All water to the property stops, including taps, appliances and any irrigation.</dd>
+              <dt>Required permission</dt>
+              <dd>Safety actions are commanded by the Safety Governor, not by a person holding a permission.</dd>
+              <dt>Reversible</dt>
+              <dd class="reversible-no">No — the valve must be reopened manually at the utility room.</dd>
+              <dt>Reason</dt>
+              <dd><label class="sr-only" for="cat-reason">Reason</label>
+                <input class="input" id="cat-reason" type="text" placeholder="Recorded in the audit trail"></dd>
+            </dl>
+
+            <div class="critical-confirm__actions">
+              <button class="btn btn--secondary" type="button">Cancel</button>
+              <button class="btn btn--critical-confirm" type="button">Hold to close the valve</button>
+            </div>
+          </div>
+
+          <div class="dispatch-progress" role="status">
+            <p class="notice__title">Closing the valve</p>
+            <div class="dispatch-step" data-state="done">
+              <span class="dispatch-step__marker" aria-hidden="true"></span>
+              <span>Confirmed by you at 18:42</span>
+            </div>
+            <div class="dispatch-step" data-state="done">
+              <span class="dispatch-step__marker" aria-hidden="true"></span>
+              <span>Sent to the device</span>
+            </div>
+            <div class="dispatch-step" data-state="active">
+              <span class="dispatch-step__marker" aria-hidden="true"></span>
+              <span>Waiting for the device to report its new state</span>
+            </div>
+            <div class="dispatch-step" data-state="failed">
+              <span class="dispatch-step__marker" aria-hidden="true"></span>
+              <span>Verification — not yet confirmed</span>
+            </div>
+          </div>
+
+          <p class="type-caption">
+            No swipe-to-confirm, no preselected destructive option, no generic
+            “OK”, and the result is never auto-dismissed. The confirming control
+            is styled as its own thing precisely so it cannot be mistaken for an
+            ordinary primary button. Each step’s state is carried by a shape as
+            well as a colour.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── §17.11 data quality ── -->
+    <section class="section" id="dataquality">
+      <h2>Data quality</h2>
+      <p class="section__intent">
+        §17.11 asks every energy view to state its completeness and freshness.
+        A number computed from two of five meters is a different claim from the
+        same number computed from all five, and the reader cannot tell them
+        apart unless the view says so.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Coverage and freshness</div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="data-quality">
+            <div class="fact"><span class="fact__label">Metered</span>
+              <span class="fact__value numeric">1 of 9 devices</span></div>
+            <div class="fact"><span class="fact__label">Freshest reading</span>
+              <span class="fact__value numeric">4 seconds ago</span></div>
+            <div class="fact"><span class="fact__label">Oldest reading</span>
+              <span class="fact__value numeric">4 seconds ago</span></div>
+            <span class="coverage-bar"><span class="coverage-bar__fill" style="inline-size: 11%"></span></span>
+          </div>
+          <p class="type-caption">
+            The bar restates the same number it sits beside; it never carries a
+            value on its own.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── §20 data states ── -->
+    <section class="section" id="states20">
+      <h2>Data states</h2>
+      <p class="section__intent">
+        §20 requires every major screen to implement these. Each one explains
+        what happened, says what is affected, shows the last successful update
+        where it is relevant, and offers one recovery action. None of them says
+        “something went wrong”, and none shows a normal state when the data to
+        judge normality is missing.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">Partial, offline, stale, denied, failure</div>
+        <div class="specimen__stage specimen__stage--column">
+          <div class="notice notice--partial">
+            <p class="notice__title">Some data could not be loaded</p>
+            <p class="notice__detail">Rooms and devices are current. Risk cases could not be read, so this page does not show whether any are open.</p>
+            <p class="notice__meta">Last successful update 18:31</p>
+            <div class="notice__actions"><button class="btn btn--secondary" type="button">Retry risk cases</button></div>
+          </div>
+          <div class="notice notice--offline">
+            <p class="notice__title">The hub is not reachable</p>
+            <p class="notice__detail">Local control continues to work. This console cannot show live state until it reconnects.</p>
+            <p class="notice__meta">Last successful update 18:14</p>
+            <div class="notice__actions"><button class="btn btn--secondary" type="button">Try again</button></div>
+          </div>
+          <div class="notice notice--stale">
+            <p class="notice__title">This data is 41 minutes old</p>
+            <p class="notice__detail">The kitchen gas detector has not reported since 18:01. Its state below is the last one received, not the current one.</p>
+            <div class="notice__actions"><button class="btn btn--secondary" type="button">Refresh</button></div>
+          </div>
+          <div class="notice notice--denied">
+            <p class="notice__title">You do not have permission to see this</p>
+            <p class="notice__detail">The audit trail records who did what, and needs the audit permission. Ask an owner of this property if you need access.</p>
+          </div>
+          <div class="notice notice--failure">
+            <p class="notice__title">The risk service did not respond</p>
+            <p class="notice__detail">Safety monitoring is unaffected — it runs on the hub and does not depend on this console. Only this view failed.</p>
+            <div class="notice__actions"><button class="btn btn--secondary" type="button">Try again</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── bidirectional ── -->
+    <section class="section" id="bidi">
+      <h2>Bidirectional behaviour</h2>
+      <p class="section__intent">
+        Arabic is genuine mirroring produced by <code class="identifier">dir="rtl"</code>
+        alone. Switch the direction control: layout mirrors, identifiers and
+        numbers do not, and chronological charts keep running left to right.
+      </p>
+      <div class="specimen">
+        <div class="specimen__label">What mirrors and what does not</div>
+        <div class="specimen__stage specimen__stage--column">
+          <p class="type-body" data-bidi-sample>
+            The kitchen sensor <span class="identifier">sensor.kitchen_temp_01</span>
+            last reported <span class="numeric">23.4</span> °C.
+          </p>
+          <div class="row">
+            <span class="icon-directional" aria-hidden="true">➜</span>
+            <span class="type-caption">Directional icon — mirrors in RTL</span>
+          </div>
+          <div class="row">
+            <span class="icon-universal" aria-hidden="true">⏻</span>
+            <span class="type-caption">Universal icon — never mirrors</span>
+          </div>
+          <div class="chart-canvas card">
+            <p class="type-caption">Chart canvas — time always runs left to right</p>
+            <div class="row">
+              <span class="numeric type-caption">08:00</span>
+              <span class="numeric type-caption">12:00</span>
+              <span class="numeric type-caption">16:00</span>
+              <span class="numeric type-caption">20:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="catalogue.js"></script>
+</body>
+</html>

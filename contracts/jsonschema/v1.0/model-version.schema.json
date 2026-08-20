@@ -1,0 +1,263 @@
+{
+  "$defs": {
+    "ModelCard": {
+      "additionalProperties": true,
+      "description": "Human-readable account of what a model is and is not (spec \u00a719.3).",
+      "properties": {
+        "ethical_and_safety_notes": {
+          "title": "Ethical And Safety Notes",
+          "type": "string"
+        },
+        "evaluation": {
+          "title": "Evaluation",
+          "type": "string"
+        },
+        "intended_use": {
+          "title": "Intended Use",
+          "type": "string"
+        },
+        "limitations": {
+          "title": "Limitations",
+          "type": "string"
+        },
+        "out_of_scope_use": {
+          "title": "Out Of Scope Use",
+          "type": "string"
+        },
+        "privacy_classification": {
+          "$ref": "#/$defs/PrivacyClass",
+          "default": "HOUSEHOLD_PRIVATE"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "training_data": {
+          "title": "Training Data",
+          "type": "string"
+        }
+      },
+      "required": [
+        "summary",
+        "intended_use",
+        "out_of_scope_use",
+        "training_data",
+        "evaluation",
+        "limitations",
+        "ethical_and_safety_notes"
+      ],
+      "title": "ModelCard",
+      "type": "object"
+    },
+    "ModelStatus": {
+      "enum": [
+        "TRAINED",
+        "ACTIVE",
+        "ROLLED_BACK",
+        "SUSPENDED"
+      ],
+      "title": "ModelStatus",
+      "type": "string"
+    },
+    "ModelType": {
+      "enum": [
+        "ROUTINE_BASELINE",
+        "TEMPERATURE_PREFERENCE",
+        "ENERGY_ANOMALY",
+        "OCCUPANCY_FUSION",
+        "RECOMMENDATION_ACCEPTANCE",
+        "DEVICE_ANOMALY"
+      ],
+      "title": "ModelType",
+      "type": "string"
+    },
+    "PrivacyClass": {
+      "description": "Data privacy classes (spec \u00a726).",
+      "enum": [
+        "PUBLIC",
+        "SYSTEM_INTERNAL",
+        "HOUSEHOLD_PRIVATE",
+        "PERSONAL_SENSITIVE",
+        "SAFETY_CRITICAL"
+      ],
+      "title": "PrivacyClass",
+      "type": "string"
+    },
+    "TrainingWindow": {
+      "properties": {
+        "distinct_days": {
+          "minimum": 0,
+          "title": "Distinct Days",
+          "type": "integer"
+        },
+        "end": {
+          "format": "date-time",
+          "title": "End",
+          "type": "string"
+        },
+        "sample_count": {
+          "minimum": 0,
+          "title": "Sample Count",
+          "type": "integer"
+        },
+        "start": {
+          "format": "date-time",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "sample_count",
+        "distinct_days"
+      ],
+      "title": "TrainingWindow",
+      "type": "object"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/model-version.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Everything spec \u00a719.3 requires a model version to record.",
+  "properties": {
+    "artifact_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Artifact Path"
+    },
+    "artifact_sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Artifact Sha256"
+    },
+    "calibration": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Calibration",
+      "type": "object"
+    },
+    "card": {
+      "$ref": "#/$defs/ModelCard"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "evaluation_metrics": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Evaluation Metrics",
+      "type": "object"
+    },
+    "feature_schema_version": {
+      "title": "Feature Schema Version",
+      "type": "string"
+    },
+    "home_id": {
+      "title": "Home Id",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "model_id": {
+      "format": "uuid",
+      "title": "Model Id",
+      "type": "string"
+    },
+    "model_type": {
+      "$ref": "#/$defs/ModelType"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "promoted_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Promoted At"
+    },
+    "rollback_target": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rollback Target"
+    },
+    "runtime": {
+      "default": "onnxruntime",
+      "title": "Runtime",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/ModelStatus",
+      "default": "TRAINED"
+    },
+    "supported_hardware": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Supported Hardware",
+      "type": "array"
+    },
+    "training_code_revision": {
+      "title": "Training Code Revision",
+      "type": "string"
+    },
+    "training_window": {
+      "$ref": "#/$defs/TrainingWindow"
+    },
+    "version": {
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "model_id",
+    "home_id",
+    "name",
+    "version",
+    "model_type",
+    "feature_schema_version",
+    "training_code_revision",
+    "training_window",
+    "evaluation_metrics",
+    "created_at",
+    "card"
+  ],
+  "title": "ModelVersion",
+  "type": "object"
+}

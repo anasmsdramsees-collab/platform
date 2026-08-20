@@ -1,0 +1,203 @@
+{
+  "$defs": {
+    "EventSource": {
+      "additionalProperties": true,
+      "description": "Producing service, hub instance, and transport protocol.",
+      "properties": {
+        "instance_id": {
+          "title": "Instance Id",
+          "type": "string"
+        },
+        "protocol": {
+          "title": "Protocol",
+          "type": "string"
+        },
+        "service": {
+          "title": "Service",
+          "type": "string"
+        }
+      },
+      "required": [
+        "service",
+        "instance_id",
+        "protocol"
+      ],
+      "title": "EventSource",
+      "type": "object"
+    },
+    "EventSubject": {
+      "additionalProperties": true,
+      "description": "What the event is about. Fields are optional because not every event\nconcerns a device (e.g. system.health.changed).",
+      "properties": {
+        "device_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Id"
+        },
+        "entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entity Id"
+        },
+        "room_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Room Id"
+        }
+      },
+      "title": "EventSubject",
+      "type": "object"
+    },
+    "PrivacyClass": {
+      "description": "Data privacy classes (spec \u00a726).",
+      "enum": [
+        "PUBLIC",
+        "SYSTEM_INTERNAL",
+        "HOUSEHOLD_PRIVATE",
+        "PERSONAL_SENSITIVE",
+        "SAFETY_CRITICAL"
+      ],
+      "title": "PrivacyClass",
+      "type": "string"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/event-envelope.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Immutable envelope shared by all SYLTRA events (spec \u00a711.1).",
+  "properties": {
+    "capability": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Capability"
+    },
+    "causation_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Causation Id"
+    },
+    "correlation_id": {
+      "format": "uuid",
+      "title": "Correlation Id",
+      "type": "string"
+    },
+    "event_id": {
+      "format": "uuid",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "event_type": {
+      "title": "Event Type",
+      "type": "string"
+    },
+    "home_id": {
+      "title": "Home Id",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "title": "Occurred At",
+      "type": "string"
+    },
+    "privacy_class": {
+      "$ref": "#/$defs/PrivacyClass",
+      "default": "HOUSEHOLD_PRIVATE"
+    },
+    "quality": {
+      "default": 1.0,
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Quality",
+      "type": "number"
+    },
+    "received_at": {
+      "format": "date-time",
+      "title": "Received At",
+      "type": "string"
+    },
+    "schema_version": {
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/EventSource"
+    },
+    "subject": {
+      "$ref": "#/$defs/EventSubject",
+      "default": {
+        "device_id": null,
+        "entity_id": null,
+        "room_id": null
+      }
+    },
+    "unit": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Unit"
+    },
+    "value": {
+      "default": null,
+      "title": "Value"
+    }
+  },
+  "required": [
+    "event_id",
+    "event_type",
+    "schema_version",
+    "occurred_at",
+    "received_at",
+    "home_id",
+    "correlation_id",
+    "source"
+  ],
+  "title": "EventEnvelope",
+  "type": "object"
+}

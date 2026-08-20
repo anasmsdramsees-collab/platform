@@ -1,0 +1,107 @@
+<!doctype html>
+<!-- SYLTRA local console (spec §28, guidelines §4 and §9.2, ADR-007).
+     `lang` and `dir` are set by console.js from the chosen locale, so Arabic
+     mirrors the whole document rather than a themed subset.
+
+     The shell is markup, not script: the sidebar, top bar and content region
+     exist before any data arrives, so a failed API call degrades to an empty
+     shell with an error rather than a blank page. Navigation items are the one
+     part built at runtime, because which ones exist depends on the caller's
+     permissions. -->
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SYLTRA Console</title>
+  <!-- The console has no stylesheet of its own. Every rule it needs is in the
+       design system, which is what makes "no feature component contains a
+       hardcoded brand colour" true by construction rather than by review. -->
+  <link rel="stylesheet" href="/design-system/tokens/tokens.css">
+  <link rel="stylesheet" href="/design-system/themes/dark-theme.css">
+  <link rel="stylesheet" href="/design-system/themes/light-theme.css">
+  <link rel="stylesheet" href="/design-system/typography/typography.css">
+  <link rel="stylesheet" href="/design-system/tokens/motion.css">
+  <link rel="stylesheet" href="/design-system/foundation.css">
+  <link rel="stylesheet" href="/design-system/primitives.css">
+  <link rel="stylesheet" href="/design-system/shell.css">
+  <link rel="stylesheet" href="/design-system/domain.css">
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+  <div class="app-shell">
+
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">
+        <!-- Typed, not the approved lockup: guidelines §5.4 forbids generating
+             the production SVGs from the PNGs without product-owner approval,
+             and none has been supplied. The brand mark never mirrors (§10.2). -->
+        <span class="app-sidebar__mark icon-universal" aria-hidden="true">S</span>
+        <span class="app-sidebar__wordmark">SYLTRA</span>
+      </div>
+
+      <!-- Filled by console.js from the caller's permissions. -->
+      <nav class="app-nav" id="nav" data-i18n-aria-label="nav_label" aria-label="Sections"></nav>
+
+      <div class="app-sidebar__footer">
+        <button class="nav-item" type="button" id="sidebar-toggle" aria-expanded="true">
+          <span class="nav-item__icon icon-directional" aria-hidden="true">‹</span>
+          <span class="nav-item__label" data-i18n="collapse_sidebar">Collapse</span>
+        </button>
+      </div>
+    </aside>
+
+    <header class="app-topbar">
+      <!-- §4: workspace and property selection stay at the top. -->
+      <div class="app-topbar__scope">
+        <label class="sr-only" for="workspace" data-i18n="workspace">Workspace</label>
+        <select class="select" id="workspace"></select>
+        <label class="sr-only" for="property" data-i18n="property">Property</label>
+        <select class="select" id="property"></select>
+      </div>
+
+      <!-- §4: user, language, appearance and sign-out live in the account area. -->
+      <div class="app-topbar__account">
+        <span class="app-topbar__user">
+          <span id="account-name"></span>
+          <span class="app-topbar__role" id="account-role"></span>
+        </span>
+
+        <label class="sr-only" for="locale" data-i18n="language">Language</label>
+        <select class="select" id="locale" aria-describedby="locale-help">
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
+        <span id="locale-help" class="sr-only" data-i18n="language_help">Changes the language and text direction</span>
+
+        <label class="sr-only" for="appearance" data-i18n="appearance">Appearance</label>
+        <select class="select" id="appearance">
+          <option value="system" data-i18n="appearance_system">System</option>
+          <option value="dark" data-i18n="appearance_dark">Dark</option>
+          <option value="light" data-i18n="appearance_light">Light</option>
+        </select>
+
+        <button class="btn btn--ghost" type="button" id="sign-out" data-i18n="sign_out">Sign out</button>
+      </div>
+    </header>
+
+    <main class="app-content" id="main">
+      <!-- §9.3: critical risk banners sit at the top of the content region,
+           above whatever view is showing. -->
+      <div class="app-content__banners" id="banners" role="status" aria-live="polite"></div>
+
+      <div class="page-header">
+        <h1 class="page-header__title" id="page-title"></h1>
+      </div>
+
+      <!-- Announces loading and errors without stealing focus. -->
+      <p id="status-line" class="muted" role="status" aria-live="polite"></p>
+
+      <section id="view" tabindex="-1"></section>
+    </main>
+
+  </div>
+
+  <script type="module" src="./console.js"></script>
+</body>
+</html>

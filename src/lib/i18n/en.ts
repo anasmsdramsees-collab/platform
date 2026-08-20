@@ -279,7 +279,7 @@ const en: Dictionary = {
     emailLabel: "Email",
     webLabel: "Web",
     corporateLabel: "Corporate",
-    corporateValue: "+966 (0) 11 000 0000",
+    corporateValue: "00966533826009",
   },
   faqPage: {
     eyebrow: "FAQ",

@@ -279,7 +279,7 @@ const ar: Dictionary = {
     emailLabel: "البريد الإلكتروني",
     webLabel: "الموقع الإلكتروني",
     corporateLabel: "الخط المؤسسي",
-    corporateValue: "+966 (0) 11 000 0000",
+    corporateValue: "00966533826009",
   },
   faqPage: {
     eyebrow: "الأسئلة الشائعة",

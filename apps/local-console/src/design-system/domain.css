@@ -548,3 +548,56 @@
   block-size: 100%;
   background: var(--accent);
 }
+
+/* ── power over time (§27 criterion 9) ──
+ *
+ * Bars rather than a line, because the series has holes in it by design and a
+ * line would have to either join across a gap — claiming a consumption nobody
+ * measured — or break in a way that reads as a rendering fault. A missing hour
+ * is simply a column that is not there.
+ */
+.chart--bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-1);
+  block-size: 8rem;
+  padding-block: var(--space-2);
+  border-block-end: var(--control-border-width) solid var(--border);
+  overflow-x: auto;
+}
+
+.chart__column {
+  position: relative;
+  flex: 1 0 var(--space-3);
+  block-size: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.chart__bar {
+  inline-size: 100%;
+  background: var(--accent);
+  border-start-start-radius: var(--radius-sm);
+  border-start-end-radius: var(--radius-sm);
+}
+
+/* An hour the meter barely reported in. Hatched rather than merely paler:
+ * §8 forbids carrying a state by colour alone, and "we are less sure of this
+ * bar" is a state. */
+.chart__bar[data-sparse="true"] {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--accent),
+    var(--accent) 2px,
+    transparent 2px,
+    transparent 5px
+  );
+}
+
+/* The peak inside the hour, which the mean hides. */
+.chart__peak {
+  position: absolute;
+  inline-size: 100%;
+  block-size: 2px;
+  background: var(--text-tertiary);
+}

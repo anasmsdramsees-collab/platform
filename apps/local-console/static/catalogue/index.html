@@ -980,6 +980,33 @@
       </div>
     </section>
 
+    <section class="catalogue__section">
+      <h2 class="type-section-title">Power over time</h2>
+      <p class="type-body">
+        Bars rather than a line, because the series has holes in it by design.
+        A line would either join across a gap — claiming a consumption nobody
+        measured, which §17.11 forbids — or break in a way that reads as a
+        rendering fault. A missing hour is simply a column that is not there.
+      </p>
+      <div class="specimen">
+        <div class="chart chart--bars" role="img"
+             aria-label="Six hours measured, one with no readings. Highest reading 2400 watts.">
+          <div class="chart__column"><div class="chart__peak" style="bottom: 40%"></div><div class="chart__bar" style="height: 30%"></div></div>
+          <div class="chart__column"><div class="chart__peak" style="bottom: 55%"></div><div class="chart__bar" style="height: 45%"></div></div>
+          <div class="chart__column"><div class="chart__peak" style="bottom: 100%"></div><div class="chart__bar" style="height: 35%"></div></div>
+          <div class="chart__column"><div class="chart__peak" style="bottom: 60%"></div><div class="chart__bar" data-sparse="true" style="height: 50%"></div></div>
+          <div class="chart__column"><div class="chart__peak" style="bottom: 70%"></div><div class="chart__bar" style="height: 65%"></div></div>
+          <div class="chart__column"><div class="chart__peak" style="bottom: 50%"></div><div class="chart__bar" style="height: 42%"></div></div>
+        </div>
+        <p class="type-caption">
+          The fourth bar is hatched: that hour was measured twice rather than
+          twelve times, and less confidence is a state, so it is not carried by
+          colour alone (§8). The thin line above each bar is the peak inside
+          the hour, which the mean hides.
+        </p>
+      </div>
+    </section>
+
   </main>
 </div>
 

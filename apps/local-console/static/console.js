@@ -1719,12 +1719,83 @@ function meteredDevices(devices) {
   return devices.filter((device) => powerReading(device) !== null);
 }
 
+/* ── power over time (§27 criterion 9) ──
+
+   The one thing this chart does differently: it does not join across a gap.
+
+   An hour nothing reported in is drawn as a gap, because a line through it
+   would be a claim about consumption nobody measured — the exact estimate
+   §17.11 forbids. Bars rather than a line, so each hour stands on its own and
+   an absent one is visibly absent rather than being a slightly longer segment.
+
+   Bar height is the mean; a fainter mark shows the maximum, because a mean of
+   800 W over an hour hides a compressor that pulled 2.4 kW for four minutes,
+   and that spike is usually what somebody opened this screen to find. */
+
+function powerOverTime(history) {
+  const section = el("section", "card");
+  section.append(el("h2", "type-section-title", t("power_over_time")));
+
+  const buckets = history.buckets || [];
+  if (!buckets.length) {
+    section.append(
+      notice(
+        "partial",
+        history.recording_since ? t("no_history_yet") : t("no_history_at_all"),
+        history.recording_since ? t("no_history_yet_detail") : t("no_history_at_all_detail"),
+      ),
+    );
+    return section;
+  }
+
+  const peak = Math.max(...buckets.map((b) => b.maximum));
+  const chart = el("div", "chart chart--bars");
+  chart.setAttribute("role", "img");
+  /* The whole chart as one sentence, because a bar chart is invisible to a
+     screen reader and a per-bar label would read as noise (§18). */
+  chart.setAttribute(
+    "aria-label",
+    t("power_over_time_summary")
+      .replace("{buckets}", String(buckets.length))
+      .replace("{missing}", String((history.missing || []).length))
+      .replace("{peak}", String(Math.round(peak))),
+  );
+
+  for (const bucket of buckets) {
+    const column = el("div", "chart__column");
+    const bar = el("div", "chart__bar");
+    bar.style.height = `${Math.max(2, (bucket.watts / peak) * 100)}%`;
+    /* Coverage, shown rather than hidden: an hour with two readings and an
+       hour with twelve are not the same claim, and the fainter bar says so
+       without a second axis. */
+    if (bucket.coverage < 0.5) bar.dataset.sparse = "true";
+    const spike = el("div", "chart__peak");
+    spike.style.bottom = `${(bucket.maximum / peak) * 100}%`;
+    column.append(spike, bar);
+    column.title = `${when(bucket.start)} — ${Math.round(bucket.watts)} W`;
+    chart.append(column);
+  }
+  section.append(chart);
+
+  const missing = (history.missing || []).length;
+  section.append(
+    el("p", "type-caption muted",
+      missing
+        ? t("history_gaps").replace("{n}", String(missing))
+        : t("history_complete")),
+  );
+  /* Said out loud rather than left to be inferred from a hole in the chart. */
+  section.append(el("p", "type-caption muted", t("history_never_estimated")));
+  return section;
+}
+
 async function renderEnergy(host) {
   const home = state.homeId;
   const { data, failed } = await loadHomeView({
     devices: api(`/v1/homes/${home}/devices`),
     risks: api(`/v1/homes/${home}/risks`),
     models: api(`/v1/homes/${home}/models`),
+    history: api(`/v1/homes/${home}/energy/history?resolution=hour&hours=24`),
   });
   const partial = partialNotice(failed);
   if (partial) host.append(partial);
@@ -1749,6 +1820,8 @@ async function renderEnergy(host) {
     .map((device) => ({ device, reading: powerReading(device) }))
     .filter((entry) => entry.reading && entry.reading.status === "KNOWN");
   const total = live.reduce((sum, entry) => sum + Number(entry.reading.value || 0), 0);
+
+  if (data.history) host.append(powerOverTime(data.history));
 
   host.append(el("h2", "type-section-title", t("current_power")));
   const metrics = el("div", "metric-row");

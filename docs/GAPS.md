@@ -186,15 +186,26 @@ Five conflicts from the UI audit (C12, C32–C35) blocked on you:
 - Are **scheduled triggers** ("at 7pm") in scope? They need a clock source in
   the evaluation loop, which is a decision about who owns time in this platform.
 
-### 2.6 Energy over time
+### 2.6 Energy over time — **built**
 
-The Energy screen shows current power, per-device breakdown where a device
-meters it, anomalies and coverage. It shows no trend, no baseline comparison and
-no cost, because the platform records power as it is read and keeps no
-aggregation — and §17.11 forbids estimating any of them.
+`GET /v1/homes/{home_id}/energy/history` aggregates measured power into minute,
+hour or day buckets, and the Energy screen draws it.
 
-*Closing it:* a time-series endpoint, which is also what §27 criterion 9
-(charts) needs.
+The design is one rule: §17.11 forbids estimating a measurement, so an hour
+nothing reported in is listed under `missing` rather than drawn as zero.
+`EnergyBucket` refuses to be constructed with no samples, so the rule cannot be
+lost one call site at a time. Bars rather than a line, because a line has to
+either join across a gap or break in a way that reads as a rendering fault.
+
+Every bucket carries `samples` and `coverage` beside the mean — an hour measured
+twice and an hour measured twelve times are not the same claim, and the sparse
+one is hatched rather than merely paler, since less confidence is a state and §8
+forbids carrying a state by colour alone.
+
+Still absent, deliberately: kilowatt-hours and cost. Converting a mean of
+unevenly spaced power readings to kWh is a guess; `energy.consumption` is the
+capability for cumulative energy. A tariff needs effective dates and tiers, and
+a cost computed from the wrong one is worse than none.
 
 ---
 
@@ -306,7 +317,7 @@ Recorded so nobody re-opens them as oversights.
 | Category | Count | Blocked on |
 |---|---|---|
 | Unverified against reality | 6 | a real home, a real Home Assistant, a person |
-| Awaiting your decision | 5 | you |
+| Awaiting your decision | 3 | you |
 | Needs a person | 3 | scheduling |
 | Known engineering gaps | 1 | nobody — pick them up any time |
 | Structural divergence | 3 groups | explained in place, not resolved |

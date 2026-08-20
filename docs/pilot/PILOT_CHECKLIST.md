@@ -46,6 +46,8 @@ whole protection, and each was a checkbox someone had to get right:
 
 - [ ] `dispatch = OBSERVE_ONLY` is set, and System Health shows **"This hub is
       watching, not acting"** on screen
+- [ ] `make observe` is running, and the dashboard's first panel reads **No**
+      under "Hub can act on devices"
 - [ ] Every home starts in `OBSERVE`
 - [ ] The pilot plan says who advances the mode, and on what evidence
 - [ ] `AUTHORIZED_AUTOMATION` is not planned for week one
@@ -55,7 +57,10 @@ whole protection, and each was a checkbox someone had to get right:
 
 ### Before enabling dispatch
 
-- [ ] The week's refused commands have been read, not just counted
+- [ ] The week's refused commands have been read, not just counted — the
+      dashboard's "Actions refused before dispatch" panel, broken down by reason
+- [ ] The policy-outcomes panel has been reviewed: a week of DENY and a week of
+      ALLOW are very different pilots
 - [ ] Nothing in that list would have been unwelcome, unsafe, or surprising
 - [ ] The household agrees to the change and knows how to reverse it
 - [ ] Someone is present in the home the first time it acts

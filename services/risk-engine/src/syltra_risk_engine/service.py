@@ -27,6 +27,7 @@ from syltra_contracts import (
     assert_risk_transition,
 )
 from syltra_digital_twin.core import HomeState
+from syltra_risk_engine import metrics
 from syltra_risk_engine.response import ResponsePlan, plan_response
 from syltra_risk_engine.governor import Confirmation, SafetyGovernor
 from syltra_risk_engine.rules import RiskInput, RiskProposal, evaluate_all
@@ -304,6 +305,9 @@ class RiskEngineService:
         plan = plan_response(confirmation, home, now)
         self._plans[home_id][key] = plan
         self._cases[home_id][key] = case
+        metrics.CONFIRMATIONS.labels(
+            category=confirmation.category.value, rule=confirmation.rule.rule_id
+        ).inc()
         self._record(
             home_id, "RISK_CASE_CONFIRMED", confirmation.confirmed_by,
             ",".join(confirmation.reason_codes),

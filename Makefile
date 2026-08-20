@@ -5,7 +5,7 @@
 SHELL := /bin/bash
 COMPOSE := docker compose
 
-.PHONY: bootstrap config-check up down reset-demo seed simulate simulate-list contracts tokens contrast console migrate migrate-status \
+.PHONY: bootstrap config-check up down reset-demo seed simulate simulate-list contracts tokens contrast console observe migrate migrate-status \
         test test-integration test-e2e test-safety lint security coverage demo \
         logs health
 
@@ -92,6 +92,13 @@ demo: ## Start the platform and run the deterministic demo against it
 	@echo "waiting for services to become healthy…" && sleep 10
 	$(MAKE) seed
 	$(MAKE) health
+
+observe: ## Start Prometheus and Grafana (spec §29 dashboard) on 127.0.0.1:3001
+	@grep -q '^GRAFANA_ADMIN_PASSWORD=.\+' .env 2>/dev/null || { \
+		echo "Set GRAFANA_ADMIN_PASSWORD in .env first — a dashboard of a household's"; \
+		echo "behavioural history does not ship with a default password."; exit 1; }
+	$(COMPOSE) --profile observability up -d prometheus grafana
+	@echo "✔ dashboard: http://127.0.0.1:3001  (SYLTRA — hub overview)"
 
 logs: ## Tail structured service logs
 	$(COMPOSE) logs -f --tail=100

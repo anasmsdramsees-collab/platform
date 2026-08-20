@@ -14,6 +14,12 @@ EVENTS_INVALID = Counter(
 EVENTS_DUPLICATE = Counter(
     "syltra_twin_events_duplicate_total", "already-seen events skipped"
 )
+DATABASE_LATENCY = Histogram(
+    "syltra_twin_database_latency_seconds",
+    "time spent in the database on one persistence call",
+    ["operation"],
+    buckets=(0.001, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0),
+)
 STATE_UPDATE_LATENCY = Histogram(
     "syltra_twin_state_update_latency_seconds",
     "consume-to-persisted latency for a state update",

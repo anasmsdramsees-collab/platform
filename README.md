@@ -48,6 +48,7 @@ All workflows run through the `Makefile`:
 | `make contracts` | Regenerate JSON Schemas in `contracts/jsonschema/` from the contract models. |
 | `make tokens` | Regenerate the design-system CSS from `tokens.json` (guidelines §24). A test fails if the checked-in CSS drifts. |
 | `make contrast` | Report the WCAG contrast ratio of every token pair in both themes; exits non-zero if any pair fails. |
+| `make observe` | Start Prometheus and Grafana behind the `observability` profile; the dashboard lands on `127.0.0.1:3001`. |
 | `make console` | Run the local console and component catalogue on `127.0.0.1:8088` with a printed development token. |
 | `make migrate` | Apply database migrations (Alembic) to the configured database. |
 | `make migrate-status` | Show the current migration revision. |

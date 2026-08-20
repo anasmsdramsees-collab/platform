@@ -23,6 +23,7 @@ from syltra_contracts import (
     Recommendation,
     compute_input_hash,
 )
+from syltra_policy_safety import metrics
 from syltra_policy_safety.rules import (
     POLICY_RULES_VERSION,
     HomePolicy,
@@ -145,6 +146,12 @@ class PolicyService:
             ),
         )
         self._record(decision, recommendation)
+        metrics.DECISIONS.labels(
+            outcome=decision.decision.value, safety_class=decision.safety_class.value
+        ).inc()
+        metrics.DECIDING_RULE.labels(
+            rule=str(deciding_rule), outcome=decision.decision.value
+        ).inc()
         return decision
 
     def approve(

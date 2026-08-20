@@ -477,7 +477,7 @@ through the same gate.
 | 10 | Risk states distinguish AI pre-alert from deterministic confirmation | ✅ three independent mechanisms |
 | 11 | Safety behavior works without the Adaptive Engine or cloud | ✅ proven in a fresh interpreter and with sockets disabled |
 | 12 | Arabic RTL and English console flows work | ✅ verified live in a browser |
-| 13 | Logs, metrics, health checks and audit records exist | ✅ |
+| 13 | Logs, metrics, health checks and audit records exist | ✅ — thirteen of §29's fourteen metrics instrumented and dashboarded; the fourteenth has no component to measure |
 | 14 | Security, privacy, backup, recovery and pilot documentation exists | ✅ all 22 spec §31 documents |
 | 15 | Unit, contract, integration, end-to-end, safety and fault tests pass | ✅ 739 + 94 + 13, 275 safety |
 | 16 | No secrets or real household data in the repository | ✅ bandit clean; synthetic data only |
@@ -1102,6 +1102,86 @@ The pilot checklist now begins with the switch rather than three promises, and
 gains a section for what must be true **before** dispatch is enabled: the week's
 refused commands read rather than counted, nothing in them unwelcome, the
 household agreeing, and someone present the first time it acts.
+
+## The observability gap, and a correction
+
+Asked whether the build was complete, I checked §32's eighteen criteria and
+found Phase 8's *observability dashboard* deliverable undelivered —
+`config/observability/` held a `.gitkeep`. I then said the instrumentation was
+complete and only the dashboard was missing. **That was wrong**, and I had
+inferred it from forty metrics existing without checking coverage.
+
+**Six of §29's fourteen required metrics had no source at all**, concentrated in
+the services that decide and act:
+
+| §29 metric | Owner | Was |
+|---|---|---|
+| policy outcomes | policy-safety | no metrics module |
+| action success and failure | action-orchestrator | no metrics module |
+| manual override rate | action-orchestrator | no metrics module |
+| active risk cases | risk-engine | no metrics module |
+| database latency | digital-twin | not instrumented |
+| cloud connector status | cloud-connector | **service does not exist** |
+
+Five services had no metrics module whatsoever. A count is not coverage.
+
+### Now
+
+Thirteen of fourteen are instrumented, registered, and incremented by real
+events. The fourteenth is unmet because the component it would measure is not
+built — see below. New modules for policy-safety, action-orchestrator,
+risk-engine and automation-engine; database latency added to the twin.
+
+Three tests keep it that way, and each closes a different way this could rot:
+
+- every §29 metric is **registered in the live Prometheus registry**, not merely
+  defined — a metric that is defined but never registered passes a grep and
+  fails a scrape;
+- a policy decision and an observe-only refusal are **actually counted**, because
+  registering a metric nobody increments is the same gap one step further on;
+- every metric the **dashboard queries** exists, because a panel querying
+  nothing shows "No data" forever, and during a pilot that is indistinguishable
+  from a quiet home.
+
+A fourth finds any metrics module missing from the list, so a whole service
+cannot end up silently outside the check.
+
+### The dashboard
+
+`config/observability/`, behind a compose profile so `make up` stays small:
+
+```bash
+make observe    # → http://127.0.0.1:3001
+```
+
+Sixteen panels, ordered by the questions a pilot week asks. The first is **"Hub
+can act on devices"** — during an observe-only week it reads *No*, and a test
+asserts it stays first, because reading order is the only thing that guarantees
+which fact someone sees first.
+
+Then: confirmed hazards, advisory cases, devices not reporting, cloud
+connected, events in. Then policy outcomes and refusals-by-reason, which in
+observe-only mode are the entire story of what the platform would have done.
+
+Prometheus keeps 30 days locally. Grafana refuses to start without
+`GRAFANA_ADMIN_PASSWORD` — a dashboard of a household's behavioural history
+does not ship with a default password — and has telemetry, update checks and
+sign-up disabled. Nothing in the profile reaches outside the hub.
+
+## A second finding: the Cloud Connector does not exist
+
+§14.11 gives it MVP responsibilities — disabled by default, an export
+allowlist, offline queueing, payload redaction. `services/cloud-connector/`
+contains a `.gitkeep`.
+
+It is not a *critical* blocker: the platform's promise is that local control
+never depends on the cloud, and a connector that does not exist is trivially
+disabled. But it is a specified MVP component that is absent, and the status
+file said the MVP was complete. **Recorded here rather than papered over**, and
+the metrics test names it as the one unmet requirement rather than inventing a
+gauge that would report a healthy cloud link nothing could provide.
+
+Whether to build it is your call. Nothing else depends on it.
 
 ## Next up
 

@@ -35,6 +35,7 @@ from datetime import UTC, datetime
 from typing import Any
 from uuid import UUID, uuid4
 
+from syltra_action_orchestrator import metrics
 from syltra_contracts import (
     ActionAttempt,
     ActionRequest,
@@ -417,6 +418,10 @@ class ActionOrchestrator:
         # the one where an exception would be least defensible in a stranger's
         # home.
         if self._config.dispatch is DispatchMode.OBSERVE_ONLY:
+            metrics.REFUSALS.labels(
+                reason_code="DISPATCH_DISABLED_OBSERVE_ONLY",
+                safety_class=request.safety_class.value,
+            ).inc()
             raise ActionRefused(
                 "DISPATCH_DISABLED_OBSERVE_ONLY",
                 f"this hub is observing only; {request.target.capability} was not sent",

@@ -1,0 +1,39 @@
+# SYLTRA metrics scrape configuration (spec §29).
+#
+# Local only. Every target is a container on the platform's own backend
+# network, and nothing here reaches outside the hub — spec §0 rule 14 says loss
+# of internet must not stop local control, and an observability stack that
+# needed the internet would be the first thing to break that.
+#
+# Services that arrive later already have a job here, commented with the port
+# they will use. A scrape target for a service that is not running shows as
+# `down` in Grafana, which is honest, and is why they are added as they land
+# rather than all at once.
+
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  external_labels:
+    hub: syltra-local
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: syltra
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["edge-agent:8081"]
+        labels: { service: edge-agent }
+      - targets: ["digital-twin:8082"]
+        labels: { service: digital-twin }
+      - targets: ["context-engine:8083"]
+        labels: { service: context-engine }
+      - targets: ["adaptive-engine:8084"]
+        labels: { service: adaptive-engine }
+      # Joining as their containers land (see docker-compose.yml):
+      # - targets: ["policy-safety:8085"]
+      # - targets: ["action-orchestrator:8086"]
+      # - targets: ["risk-engine:8087"]
+      # - targets: ["api-gateway:8088"]

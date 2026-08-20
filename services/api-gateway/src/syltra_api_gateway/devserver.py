@@ -5,24 +5,27 @@ data. It seeds synthetic household state (spec §26) and prints a token so the
 console can authenticate. Never used in a pilot or production deployment.
 """
 
+import json
 import logging
 import os
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import uvicorn
-
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from syltra_action_orchestrator import ActionOrchestrator, OrchestratorConfig
 from syltra_adaptive_engine.service import AdaptiveEngineService
-from syltra_api_gateway.api import create_app
-from syltra_api_gateway.dependencies import RateLimiter
-from syltra_api_gateway.platform import Platform
 from syltra_context_engine.service import ContextService
 from syltra_contracts import CommandResult, LearningMode
 from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import HomePolicy, PolicyService
 from syltra_risk_engine import RiskEngineService
 from syltra_security import Role, TokenStore
+
+from syltra_api_gateway.api import create_app
+from syltra_api_gateway.dependencies import RateLimiter
+from syltra_api_gateway.platform import Platform
 
 logger = logging.getLogger(__name__)
 
@@ -81,8 +84,13 @@ def build_platform() -> Platform:
     ]
     for device_id, room, capability, value, unit in seeded:
         envelope = make_envelope(
-            capability=capability, value=value, unit=unit, home_id=HOME,
-            device_id=device_id, room_id=room, occurred_at=now,
+            capability=capability,
+            value=value,
+            unit=unit,
+            home_id=HOME,
+            device_id=device_id,
+            room_id=room,
+            occurred_at=now,
         )
         context.twin.apply(envelope)
         adaptive.observe(envelope)
@@ -123,9 +131,7 @@ def build_platform() -> Platform:
                 ),
             ),
             actions=(
-                AutomationAction(
-                    capability="light.power", value=True, device_id="light_living"
-                ),
+                AutomationAction(capability="light.power", value=True, device_id="light_living"),
             ),
         )
     )
@@ -137,12 +143,48 @@ def build_platform() -> Platform:
         adaptive=adaptive,
         policy=policy,
         orchestrator=ActionOrchestrator(
-            gateway=gateway, read_state=gateway.read, get_decision=policy.get,
+            gateway=gateway,
+            read_state=gateway.read,
+            get_decision=policy.get,
             config=OrchestratorConfig(environment="development", verify_delay_seconds=0.0),
         ),
         feedback=FeedbackService(),
         risk=RiskEngineService(),
     )
+
+
+def _add_dev_sign_in(app: FastAPI, token: str, port: int) -> None:
+    """A one-click sign-in that only this development server has.
+
+    The console reads its token from `localStorage` and offers no sign-in form,
+    which is right for a hub with a real identity provider in front of it and
+    miserable for looking at the thing: it leaves pasting into DevTools as the
+    only way in, and Chrome now refuses that paste until you type "allow
+    pasting" first.
+
+    This route stores the token and redirects. It is defined here rather than
+    in `api.py` so it cannot reach a pilot: `create_app` never sees it. The
+    token is not put in the URL — a URL is copied, bookmarked and logged, and
+    this one is handed straight to the page instead.
+
+    It sits at the root rather than under `/console/` because the console is a
+    static mount, and a mount answers every path beneath it before a route
+    added afterwards gets a look.
+    """
+
+    @app.get("/dev-login", response_class=HTMLResponse, include_in_schema=False)
+    async def dev_login() -> HTMLResponse:
+        page = (
+            "<!doctype html><meta charset=utf-8><title>SYLTRA — development sign-in</title>"
+            "<script>"
+            f"localStorage.setItem('syltra.token', {json.dumps(token)});"
+            f"location.replace('/console/?home={HOME}');"
+            "</script>"
+            "<p>Signing in…</p>"
+        )
+        return HTMLResponse(page)
+
+    print(f"  One-click sign-in:   http://127.0.0.1:{port}/dev-login")
 
 
 def main() -> None:
@@ -162,6 +204,7 @@ def main() -> None:
 
     port = int(os.environ.get("PORT", "8088"))
     print(f"\n  SYLTRA console:    http://127.0.0.1:{port}/console/?home={HOME}")
+    _add_dev_sign_in(app, token, port)
     # The catalogue is the design system on its own: static, no data, no token.
     print(f"  Component catalogue: http://127.0.0.1:{port}/console/catalogue/")
     print("\n  Development tokens, one per role:")

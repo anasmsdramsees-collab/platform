@@ -12,6 +12,7 @@ from uuid import UUID, uuid4
 import pytest
 from syltra_action_orchestrator import (
     ActionOrchestrator,
+    DispatchMode,
     OrchestratorConfig,
     build_action_request,
 )
@@ -104,12 +105,15 @@ def build(
     gateway: FakeGateway,
     decisions: dict[UUID, PolicyDecision],
     environment: str = "production",
+    dispatch: DispatchMode = DispatchMode.ENABLED,
 ) -> ActionOrchestrator:
     return ActionOrchestrator(
         gateway=gateway,
         read_state=gateway.read,
         get_decision=decisions.get,
-        config=OrchestratorConfig(environment=environment, verify_delay_seconds=0.0),
+        config=OrchestratorConfig(
+            environment=environment, dispatch=dispatch, verify_delay_seconds=0.0
+        ),
     )
 
 
@@ -117,13 +121,15 @@ def scenario(
     outcome: PolicyOutcome = PolicyOutcome.ALLOW,
     initial: Any = 27.0,
     environment: str = "production",
+    dispatch: DispatchMode = DispatchMode.ENABLED,
+    safety_class: SafetyClass = SafetyClass.COMFORT,
     **gateway_kwargs: Any,
 ) -> tuple[ActionOrchestrator, FakeGateway, Any]:
     gateway = FakeGateway(
         state={("ac_living", "climate.target_temperature"): initial}, **gateway_kwargs
     )
-    approved = decision(outcome)
-    orchestrator = build(gateway, {approved.decision_id: approved}, environment)
+    approved = decision(outcome, safety_class=safety_class)
+    orchestrator = build(gateway, {approved.decision_id: approved}, environment, dispatch)
     request = build_action_request(approved, recommendation(), NOW)
     return orchestrator, gateway, request
 
@@ -476,3 +482,76 @@ async def test_a_working_sink_receives_every_entry() -> None:
     await orchestrator.execute(build_action_request(approved, recommendation(), NOW), now=NOW)
     assert written
     assert orchestrator.audit_store_available is True
+
+
+# ── observe-only: the switch a first pilot runs behind ──
+
+
+@pytest.mark.safety
+async def test_an_observing_hub_sends_nothing_to_a_device() -> None:
+    # The guarantee a household is owed on day one in a real home: everything
+    # else runs, and nothing is commanded.
+    orchestrator, gateway, request = scenario(dispatch=DispatchMode.OBSERVE_ONLY)
+
+    result = await orchestrator.execute(request)
+
+    assert result.status is ActionStatus.FAILED
+    assert "DISPATCH_DISABLED_OBSERVE_ONLY" in result.reason_codes
+    assert gateway.commands == [], "an observing hub commanded a device"
+
+
+@pytest.mark.safety
+@pytest.mark.parametrize("safety_class", list(SafetyClass))
+async def test_observe_only_holds_for_every_safety_class(safety_class: SafetyClass) -> None:
+    # Not only the critical ones. The existing environment block covers
+    # life-safety and safety-related capabilities; comfort was never blocked in
+    # any environment, and a light switching itself on in a stranger's house on
+    # night one is exactly the wrong first impression.
+    orchestrator, gateway, request = scenario(
+        dispatch=DispatchMode.OBSERVE_ONLY, safety_class=safety_class
+    )
+    result = await orchestrator.execute(request)
+    assert "DISPATCH_DISABLED_OBSERVE_ONLY" in result.reason_codes
+    assert gateway.commands == []
+
+
+@pytest.mark.safety
+async def test_observe_only_is_checked_before_anything_else() -> None:
+    # Placed at the top of the one function every dispatch passes through, so
+    # no earlier condition can reach a device first. Proven by handing it a
+    # request that would otherwise fail for a *different* reason: the observe
+    # refusal is what comes back.
+    gateway = FakeGateway(state={("ac_living", "climate.target_temperature"): 27.0})
+    approved = decision(PolicyOutcome.ALLOW)
+    # No decision on record at all, which would normally be NO_POLICY_DECISION.
+    orchestrator = build(gateway, {}, "production", DispatchMode.OBSERVE_ONLY)
+    request = build_action_request(approved, recommendation(), NOW)
+
+    result = await orchestrator.execute(request)
+
+    assert "DISPATCH_DISABLED_OBSERVE_ONLY" in result.reason_codes
+    assert "NO_POLICY_DECISION" not in result.reason_codes
+    assert gateway.commands == []
+
+
+@pytest.mark.safety
+async def test_an_observing_hub_records_what_it_would_have_sent() -> None:
+    # The point of a pilot week: read back everything SYLTRA wanted to do. A
+    # refusal that did not say what was refused would make the mode useless.
+    orchestrator, _, request = scenario(dispatch=DispatchMode.OBSERVE_ONLY)
+
+    await orchestrator.execute(request)
+
+    entries = [e for e in orchestrator.audit if "DISPATCH_DISABLED" in e.reason]
+    assert entries, "the refusal was not recorded"
+    detail = entries[0].detail
+    assert detail["capability"] == "climate.target_temperature"
+    assert detail["device_id"] == "ac_living"
+    assert "value" in detail, "the value that was not sent is not recorded"
+    assert detail["attempts"] == 0, "an observing hub made no attempt"
+
+
+async def test_dispatch_is_enabled_by_default() -> None:
+    # Observe-only is a deliberate choice, not a default that could silently
+    # disable a home that was meant to be working.
+    assert OrchestratorConfig().dispatch is DispatchMode.ENABLED

@@ -29,6 +29,7 @@ Every attempt and outcome is recorded immutably (invariant 12).
 import asyncio
 import logging
 from collections.abc import Awaitable, Callable
+from enum import StrEnum
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any
@@ -70,9 +71,32 @@ AuditSink = Callable[["AuditEntry"], None]
 """Durable audit writer. Raising signals that the record cannot be stored."""
 
 
+class DispatchMode(StrEnum):
+    """Whether this hub is allowed to command anything at all.
+
+    `OBSERVE_ONLY` is for the first run in a real home. Everything else the
+    platform does still happens — events arrive, the twin projects, contexts
+    resolve, models train, policy decides, automations evaluate — and nothing
+    reaches a device. Every refusal is recorded with the command that was not
+    sent, so a week in this mode answers the question a pilot exists to ask:
+    *what would SYLTRA have done in this house?*
+
+    This is deliberately not the same thing as OBSERVE on the learning ladder.
+    That governs whether the Adaptive Engine proposes; this governs whether
+    anything at all is dispatched, including a user-authored automation and a
+    deterministic safety response. It is the switch you can hand to a household
+    and describe in one sentence.
+    """
+
+    ENABLED = "ENABLED"
+    OBSERVE_ONLY = "OBSERVE_ONLY"
+
+
 @dataclass
 class OrchestratorConfig:
     environment: str = "development"
+    dispatch: DispatchMode = DispatchMode.ENABLED
+    """Set to OBSERVE_ONLY for a first pilot: nothing reaches a device."""
     verify_delay_seconds: float = 0.05
     """Pause before reading back state, so the device can settle."""
     compensate_on_failure: bool = True
@@ -378,8 +402,26 @@ class ActionOrchestrator:
             observed,
         )
 
+    @property
+    def dispatch_enabled(self) -> bool:
+        """Whether this orchestrator may command a device."""
+        return self._config.dispatch is DispatchMode.ENABLED
+
     def _preflight(self, request: ActionRequest, now: datetime) -> None:
         """The spec §14.7 preconditions, checked at dispatch time."""
+        # First, before anything else and regardless of class, decision or
+        # urgency: an observing hub does not command. Placed at the top of the
+        # one function every dispatch passes through, so there is no path that
+        # reaches a device without meeting it — including a confirmed safety
+        # response, which is the case most likely to argue for an exception and
+        # the one where an exception would be least defensible in a stranger's
+        # home.
+        if self._config.dispatch is DispatchMode.OBSERVE_ONLY:
+            raise ActionRefused(
+                "DISPATCH_DISABLED_OBSERVE_ONLY",
+                f"this hub is observing only; {request.target.capability} was not sent",
+            )
+
         if request.is_expired_at(now):
             raise ActionRefused("ACTION_EXPIRED", "action TTL elapsed before dispatch")
 

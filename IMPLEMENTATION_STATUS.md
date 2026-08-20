@@ -1070,6 +1070,39 @@ runs an actual automation, and the safety case says so.
   needs a clock source in the evaluation loop, which is a separate decision
   about who owns time in this platform.
 
+## Before a real home — a hub that cannot act ✅
+
+The pilot plan is a real home after the build. The single most important
+question for that is whether the platform can be *guaranteed* not to act, and
+the honest answer was no: the protections were three separate things someone had
+to get right — the learning mode, the absence of automations, and the policy
+gate. The environment block covered life-safety and safety-related capabilities
+only, and **comfort actions were never blocked in any environment**. A light
+switching itself on in a stranger's house on night one is exactly the wrong
+first impression.
+
+`OrchestratorConfig.dispatch = OBSERVE_ONLY` makes it one thing.
+
+Everything else still runs — events arrive, the twin projects, contexts resolve,
+models train, policy decides, automations evaluate — and nothing reaches a
+device. Each refusal records the capability, device, value and safety class of
+the command that was not sent. **That record is the deliverable of a pilot week**,
+not a side effect: it answers "what would SYLTRA have done in this house?"
+
+| Property | How it is held |
+|---|---|
+| Nothing is dispatched | The check is the first line of `_preflight`, the one function every dispatch passes through |
+| Every class, not only the critical ones | Parametrized over all five safety classes |
+| Before every other condition | Proven by handing it a request that would otherwise fail differently and asserting the observe refusal returns |
+| The refusal is legible | Records what would have been sent, translated in both languages |
+| Cannot switch itself on | Enabled is the default, and a test says so — a mode that could silently disable a working home would be its own hazard |
+| Visible without reading a config file | System Health says *"This hub is watching, not acting"* before anything else on the page |
+
+The pilot checklist now begins with the switch rather than three promises, and
+gains a section for what must be true **before** dispatch is enabled: the week's
+refused commands read rather than counted, nothing in them unwelcome, the
+household agreeing, and someone present the first time it acts.
+
 ## Next up
 
 The MVP (master build spec, phases 0–8) and every UI phase the guidelines define
@@ -1097,7 +1130,9 @@ are complete. What remains needs a decision or a person, not more code.
 
 ### Needs a person, not a decision
 
-5. **The pilot checklist.** `docs/pilot/PILOT_CHECKLIST.md` and its sign-offs.
+5. **The pilot itself.** `docs/pilot/PILOT_CHECKLIST.md` and its sign-offs.
+   Week one runs with `dispatch = OBSERVE_ONLY`, and the deliverable is the
+   list of commands the hub did not send.
 6. **The manual accessibility checks.** A screen reader walkthrough, an Arabic
    reading pass for tone, Windows high-contrast, and a judgement on focus-ring
    visibility. 200% zoom and the accessible-name tree are done and recorded in

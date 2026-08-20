@@ -133,6 +133,10 @@ REASON_CODES: Final[dict[str, dict[str, str]]] = {
         "en": "Held back because this action could not be recorded",
         "ar": "تم التأجيل لأنه تعذّر تسجيل هذا الإجراء",
     },
+    "DISPATCH_DISABLED_OBSERVE_ONLY": {
+        "en": "This hub is observing only and sent nothing to the device",
+        "ar": "هذا الموزّع في وضع المراقبة فقط ولم يُرسل شيئاً إلى الجهاز",
+    },
     "AUTOMATION_TRIGGERED": {
         "en": "An automation you set up asked for this",
         "ar": "طلبت هذا أتمتة قمت بإعدادها",

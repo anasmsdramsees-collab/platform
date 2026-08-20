@@ -399,6 +399,41 @@ Recorded honestly rather than closed prematurely:
 | Confirmed hazards notify and prepare, but nothing executes a response | **Half closed.** A confirmation now produces a `ResponsePlan` (`services/risk-engine/.../response.py`): the household is told, the valve is identified and its reachability verified, and the command is computed and *not sent*. What remains unbuilt is execution — closing a valve, sounding a siren, unlocking egress — which needs product-owner approval per spec §0 rule 9. See below | Execution: post-MVP, with approval |
 | Update and rollback is designed, not implemented | `docs/architecture/DEPLOYMENT.md` describes the intended sequence | Next iteration |
 
+## Observing only: a hub that cannot act
+
+The protections that stop SYLTRA acting were, until now, three separate things
+someone had to get right: the learning mode, the absence of automations, and the
+policy gate. Any one of them being wrong meant the platform could move something
+in an occupied home. For a first pilot that is the wrong shape of guarantee.
+
+`OrchestratorConfig.dispatch = OBSERVE_ONLY` makes it one thing.
+
+**Code.** The check sits at the top of `_preflight`, the single function every
+dispatch passes through, before the expiry check, before the decision lookup,
+before anything. It ignores safety class entirely — including a confirmed safety
+response, which is the case most likely to argue for an exception and the one
+where an exception would be least defensible in a stranger's home.
+
+**Tests.** `test_an_observing_hub_sends_nothing_to_a_device`,
+`test_observe_only_holds_for_every_safety_class` (parametrized over all five),
+`test_observe_only_is_checked_before_anything_else` — which proves ordering by
+handing it a request that would otherwise fail for a different reason and
+asserting the observe refusal is what returns —
+`test_an_observing_hub_records_what_it_would_have_sent`, and
+`test_dispatch_is_enabled_by_default`, because a mode that could switch itself
+on silently would be its own hazard.
+
+**Logs.** `ACTION_FAILED` with `DISPATCH_DISABLED_OBSERVE_ONLY`, and a detail
+carrying the capability, device, value and safety class of the command that was
+not sent. That record is the deliverable of a pilot week, not a side effect of
+it.
+
+**Operator control.** The console's System Health says *"This hub is watching,
+not acting"* before anything else on the page, and lists whether the hub can act
+as a plain fact. A pilot should not have to read a config file to know.
+
+---
+
 ## Notify and prepare, and why execution is not here
 
 Spec §20.4 gives the AI role as "notify and prepare the allowed response", with

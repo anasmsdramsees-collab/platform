@@ -42,6 +42,16 @@ class Platform:
     def known_homes(self) -> list[str]:
         return sorted(self.twin.home_ids)
 
+    @property
+    def dispatch_enabled(self) -> bool:
+        """Whether this hub may command a device at all.
+
+        Read from the orchestrator's own configuration rather than a separate
+        setting, so the console cannot report "acting" while the component that
+        would act is observing.
+        """
+        return self.orchestrator.dispatch_enabled
+
     def system_status(self, now: datetime | None = None) -> dict[str, Any]:
         moment = now or datetime.now(tz=UTC)
         return {
@@ -49,6 +59,9 @@ class Platform:
             "checked_at": moment.isoformat(),
             "uptime_seconds": round((moment - self.started_at).total_seconds(), 1),
             "homes": len(self.known_homes()),
+            # The most consequential fact about a hub, and the one a pilot
+            # needs on screen rather than in a config file: can it act?
+            "dispatch_enabled": self.dispatch_enabled,
             # Component health, not implementation detail: no broker URLs, no
             # stream names, no database DSNs.
             "components": {

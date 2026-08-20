@@ -34,10 +34,31 @@ conversation — not a substitute for it.
 
 ## 3. Learning posture
 
+**Week one runs with the hub unable to act.** Set the Action Orchestrator's
+`dispatch` to `OBSERVE_ONLY`. Everything else runs — events arrive, the twin
+projects, contexts resolve, models train, policy decides, automations evaluate
+— and nothing reaches a device. Every refusal records the command that was not
+sent, so the week answers the question the pilot exists to ask: *what would
+SYLTRA have done in this house?*
+
+This is a switch, not a procedure. The three items below it used to be the
+whole protection, and each was a checkbox someone had to get right:
+
+- [ ] `dispatch = OBSERVE_ONLY` is set, and System Health shows **"This hub is
+      watching, not acting"** on screen
 - [ ] Every home starts in `OBSERVE`
 - [ ] The pilot plan says who advances the mode, and on what evidence
 - [ ] `AUTHORIZED_AUTOMATION` is not planned for week one
 - [ ] Model evaluation gates are configured and understood
+- [ ] The household has been told, in their own language, that the hub is
+      watching and will not act — and what will change when that changes
+
+### Before enabling dispatch
+
+- [ ] The week's refused commands have been read, not just counted
+- [ ] Nothing in that list would have been unwelcome, unsafe, or surprising
+- [ ] The household agrees to the change and knows how to reverse it
+- [ ] Someone is present in the home the first time it acts
 
 ## 4. Privacy
 

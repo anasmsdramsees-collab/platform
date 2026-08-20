@@ -6,6 +6,7 @@ reversible where the capability supports it (spec §0 rule 15).
 """
 
 from syltra_action_orchestrator.orchestrator import (
+    DispatchMode,
     ActionOrchestrator,
     ActionRefused,
     AuditEntry,
@@ -14,6 +15,7 @@ from syltra_action_orchestrator.orchestrator import (
 )
 
 __all__ = [
+    "DispatchMode",
     "ActionOrchestrator",
     "ActionRefused",
     "AuditEntry",

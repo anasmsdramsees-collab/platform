@@ -1971,9 +1971,17 @@ async function renderHealth(host) {
     ),
   );
 
+  /* §20: never show a normal state when the truth is more important. A hub
+     that cannot act is not a degraded hub — it is a deliberate posture, and a
+     household running a pilot should see it before anything else. */
+  if (data.status.dispatch_enabled === false) {
+    host.append(notice("stale", t("observe_only_title"), t("observe_only_detail")));
+  }
+
   host.append(
     definitions([
       [t("hub"), el("span", "identifier", data.status.hub_id)],
+      [t("can_act"), t(data.status.dispatch_enabled === false ? "no" : "yes")],
       [t("uptime"), ago(data.status.uptime_seconds)],
       [t("properties_count"), data.status.homes],
       [t("cloud"), t("local_only")],

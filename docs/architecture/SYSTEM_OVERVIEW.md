@@ -1,6 +1,10 @@
 # System Overview
 
-SYLTRA Adaptive Edge Platform — what exists today and where it is going.
+SYLTRA Adaptive Edge Platform — the shape of the system and its event model.
+
+For an explanation of the whole platform written for a person rather than a
+component, start with [`docs/PLATFORM_OVERVIEW.md`](../PLATFORM_OVERVIEW.md).
+This document is the architectural detail behind it.
 
 ## The shape of the system
 
@@ -30,15 +34,32 @@ gateway adapter, not rewriting the intelligence layer.
 
 ## What is implemented
 
-| Component | State | Where |
-|---|---|---|
-| Canonical contracts (envelope, capabilities, enums, gateway interface) | ✅ Phase 0–1 | `libs/contracts` |
-| Eventing (subjects, streams, validated publishing, dead-letter) | ✅ Phase 1 | `libs/eventing` |
-| Observability (JSON logs, secret redaction, correlation IDs) | ✅ Phase 1 | `libs/observability` |
-| Edge Agent (HA WebSocket, mapping, normalization, publishing, health) | ✅ Phase 1 | `services/edge-agent` |
-| `HomeAssistantDeviceGateway` adapter | ✅ Phase 1 | `services/edge-agent/gateway.py` |
-| Deterministic simulator + mock HA boundary | ✅ Phase 1 | `simulator/` |
-| Digital Twin, Context, Adaptive, Risk, Policy, Actions, API, SILA | ⬜ Phase 2–7 | `services/*` |
+Every component below is built and tested. `IMPLEMENTATION_STATUS.md` carries the
+phase-by-phase history and the acceptance evidence for each.
+
+| Component | Where |
+|---|---|
+| Canonical contracts (envelope, capabilities, enums, gateway interface) | `libs/contracts` |
+| Eventing (subjects, streams, validated publishing, dead-letter) | `libs/eventing` |
+| Observability (JSON logs, secret redaction, correlation IDs, metrics) | `libs/observability`, `services/*/metrics.py` |
+| Edge Agent (HA WebSocket, mapping, normalization, publishing, health) | `services/edge-agent` |
+| `HomeAssistantDeviceGateway` adapter | `services/edge-agent/gateway.py` |
+| Deterministic simulator + mock HA boundary (21 scenarios) | `simulator/` |
+| Digital Twin (deterministic projection, fingerprints, freshness) | `services/digital-twin` |
+| Context Engine (13 deterministic contexts) | `services/context-engine` |
+| Adaptive Engine (3 models, ONNX, learning ladder, drift suspension) | `services/adaptive-engine` |
+| Automation Engine (typed user rules, non-critical only) | `services/automation-engine` |
+| Policy and Safety Service (16 rules, 5 outcomes) | `services/policy-safety` |
+| Action Orchestrator (verification, retry, manual override, observe-only) | `services/action-orchestrator` |
+| Risk Engine (advisory) and Safety Governor (deterministic confirmation) | `services/risk-engine` |
+| Feedback Service | `services/feedback-service` |
+| Local API Gateway, console, SILA | `services/api-gateway`, `apps/` |
+| Encrypted backup, privacy export and deletion, watchdogs | `libs/operations` |
+
+**Not built:** the Cloud Connector (`services/cloud-connector/` is a placeholder;
+§14.11 specifies it and nothing depends on it), installations, user management,
+and execution of a confirmed-hazard response — the last needs product-owner
+approval under spec §0 rule 9.
 
 ## Data flow today
 
@@ -64,9 +85,9 @@ See `docs/architecture/EVENT_MODEL.md` for the contract detail.
 - **Secrets never travel.** The Home Assistant token is held as `SecretStr`,
   injected by environment, and stripped from every log line by a redaction
   filter — verified by test and by inspecting a running container.
-- **Advisory AI.** No model output can reach an actuator. Today no model exists;
-  when one does (Phase 4), it produces recommendations that must clear the
-  Policy and Safety Service (Phase 5–6) before any action.
+- **Advisory AI.** No model output can reach an actuator. A recommendation must
+  clear the Policy and Safety Service, and a person or a deterministic rule must
+  authorise it, before anything is dispatched.
 - **Critical actuators blocked in development.** The gateway refuses lock, valve,
   breaker, siren, and garage commands in development and simulation environments
   (safety invariant 16), before target resolution.
@@ -80,7 +101,15 @@ See `docs/architecture/EVENT_MODEL.md` for the contract detail.
 - After reconnect it re-bootstraps registries and re-seeds current state, so a
   consumer can rebuild from the normalized stream alone.
 
-## Next
+## Observing only
 
-Phase 2 adds the Digital Twin: versioned JSON Schemas, database migrations,
-deterministic state rebuild from the event stream, and home/room/device APIs.
+The Action Orchestrator can be configured so that **nothing reaches a device at
+all** — `DispatchMode.OBSERVE_ONLY`. Everything else still runs, and each refusal
+records the command that was not sent. This is the posture a first run in a real
+home should use; see `docs/pilot/PILOT_CHECKLIST.md`.
+
+## Where to go next
+
+- [`docs/PLATFORM_OVERVIEW.md`](../PLATFORM_OVERVIEW.md) — the whole platform, explained
+- [`EVENT_MODEL.md`](EVENT_MODEL.md) — how state becomes knowledge
+- [`../safety/SAFETY_CASE.md`](../safety/SAFETY_CASE.md) — the safety argument, in evidence

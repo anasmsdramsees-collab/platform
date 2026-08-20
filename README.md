@@ -129,6 +129,12 @@ For how to change a token, add a component, or add a screen — and which rules
 are enforced by tests rather than convention — see
 [docs/ui/DESIGN_SYSTEM.md](docs/ui/DESIGN_SYSTEM.md).
 
+### Understanding the platform
+
+Start with **[docs/PLATFORM_OVERVIEW.md](docs/PLATFORM_OVERVIEW.md)** — what
+SYLTRA is, how a fact becomes an action, what each component does, and what is
+deliberately not built. It assumes no knowledge of the codebase.
+
 ### Status and roadmap
 
 Progress, per-phase acceptance results, and known gaps are tracked in

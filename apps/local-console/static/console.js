@@ -226,6 +226,17 @@ function ago(seconds) {
   return t("ago_days").replace("{n}", Math.round(value / 86400));
 }
 
+/* A span of time, not a point in the past. `ago` says "5 minutes ago", which
+   is right for an age and nonsense after "Expires in" or "Uptime". */
+function duration(seconds) {
+  if (seconds === undefined || seconds === null) return "—";
+  const value = Math.max(0, Math.round(seconds));
+  if (value < 60) return t("duration_seconds").replace("{n}", value);
+  if (value < 3600) return t("duration_minutes").replace("{n}", Math.round(value / 60));
+  if (value < 86400) return t("duration_hours").replace("{n}", Math.round(value / 3600));
+  return t("duration_days").replace("{n}", Math.round(value / 86400));
+}
+
 function secondsSince(iso) {
   if (!iso) return null;
   return (Date.now() - new Date(iso).getTime()) / 1000;
@@ -954,12 +965,12 @@ function contextList(contexts) {
     node.append(el("h3", "card__title", t(`context_${context.context_type}`)));
     node.append(confidenceBar(context.confidence));
     const meta = el("p", "muted");
-    meta.textContent = `${t("scope")}: ${context.scope} · ${(context.evidence || []).length} ${t("evidence")}`;
+    meta.textContent = `${t("scope")}: ${context.scope} · ${t("evidence")}: ${(context.evidence || []).length}`;
     node.append(meta);
     if (context.advisory_only) node.append(badge("advisory", t("advisory")));
     if (stale) node.append(badge("stale", t("state_stale")));
     else if (context.seconds_until_expiry !== undefined) {
-      node.append(el("p", "expiry", `${t("expires_in")} ${ago(context.seconds_until_expiry)}`));
+      node.append(el("p", "expiry", `${t("expires_in")} ${duration(context.seconds_until_expiry)}`));
     }
     node.append(reasonList(context.reasons));
     grid.append(node);
@@ -1982,7 +1993,7 @@ async function renderHealth(host) {
     definitions([
       [t("hub"), el("span", "identifier", data.status.hub_id)],
       [t("can_act"), t(data.status.dispatch_enabled === false ? "no" : "yes")],
-      [t("uptime"), ago(data.status.uptime_seconds)],
+      [t("uptime"), duration(data.status.uptime_seconds)],
       [t("properties_count"), data.status.homes],
       [t("cloud"), t("local_only")],
     ]),

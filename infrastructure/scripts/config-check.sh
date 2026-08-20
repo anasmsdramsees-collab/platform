@@ -46,6 +46,7 @@ if command -v docker >/dev/null && docker info >/dev/null 2>&1; then
   if NATS_PASSWORD="${NATS_PASSWORD:-placeholder}" \
      POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-placeholder}" \
      HOME_ASSISTANT_TOKEN="${HOME_ASSISTANT_TOKEN:-placeholder}" \
+     GRAFANA_ADMIN_PASSWORD="${GRAFANA_ADMIN_PASSWORD:-placeholder}" \
      docker compose config -q; then
     echo "✔ docker-compose.yml is valid"
   else

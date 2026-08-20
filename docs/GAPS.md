@@ -84,6 +84,27 @@ rendering the wrong colour on correct geometry.
 
 ---
 
+### 1.6 The offline claim has never been tested offline
+
+Spec §0 rule 4 says loss of internet must not stop local control. The build
+honours it structurally: no service calls an external host, the console loads no
+CDN asset or remote font, the models are trained locally and no pretrained
+weights are fetched, and `services/cloud-connector/` is empty.
+
+But no test cuts the network and asserts the platform still works. The tests
+matching "offline" are about a *device* going offline, not the house losing its
+internet. The claim rests on inspection, not on a run.
+
+Two things sit outside the platform's control and will not be fixed by testing
+it: Home Assistant integrations that are themselves cloud-based will stop when
+the line drops, and a NOTIFY step routed to mobile push needs the internet to
+reach a phone. Both are properties of what you connect, not of SYLTRA.
+
+*Closing it:* run the stack with the network interface down, exercise a local
+control path end to end, and assert on it in `tests/safety/`.
+
+---
+
 ## 2. Needs a decision from you
 
 Nothing here can proceed without a product judgement. Each is blocked, not
@@ -249,7 +270,7 @@ Recorded so nobody re-opens them as oversights.
 
 | Category | Count | Blocked on |
 |---|---|---|
-| Unverified against reality | 5 | a real home, a real Home Assistant, a person |
+| Unverified against reality | 6 | a real home, a real Home Assistant, a person |
 | Awaiting your decision | 6 | you |
 | Needs a person | 3 | scheduling |
 | Known engineering gaps | 5 | nobody — pick them up any time |

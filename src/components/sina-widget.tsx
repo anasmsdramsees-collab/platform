@@ -22,7 +22,6 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
   const [loading, setLoading] = useState(false);
   const [voiceReplies, setVoiceReplies] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const speakThisReplyRef = useRef(false);
 
   const router = useRouter();
   const { applyAction } = useHomeControls();
@@ -34,10 +33,9 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
 
-  async function send(override?: string, spoken = false) {
+  async function send(override?: string) {
     const text = (override ?? input).trim();
     if (!text || loading) return;
-    speakThisReplyRef.current = spoken;
 
     const next: Message[] = [...messages, { role: "user", content: text }];
     setMessages(next);
@@ -61,7 +59,7 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
       }
 
       setMessages((m) => [...m, { role: "assistant", content: data.reply }]);
-      if (speakThisReplyRef.current && voiceReplies && tts.supported) {
+      if (voiceReplies && tts.supported) {
         tts.speak(data.reply);
       }
     } catch {
@@ -92,7 +90,7 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
       } else if (action) {
         applyAction(action);
       }
-      send(transcript, true);
+      send(transcript);
     });
   }
 

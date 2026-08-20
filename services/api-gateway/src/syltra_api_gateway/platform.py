@@ -36,8 +36,21 @@ class Platform:
     feedback: FeedbackService
     risk: RiskEngineService
     automations: AutomationEngine = field(default_factory=AutomationEngine)
+    # The loop that feeds the risk engine. Optional so tests and the OpenAPI
+    # export construct a platform without starting one, and reported as
+    # degraded when absent rather than assumed fine.
+    risk_driver: Any = None
+    risk_driver_tolerance_seconds: float = 10.0
     hub_id: str = "hub_dev_001"
     started_at: datetime = field(default_factory=lambda: datetime.now(tz=UTC))
+
+    def _risk_engine_health(self) -> str:
+        """"ok" only while something is asking the risk engine to look."""
+        driver = self.risk_driver
+        if driver is None:
+            return "degraded"
+        tolerance = self.risk_driver_tolerance_seconds
+        return "ok" if driver.health.is_healthy(datetime.now(tz=UTC), tolerance) else "degraded"
 
     def known_homes(self) -> list[str]:
         return sorted(self.twin.home_ids)
@@ -70,7 +83,12 @@ class Platform:
                 "adaptive_engine": "ok" if self.adaptive.ready else "degraded",
                 "policy_safety": "ok",
                 "action_orchestrator": "ok",
-                "risk_engine": "ok",
+                # Hard-coding "ok" for the risk engine hid the worst fault the
+                # hub can have: the loop that reads the detectors stopping
+                # while everything else keeps rendering. It now reports what
+                # the driver is actually doing, and "no driver at all" is a
+                # fault rather than a silence.
+                "risk_engine": self._risk_engine_health(),
                 "feedback_service": "ok",
             },
         }

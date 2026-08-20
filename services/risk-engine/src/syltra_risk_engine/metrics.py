@@ -27,3 +27,21 @@ CONFIRMATION_REFUSALS = Counter(
     "confirmations the governor declined, by reason",
     ["reason"],
 )
+
+# The driver's own vital signs. A safety loop that stopped is invisible without
+# these: every other metric here simply stops changing, which looks identical to
+# a quiet house.
+DRIVER_PASSES = Counter(
+    "syltra_risk_driver_passes_total",
+    "completed evaluation passes over every known home",
+)
+DRIVER_FAILURES = Counter(
+    "syltra_risk_driver_failures_total",
+    "homes whose evaluation raised during a pass",
+    ["home_id"],
+)
+ISOLATIONS = Counter(
+    "syltra_risk_isolations_total",
+    "supplies cut by a confirmed hazard, and whether the device confirmed it",
+    ["capability", "verified"],
+)

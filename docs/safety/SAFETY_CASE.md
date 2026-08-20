@@ -510,11 +510,27 @@ runs against — hands it one. A confirmed hazard reaching that engine closes th
 valve. The default constructor still takes no dispatcher, so every other risk
 engine in the repository plans and cannot act, and a test pins both halves.
 
-What wiring it revealed is more serious than what it fixed: **nothing in the
-deployed stack calls `RiskEngineService.evaluate`.** There is no consumer, no
-timer and no container that hands the risk engine the state of the house. The
-governor, the seven risk states and this shutoff are all reachable only from a
-caller that exists in the test suite. The isolation path is connected to an
-engine that is never asked to look. Recorded in `docs/GAPS.md` §4 as the most
-consequential item after §1.1.
+Wiring it revealed something more serious, now also fixed: **nothing called
+`RiskEngineService.evaluate`.** No consumer, no timer, no container. The
+governor, the seven risk states and this shutoff were reachable only from the
+test suite — every safety test passed against a component the product never
+invoked.
+
+`RiskDriver` is the caller that was missing. It walks every known home on a
+timer, evaluates, and carries out what that authorizes in the same pass, so a
+certified reading and a closed valve are not separated by an extra tick. It is
+a timer rather than a subscriber deliberately: an event-driven safety loop stops
+when events stop, and the failure that matters most here is the one where
+nothing arrives at all. A timer finds a latched alarm in a stale twin; a
+subscriber waits forever and looks healthy doing it.
+
+Failures are contained per household, because the next house may be the one
+with the gas alarm, and a first pass that fails does not stop the driver
+starting — refusing to start leaves nothing watching, where starting unhealthy
+leaves a loop that retries and a flag that says so.
+
+`system_status` reported `"risk_engine": "ok"` as a literal. It now reports what
+the driver is doing, and a hub with no driver reads *degraded*. A safety loop
+that dies quietly is worse than one never built: the console keeps rendering and
+the household keeps trusting it.
 

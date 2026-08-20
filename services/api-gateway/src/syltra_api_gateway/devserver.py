@@ -21,6 +21,7 @@ from syltra_contracts import CommandResult, LearningMode
 from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import HomePolicy, PolicyService
 from syltra_risk_engine import IsolationDispatcher, RiskEngineService
+from syltra_risk_engine.driver import RiskDriver
 from syltra_security import Role, TokenStore
 
 from syltra_api_gateway.api import create_app
@@ -142,6 +143,9 @@ def build_platform() -> Platform:
         get_decision=policy.get,
         config=OrchestratorConfig(environment="development", verify_delay_seconds=0.0),
     )
+    risk = RiskEngineService(
+        isolation=IsolationDispatcher(policy=policy, orchestrator=orchestrator)
+    )
     return Platform(
         automations=automations,
         twin=context.twin,
@@ -156,9 +160,8 @@ def build_platform() -> Platform:
         # outside production (safety invariant 16) — the wiring is live, the
         # valve is not, and the console shows the refusal rather than a
         # pretended success.
-        risk=RiskEngineService(
-            isolation=IsolationDispatcher(policy=policy, orchestrator=orchestrator)
-        ),
+        risk=risk,
+        risk_driver=RiskDriver(context.twin, risk, contexts=context),
     )
 
 
@@ -221,6 +224,19 @@ def main() -> None:
         print(f"    {role.value:<10} {value}")
     print("\n  Paste one in the browser console to sign in as that role:")
     print(f"    localStorage.setItem('syltra.token', '{token}')\n")
+    # The safety loop runs for as long as the app does. Started in a lifespan
+    # rather than at import, so it belongs to the running server and stops with
+    # it instead of outliving it as an orphaned task.
+    driver = app.state.platform.risk_driver
+
+    @app.on_event("startup")
+    async def _start_risk_driver() -> None:  # pragma: no cover - server lifecycle
+        await driver.start()
+
+    @app.on_event("shutdown")
+    async def _stop_risk_driver() -> None:  # pragma: no cover - server lifecycle
+        await driver.stop()
+
     uvicorn.run(app, host="127.0.0.1", port=port, log_level="warning")
 
 

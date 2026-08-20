@@ -323,12 +323,20 @@ def test_a_confirmed_hazard_reports_a_plan_that_has_dispatched_nothing(
     assert confirmed, "no confirmed hazard; this test would prove nothing"
     plan = confirmed[0]["response_plan"]
     assert plan is not None
-    assert plan["dispatched"] is False
     assert plan["notifications"], "a confirmed hazard must at least tell someone"
-    prepared = plan["prepared"]
-    assert prepared and prepared[0]["capability"] == "valve.state"
-    assert prepared[0]["device_id"] == "valve_main"
-    assert prepared[0]["reachable"] is True
+
+    # Gas isolates rather than prepares (owner decision, 2026-08-20), so the
+    # valve appears under `isolating`.
+    isolating = plan["isolating"]
+    assert isolating and isolating[0]["capability"] == "valve.state"
+    assert isolating[0]["device_id"] == "valve_main"
+    assert isolating[0]["reachable"] is True
+
+    # And it has not been carried out, because this API never dispatches one.
+    # The gateway reads state; something else acts. If that ever changes, this
+    # is where it should be noticed.
+    assert isolating[0]["carried_out"] is False
+    assert plan["dispatched"] is False
 
 
 @pytest.mark.safety

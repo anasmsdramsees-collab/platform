@@ -10,6 +10,7 @@ The guarantee every test below defends: **nothing on this path can dispatch.**
 
 import ast
 import inspect
+import re
 from datetime import UTC, datetime
 
 import pytest
@@ -19,6 +20,7 @@ from syltra_risk_engine import response as response_module
 from syltra_risk_engine.governor import CONFIRMATION_RULES, SafetyGovernor
 from syltra_risk_engine.governor import Confirmation as HazardConfirmation
 from syltra_risk_engine.response import (
+    FAIL_SAFE_VALUES,
     NOTIFICATION_CAPABILITY,
     RESPONSE_DEFINITIONS,
     ResponsePlan,
@@ -53,11 +55,73 @@ def confirmed_gas(
 
 
 @pytest.mark.safety
-def test_the_response_path_has_no_execute_stage() -> None:
-    # Structural, not conventional. There is no value a step could carry that
-    # means "execute", so no caller can construct one — and adding one means
-    # editing the enum and failing this test, which is the point.
-    assert {stage.value for stage in ResponseStage} == {"NOTIFY", "PREPARE"}
+def test_the_response_path_has_no_general_execute_stage() -> None:
+    # ISOLATE replaced nothing: it was added beside NOTIFY and PREPARE when the
+    # owner decided a confirmed gas hazard closes the valve. What is still
+    # absent is a stage that could drive any capability to any value.
+    assert {stage.value for stage in ResponseStage} == {"NOTIFY", "PREPARE", "ISOLATE"}
+
+
+@pytest.mark.safety
+def test_an_isolate_step_cannot_open_a_valve() -> None:
+    # The whole safety of the ISOLATE stage is that it points one way. A
+    # confirmed hazard closes a gas supply; nothing here reopens one, because
+    # reopening into an unrepaired leak is the hazard, not the recovery.
+    with pytest.raises(ValueError, match=re.escape("may only drive valve.state to 'closed'")):
+        ResponseStep(
+            stage=ResponseStage.ISOLATE,
+            capability="valve.state",
+            intended_value="open",
+        )
+
+
+@pytest.mark.safety
+def test_every_isolable_capability_declares_exactly_one_fail_safe_value() -> None:
+    # A capability with two acceptable isolation values has a direction the
+    # caller chooses, which is the thing this stage exists to prevent.
+    for capability, value in FAIL_SAFE_VALUES.items():
+        assert not isinstance(value, (list, set, tuple, frozenset)), capability
+        definition = get_definition(capability)
+        assert definition.confirmation is Confirmation.DETERMINISTIC_SAFETY_RULE, capability
+        if definition.allowed_values:
+            assert value in definition.allowed_values, capability
+
+
+@pytest.mark.safety
+def test_a_deterministic_capability_with_no_fail_safe_value_cannot_be_isolated() -> None:
+    # `siren.state` passes the deterministic-rule gate and still cannot be
+    # isolated, because nobody has decided which way is safe for it. Sounding a
+    # siren is not cutting a supply, and silencing one during a fire is worse.
+    assert "siren.state" not in FAIL_SAFE_VALUES
+    with pytest.raises(ValueError, match="no fail-safe value"):
+        ResponseStep(
+            stage=ResponseStage.ISOLATE,
+            capability="siren.state",
+            intended_value="off",
+        )
+
+
+@pytest.mark.safety
+def test_a_comfort_capability_never_reaches_the_direction_check() -> None:
+    with pytest.raises(ValueError, match="does not require a deterministic safety rule"):
+        ResponseStep(
+            stage=ResponseStage.ISOLATE,
+            capability="light.power",
+            intended_value=False,
+        )
+
+
+@pytest.mark.safety
+def test_no_response_definition_isolates_something_that_is_not_a_supply() -> None:
+    # Reached through the definitions rather than the constructor, because a
+    # response definition is where a future edit would try to add one.
+    for response, definition in RESPONSE_DEFINITIONS.items():
+        isolate = definition.get("isolate")
+        if isolate is None:
+            continue
+        capability, value = isolate
+        assert capability in FAIL_SAFE_VALUES, f"{response} isolates {capability}"
+        assert value == FAIL_SAFE_VALUES[capability], f"{response} isolates the wrong way"
 
 
 @pytest.mark.safety
@@ -144,37 +208,51 @@ def test_an_undefined_response_is_refused_rather_than_ignored() -> None:
         plan_response(renamed, None, NOW)
 
 
-def test_a_gas_confirmation_notifies_and_prepares_the_valve() -> None:
+def test_a_gas_confirmation_closes_the_valve_and_says_so() -> None:
     confirmation, state = confirmed_gas()
     plan = plan_response(confirmation, state, NOW)
 
     assert len(plan.notifications) == 1
     assert plan.notifications[0].capability == NOTIFICATION_CAPABILITY
 
-    assert len(plan.prepared) == 1
-    prepared = plan.prepared[0]
-    assert prepared.capability == "valve.state"
-    assert prepared.intended_value == "closed"
-    assert prepared.device_id == "kitchen_valve"
-    assert prepared.reachable
-    assert "not sent" in prepared.detail
+    # Gas isolates rather than prepares: the reading is the hazard, and a
+    # household asked to approve a shutoff is a household breathing gas while
+    # it decides.
+    assert plan.prepared == ()
+    assert len(plan.isolating) == 1
+    isolating = plan.isolating[0]
+    assert isolating.capability == "valve.state"
+    assert isolating.intended_value == "closed"
+    assert isolating.device_id == "kitchen_valve"
+    assert isolating.reachable
+    assert "told, not asked" in isolating.detail
+
+
+@pytest.mark.safety
+def test_a_water_confirmation_still_only_prepares() -> None:
+    # A leak damages property; gas kills people. The decision that was made
+    # covered gas, and quietly extending it to water would be a decision
+    # nobody made.
+    assert RESPONSE_DEFINITIONS["NOTIFY_AND_PREPARE_WATER_ISOLATION"]["isolate"] is None
+    assert RESPONSE_DEFINITIONS["NOTIFY_AND_PREPARE_WATER_ISOLATION"]["prepare"] is not None
 
 
 def test_the_plan_prefers_a_valve_in_the_affected_room() -> None:
     confirmation, state = confirmed_gas(valve_room="kitchen")
-    assert plan_response(confirmation, state, NOW).prepared[0].device_id == "kitchen_valve"
+    assert plan_response(confirmation, state, NOW).isolating[0].device_id == "kitchen_valve"
 
 
 @pytest.mark.safety
-def test_a_prepared_step_with_no_reachable_valve_is_reported_not_hidden() -> None:
-    # A prepared isolation that names no valve is a plan that fails at the
-    # moment it matters. The household should learn that now.
+def test_an_isolation_with_no_reachable_valve_is_reported_not_hidden() -> None:
+    # An isolation that names no valve is a shutoff that fails at the moment it
+    # matters. Now that the platform closes the valve itself, this is the case
+    # where it cannot — and silence would read as success.
     confirmation, state = confirmed_gas(with_valve=False)
     plan = plan_response(confirmation, state, NOW)
-    assert plan.prepared
-    assert plan.unreachable == plan.prepared
-    assert plan.prepared[0].device_id is None
-    assert "no reachable device" in plan.prepared[0].detail
+    assert plan.isolating
+    assert plan.unreachable == plan.isolating
+    assert plan.isolating[0].device_id is None
+    assert "no reachable device" in plan.isolating[0].detail
 
 
 @pytest.mark.safety

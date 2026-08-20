@@ -43,7 +43,7 @@ def test_a_fresh_certified_gas_alarm_confirms() -> None:
     assert confirmation.category is RiskCategory.GAS
     assert confirmation.severity is RiskSeverity.CRITICAL
     assert confirmation.confirmed_by == "rule:gas_confirmed@1.0.0"
-    assert confirmation.authorized_response == "NOTIFY_AND_PREPARE_GAS_ISOLATION"
+    assert confirmation.authorized_response == "NOTIFY_AND_ISOLATE_GAS"
 
 
 @pytest.mark.safety
@@ -187,7 +187,7 @@ def test_a_confirmation_authorizes_only_its_named_response() -> None:
     # A confirmed gas alarm is not a licence to operate arbitrary devices.
     governor = SafetyGovernor()
     confirmation = governor.evaluate(HOME, gas_home(), NOW)[0]
-    assert governor.authorizes_response(confirmation, "NOTIFY_AND_PREPARE_GAS_ISOLATION")
+    assert governor.authorizes_response(confirmation, "NOTIFY_AND_ISOLATE_GAS")
     assert not governor.authorizes_response(confirmation, "UNLOCK_ALL_DOORS")
     assert not governor.authorizes_response(confirmation, "OPEN_BREAKER")
 
@@ -219,7 +219,7 @@ def test_audit_entries_name_the_rule_and_the_authorized_response() -> None:
     governor.evaluate(HOME, gas_home(), NOW)
     entry = next(e for e in governor.audit if e.action == "HAZARD_CONFIRMED")
     assert entry.rule == "rule:gas_confirmed@1.0.0"
-    assert entry.detail["authorized_response"] == "NOTIFY_AND_PREPARE_GAS_ISOLATION"
+    assert entry.detail["authorized_response"] == "NOTIFY_AND_ISOLATE_GAS"
     assert entry.detail["severity"] == "CRITICAL"
 
 

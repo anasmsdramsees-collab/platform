@@ -121,19 +121,25 @@ path through the API, and confirm it completes.
 Nothing here can proceed without a product judgement. Each is blocked, not
 forgotten.
 
-### 2.1 May a confirmed hazard operate an actuator?
+### 2.1 May a confirmed hazard operate an actuator? — **decided**
 
-A confirmed gas alarm currently **notifies** and **prepares** — identifies the
-valve, verifies it can be reached, computes the command — and stops. Execution
-is unbuilt, and structurally unreachable from that path.
+**Decided 2026-08-20, by the owner: yes, for gas.** A certified detector at its
+alarm threshold is a measurement that gas is present, not an opinion about it,
+and a household asked for permission is a household breathing gas while it
+decides. The valve closes and the notification says so.
 
-Spec §0 rule 9 requires explicit approval before anything operates a real safety
-actuator. Everything needed to decide is now visible: which valve, whether it
-answers, exactly what would be sent.
+Built, tested and *not yet wired into the running services* — see
+`docs/safety/SAFETY_CASE.md` and `tests/safety/test_gas_isolation.py`. The
+direction is fixed in the type system: `valve.state` may be driven to `closed`
+and to nothing else, so nothing in the platform can reopen a supply. That stays
+a person's job, after the leak is found.
 
-This also blocks UI §27 criterion 8 (critical controls use confirmation and
-verification) — the confirmation pattern is built and waiting for an action to
-attach to.
+Still open under the same heading, and deliberately not decided by extension:
+
+- **water** — leaks damage property rather than people, and it still prepares;
+- **egress and ventilation** — neither cuts a supply;
+- **siren and breaker** — they pass the deterministic-rule gate and have no
+  fail-safe direction anybody has chosen.
 
 ### 2.2 Scope for Installations and Users and Roles
 
@@ -201,6 +207,7 @@ Scoped, understood, nobody blocked on a decision.
 | Gap | Consequence | Size |
 |---|---|---|
 | Update and rollback is designed, not implemented | `docs/architecture/DEPLOYMENT.md` describes the sequence. Spec §22 Phase 8 asked for a *design*, so this is beyond what the MVP required — but a pilot hub will eventually need updating | medium |
+| `dispatch_isolation` is not wired into the running services | A confirmed gas hazard closes the valve in the tests and not in the product. `RiskEngineService` plans and records outcomes; nothing calls the dispatcher. The API reports `carried_out: false` honestly, which is correct and not the same as working | small |
 | The console polls every 15 seconds | `/v1/stream` exists and nothing uses it. Polling is simple and works; a pilot watching live state would prefer the stream | medium |
 
 ### Closed
@@ -291,9 +298,9 @@ Recorded so nobody re-opens them as oversights.
 | Category | Count | Blocked on |
 |---|---|---|
 | Unverified against reality | 6 | a real home, a real Home Assistant, a person |
-| Awaiting your decision | 6 | you |
+| Awaiting your decision | 5 | you |
 | Needs a person | 3 | scheduling |
-| Known engineering gaps | 2 | nobody — pick them up any time |
+| Known engineering gaps | 3 | nobody — pick them up any time |
 | Structural divergence | 3 groups | explained in place, not resolved |
 
 Nothing in §1 through §5 is a *critical blocker* in the sense of §32 item 18:

@@ -69,7 +69,7 @@ def test_confirmation_works_with_the_adaptive_engine_absent() -> None:
     governor = SafetyGovernor()
     confirmations = governor.evaluate(HOME, alarming_home(), NOW)
     assert len(confirmations) == 1
-    assert confirmations[0].authorized_response == "NOTIFY_AND_PREPARE_GAS_ISOLATION"
+    assert confirmations[0].authorized_response == "NOTIFY_AND_ISOLATE_GAS"
 
 
 def test_risk_cases_are_created_with_no_models_present() -> None:

@@ -396,7 +396,7 @@ Recorded honestly rather than closed prematurely:
 
 | Gap | Consequence | Resolves in |
 |---|---|---|
-| Confirmed hazards notify and prepare, but nothing executes a response | **Half closed.** A confirmation now produces a `ResponsePlan` (`services/risk-engine/.../response.py`): the household is told, the valve is identified and its reachability verified, and the command is computed and *not sent*. What remains unbuilt is execution — closing a valve, sounding a siren, unlocking egress — which needs product-owner approval per spec §0 rule 9. See below | Execution: post-MVP, with approval |
+| Confirmed hazards notify and isolate | **Closed for gas.** A confirmed gas hazard closes the valve automatically (owner decision, 2026-08-20), direction-locked so nothing can reopen one, verified by read-back, escalating when unverified. Water still prepares; egress and ventilation stay blocked. `dispatch_isolation` is tested and not yet wired into the running services | Wiring: the remaining step |
 | Update and rollback is designed, not implemented | `docs/architecture/DEPLOYMENT.md` describes the intended sequence | Next iteration |
 
 ## Observing only: a hub that cannot act
@@ -434,60 +434,80 @@ as a plain fact. A pilot should not have to read a config file to know.
 
 ---
 
-## Notify and prepare, and why execution is not here
+## Notify, isolate, and what still cannot happen
 
 Spec §20.4 gives the AI role as "notify and prepare the allowed response", with
-confirmed actions left to deterministic rules. Both halves of that are now
-built, and the third — carrying it out — deliberately is not.
+confirmed actions left to deterministic rules. On 2026-08-20 the product owner
+made the decision that section leaves open: **a confirmed gas hazard closes the
+valve.**
+
+The reasoning, recorded because a future reader deserves it rather than the
+conclusion alone: a certified detector reaching its alarm threshold is not an
+opinion about whether there is gas. It is a measurement that there is. A design
+that then asks a sleeping household for permission is a design that trades
+minutes of exposure for a confirmation nobody is awake to give. Closing on a
+false alarm costs a cold kitchen until somebody reopens the supply. Not closing
+on a real one costs more.
 
 **Notify** executes. `notification.send` is NON_CRITICAL and requires no
-confirmation; telling a household their gas alarm is sounding operates nothing.
+confirmation. It now tells the household the supply *has been* closed rather
+than asking whether it should be — people need to know before they go looking
+for a pilot light that will not relight.
 
-**Prepare** executes and touches nothing. The plan resolves the valve from the
-twin, prefers one in the affected room, records whether the twin says it can be
-reached, and computes the command. A prepared isolation that names no reachable
-valve is reported rather than hidden — that is a plan which would fail at the
-moment it matters, and the household should learn it now.
+**Isolate** executes, and only in one direction. This is where the safety of
+the whole change lives:
 
-**Execute** is absent, and absent structurally rather than by omission:
+- `FAIL_SAFE_VALUES` maps each isolable capability to its single safe value.
+  `valve.state` maps to `"closed"` and to nothing else. `ResponseStep` rejects
+  any ISOLATE step carrying a different value, so there is no argument through
+  which a confirmed hazard, a miscarried rule or a future edit to a response
+  definition can reopen a gas supply.
+- The dispatcher re-checks the direction rather than trusting the planner,
+  because a check that exists only upstream is a check the next caller skips.
+- `PolicyService.authorize_safety_isolation` refuses any capability not
+  governed by a `DETERMINISTIC_SAFETY_RULE`, any value that is not the fail-safe
+  one, and any request that does not name the confirmation authorizing it. The
+  decision it mints carries no `recommendation_id`, because there is no
+  recommendation: the authority is the Safety Governor.
+- Reopening is a person's job. Nothing in the platform sets a valve to `open`,
+  and after a leak that is the point — restoring gas to a house whose fault the
+  platform cannot see is the hazard, not the recovery.
 
-- `ResponseStage` has two members, `NOTIFY` and `PREPARE`. There is no value a
-  step could carry that means "execute", so no caller can construct one.
-- A `NOTIFY` step may only use `notification.send`; a valve command labelled
-  NOTIFY raises rather than passing checks that read the stage.
-- The planner imports no gateway, orchestrator or action module, and calls
-  nothing named `execute`, `dispatch`, `send` or `publish`. Asserted on the
-  parsed syntax tree, not by searching the text — the module's own docstring
-  explains that it never reaches a gateway, and a substring search reports the
-  explanation as the offence.
-- No API route contains `valve`, `siren`, `breaker`, `isolate`, `dispatch` or
-  `execute`. The test fails the moment one does.
-- The console renders the plan and no control: no button, no event listener, no
-  request. `dispatched` is reported, never toggled.
+**Verification is not optional.** An `IsolationOutcome` reports `succeeded`
+only when the device confirmed the new state. A command that was accepted and
+changed nothing — the failure mode a naive implementation misses, where nothing
+errors and the gas keeps flowing — reports `ISOLATION_UNVERIFIED` and escalates.
+A home with no reachable valve reports `NO_REACHABLE_ISOLATION_DEVICE` loudly,
+because that is exactly the case where silence reads as safety.
 
-**Tests.** `services/risk-engine/tests/test_response.py` (14),
-`test_approval_chain.py::test_no_endpoint_exists_that_would_carry_out_a_response`,
-and the console's `test_the_response_plan_is_described_never_offered_as_a_control`.
+**Execute, in general, is still absent:**
 
-The remaining decision is yours, not this repository's: whether a confirmed gas
-alarm should close a valve automatically. Everything needed to make that
-decision — which valve, whether it answers, what would be sent — is now visible
-before it is taken.
+- `ResponseStage` has three members and none of them can drive an arbitrary
+  capability to an arbitrary value.
+- `siren.state` and `breaker.state` pass the deterministic-rule gate and still
+  cannot be isolated: nobody has decided which way is safe for them, and
+  silencing a siren during a fire is worse than either direction of a valve.
+- Water still prepares rather than isolates. A leak damages property; gas kills
+  people, and the decision that was made covered gas. Extending it quietly
+  would be a decision nobody made.
+- Unlocking egress and starting ventilation remain blocked. Neither is cutting
+  a supply — one opens a door, one energizes a device.
+- Development and simulation still block every critical actuator (invariant
+  16). A development machine has no gas valve, and a simulation that closed one
+  would be closing something real by accident.
+- No AI is anywhere in the chain. The governor confirms from certified alarm
+  capabilities only, and the isolation test constructs no recommendation, no
+  model reference and no confidence score.
 
----
+**Tests.** `tests/safety/test_gas_isolation.py` (16), covering the happy path,
+both wrong-direction refusals, the forged-step recheck, the three failure modes,
+and the development block. `services/risk-engine/tests/test_response.py` pins
+the direction constraint at the type level.
 
-## Running the safety suite
+**Not yet wired.** `dispatch_isolation` is tested end to end against the
+orchestrator, and nothing in the running services calls it: `RiskEngineService`
+plans and records outcomes but does not dispatch, and the API gateway reports
+`carried_out: false` honestly because nothing has. Wiring it into the
+composition root is the remaining step, and it is deliberately a separate,
+visible act.
 
-```bash
-make test-safety
-```
-
-288 tests, of which 285 require nothing but Python. They are the first thing to
-run after any change to policy, risk, or capability definitions.
-
-To prove the independence claim yourself — that the safety path needs no
-database, broker or network — run them with the credentials removed:
-
-```bash
-env -u POSTGRES_PASSWORD -u NATS_PASSWORD uv run pytest -m safety
-```

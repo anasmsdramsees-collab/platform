@@ -101,7 +101,7 @@ A named, fixed response per rule:
 
 | Rule | Response |
 |---|---|
-| `gas_confirmed` | `NOTIFY_AND_PREPARE_GAS_ISOLATION` |
+| `gas_confirmed` | `NOTIFY_AND_ISOLATE_GAS` |
 | `smoke_confirmed` / `heat_confirmed` | `NOTIFY_AND_UNLOCK_EGRESS` |
 | `co_confirmed` | `NOTIFY_AND_VENTILATE` |
 | `water_leak_confirmed` | `NOTIFY_AND_PREPARE_WATER_ISOLATION` |

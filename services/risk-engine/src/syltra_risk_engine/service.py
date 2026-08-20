@@ -64,6 +64,12 @@ class RiskEngineService:
         self._plans: dict[str, dict[tuple[RiskCategory, str | None], ResponsePlan]] = (
             defaultdict(dict)
         )
+        # What actually happened when an isolation was carried out. Empty until
+        # something outside this service dispatches and reports back — the
+        # service plans, it does not act.
+        self._isolations: dict[
+            str, dict[tuple[RiskCategory, str | None], tuple[Any, ...]]
+        ] = {}
         self.governor = governor or SafetyGovernor()
         self.audit: list[RiskAudit] = []
 
@@ -78,6 +84,48 @@ class RiskEngineService:
         response, so only a confirmation has a plan.
         """
         return self._plans[home_id].get((category, room_id))
+
+    def isolation_carried_out(
+        self,
+        home_id: str,
+        category: RiskCategory,
+        room_id: str | None,
+        capability: str,
+    ) -> bool:
+        """Whether this isolation was actually performed and verified.
+
+        The service plans; it does not dispatch. Something outside it must call
+        `dispatch_confirmed_isolations` and hand the outcomes back, and until
+        that happens the honest answer is False. A screen that showed a planned
+        shutoff as a completed one would be the worst possible lie for this
+        particular screen to tell.
+        """
+        outcomes = self._isolations.get(home_id, {}).get((category, room_id), ())
+        return any(o.capability == capability and o.succeeded for o in outcomes)
+
+    def record_isolation_outcomes(
+        self,
+        home_id: str,
+        category: RiskCategory,
+        room_id: str | None,
+        outcomes: tuple[Any, ...],
+    ) -> None:
+        """Store what happened when an isolation was carried out."""
+        self._isolations.setdefault(home_id, {})[(category, room_id)] = outcomes
+        for outcome in outcomes:
+            self._record(
+                home_id,
+                "SAFETY_ISOLATION_VERIFIED" if outcome.succeeded else "SAFETY_ISOLATION_FAILED",
+                "risk-engine",
+                outcome.reason_code,
+                {
+                    "capability": outcome.capability,
+                    "device_id": outcome.device_id,
+                    "status": outcome.status,
+                    "verified": outcome.verified,
+                    "detail": outcome.detail,
+                },
+            )
 
     def response_plans(self, home_id: str) -> list[ResponsePlan]:
         return list(self._plans[home_id].values())

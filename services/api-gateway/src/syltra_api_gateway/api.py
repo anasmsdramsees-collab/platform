@@ -852,6 +852,23 @@ def create_app(
                 }
                 for step in plan.prepared
             ],
+            # Isolations are listed apart from prepared steps because they mean
+            # the opposite thing: prepared is "ready, waiting for a person",
+            # isolating is "this supply is being cut". Flattening the two would
+            # let a screen show a gas shutoff as though it were still pending.
+            "isolating": [
+                {
+                    "capability": step.capability,
+                    "intended_value": step.intended_value,
+                    "device_id": step.device_id,
+                    "reachable": step.reachable,
+                    "detail": step.detail,
+                    "carried_out": platform.risk.isolation_carried_out(
+                        case.home_id, case.category, case.room_id, step.capability
+                    ),
+                }
+                for step in plan.isolating
+            ],
             "blocked": [
                 {
                     "capability": item.capability,
@@ -860,7 +877,15 @@ def create_app(
                 }
                 for item in plan.blocked
             ],
-            "dispatched": False,
+            # True only when something actually carried an isolation out. A
+            # plan that names a shutoff nobody performed must not read as one
+            # that happened.
+            "dispatched": any(
+                platform.risk.isolation_carried_out(
+                    case.home_id, case.category, case.room_id, step.capability
+                )
+                for step in plan.isolating
+            ),
         }
 
     def _risk_view(case: Any, locale: str) -> dict[str, Any]:

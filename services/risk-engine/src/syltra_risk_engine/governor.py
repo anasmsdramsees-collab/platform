@@ -67,7 +67,7 @@ CONFIRMATION_RULES: tuple[ConfirmationRule, ...] = (
         capability="safety.gas_alarm",
         category=RiskCategory.GAS,
         severity=RiskSeverity.CRITICAL,
-        response="NOTIFY_AND_PREPARE_GAS_ISOLATION",
+        response="NOTIFY_AND_ISOLATE_GAS",
     ),
     ConfirmationRule(
         rule_id="smoke_confirmed",

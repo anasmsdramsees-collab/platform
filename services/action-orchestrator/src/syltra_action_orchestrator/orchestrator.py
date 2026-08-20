@@ -530,6 +530,14 @@ class ActionOrchestrator:
             reason_codes=reason_codes,
             observed_value=observed,
             completed_at=now,
+            # `ActionResult.verified` existed and nothing ever set it, so every
+            # result carried verified=False — including the ones the device had
+            # confirmed. SUCCEEDED is only reachable from a verified attempt
+            # (see the dispatch loop above), which makes the two equivalent;
+            # leaving the field permanently false made a successful action look
+            # unconfirmed to anything reading the contract rather than the
+            # status.
+            verified=status is ActionStatus.SUCCEEDED,
         )
         self._by_key[request.idempotency_key] = _Record(result=result, request=request)
         self._pending.pop(request.idempotency_key, None)

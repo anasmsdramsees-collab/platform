@@ -82,6 +82,22 @@ REASON_CODES: Final[dict[str, dict[str, str]]] = {
     "NO_DATA": {"en": "No data available", "ar": "لا توجد بيانات متاحة"},
     # policy
     "WITHIN_POLICY": {"en": "Allowed by your settings", "ar": "مسموح به وفق إعداداتك"},
+    "AUTHORIZED_BY_SAFETY_GOVERNOR": {
+        "en": "Authorized by the safety system, not by a setting",
+        "ar": "مصرّح به من نظام السلامة، لا من إعداد",
+    },
+    "ISOLATION_VERIFIED": {
+        "en": "The supply is closed and the device confirmed it",
+        "ar": "تم إغلاق الإمداد وأكّد الجهاز ذلك",
+    },
+    "ISOLATION_UNVERIFIED": {
+        "en": "The close command was sent and the device did not confirm it",
+        "ar": "أُرسل أمر الإغلاق ولم يؤكّده الجهاز",
+    },
+    "NO_REACHABLE_ISOLATION_DEVICE": {
+        "en": "No reachable valve to close",
+        "ar": "لا يوجد محبس يمكن الوصول إليه لإغلاقه",
+    },
     "SHADOW_MODE_RECOMMENDATION": {
         "en": "The system is still learning and will not act",
         "ar": "النظام ما زال في مرحلة التعلّم ولن يتخذ أي إجراء",

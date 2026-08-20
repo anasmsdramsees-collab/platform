@@ -23,6 +23,7 @@ from syltra_contracts import (
     Recommendation,
     compute_input_hash,
 )
+from syltra_contracts.capability_definitions import Confirmation, get_definition
 from syltra_policy_safety import metrics
 from syltra_policy_safety.rules import (
     POLICY_RULES_VERSION,
@@ -36,6 +37,8 @@ logger = logging.getLogger(__name__)
 
 DECISION_TTL = timedelta(minutes=15)
 APPROVAL_TTL = timedelta(minutes=30)
+SAFETY_ISOLATION_TTL = timedelta(seconds=60)
+"""How long a confirmed hazard's isolation stays executable."""
 """Approval requests live longer — a person needs time to answer."""
 
 
@@ -152,6 +155,98 @@ class PolicyService:
         metrics.DECIDING_RULE.labels(
             rule=str(deciding_rule), outcome=decision.decision.value
         ).inc()
+        return decision
+
+    def authorize_safety_isolation(
+        self,
+        home_id: str,
+        capability: str,
+        value: Any,
+        confirmed_by: str,
+        reason_codes: list[str] | None = None,
+        now: datetime | None = None,
+    ) -> PolicyDecision:
+        """Mint the fixed-rule ALLOW that lets a confirmed hazard cut a supply.
+
+        This is the ESCALATE_TO_FIXED_SAFETY_RULE branch arriving somewhere.
+        Rule 15 escalates a life-safety capability out of the ordinary chain
+        precisely because the ordinary chain — confidence thresholds, quiet
+        hours, rate limits, the household's learning mode — must not be able to
+        stop a gas shutoff. This method is the fixed rule those escalations
+        escalate *to*, and it answers on three facts and nothing else.
+
+        It refuses unless:
+
+        - the capability declares `DETERMINISTIC_SAFETY_RULE`, so no comfort or
+          security-sensitive device is reachable through it;
+        - the value is that capability's single fail-safe value, so the
+          decision it authorizes can only cut a supply, never restore one;
+        - a Safety Governor confirmation is named as the authority.
+
+        No recommendation, no model and no confidence score is involved. There
+        is no argument through which one could be.
+        """
+        from syltra_risk_engine.response import FAIL_SAFE_VALUES
+
+        moment = now or datetime.now(tz=UTC)
+        definition = get_definition(capability)
+        if definition.confirmation is not Confirmation.DETERMINISTIC_SAFETY_RULE:
+            msg = f"{capability} is not governed by a deterministic safety rule"
+            raise ValueError(msg)
+        fail_safe = FAIL_SAFE_VALUES.get(capability)
+        if fail_safe is None or value != fail_safe:
+            msg = (
+                f"a safety isolation may only drive {capability} to {fail_safe!r}, "
+                f"not {value!r}"
+            )
+            raise ValueError(msg)
+        if not confirmed_by:
+            msg = "a safety isolation must name the confirmation that authorizes it"
+            raise ValueError(msg)
+
+        decision = PolicyDecision(
+            decision_id=uuid4(),
+            recommendation_id=None,
+            home_id=home_id,
+            decision=PolicyOutcome.ALLOW,
+            evaluated_at=moment,
+            # Deliberately short, and shorter than DECISION_TTL. An isolation
+            # authorized during an alarm must not still be executable when
+            # somebody finds it in a queue an hour later.
+            expires_at=moment + SAFETY_ISOLATION_TTL,
+            reason_codes=[*(reason_codes or []), "AUTHORIZED_BY_SAFETY_GOVERNOR"],
+            safety_class=definition.safety_class,
+            policy_version=POLICY_RULES_VERSION,
+            input_hash=compute_input_hash(
+                {
+                    "home_id": home_id,
+                    "capability": capability,
+                    "value": value,
+                    "confirmed_by": confirmed_by,
+                }
+            ),
+            evidence={"deciding_rule": "fixed_safety_isolation", "confirmed_by": confirmed_by},
+        )
+        self.decisions[decision.decision_id] = decision
+        self._audit(
+            decision,
+            action="SAFETY_ISOLATION_AUTHORIZED",
+            actor=confirmed_by,
+            extra={"capability": capability, "value": value},
+        )
+        metrics.DECISIONS.labels(
+            outcome=decision.decision.value, safety_class=decision.safety_class.value
+        ).inc()
+        metrics.DECIDING_RULE.labels(
+            rule="fixed_safety_isolation", outcome=decision.decision.value
+        ).inc()
+        logger.warning(
+            "SAFETY: isolation authorized for %s — %s to %r, confirmed by %s",
+            home_id,
+            capability,
+            value,
+            confirmed_by,
+        )
         return decision
 
     def approve(

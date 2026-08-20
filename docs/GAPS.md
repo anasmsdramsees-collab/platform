@@ -141,13 +141,21 @@ Still open under the same heading, and deliberately not decided by extension:
 - **siren and breaker** — they pass the deterministic-rule gate and have no
   fail-safe direction anybody has chosen.
 
-### 2.2 Scope for Installations and Users and Roles
+### 2.2 Installations — **Users and Roles decided and built**
 
-Both have navigation entries marked unavailable. Neither has a backend.
+**Users and Roles is done.** `UserDirectory` holds memberships and the record of
+every change; the API exposes list, grant, change-role and revoke; the console
+screen is live. Both UI-5 criteria that were blocked on it are met: a permission
+change carries a reason (refused at construction, and again at the API so the
+caller gets a named 400), and revoked or expired members stay visible rather
+than vanishing.
 
-Two UI-5 acceptance criteria stay unmet until user management exists: *permission
-changes require confirmation and audit reason*, and *commissioning stages are
-recoverable*.
+`SAFETY_OPERATOR` exists and holds no authority over any device — it can close a
+case, not open a valve. `ACT_SAFETY` still appears in no role.
+
+**Installations is still open.** Commissioning stages, their recoverability, and
+what an "installation" is as a product concept are undecided, and the navigation
+entry stays marked unavailable rather than pretending otherwise.
 
 ### 2.3 The Cloud Connector
 

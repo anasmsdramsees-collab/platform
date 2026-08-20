@@ -64,7 +64,7 @@ const NAV = [
     detail: renderRiskDetail },
   { id: "energy", icon: "◔", permission: "READ_HOME", render: renderEnergy },
   { id: "installations", icon: "▤", permission: "READ_HOME", unavailable: true },
-  { id: "users", icon: "◎", permission: "MANAGE_POLICY", unavailable: true },
+  { id: "users", icon: "◎", permission: "READ_HOME", render: renderUsers },
   { id: "audit", icon: "☰", permission: "READ_AUDIT", render: renderAudit },
   { id: "health", icon: "♡", permission: "READ_HOME", render: renderHealth },
   { id: "settings", icon: "⚙", permission: "READ_HOME", render: renderSettings },
@@ -1890,6 +1890,164 @@ function auditReason(entry) {
   if (entry.reason) return entry.reason;
   const codes = entry.reason_codes || [];
   return codes.length ? codes.join(", ") : "—";
+}
+
+/* ── users and roles (§21, UI-5) ──
+
+   Two things this screen does that a permissions table usually does not.
+
+   It shows revoked and expired members rather than hiding them: "who used to
+   have a key" is the question asked after something goes missing, and a list
+   that only shows the present cannot answer it.
+
+   And it will not let a change through without a reason. That is not a form
+   validation nicety — the reason is the audit entry somebody reads months
+   later, and "role changed" answers nothing. */
+
+async function renderUsers(host) {
+  const home = state.homeId;
+  const { data, failed } = await loadHomeView({
+    users: api(`/v1/homes/${home}/users`),
+  });
+  if (!data.users) {
+    host.append(failureNotice(errorFor(failed, "users"), t("source_users")));
+    return;
+  }
+
+  const { members = [], may_manage: mayManage, assignable_roles: assignable = [] } = data.users;
+
+  if (!mayManage) {
+    /* §20: say why the controls are absent rather than rendering a page that
+       looks broken. */
+    host.append(notice("partial", t("users_readonly_title"), t("users_readonly_detail")));
+  } else {
+    host.append(inviteForm(home, assignable));
+  }
+
+  if (!members.length) {
+    host.append(emptyNotice("no_members"));
+    return;
+  }
+
+  const rows = members.map((member) => {
+    const who = el("div");
+    who.append(el("span", "identifier", member.display_name || member.subject));
+    if (member.display_name && member.display_name !== member.subject) {
+      who.append(el("p", "muted", member.subject));
+    }
+    return [
+      who,
+      t(`role_${member.role.toLowerCase()}`),
+      member.active
+        ? badge("online", t("access_active"))
+        : badge("offline", member.revoked_at ? t("access_revoked") : t("access_expired")),
+      member.expires_at ? when(member.expires_at) : t("access_no_expiry"),
+      member.granted_by,
+      mayManage && member.active ? revokeButton(home, member) : el("span", "muted", "—"),
+    ];
+  });
+
+  host.append(
+    scrollableTable(
+      ["who", "role", "access_state", "expires", "granted_by", "manage"],
+      rows,
+    ),
+  );
+}
+
+function inviteForm(home, assignable) {
+  const form = el("form", "card");
+  form.append(el("h2", "type-section-title", t("invite_title")));
+  form.append(el("p", "muted", t("invite_detail")));
+
+  const subject = labelledInput("invite-subject", t("who"), "text");
+  const role = el("select", "select");
+  role.id = "invite-role";
+  for (const value of assignable) {
+    const option = el("option", null, t(`role_${value.toLowerCase()}`));
+    option.value = value;
+    role.append(option);
+  }
+  const roleField = el("div", "field");
+  const roleLabel = el("label", null, t("role"));
+  roleLabel.htmlFor = role.id;
+  roleField.append(roleLabel, role);
+
+  const reason = labelledInput("invite-reason", t("reason_for_change"), "text");
+  /* `required` stays for the semantics a screen reader announces. Native
+     validation is turned off because its bubble is the browser's language, not
+     the household's, and §20 asks for a designed state rather than a tooltip
+     that appears in English on an Arabic screen. */
+  reason.input.required = true;
+  form.noValidate = true;
+
+  const submit = el("button", "btn btn--primary", t("invite_submit"));
+  submit.type = "submit";
+
+  const outcome = el("div");
+  form.append(subject.node, roleField, reason.node, submit, outcome);
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    outcome.replaceChildren();
+    if (!reason.input.value.trim()) {
+      /* Refused here as well as by the server: a person should learn what is
+         missing without a round trip, and the server must not rely on it. */
+      outcome.append(notice("error", t("reason_required"), t("reason_required_detail")));
+      reason.input.focus();
+      return;
+    }
+    submit.setAttribute("aria-busy", "true");
+    try {
+      await api(`/v1/homes/${home}/users`, {
+        method: "POST",
+        body: JSON.stringify({
+          subject: subject.input.value.trim(),
+          role: role.value,
+          reason: reason.input.value.trim(),
+        }),
+      });
+      await refresh();
+    } catch (error) {
+      outcome.append(failureNotice(error, t("source_users")));
+    } finally {
+      submit.removeAttribute("aria-busy");
+    }
+  });
+  return form;
+}
+
+function revokeButton(home, member) {
+  const button = el("button", "btn btn--secondary", t("revoke"));
+  button.type = "button";
+  button.addEventListener("click", async () => {
+    /* A reason, before anything happens. Revoking access is exactly the change
+       whose "why" gets asked about later. */
+    const reason = window.prompt(t("reason_for_change"));
+    if (!reason || !reason.trim()) return;
+    button.setAttribute("aria-busy", "true");
+    try {
+      await api(`/v1/homes/${home}/users/${member.membership_id}/revoke`, {
+        method: "POST",
+        body: JSON.stringify({ reason: reason.trim() }),
+      });
+      await refresh();
+    } finally {
+      button.removeAttribute("aria-busy");
+    }
+  });
+  return button;
+}
+
+function labelledInput(id, label, type) {
+  const node = el("div", "field");
+  const element = el("label", null, label);
+  element.htmlFor = id;
+  const input = el("input", "input");
+  input.id = id;
+  input.type = type;
+  node.append(element, input);
+  return { node, input };
 }
 
 async function renderAudit(host) {

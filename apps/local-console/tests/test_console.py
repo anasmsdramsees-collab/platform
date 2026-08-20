@@ -474,11 +474,15 @@ def test_navigation_is_filtered_by_permission_not_by_role_name() -> None:
 
 
 def test_the_sensitive_sections_name_the_permission_they_need() -> None:
-    # Audit reveals who did what, and user management changes who may do it.
-    # Neither is implied by being able to see the home.
+    # Audit reveals who did what, and is not implied by seeing the home.
     entries = dict(re.findall(r'\{ id: "([a-z]+)", icon: "[^"]+", permission: "(\w+)"', JS_CODE))
     assert entries["audit"] == "READ_AUDIT"
-    assert entries["users"] == "MANAGE_POLICY"
+    # Users is READ_HOME on purpose: knowing who else holds a key to the house
+    # you live in is not a privileged question. Changing anything on that
+    # screen needs MANAGE_USERS, which the API enforces and the screen reflects
+    # by rendering no controls without it.
+    assert entries["users"] == "READ_HOME"
+    assert "may_manage" in JS_CODE, "the screen must gate its controls on the server's answer"
     # Everything else is readable by anyone who can see the home.
     assert entries["overview"] == "READ_HOME"
 
@@ -507,14 +511,11 @@ def test_unavailable_sections_are_marked_rather_than_hidden() -> None:
     # §20: an absent capability is a designed state. Silently dropping half the
     # information architecture would make the console look finished.
     unavailable = re.findall(r'\{ id: "([a-z]+)"[^}]*unavailable: true', JS_CODE)
-    # Properties became real in UI-2 (the caller's own scope), Energy in UI-4
-    # (current power from the devices that meter it), and Automations once the
-    # engine existed. What is left is what the platform genuinely does not
-    # produce: there is no installation project and no user directory.
-    assert set(unavailable) == {
-        "installations",
-        "users",
-    }, unavailable
+    # Properties became real in UI-2 (the caller's own scope), Energy in UI-4,
+    # Automations once the engine existed, and Users once the directory did.
+    # What is left is what the platform genuinely does not produce: there is no
+    # installation project.
+    assert set(unavailable) == {"installations"}, unavailable
     assert "not_yet_available" in JS_CODE
     assert "not_yet_available" in I18N["en"] and "not_yet_available" in I18N["ar"]
 

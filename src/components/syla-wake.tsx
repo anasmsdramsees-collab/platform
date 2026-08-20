@@ -36,6 +36,10 @@ const WAKE_WORDS = [
 
 const STORAGE_KEY = "syla_wake_enabled";
 
+// Spoken once per visit when Syla first wakes with no question attached.
+const ACKS_AR = ["نعم، أنا هنا لمساعدتك.", "أنا في أمرك.", "تحت الخدمة، اتفضل.", "نعم، أنا سامعتك."];
+const ACKS_EN = ["Yes, I'm here to help.", "At your service.", "I'm listening."];
+
 function stripWakeWord(text: string): { woke: boolean; query: string } {
   const lower = text.toLowerCase().trim();
   for (const w of WAKE_WORDS) {
@@ -57,6 +61,7 @@ export default function SylaWake({ locale }: { locale: Locale }) {
   const phaseRef = useRef<Phase>("off");
   const enabledRef = useRef(false);
   const silenceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const greetedRef = useRef(false);
 
   const router = useRouter();
   const { applyAction } = useHomeControls();
@@ -190,6 +195,12 @@ export default function SylaWake({ locale }: { locale: Locale }) {
           if (probe.query && finalText) {
             processQuery(probe.query);
             return;
+          }
+          // Greet out loud the first time only; later wakes just listen quietly.
+          if (!greetedRef.current) {
+            greetedRef.current = true;
+            const acks = locale === "ar" ? ACKS_AR : ACKS_EN;
+            speak(acks[Math.floor(Math.random() * acks.length)]);
           }
           // wait for the actual question
           if (silenceTimer.current) clearTimeout(silenceTimer.current);

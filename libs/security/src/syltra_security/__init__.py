@@ -6,6 +6,14 @@ life-safety actuators are commanded by deterministic rules through the Safety
 Governor, never by a person holding a permission.
 """
 
+from syltra_security.directory import (
+    DEFAULT_EXPIRY,
+    OWNER_APPOINTED,
+    Membership,
+    MembershipChange,
+    MembershipRefused,
+    UserDirectory,
+)
 from syltra_security.authorization import (
     ROLE_PERMISSIONS,
     AuthorizationError,
@@ -26,6 +34,12 @@ from syltra_security.tokens import (
 )
 
 __all__ = [
+    "OWNER_APPOINTED",
+    "DEFAULT_EXPIRY",
+    "UserDirectory",
+    "MembershipRefused",
+    "MembershipChange",
+    "Membership",
     "ROLE_PERMISSIONS",
     "AuthenticationError",
     "AuthorizationError",

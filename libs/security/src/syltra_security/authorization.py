@@ -41,6 +41,22 @@ class Permission(StrEnum):
     MANAGE_POLICY = "MANAGE_POLICY"
     MANAGE_PRIVACY = "MANAGE_PRIVACY"
     """Consent, export and deletion (spec §26)."""
+    MANAGE_USERS = "MANAGE_USERS"
+    """Invite a person, change their role, revoke their access.
+
+    Separate from MANAGE_POLICY because they answer different questions.
+    Policy is what the household allows; this is who the household is. Somebody
+    who may tune a comfort threshold has no business granting a stranger a key.
+    """
+    ACKNOWLEDGE_SAFETY = "ACKNOWLEDGE_SAFETY"
+    """Acknowledge a confirmed hazard and close its case once it has cleared.
+
+    Deliberately *not* ACT_SAFETY. This permission removes a case from the
+    screen; it commands no actuator. The distinction is the whole reason the
+    Safety Operator role can exist without breaking invariants 6, 13 and 18:
+    somebody has to be able to say "the leak is dealt with", and that is a
+    different act from opening a gas valve.
+    """
     MANAGE_AUTOMATIONS = "MANAGE_AUTOMATIONS"
     """Write, enable and disable the household's own automations.
 
@@ -68,6 +84,15 @@ class Role(StrEnum):
     CHILD = "CHILD"
     GUEST = "GUEST"
     INSTALLER = "INSTALLER"
+    SAFETY_OPERATOR = "SAFETY_OPERATOR"
+    """The person a confirmed hazard is escalated to.
+
+    Assignable only by an Owner (enforced in the user directory, not here).
+    Holds no authority over any device: a confirmed gas hazard closes its own
+    valve deterministically, and reopening it is a physical act performed by
+    someone who has found out why it leaked. What this role adds is a named,
+    auditable person who can say the incident is over.
+    """
     SERVICE = "SERVICE"
     """A platform service acting on its own behalf, not a person."""
 
@@ -85,6 +110,8 @@ ROLE_PERMISSIONS: Final[dict[Role, frozenset[Permission]]] = {
             Permission.MANAGE_PRIVACY,
             Permission.READ_DIAGNOSTICS,
             Permission.MANAGE_AUTOMATIONS,
+            Permission.MANAGE_USERS,
+            Permission.ACKNOWLEDGE_SAFETY,
         }
     ),
     Role.ADULT: frozenset(
@@ -105,10 +132,22 @@ ROLE_PERMISSIONS: Final[dict[Role, frozenset[Permission]]] = {
     Role.INSTALLER: frozenset(
         {Permission.READ_HOME, Permission.ACT_COMFORT, Permission.READ_DIAGNOSTICS}
     ),
+    # Sees everything a household member sees, plus the audit trail, and
+    # commands nothing. The audit access is the point: an incident is reviewed
+    # by reading what happened, not by pressing anything.
+    Role.SAFETY_OPERATOR: frozenset(
+        {
+            Permission.READ_HOME,
+            Permission.READ_AUDIT,
+            Permission.READ_DIAGNOSTICS,
+            Permission.ACKNOWLEDGE_SAFETY,
+        }
+    ),
     Role.SERVICE: frozenset({Permission.READ_HOME}),
 }
 
-# ACT_SAFETY appears in no role. Life-safety actuators are commanded by
+# ACT_SAFETY appears in no role — including SAFETY_OPERATOR, which is named
+# after safety and holds none of it. Life-safety actuators are commanded by
 # deterministic rules through the Safety Governor, never by a person holding a
 # permission (safety invariants 6, 13, 18).
 #

@@ -2,16 +2,16 @@ import type { Dictionary } from "./dictionary";
 
 const en: Dictionary = {
   meta: {
-    titleHome: "Syltra One — Smart Living. Seamlessly Connected.",
-    titleProducts: "Products — Syltra One",
-    titleAbout: "About — Syltra One",
-    titleContact: "Contact — Syltra One",
-    titleApps: "Apps — Syltra One",
-    titleSyntraTv: "Syltra TV — Syltra One",
-    titleHomeAssistant: "Syltra Home — Syltra One",
-    titleFaq: "FAQ — Syltra One",
+    titleHome: "Syltra One | Smart Living. Seamlessly Connected.",
+    titleProducts: "Products | Syltra One",
+    titleAbout: "About | Syltra One",
+    titleContact: "Contact | Syltra One",
+    titleApps: "Apps | Syltra One",
+    titleSyntraTv: "Syltra TV | Syltra One",
+    titleHomeAssistant: "Syltra Home | Syltra One",
+    titleFaq: "FAQ | Syltra One",
     description:
-      "Syltra One engineers the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language.",
+      "Syltra One engineers the connected home, building and city of the future, one ecosystem, one intelligence layer, one design language.",
   },
   nav: {
     products: "Products",
@@ -33,13 +33,13 @@ const en: Dictionary = {
     openAppButton: "Open the app",
     livePreviewLabel: "Live preview",
     livePreviewNote:
-      "A real, running build — sign in with your Syltra account. Content shown is placeholder/test data, not the final licensed catalog.",
+      "A real, running build, sign in with your Syltra account. Content shown is placeholder/test data, not the final licensed catalog.",
   },
   hero: {
     eyebrow: "Smart Home · IoT · AI",
     title: "Smart Living. Seamlessly Connected.",
     subtitle:
-      "One ecosystem for the connected home — devices, AI and cloud infrastructure, unified under a single premium standard.",
+      "One ecosystem for the connected home, devices, AI and cloud infrastructure, unified under a single premium standard.",
     ctaProducts: "Explore the ecosystem",
     ctaAbout: "About Syltra",
   },
@@ -61,16 +61,16 @@ const en: Dictionary = {
       { name: "Mobile Application", desc: "One app. Every device. Every room." },
       { name: "Automation", desc: "Scenes and routines that run themselves." },
       { name: "Security", desc: "End-to-end encryption, on-device and in the cloud." },
-      { name: "Connectivity", desc: "Matter, Z-Wave, Zigbee, Wi-Fi, BLE and Thread — natively." },
+      { name: "Connectivity", desc: "Matter, Z-Wave, Zigbee, Wi-Fi, BLE and Thread, natively." },
     ],
   },
   why: {
     eyebrow: "Why Syltra",
     title: "Five reasons the world is moving to Syltra.",
     items: [
-      { name: "One Ecosystem", desc: "Every device, one intelligence layer — no fragmented apps." },
+      { name: "One Ecosystem", desc: "Every device, one intelligence layer, no fragmented apps." },
       { name: "Open by Design", desc: "Native Matter, Z-Wave, Zigbee, Thread and Home Assistant." },
-      { name: "AI-Native", desc: "Automation that learns your space, not just reacts to it." },
+      { name: "AI-Native", desc: "Automation that learns your space and acts ahead of you." },
       { name: "Enterprise-Grade", desc: "Residential comfort, industrial-grade reliability." },
       { name: "Built for Longevity", desc: "Premium materials, decade-long software support." },
     ],
@@ -78,13 +78,13 @@ const en: Dictionary = {
   categories: {
     eyebrow: "Product Categories",
     title: "A complete device portfolio.",
-    subtitle: "Hubs, switches, sensors and security — one design language across every room.",
+    subtitle: "Hubs, switches, sensors and security | one design language across every room.",
     cta: "View all products",
   },
   protocols: {
     eyebrow: "Connectivity",
     title: "Six protocols. One standard.",
-    subtitle: "Every Syltra device speaks the same language, natively — no bridges, no walled gardens.",
+    subtitle: "Every Syltra device speaks the same language, natively | no bridges, no walled gardens.",
     items: [
       { name: "Matter", desc: "The unifying smart-home standard, certified across the full portfolio." },
       { name: "Z-Wave", desc: "Low-power mesh built for reliability at scale, across large properties." },
@@ -96,7 +96,7 @@ const en: Dictionary = {
   },
   homeCta: {
     title: "Let's build the future of living, together.",
-    subtitle: "From a single room to an entire city — one ecosystem, engineered to scale.",
+    subtitle: "From a single room to an entire city | one ecosystem, engineered to scale.",
     button: "Get in touch",
   },
   footer: {
@@ -111,27 +111,27 @@ const en: Dictionary = {
     eyebrow: "Product Categories",
     title: "The full Syltra portfolio",
     subtitle:
-      "Fourteen categories, one design language — matte black or matte white, hidden fasteners, a single blue status light across the entire range.",
+      "Fourteen categories, one design language, matte black or matte white, hidden fasteners, a single blue status light across the entire range.",
   },
   appsPage: {
     eyebrow: "Syltra Apps",
     title: "Control it from anywhere the household already looks.",
     subtitle:
-      "The phone app was only ever the start. Syltra is moving onto the biggest screen in the house, and opening up to the platform power users already trust.",
+      "We started with the phone app. Syltra is moving onto the biggest screen in the house, and opening up to the platform power users already trust.",
     cards: [
       {
         slug: "syntra-tv",
         name: "Syltra TV",
         tagline: "Entertainment. Anytime. Anywhere.",
-        desc: "One interface for live channels, movies, series, apps and AI recommendations — built to work seamlessly with the rest of the Syltra ecosystem.",
-        status: "In development — targeting 2026",
+        desc: "One interface for live channels, movies, series, apps and AI recommendations, built to work with the rest of the Syltra ecosystem.",
+        status: "In development, targeting 2026",
       },
       {
         slug: "home-assistant",
         name: "Syltra Home",
-        tagline: "One app for every Syltra device — open by design.",
+        tagline: "One app for every Syltra device, open by design.",
         desc: "The Syltra mobile app for iOS and Android, plus a native integration for the open-source Home Assistant platform.",
-        status: "In development — targeting 2026",
+        status: "In development, targeting 2026",
       },
     ],
   },
@@ -140,7 +140,7 @@ const en: Dictionary = {
       eyebrow: "Syltra Apps · Syltra TV",
       title: "Entertainment. Anytime. Anywhere.",
       subtitle:
-        "A dark, Netflix-quality entertainment home screen — live channels, movies, series, apps and AI recommendations, running on the same Hub, SYLA voice assistant and account as the rest of the smart home.",
+        "A dark, Netflix-quality entertainment home screen, live channels, movies, series, apps and AI recommendations, running on the same Hub, SYLA voice assistant and account as the rest of the smart home.",
     },
     platforms: ["Android TV", "Apple TV", "Samsung Tizen", "LG webOS"],
     specs: ["4K Ultra HD", "HDR10+", "Dolby Vision · Atmos", "Wi-Fi 6"],
@@ -154,46 +154,46 @@ const en: Dictionary = {
     ],
     howItWorks: [
       { step: "01", title: "Pair with your hub", desc: "Sign in with the same Syltra account already running your Hub Pro or Hub Max." },
-      { step: "02", title: "Launch on the big screen", desc: "Install from your TV's app store — no separate box or dongle required." },
+      { step: "02", title: "Launch on the big screen", desc: "Install from your TV's app store, no separate box or dongle required." },
       { step: "03", title: "Watch, listen or control the home", desc: "Navigate with the remote you already have, or just speak to SYLA." },
     ],
     screen: {
       eyebrow: "Everything in one place",
-      title: "“Everything you love — in one place.”",
+      title: "“Everything you love | in one place.”",
       items: [
         { name: "Live", desc: "Arabic and international channels, in high quality." },
         { name: "Movies & Series", desc: "The latest titles on demand, without intrusive ads." },
-        { name: "Games", desc: "Cloud gaming, seamless on the big screen." },
+        { name: "Games", desc: "Cloud gaming on the big screen." },
         { name: "Apps", desc: "Every favorite app, ready to install and use." },
         { name: "Smart Home", desc: "Lighting, climate, security and cameras, controlled from the TV." },
         { name: "AI", desc: "Smart recommendations, voice search and a personalized experience." },
       ],
     },
-    status: "In development — targeting a 2026 launch alongside Syltra OS 1.0.",
+    status: "In development, targeting a 2026 launch alongside Syltra OS 1.0.",
   },
   homeAssistantPage: {
     hero: {
       eyebrow: "Syltra Apps · Syltra Home",
-      title: "One app for every Syltra device — open by design.",
+      title: "One app for every Syltra device | open by design.",
       subtitle:
         "The everyday Syltra app for iOS and Android, built on the same open standards that already power Hub Pro's embedded Home Assistant OS.",
     },
     platforms: ["iOS", "Android", "Home Assistant (HACS)", "Matter"],
     features: [
-      { name: "Every room, one app", desc: "Hubs, switches, sensors, locks and cameras — controlled from a single Syltra account." },
+      { name: "Every room, one app", desc: "Hubs, switches, sensors, locks and cameras, controlled from a single Syltra account." },
       { name: "Scenes & automations", desc: "Build routines that span every device category without writing a line of code." },
       { name: "Guest access", desc: "Share time-boxed access to a lock, a room or the whole home, and revoke it just as easily." },
-      { name: "Push alerts", desc: "A leak, an open door, a triggered smoke sensor — pushed the instant it happens." },
+      { name: "Push alerts", desc: "A leak, an open door, a triggered smoke sensor, pushed the instant it happens." },
       { name: "Energy dashboard", desc: "Live and historical consumption, per device and per room." },
-      { name: "Local-first control", desc: "Commands run on the hub first — the app keeps working even if the internet doesn't." },
+      { name: "Local-first control", desc: "Commands run on the hub first, the app keeps working even if the internet doesn't." },
     ],
     openSection: {
       eyebrow: "Open by Design",
       title: "It also speaks Home Assistant, natively.",
       paragraphs: [
         "Every Syltra Hub Pro already ships with an embedded Home Assistant OS, so local automations keep running with or without the cloud.",
-        "Syltra Home extends that with a native integration published through HACS — every Syltra device shows up as a first-class entity, ready for your own automations, dashboards and YAML.",
-        "No walled garden, no proprietary bridge to reverse-engineer. If the household already runs Home Assistant, Syltra joins it — it doesn't replace it.",
+        "Syltra Home extends that with a native integration published through HACS, every Syltra device shows up as a first-class entity, ready for your own automations, dashboards and YAML.",
+        "No walled garden, no proprietary bridge to reverse-engineer. If the household already runs Home Assistant, Syltra joins it, it doesn't replace it.",
       ],
       items: [
         { name: "HACS integration", desc: "Install the Syltra custom component straight from the Home Assistant Community Store." },
@@ -203,11 +203,11 @@ const en: Dictionary = {
       ],
     },
     howItWorks: [
-      { step: "01", title: "Set up your hub", desc: "Hub Mini, Pro or Max — the app finds it on the network in seconds." },
+      { step: "01", title: "Set up your hub", desc: "Hub Mini, Pro or Max, the app finds it on the network in seconds." },
       { step: "02", title: "Control everything", desc: "Every room and device, organized the way the household actually uses them." },
       { step: "03", title: "Bring your own platform", desc: "Optionally add the HACS integration and keep using Home Assistant as the front end." },
     ],
-    status: "In development — targeting a 2026 launch alongside Syltra OS 1.0.",
+    status: "In development, targeting a 2026 launch alongside Syltra OS 1.0.",
   },
   aboutPage: {
     hero: {
@@ -220,18 +220,18 @@ const en: Dictionary = {
       eyebrow: "Our Story",
       title: "Built to end the fragmentation.",
       paragraphs: [
-        "Syltra One began with a simple frustration: the smart home industry had built brilliant devices and a broken experience — dozens of apps, competing standards, hubs that never spoke to one another.",
-        "We started Syltra to end that fragmentation. One ecosystem. One intelligence layer. One design language — engineered from the silicon up to work as a single, seamless system.",
+        "Syltra One began with a simple frustration: the smart home industry had built brilliant devices and a broken experience, dozens of apps, competing standards, hubs that never spoke to one another.",
+        "We started Syltra to end that fragmentation. One ecosystem. One intelligence layer. One design language, engineered from the silicon up to work as a single system.",
         "What began as a small engineering team in Riyadh is now building the infrastructure for smart living across the Gulf, Europe and beyond.",
       ],
     },
     mission: {
       label: "Mission",
-      text: "To engineer the most seamless, secure and intelligent connected-living ecosystem on Earth — and to make it accessible to every home and enterprise, everywhere.",
+      text: "To build the most secure and intelligent connected-living ecosystem on Earth, and to make it accessible to every home and enterprise, everywhere.",
     },
     vision: {
       label: "Vision",
-      text: "A world where every space — home, hotel, hospital or headquarters — is intelligent by default. Where technology disappears into the architecture, and comfort, security and efficiency simply happen.",
+      text: "A world where every space, home, hotel, hospital or headquarters, is intelligent by default. Where technology disappears into the architecture, and comfort, security and efficiency simply happen.",
     },
     values: {
       eyebrow: "Core Values",
@@ -240,7 +240,7 @@ const en: Dictionary = {
         { name: "Excellence", desc: "We ship nothing we would not put in our own homes." },
         { name: "Innovation", desc: "We build ahead of the standard, not behind it." },
         { name: "Security", desc: "Privacy and protection are engineered in, never bolted on." },
-        { name: "Simplicity", desc: "Power should feel effortless." },
+        { name: "Simplicity", desc: "Power should feel simple." },
         { name: "Trust", desc: "Every device, every time, without exception." },
         { name: "Sustainability", desc: "Designed to last, built to matter." },
       ],
@@ -248,7 +248,7 @@ const en: Dictionary = {
     chairman: {
       eyebrow: "CEO's Message",
       quote:
-        "Every industry reaches a point where convenience is no longer enough — where intelligence becomes the standard. Syltra One was built for that moment. We did not set out to make another smart plug or another app. We set out to build the operating layer for how homes, businesses and cities will run for the next fifty years — quietly, securely and beautifully. From Riyadh to the world, our mission is simple: give every space the intelligence to take care of itself, and give every person back the time technology was always meant to create.",
+        "Every industry reaches a point where convenience is no longer enough, where intelligence becomes the standard. Syltra One was built for that moment. We did not set out to make another smart plug or another app. We set out to build the operating layer for how homes, businesses and cities will run for the next fifty years, quietly, securely and beautifully. From Riyadh to the world, our mission is simple: give every space the intelligence to take care of itself, and give every person back the time technology was always meant to create.",
       name: "Anas Elimam",
       role: "Founder & CEO, Syltra One",
     },
@@ -262,18 +262,18 @@ const en: Dictionary = {
       eyebrow: "Global Expansion",
       title: "From Riyadh to the world.",
       items: [
-        { year: "2026", text: "Global launch — Saudi Arabia & GCC, Syltra OS 1.0." },
+        { year: "2026", text: "Global launch, Saudi Arabia & GCC, Syltra OS 1.0." },
         { year: "2027", text: "Wider MENA expansion, Syltra AI 2.0." },
         { year: "2028", text: "Europe entry, industrial & enterprise product line." },
         { year: "2029", text: "North America market entry." },
-        { year: "2030", text: "Global network — 1M+ connected spaces worldwide." },
+        { year: "2030", text: "Global network, 1M+ connected spaces worldwide." },
       ],
     },
   },
   contactPage: {
     eyebrow: "Contact",
     title: "Let's build the future of living, together.",
-    subtitle: "For partnerships, distribution or press — reach the Syltra One team directly.",
+    subtitle: "For partnerships, distribution or press | reach the Syltra One team directly.",
     hqLabel: "Headquarters",
     hqValue: "Riyadh, Kingdom of Saudi Arabia",
     emailLabel: "Email",
@@ -288,11 +288,11 @@ const en: Dictionary = {
     items: [
       {
         q: "What is Syltra One?",
-        a: "Syltra One is a global smart-technology company engineering the connected home, building and city of the future — one ecosystem, one intelligence layer, one design language across hubs, switches, sensors, security and two companion apps.",
+        a: "Syltra One is a global smart-technology company engineering the connected home, building and city of the future, one ecosystem, one intelligence layer, one design language across hubs, switches, sensors, security and two companion apps.",
       },
       {
         q: "What connectivity protocols does Syltra support?",
-        a: "Every Syltra device speaks Matter, Z-Wave, Zigbee, Wi-Fi, Bluetooth LE and Thread natively — no bridges, no walled gardens, and no dependency on any single standard.",
+        a: "Every Syltra device speaks Matter, Z-Wave, Zigbee, Wi-Fi, Bluetooth LE and Thread natively, no bridges, no walled gardens, and no dependency on any single standard.",
       },
       {
         q: "Who or what is Syla?",
@@ -316,7 +316,7 @@ const en: Dictionary = {
       },
       {
         q: "How do I get in touch or request early access?",
-        a: "Reach the team directly through the contact page — partnerships, distribution and press inquiries are all welcome.",
+        a: "Reach the team directly through the contact page, partnerships, distribution and press inquiries are all welcome.",
       },
     ],
   },
@@ -324,12 +324,12 @@ const en: Dictionary = {
     launcherLabel: "Chat with Syla",
     title: "Syla",
     subtitle: "Syltra One assistant",
-    greeting: "Hi, I'm Syla — Syltra One's assistant. Ask me about any product, spec, or how the ecosystem fits together.",
+    greeting: "Hi, I'm Syla, Syltra One's assistant. Ask me about any product, spec, or how the ecosystem fits together.",
     placeholder: "Ask Syla anything about Syltra…",
     send: "Send",
     thinking: "Syla is thinking…",
     disclaimer: "Syla can make mistakes. Check important details with info@syltraone.com.",
-    unavailable: "Syla isn't connected yet — check back soon.",
+    unavailable: "Syla isn't connected yet, check back soon.",
     error: "Something went wrong on Syla's end. Please try again.",
     close: "Close",
     mic: "Speak to Syla",

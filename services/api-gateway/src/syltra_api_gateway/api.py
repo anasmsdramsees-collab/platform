@@ -29,11 +29,12 @@ from syltra_api_gateway.dependencies import (
     check_approve,
     check_audit,
     check_automations,
+    check_users,
     check_models,
     check_read,
     get_rate_limiter,
 )
-from syltra_api_gateway.errors import bad_request, conflict, not_found
+from syltra_api_gateway.errors import bad_request, conflict, forbidden, not_found
 from syltra_api_gateway.platform import Platform
 from syltra_api_gateway.stream import HEARTBEAT_SECONDS
 from syltra_api_gateway.translations import is_rtl, translate_reasons
@@ -46,7 +47,7 @@ from syltra_contracts import (
 )
 from syltra_digital_twin.core import StateStatus
 from syltra_policy_safety.service import PolicyService
-from syltra_security import Permission, TokenStore
+from syltra_security import ROLE_PERMISSIONS, MembershipRefused, Permission, Role, TokenStore
 
 API_VERSION = "1.0"
 
@@ -738,6 +739,132 @@ def create_app(
             ],
             "dispatched": False,
         }
+
+    # ── users and roles (spec §21, UI-5) ──
+
+    def _membership_or_404(home_id: str, membership_id: UUID) -> Any:
+        for membership in platform.users.members(home_id):
+            if membership.membership_id == membership_id:
+                return membership
+        raise not_found("NO_SUCH_MEMBERSHIP", f"no membership {membership_id}")
+
+    def _required_reason(payload: dict[str, Any]) -> str:
+        """UI-5: a permission change carries a reason, or it does not happen.
+
+        Refused here as well as in the directory, so the caller gets a 400 that
+        names the field rather than a 500 from a constructor.
+        """
+        reason = str(payload.get("reason", "")).strip()
+        if not reason:
+            raise bad_request(
+                "REASON_REQUIRED",
+                "a change to who may do what has to say why",
+            )
+        return reason
+
+    def _role_or_400(value: Any) -> Role:
+        try:
+            return Role(str(value))
+        except ValueError as exc:
+            known = ", ".join(sorted(r.value for r in Role))
+            raise bad_request("UNKNOWN_ROLE", f"{value!r} is not a role. Known: {known}") from exc
+
+    @app.get("/v1/homes/{home_id}/users", tags=["users"])
+    async def list_users(
+        home_id: str, principal: PrincipalDep, locale: LocaleDep
+    ) -> dict[str, Any]:
+        # Readable by anyone who may see the home: knowing who else holds a key
+        # to the house you live in is not a privileged question.
+        check_read(home_id, principal)
+        now = datetime.now(tz=UTC)
+        return {
+            "home_id": home_id,
+            "members": [m.as_view(now) for m in platform.users.members(home_id, now)],
+            # The console hides controls it cannot use rather than showing
+            # buttons that will be refused.
+            "may_manage": principal.may(Permission.MANAGE_USERS),
+            "assignable_roles": sorted(
+                role.value
+                for role in Role
+                if role is not Role.SERVICE
+                and not (ROLE_PERMISSIONS[role] - principal.permissions)
+            ),
+        }
+
+    @app.post("/v1/homes/{home_id}/users", tags=["users"])
+    async def grant_membership(
+        home_id: str,
+        principal: PrincipalDep,
+        locale: LocaleDep,
+        payload: Annotated[dict[str, Any], Body()],
+    ) -> dict[str, Any]:
+        check_users(home_id, principal)
+        reason = _required_reason(payload)
+        subject = str(payload.get("subject", "")).strip()
+        if not subject:
+            raise bad_request("SUBJECT_REQUIRED", "a membership needs somebody to belong to")
+        expires_raw = payload.get("expires_at")
+        try:
+            membership = platform.users.grant(
+                home_id,
+                subject,
+                _role_or_400(payload.get("role")),
+                actor=principal.subject,
+                actor_role=principal.role,
+                reason=reason,
+                display_name=payload.get("display_name"),
+                expires_at=datetime.fromisoformat(expires_raw) if expires_raw else None,
+            )
+        except MembershipRefused as exc:
+            raise forbidden(exc.reason_code, exc.detail) from exc
+        return membership.as_view(datetime.now(tz=UTC))
+
+    @app.post("/v1/homes/{home_id}/users/{membership_id}/role", tags=["users"])
+    async def change_membership_role(
+        home_id: str,
+        membership_id: UUID,
+        principal: PrincipalDep,
+        locale: LocaleDep,
+        payload: Annotated[dict[str, Any], Body()],
+    ) -> dict[str, Any]:
+        check_users(home_id, principal)
+        reason = _required_reason(payload)
+        _membership_or_404(home_id, membership_id)
+        try:
+            membership = platform.users.change_role(
+                home_id,
+                membership_id,
+                _role_or_400(payload.get("role")),
+                actor=principal.subject,
+                actor_role=principal.role,
+                reason=reason,
+            )
+        except MembershipRefused as exc:
+            raise forbidden(exc.reason_code, exc.detail) from exc
+        return membership.as_view(datetime.now(tz=UTC))
+
+    @app.post("/v1/homes/{home_id}/users/{membership_id}/revoke", tags=["users"])
+    async def revoke_membership(
+        home_id: str,
+        membership_id: UUID,
+        principal: PrincipalDep,
+        locale: LocaleDep,
+        payload: Annotated[dict[str, Any], Body()],
+    ) -> dict[str, Any]:
+        check_users(home_id, principal)
+        reason = _required_reason(payload)
+        _membership_or_404(home_id, membership_id)
+        try:
+            membership = platform.users.revoke(
+                home_id,
+                membership_id,
+                actor=principal.subject,
+                actor_role=principal.role,
+                reason=reason,
+            )
+        except MembershipRefused as exc:
+            raise forbidden(exc.reason_code, exc.detail) from exc
+        return membership.as_view(datetime.now(tz=UTC))
 
     # ── audit ──
 

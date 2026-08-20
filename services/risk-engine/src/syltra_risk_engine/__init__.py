@@ -22,7 +22,7 @@ from syltra_risk_engine.rules import (
     RiskProposal,
     evaluate_all,
 )
-from syltra_risk_engine.service import CaseChange, RiskEngineService
+from syltra_risk_engine.service import CaseChange, IsolationDispatcher, RiskEngineService
 
 __all__ = [
     "CONFIRMATION_RULES",
@@ -31,6 +31,7 @@ __all__ = [
     "CaseChange",
     "Confirmation",
     "ConfirmationRule",
+    "IsolationDispatcher",
     "RiskEngineService",
     "RiskInput",
     "RiskProposal",

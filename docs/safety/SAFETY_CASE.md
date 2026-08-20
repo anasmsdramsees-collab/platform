@@ -504,10 +504,17 @@ both wrong-direction refusals, the forged-step recheck, the three failure modes,
 and the development block. `services/risk-engine/tests/test_response.py` pins
 the direction constraint at the type level.
 
-**Not yet wired.** `dispatch_isolation` is tested end to end against the
-orchestrator, and nothing in the running services calls it: `RiskEngineService`
-plans and records outcomes but does not dispatch, and the API gateway reports
-`carried_out: false` honestly because nothing has. Wiring it into the
-composition root is the remaining step, and it is deliberately a separate,
-visible act.
+**Wired, into something nothing drives.** `RiskEngineService` now accepts an
+`IsolationDispatcher`, and `build_platform` — the composition root the console
+runs against — hands it one. A confirmed hazard reaching that engine closes the
+valve. The default constructor still takes no dispatcher, so every other risk
+engine in the repository plans and cannot act, and a test pins both halves.
+
+What wiring it revealed is more serious than what it fixed: **nothing in the
+deployed stack calls `RiskEngineService.evaluate`.** There is no consumer, no
+timer and no container that hands the risk engine the state of the house. The
+governor, the seven risk states and this shutoff are all reachable only from a
+caller that exists in the test suite. The isolation path is connected to an
+engine that is never asked to look. Recorded in `docs/GAPS.md` §4 as the most
+consequential item after §1.1.
 

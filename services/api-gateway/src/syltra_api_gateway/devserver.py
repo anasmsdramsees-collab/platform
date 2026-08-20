@@ -20,7 +20,7 @@ from syltra_context_engine.service import ContextService
 from syltra_contracts import CommandResult, LearningMode
 from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import HomePolicy, PolicyService
-from syltra_risk_engine import RiskEngineService
+from syltra_risk_engine import IsolationDispatcher, RiskEngineService
 from syltra_security import Role, TokenStore
 
 from syltra_api_gateway.api import create_app
@@ -136,20 +136,29 @@ def build_platform() -> Platform:
         )
     )
 
+    orchestrator = ActionOrchestrator(
+        gateway=gateway,
+        read_state=gateway.read,
+        get_decision=policy.get,
+        config=OrchestratorConfig(environment="development", verify_delay_seconds=0.0),
+    )
     return Platform(
         automations=automations,
         twin=context.twin,
         context=context,
         adaptive=adaptive,
         policy=policy,
-        orchestrator=ActionOrchestrator(
-            gateway=gateway,
-            read_state=gateway.read,
-            get_decision=policy.get,
-            config=OrchestratorConfig(environment="development", verify_delay_seconds=0.0),
-        ),
+        orchestrator=orchestrator,
         feedback=FeedbackService(),
-        risk=RiskEngineService(),
+        # The isolation path is wired here, so a confirmed gas hazard closes the
+        # valve rather than describing one. It stays harmless in development
+        # because the orchestrator refuses every LIFE_SAFETY_CRITICAL actuator
+        # outside production (safety invariant 16) — the wiring is live, the
+        # valve is not, and the console shows the refusal rather than a
+        # pretended success.
+        risk=RiskEngineService(
+            isolation=IsolationDispatcher(policy=policy, orchestrator=orchestrator)
+        ),
     )
 
 

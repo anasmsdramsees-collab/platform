@@ -207,7 +207,7 @@ Scoped, understood, nobody blocked on a decision.
 | Gap | Consequence | Size |
 |---|---|---|
 | Update and rollback is designed, not implemented | `docs/architecture/DEPLOYMENT.md` describes the sequence. Spec §22 Phase 8 asked for a *design*, so this is beyond what the MVP required — but a pilot hub will eventually need updating | medium |
-| `dispatch_isolation` is not wired into the running services | A confirmed gas hazard closes the valve in the tests and not in the product. `RiskEngineService` plans and records outcomes; nothing calls the dispatcher. The API reports `carried_out: false` honestly, which is correct and not the same as working | small |
+| **Nothing drives risk evaluation in the deployed stack** | Found while wiring the gas isolation. `RiskEngineService.evaluate` is called by tests and by nothing else: there is no consumer, no timer and no container for it. The Safety Governor, the seven risk states and now the gas shutoff are all reachable only from a caller that does not exist outside the test suite. The isolation path itself is wired — `build_platform` hands the risk engine a dispatcher — but the engine it is wired into is never asked to look at the house | medium, and the most consequential item in this file after §1.1 |
 | The console polls every 15 seconds | `/v1/stream` exists and nothing uses it. Polling is simple and works; a pilot watching live state would prefer the stream | medium |
 
 ### Closed

@@ -53,8 +53,25 @@ class RiskAudit:
     detail: dict[str, Any] = field(default_factory=dict)
 
 
+@dataclass(frozen=True)
+class IsolationDispatcher:
+    """What a risk engine needs in order to actually close a valve.
+
+    A named pair rather than two loose constructor arguments, so "this risk
+    engine can act" is one visible thing in the wiring rather than something a
+    reader assembles from two parameters.
+    """
+
+    policy: Any
+    orchestrator: Any
+
+
 class RiskEngineService:
-    def __init__(self, governor: SafetyGovernor | None = None) -> None:
+    def __init__(
+        self,
+        governor: SafetyGovernor | None = None,
+        isolation: IsolationDispatcher | None = None,
+    ) -> None:
         self._cases: dict[str, dict[tuple[RiskCategory, str | None], RiskCase]] = defaultdict(
             dict
         )
@@ -70,6 +87,11 @@ class RiskEngineService:
         self._isolations: dict[
             str, dict[tuple[RiskCategory, str | None], tuple[Any, ...]]
         ] = {}
+        # Absent by default, and that default is the safety property: a risk
+        # engine constructed the ordinary way cannot operate anything. Handing
+        # it a dispatcher is an explicit act at the composition root, where
+        # somebody reviewing the wiring will see it.
+        self._isolation = isolation
         self.governor = governor or SafetyGovernor()
         self.audit: list[RiskAudit] = []
 
@@ -84,6 +106,51 @@ class RiskEngineService:
         response, so only a confirmation has a plan.
         """
         return self._plans[home_id].get((category, room_id))
+
+    async def carry_out_confirmed_isolations(
+        self, home_id: str, now: datetime | None = None
+    ) -> tuple[Any, ...]:
+        """Close what the confirmed hazards in this home authorize closing.
+
+        Separate from `evaluate` and asynchronous on purpose. Evaluation is
+        deterministic, synchronous and safe to run anywhere; closing a valve
+        talks to a device and can fail. Fusing them would make every caller of
+        `evaluate` — including tests that only want to know what the rules say —
+        a caller that might operate a household's gas supply.
+
+        Does nothing at all unless the service was constructed with an
+        `IsolationDispatcher`. A risk engine built without one plans and never
+        acts, which is what every test outside `test_gas_isolation.py` relies
+        on.
+
+        Idempotent by outcome: a plan whose isolation already succeeded is
+        skipped, so a driver calling this on a timer does not reclose a valve
+        every few seconds.
+        """
+        if self._isolation is None:
+            return ()
+        from syltra_risk_engine.isolation import dispatch_isolation
+
+        moment = now or datetime.now(tz=UTC)
+        carried: list[Any] = []
+        for (category, room_id), plan in list(self._plans[home_id].items()):
+            if not plan.isolating:
+                continue
+            if all(
+                self.isolation_carried_out(home_id, category, room_id, step.capability)
+                for step in plan.isolating
+            ):
+                continue
+            outcomes = await dispatch_isolation(
+                plan,
+                home_id,
+                self._isolation.policy,
+                self._isolation.orchestrator,
+                moment,
+            )
+            self.record_isolation_outcomes(home_id, category, room_id, outcomes)
+            carried.extend(outcomes)
+        return tuple(carried)
 
     def isolation_carried_out(
         self,

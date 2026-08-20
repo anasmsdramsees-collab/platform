@@ -282,3 +282,108 @@ async def test_only_the_gas_response_isolates() -> None:
 
 async def test_the_fail_safe_map_covers_only_supplies() -> None:
     assert set(FAIL_SAFE_VALUES) == {"valve.state"}
+
+
+# ── the wiring, which is what makes any of the above reach a device ──
+
+
+async def test_a_risk_engine_built_the_ordinary_way_cannot_act() -> None:
+    """The default is the safety property, not an oversight.
+
+    Every other test in this repository constructs `RiskEngineService()` and
+    relies on it operating nothing. Handing it a dispatcher has to be a
+    deliberate act at the composition root.
+    """
+    from syltra_risk_engine import RiskEngineService
+
+    service = RiskEngineService()
+    state = alarming_home()
+    service.evaluate(HOME, state, NOW, occupied=False)
+    assert await service.carry_out_confirmed_isolations(HOME, NOW) == ()
+
+
+async def test_a_wired_risk_engine_closes_the_valve_on_confirmation() -> None:
+    from syltra_risk_engine import IsolationDispatcher, RiskEngineService
+
+    gateway = ValveGateway()
+    policy, orchestrator = build(gateway)
+    service = RiskEngineService(
+        isolation=IsolationDispatcher(policy=policy, orchestrator=orchestrator)
+    )
+
+    state = alarming_home()
+    service.evaluate(HOME, state, NOW, occupied=False)
+    outcomes = await service.carry_out_confirmed_isolations(HOME, NOW)
+
+    assert len(outcomes) == 1
+    assert outcomes[0].succeeded
+    assert await gateway.read("kitchen_valve", "valve.state") == "closed"
+
+
+async def test_a_second_call_does_not_reclose_the_valve() -> None:
+    """A driver on a timer must not send a command every few seconds.
+
+    Idempotent by outcome rather than by timestamp: what has already succeeded
+    is skipped, and what failed is retried — which is the way round a household
+    would want it.
+    """
+    from syltra_risk_engine import IsolationDispatcher, RiskEngineService
+
+    gateway = ValveGateway()
+    policy, orchestrator = build(gateway)
+    service = RiskEngineService(
+        isolation=IsolationDispatcher(policy=policy, orchestrator=orchestrator)
+    )
+    service.evaluate(HOME, alarming_home(), NOW, occupied=False)
+
+    await service.carry_out_confirmed_isolations(HOME, NOW)
+    sent_once = len(gateway.commands)
+    assert await service.carry_out_confirmed_isolations(HOME, NOW) == ()
+    assert len(gateway.commands) == sent_once
+
+
+async def test_a_failed_isolation_is_retried_on_the_next_pass() -> None:
+    from syltra_risk_engine import IsolationDispatcher, RiskEngineService
+
+    gateway = ValveGateway(accepts=False)
+    policy, orchestrator = build(gateway)
+    service = RiskEngineService(
+        isolation=IsolationDispatcher(policy=policy, orchestrator=orchestrator)
+    )
+    service.evaluate(HOME, alarming_home(), NOW, occupied=False)
+
+    first = await service.carry_out_confirmed_isolations(HOME, NOW)
+    assert first and first[0].needs_escalation
+    second = await service.carry_out_confirmed_isolations(HOME, NOW)
+    assert second, "a valve that would not close must be tried again"
+
+
+async def test_the_outcome_is_recorded_in_the_audit_trail() -> None:
+    from syltra_risk_engine import IsolationDispatcher, RiskEngineService
+
+    gateway = ValveGateway()
+    policy, orchestrator = build(gateway)
+    service = RiskEngineService(
+        isolation=IsolationDispatcher(policy=policy, orchestrator=orchestrator)
+    )
+    service.evaluate(HOME, alarming_home(), NOW, occupied=False)
+    await service.carry_out_confirmed_isolations(HOME, NOW)
+
+    actions = [entry.action for entry in service.audit]
+    assert "SAFETY_ISOLATION_VERIFIED" in actions
+
+
+async def test_the_development_server_wires_the_isolation_path() -> None:
+    """The wiring itself, checked rather than assumed.
+
+    `build_platform` is the composition root the console runs against. If
+    somebody removes the dispatcher from it, the gas response silently goes
+    back to describing a shutoff instead of performing one, and nothing else
+    in the suite would notice.
+    """
+    from syltra_api_gateway.devserver import build_platform
+
+    platform = build_platform()
+    assert platform.risk._isolation is not None
+    assert platform.risk._isolation.orchestrator is platform.orchestrator
+    assert platform.risk._isolation.policy is platform.policy

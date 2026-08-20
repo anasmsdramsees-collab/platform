@@ -85,6 +85,13 @@ export default function SylaWake({ locale }: { locale: Locale }) {
         onEnd?.();
         return;
       }
+      // Mute her own ears while she talks, so she never hears herself
+      // and answers her own words. Listeners restart in the onEnd callback.
+      try {
+        recRef.current?.abort?.();
+      } catch {
+        /* ignore */
+      }
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(normalizeForSpeech(text, lang));
       applySylaVoice(u, lang);
@@ -218,7 +225,9 @@ export default function SylaWake({ locale }: { locale: Locale }) {
           if (!greetedRef.current) {
             greetedRef.current = true;
             const acks = locale === "ar" ? ACKS_AR : ACKS_EN;
-            speak(acks[Math.floor(Math.random() * acks.length)]);
+            setPhase("speaking");
+            speak(acks[Math.floor(Math.random() * acks.length)], openFollowUp);
+            return;
           }
           // wait for the actual question
           if (silenceTimer.current) clearTimeout(silenceTimer.current);

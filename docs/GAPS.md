@@ -207,12 +207,12 @@ Scoped, understood, nobody blocked on a decision.
 | Gap | Consequence | Size |
 |---|---|---|
 | Update and rollback is designed, not implemented | `docs/architecture/DEPLOYMENT.md` describes the sequence. Spec §22 Phase 8 asked for a *design*, so this is beyond what the MVP required — but a pilot hub will eventually need updating | medium |
-| The console polls every 15 seconds | `/v1/stream` exists and nothing uses it. Polling is simple and works; a pilot watching live state would prefer the stream | medium |
 
 ### Closed
 
 | Was | Now |
 |---|---|
+| The console polled every 15 seconds | `/v1/stream` carries change notifications with per-home sequence numbers, a heartbeat, resume-from-cursor and a `resync` when the cursor is too old to answer. The console re-reads on notification and falls back to polling only while the socket is unhealthy. Measured live: an external change reached the screen in about one second. The stream deliberately carries notifications rather than data — a second copy of every view model is a second copy that can disagree with the first |
 | Nothing drove risk evaluation | `RiskDriver` evaluates every known home on a timer and carries out what that authorizes, started for the life of the app. Found while wiring the gas isolation: `evaluate` was called by the test suite and by nothing else, so the governor, the seven risk states and the shutoff were all reachable only from a caller the product did not have. `system_status` now reports the risk engine degraded when no driver is running or its loop has stalled, instead of the hard-coded `"ok"` that made a hub with nothing reading its detectors look healthy |
 | `contracts/openapi/` empty | `make contracts` writes `contracts/openapi/v1.0/syltra-local-api.openapi.json` from the app itself; a test fails the build when a route changes without regenerating. The WebSocket `/v1/stream` is absent because OpenAPI 3.1 cannot describe one, and a test asserts that absence so it stays a known limitation |
 | `contracts/examples/` empty | Eighteen worked examples in `contracts/examples/v1.0/`, all one evening in one synthetic home, cross-referenced by id so following `recommendation_id` from recommendation to decision to feedback works. Each re-validates through the model it came from |
@@ -300,7 +300,7 @@ Recorded so nobody re-opens them as oversights.
 | Unverified against reality | 6 | a real home, a real Home Assistant, a person |
 | Awaiting your decision | 5 | you |
 | Needs a person | 3 | scheduling |
-| Known engineering gaps | 2 | nobody — pick them up any time |
+| Known engineering gaps | 1 | nobody — pick them up any time |
 | Structural divergence | 3 groups | explained in place, not resolved |
 
 Nothing in §1 through §5 is a *critical blocker* in the sense of §32 item 18:

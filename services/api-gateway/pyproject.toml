@@ -6,6 +6,11 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
     "fastapi>=0.115",
     "uvicorn>=0.34",
+    # uvicorn speaks HTTP without help and WebSockets only with a protocol
+    # library. `/v1/stream` existed for weeks and could never have served a
+    # single connection: every handshake was answered with "Unsupported upgrade
+    # request" in a log nobody was reading.
+    "websockets>=14.0",
     "prometheus-client>=0.21",
     "pydantic-settings>=2.8",
     "nats-py>=2.10",

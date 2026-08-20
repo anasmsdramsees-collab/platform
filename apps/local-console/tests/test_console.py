@@ -1134,7 +1134,13 @@ def test_the_periodic_refresh_does_not_wipe_an_answer_the_user_asked_for() -> No
     # look broken — the same failure as the approval confirmation that used to
     # flash and vanish.
     boot = JS_CODE[JS_CODE.index("async function boot()") :]
-    assert "if (!state.holdRefresh) refresh();" in boot
+    # The fallback poll checks it...
+    assert "if (state.holdRefresh) return;" in boot
+    # ...and so does the live stream, which is now the primary path. A rule
+    # enforced on one of the two would be enforced on neither in practice.
+    assert "function refreshUnlessHeld()" in JS_CODE
+    unless_held = JS_CODE[JS_CODE.index("function refreshUnlessHeld()") :]
+    assert "if (state.holdRefresh) return;" in unless_held[: unless_held.index("\n}")]
     # Navigating away releases the hold, so a held view cannot go stale forever.
     route = JS_CODE[JS_CODE.index("async function route()") :]
     route = route[: route.index("\n}")]

@@ -10,6 +10,7 @@ response that carries reason codes carries both: `reason_codes` for machines and
 `reasons` for people.
 """
 
+import asyncio
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated, Any
@@ -34,6 +35,7 @@ from syltra_api_gateway.dependencies import (
 )
 from syltra_api_gateway.errors import bad_request, conflict, not_found
 from syltra_api_gateway.platform import Platform
+from syltra_api_gateway.stream import HEARTBEAT_SECONDS
 from syltra_api_gateway.translations import is_rtl, translate_reasons
 from pydantic import ValidationError
 from syltra_contracts import (
@@ -104,6 +106,32 @@ def create_app(
         openapi_url="/v1/openapi.json",
     )
     app.state.platform = platform
+
+    @app.middleware("http")
+    async def _publish_changes(request: Request, call_next: Any) -> Response:
+        """Wake the stream after any request that changed something.
+
+        Middleware rather than a line in each handler, because a line in each
+        handler is a line the next handler forgets. Every successful mutating
+        request against a home publishes, whatever route added it.
+
+        A dry run is excluded by name: it is a POST that changes nothing, and a
+        notification for it would make the console re-read for no reason.
+        """
+        response: Response = await call_next(request)
+        if request.method not in ("POST", "PUT", "PATCH", "DELETE"):
+            return response
+        if response.status_code >= 400 or request.url.path.endswith("/dry-run"):
+            return response
+        home_id = request.path_params.get("home_id") or request.query_params.get("home_id")
+        if not home_id:
+            return response
+        # The path is the reason, uppercased: APPROVE, REJECT, ENABLED. It is
+        # what changed, in the vocabulary the caller already used.
+        tail = [part for part in request.url.path.rsplit("/", 2)[-2:] if part]
+        reason = (tail[-1] if tail else "UPDATED").upper()
+        request.app.state.platform.stream.publish(str(home_id), reason)
+        return response
     # `is None`, not `or`: TokenStore defines __len__, so an empty store is
     # falsy and `tokens or TokenStore()` would silently discard the caller's
     # store — every token it later issued would then be unknown to this app.
@@ -790,24 +818,82 @@ def create_app(
             await websocket.close(code=4403)
             return
 
+        # The cursor a reconnecting client last saw. Absent or unparseable is
+        # treated as "no history", which resyncs rather than guessing.
+        try:
+            cursor = int(websocket.query_params.get("cursor", "0"))
+        except ValueError:
+            cursor = 0
+
+        hub = platform.stream
         await websocket.accept()
         metrics.STREAM_CONNECTIONS.inc()
+        queue = hub.subscribe(home_id)
         try:
+            missed, resync = hub.missed(home_id, cursor)
             await websocket.send_json(
                 {
                     "type": "connected",
                     "home_id": home_id,
                     "subject": principal.subject,
+                    "seq": hub.latest_sequence(home_id),
+                    # The client re-reads on either. `resync` says so
+                    # explicitly, because "I cannot tell you what you missed"
+                    # and "you missed nothing" must not look the same.
+                    "resync": resync,
+                    "missed": [change.as_json() for change in missed],
+                    "heartbeat_seconds": HEARTBEAT_SECONDS,
                     "at": datetime.now(tz=UTC).isoformat(),
                 }
             )
-            while True:
-                message = await websocket.receive_text()
-                if message == "ping":
-                    await websocket.send_json({"type": "pong"})
+
+            # Reading and writing at once: the socket must notice a client that
+            # went away, and the client must notice a server that did.
+            reader = asyncio.create_task(websocket.receive_text())
+            try:
+                while True:
+                    waiter = asyncio.create_task(queue.get())
+                    done, _ = await asyncio.wait(
+                        {reader, waiter},
+                        timeout=HEARTBEAT_SECONDS,
+                        return_when=asyncio.FIRST_COMPLETED,
+                    )
+                    if reader in done:
+                        # Any inbound message is a liveness check; the stream is
+                        # one-directional by design and accepts no commands.
+                        reader.exception() or reader.result()
+                        waiter.cancel()
+                        await websocket.send_json(
+                            {"type": "pong", "seq": hub.latest_sequence(home_id)}
+                        )
+                        reader = asyncio.create_task(websocket.receive_text())
+                        continue
+                    if waiter in done:
+                        change = waiter.result()
+                        # Coalesce a burst into one notification rather than
+                        # making the console re-read once per event.
+                        reasons = list(change.reasons)
+                        while not queue.empty():
+                            reasons.extend(queue.get_nowait().reasons)
+                        payload = change.as_json()
+                        payload["seq"] = hub.latest_sequence(home_id)
+                        payload["reasons"] = sorted(set(reasons))
+                        await websocket.send_json(payload)
+                        continue
+                    waiter.cancel()
+                    await websocket.send_json(
+                        {
+                            "type": "heartbeat",
+                            "seq": hub.latest_sequence(home_id),
+                            "at": datetime.now(tz=UTC).isoformat(),
+                        }
+                    )
+            finally:
+                reader.cancel()
         except WebSocketDisconnect:
             return
         finally:
+            hub.unsubscribe(home_id, queue)
             metrics.STREAM_CONNECTIONS.dec()
 
     # ── view helpers ──

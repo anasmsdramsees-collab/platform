@@ -19,6 +19,8 @@ from syltra_policy_safety import PolicyService
 from syltra_automation_engine import AutomationEngine
 from syltra_risk_engine import RiskEngineService
 
+from syltra_api_gateway.stream import StreamHub
+
 
 @dataclass
 class Platform:
@@ -39,6 +41,9 @@ class Platform:
     # The loop that feeds the risk engine. Optional so tests and the OpenAPI
     # export construct a platform without starting one, and reported as
     # degraded when absent rather than assumed fine.
+    # The change feed. Owned by the platform rather than by the app, so the
+    # services that cause changes can publish without importing the web layer.
+    stream: StreamHub = field(default_factory=StreamHub)
     risk_driver: Any = None
     risk_driver_tolerance_seconds: float = 10.0
     hub_id: str = "hub_dev_001"

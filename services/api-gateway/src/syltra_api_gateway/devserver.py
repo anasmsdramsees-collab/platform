@@ -8,6 +8,7 @@ console can authenticate. Never used in a pilot or production deployment.
 import json
 import logging
 import os
+from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
@@ -51,6 +52,20 @@ class _DemoGateway:
 
     async def read(self, device_id: str, capability: str) -> Any:
         return self.state.get((device_id, capability))
+
+
+def _publish_to(platform: Platform) -> Callable[[str, tuple[str, ...]], None]:
+    """Adapt the hub's publisher to the driver's callback shape.
+
+    A named function rather than a lambda because `publish` returns the change
+    it recorded, and a lambda would quietly hand that return value back to a
+    callback declared to return nothing.
+    """
+
+    def publish(home_id: str, reasons: tuple[str, ...]) -> None:
+        platform.stream.publish(home_id, *reasons)
+
+    return publish
 
 
 def build_platform() -> Platform:
@@ -146,7 +161,7 @@ def build_platform() -> Platform:
     risk = RiskEngineService(
         isolation=IsolationDispatcher(policy=policy, orchestrator=orchestrator)
     )
-    return Platform(
+    platform = Platform(
         automations=automations,
         twin=context.twin,
         context=context,
@@ -161,8 +176,14 @@ def build_platform() -> Platform:
         # valve is not, and the console shows the refusal rather than a
         # pretended success.
         risk=risk,
-        risk_driver=RiskDriver(context.twin, risk, contexts=context),
     )
+    platform.risk_driver = RiskDriver(
+        context.twin,
+        risk,
+        contexts=context,
+        on_change=_publish_to(platform),
+    )
+    return platform
 
 
 def _add_dev_sign_in(app: FastAPI, token: str, port: int) -> None:

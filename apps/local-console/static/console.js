@@ -26,6 +26,17 @@ const state = {
   param: null,
   holdRefresh: false,
   me: null,
+  /* The live feed's own state. `healthy` gates the fallback poll: while the
+     socket is delivering, polling every 15 seconds would be pure duplication. */
+  stream: {
+    socket: null,
+    cursor: 0,
+    healthy: false,
+    attempt: 0,
+    retry: null,
+    pending: null,
+    lastMessageAt: 0,
+  },
 };
 
 /* ── navigation (§4) ──
@@ -2428,12 +2439,109 @@ async function boot() {
   }
   window.addEventListener("hashchange", route);
   await route();
-  /* The periodic refresh keeps live data current. It must not destroy an
-     answer the person asked for: a test run's result is not live data, and
-     wiping it a few seconds after the click makes the button look broken. */
+  connectStream();
+  /* The poll is now the fallback, not the mechanism. It stays because a
+     WebSocket can fail in ways that look like success — a proxy that holds the
+     connection open and delivers nothing — and a console that stopped updating
+     without saying so is worse than one that updates slowly. */
   setInterval(() => {
-    if (!state.holdRefresh) refresh();
+    if (state.holdRefresh) return;
+    if (state.stream.healthy) return;
+    refresh();
   }, 15000);
+}
+
+/* ── the live change feed ──
+
+   The stream carries notifications, not data: "something changed, and here is
+   how far the sequence has advanced". The console then re-reads the endpoints
+   it already reads, so there is exactly one description of a device and the
+   socket is not a second one that can disagree with it. */
+
+const STREAM_BACKOFF_MS = [500, 1000, 2000, 5000, 10000, 30000];
+
+function streamUrl() {
+  /* `/v1/stream`, spelled out. `API` is the empty string here and every other
+     call writes its own `/v1/...`, so building this one from `API` alone
+     produced `ws://host/stream` — a 404 that the retry loop then hid behind
+     patient, well-behaved reconnection. */
+  const url = new URL(`${API}/v1/stream`, window.location.href);
+  url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
+  /* A token in a URL is normally wrong. A browser cannot set headers on a
+     WebSocket handshake, so there is no alternative here; the connection is to
+     this machine, and the gateway verifies before accepting. */
+  url.searchParams.set("token", state.token);
+  url.searchParams.set("home_id", state.homeId);
+  url.searchParams.set("cursor", String(state.stream.cursor));
+  return url.toString();
+}
+
+function connectStream() {
+  if (!state.homeId || !state.token) return;
+  if (state.stream.socket) {
+    state.stream.socket.onclose = null;
+    state.stream.socket.close();
+  }
+  let socket;
+  try {
+    socket = new WebSocket(streamUrl());
+  } catch {
+    scheduleStreamRetry();
+    return;
+  }
+  state.stream.socket = socket;
+
+  socket.onopen = () => {
+    state.stream.attempt = 0;
+  };
+
+  socket.onmessage = (event) => {
+    let message;
+    try {
+      message = JSON.parse(event.data);
+    } catch {
+      return;
+    }
+    state.stream.healthy = true;
+    state.stream.lastMessageAt = Date.now();
+    if (typeof message.seq === "number") state.stream.cursor = message.seq;
+
+    if (message.type === "connected") {
+      /* `resync` and "you missed nothing" must not be treated alike: the first
+         means the server cannot say what was missed, and only a re-read is
+         safe. */
+      if (message.resync || (message.missed || []).length) refreshUnlessHeld();
+      return;
+    }
+    if (message.type === "changed") refreshUnlessHeld();
+  };
+
+  socket.onclose = () => {
+    state.stream.healthy = false;
+    scheduleStreamRetry();
+  };
+  socket.onerror = () => {
+    state.stream.healthy = false;
+  };
+}
+
+function refreshUnlessHeld() {
+  /* Same rule the poll follows: a test run's result is an answer somebody
+     asked for, and a change elsewhere in the house must not wipe it. */
+  if (state.holdRefresh) return;
+  /* Coalesce a burst arriving as separate frames into one re-read. */
+  clearTimeout(state.stream.pending);
+  state.stream.pending = setTimeout(() => refresh(), 120);
+}
+
+function scheduleStreamRetry() {
+  const attempt = Math.min(state.stream.attempt, STREAM_BACKOFF_MS.length - 1);
+  /* Jitter, so a hub that restarted does not get every console in the house
+     reconnecting in the same millisecond. */
+  const delay = STREAM_BACKOFF_MS[attempt] * (0.75 + Math.random() * 0.5);
+  state.stream.attempt += 1;
+  clearTimeout(state.stream.retry);
+  state.stream.retry = setTimeout(connectStream, delay);
 }
 
 boot();

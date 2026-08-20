@@ -37,6 +37,7 @@ whether this loop or a test made the call.
 
 import asyncio
 import logging
+from collections.abc import Callable
 from contextlib import suppress
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
@@ -107,10 +108,16 @@ class RiskDriver:
         risk: _Risk,
         contexts: _Contexts | None = None,
         interval_seconds: float = DEFAULT_INTERVAL_SECONDS,
+        on_change: Callable[[str, tuple[str, ...]], None] | None = None,
     ) -> None:
         self._twin = twin
         self._risk = risk
         self._contexts = contexts
+        # Called when a pass actually changed something, so a live console
+        # learns about a confirmed hazard in the same second rather than at the
+        # next poll. A callback rather than an import: the risk engine must not
+        # depend on the web layer to do its job.
+        self._on_change = on_change
         self._interval = interval_seconds
         self._task: asyncio.Task[None] | None = None
         self.health = RiskDriverHealth()
@@ -143,7 +150,8 @@ class RiskDriver:
         if state is None:
             return
         occupied, cooking = self._situation(home_id, now)
-        self._risk.evaluate(home_id, state, now, occupied=occupied, cooking=cooking)
+        changes = self._risk.evaluate(home_id, state, now, occupied=occupied, cooking=cooking)
+        reasons = [f"RISK_{change.kind}" for change in changes]
         # Isolations are carried out in the same pass that confirmed them.
         # Deferring to the next tick would put a second of avoidable delay
         # between a certified gas reading and a closed valve.
@@ -153,6 +161,11 @@ class RiskDriver:
                 capability=outcome.capability,
                 verified=str(outcome.succeeded).lower(),
             ).inc()
+            reasons.append(outcome.reason_code)
+        # Only when something happened. A quiet pass every second that told the
+        # console to re-read would be the 15-second poll again, faster.
+        if reasons and self._on_change is not None:
+            self._on_change(home_id, tuple(reasons))
 
     def _situation(self, home_id: str, now: datetime) -> tuple[bool | None, bool]:
         """Occupancy and cooking, from context rather than from guesswork.

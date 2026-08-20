@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Package, LayoutGrid, Info, HelpCircle, Mail } from "lucide-react";
+import { Package, LayoutGrid, Info, HelpCircle, Mail, ShoppingBag } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import Logo from "./logo";
@@ -16,6 +16,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
 
   const links = [
     { href: `/${locale}/products`, label: dict.nav.products },
+    { href: `/${locale}/store`, label: dict.nav.store },
     { href: `/${locale}/apps`, label: dict.nav.apps },
     { href: `/${locale}/about`, label: dict.nav.about },
     { href: `/${locale}/faq`, label: dict.nav.faq },
@@ -24,6 +25,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
 
   const mobileNavItems: NavItem[] = [
     { id: "products", icon: <Package />, label: dict.nav.products, href: `/${locale}/products` },
+    { id: "store", icon: <ShoppingBag />, label: dict.nav.store, href: `/${locale}/store` },
     { id: "apps", icon: <LayoutGrid />, label: dict.nav.apps, href: `/${locale}/apps` },
     { id: "about", icon: <Info />, label: dict.nav.about, href: `/${locale}/about` },
     { id: "faq", icon: <HelpCircle />, label: dict.nav.faq, href: `/${locale}/faq` },

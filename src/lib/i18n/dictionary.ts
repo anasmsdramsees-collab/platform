@@ -26,6 +26,7 @@ export interface Dictionary {
   };
   nav: {
     products: string;
+    store: string;
     apps: string;
     about: string;
     faq: string;

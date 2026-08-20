@@ -15,6 +15,7 @@ const ar: Dictionary = {
   },
   nav: {
     products: "المنتجات",
+    store: "المتجر",
     apps: "التطبيقات",
     about: "من نحن",
     faq: "الأسئلة الشائعة",

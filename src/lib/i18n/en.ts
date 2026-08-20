@@ -15,6 +15,7 @@ const en: Dictionary = {
   },
   nav: {
     products: "Products",
+    store: "Store",
     apps: "Apps",
     about: "About",
     faq: "FAQ",

@@ -1,13 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { applySylaVoice } from "@/lib/tts-voice";
 
 export function useSpeechSynthesis(lang: string) {
   const [supported, setSupported] = useState(false);
   const [speaking, setSpeaking] = useState(false);
 
   useEffect(() => {
-    setSupported(typeof window !== "undefined" && "speechSynthesis" in window);
+    const ok = typeof window !== "undefined" && "speechSynthesis" in window;
+    setSupported(ok);
+    // Chrome loads the voice list asynchronously; touching it here ensures
+    // it is ready by the time the first reply is spoken.
+    if (ok) window.speechSynthesis.getVoices();
   }, []);
 
   const speak = useCallback(
@@ -15,7 +20,7 @@ export function useSpeechSynthesis(lang: string) {
       if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = lang;
+      applySylaVoice(utterance, lang);
       utterance.rate = 1;
       utterance.onstart = () => setSpeaking(true);
       utterance.onend = () => setSpeaking(false);

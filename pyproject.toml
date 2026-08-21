@@ -15,6 +15,7 @@ members = [
     "services/context-engine",
     "services/adaptive-engine",
     "services/automation-engine",
+    "services/cloud-connector",
     "services/policy-safety",
     "services/action-orchestrator",
     "services/feedback-service",

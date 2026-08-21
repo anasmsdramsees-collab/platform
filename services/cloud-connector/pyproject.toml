@@ -1,0 +1,22 @@
+[project]
+name = "syltra-cloud-connector"
+version = "0.1.0"
+description = "SYLTRA Cloud Connector: disabled by default, exports only what a household consented to"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "prometheus-client>=0.21",
+    "pydantic-settings>=2.8",
+    "syltra-contracts",
+    "syltra-observability",
+]
+
+[tool.uv.sources]
+syltra-contracts = { workspace = true }
+syltra-observability = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/syltra_cloud_connector"]

@@ -28,6 +28,7 @@ METRICS_MODULES = [
     "syltra_adaptive_engine.metrics",
     "syltra_api_gateway.metrics",
     "syltra_automation_engine.metrics",
+    "syltra_cloud_connector.metrics",
     "syltra_context_engine.metrics",
     "syltra_digital_twin.metrics",
     "syltra_edge_agent.metrics",
@@ -53,14 +54,15 @@ REQUIRED: dict[str, str] = {
     "model suspension count": "syltra_adaptive_model_suspensions_total",
     "stale sensor count": "syltra_twin_stale_capabilities",
     "active risk cases": "syltra_risk_active_cases",
+    # The fourteenth, and the last to get a source. It reads zero on every hub
+    # that has not turned the connector on, which is the evidence the platform's
+    # central promise deserves: local control does not depend on the cloud.
+    "cloud connector status": "syltra_cloud_connector_enabled",
 }
 
-# The fourteenth. §14.11 gives the Cloud Connector MVP responsibilities and the
-# service does not exist — `services/cloud-connector/` holds a `.gitkeep`. A
-# metric invented for a component that is not there would report a healthy
-# cloud link that nothing could ever provide, which is worse than its absence.
-# Recorded in IMPLEMENTATION_STATUS.md rather than faked here.
-NOT_APPLICABLE = {"cloud connector status": "no cloud connector service exists"}
+# Empty, and it took building the connector to make it so. Every one of §29's
+# fourteen now has a component behind it rather than an excuse.
+NOT_APPLICABLE: dict[str, str] = {}
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -88,7 +90,7 @@ def test_the_only_unmet_requirement_is_the_one_with_no_component() -> None:
     # Thirteen of fourteen. The fourteenth is unmet because the service it would
     # measure does not exist, and that is recorded rather than papered over.
     assert len(REQUIRED) + len(NOT_APPLICABLE) == 14
-    assert set(NOT_APPLICABLE) == {"cloud connector status"}
+    assert NOT_APPLICABLE == {}, "a §29 metric with no source needs a recorded reason"
 
 
 def test_every_service_that_decides_or_acts_is_instrumented() -> None:

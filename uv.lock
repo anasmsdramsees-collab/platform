@@ -8,6 +8,7 @@ members = [
     "syltra-adaptive-engine",
     "syltra-api-gateway",
     "syltra-automation-engine",
+    "syltra-cloud-connector",
     "syltra-context-engine",
     "syltra-contracts",
     "syltra-design-tokens",
@@ -1280,6 +1281,25 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.10" },
     { name = "syltra-contracts", editable = "libs/contracts" },
     { name = "syltra-digital-twin", editable = "services/digital-twin" },
+]
+
+[[package]]
+name = "syltra-cloud-connector"
+version = "0.1.0"
+source = { editable = "services/cloud-connector" }
+dependencies = [
+    { name = "prometheus-client" },
+    { name = "pydantic-settings" },
+    { name = "syltra-contracts" },
+    { name = "syltra-observability" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "prometheus-client", specifier = ">=0.21" },
+    { name = "pydantic-settings", specifier = ">=2.8" },
+    { name = "syltra-contracts", editable = "libs/contracts" },
+    { name = "syltra-observability", editable = "libs/observability" },
 ]
 
 [[package]]

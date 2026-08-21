@@ -157,16 +157,34 @@ case, not open a valve. `ACT_SAFETY` still appears in no role.
 what an "installation" is as a product concept are undecided, and the navigation
 entry stays marked unavailable rather than pretending otherwise.
 
-### 2.3 The Cloud Connector
+### 2.3 The Cloud Connector — **built, and built to refuse**
 
-Spec §14.11 gives it MVP responsibilities — disabled by default, an export
-allowlist, offline queueing, payload redaction. `services/cloud-connector/`
-contains a `.gitkeep`.
+`services/cloud-connector/` held a `.gitkeep`, and the argument for leaving it
+that way was decent: local control never depends on the cloud, and a connector
+that does not exist is trivially disabled.
 
-Not critical: the platform's promise is that local control never depends on the
-cloud, and a connector that does not exist is trivially disabled. But it is a
-specified MVP component that is absent, and it is why one of §29's fourteen
-required metrics (*cloud connector status*) has no source.
+It was wrong in one direction. A component that does not exist is not a
+component that refuses — it is one somebody adds in a hurry later, under a
+deadline, without the refusals. It exists now in order to say no.
+
+Four gates, each defaulting to closed: **disabled** for every household until
+somebody enables it with a reason; **consent per destination**, because agreeing
+to send diagnostics to an installer is not agreeing to send anything to a
+manufacturer, and withdrawal empties the queue rather than draining it;
+**an allowlist**, because a denylist forgets the field somebody added last week;
+and **redaction** after the allowlist, since *may this field go* and *what may
+it say* are different questions. Device ids become pseudonyms salted with a
+value that never leaves, so a diagnostic can correlate two records from one
+device and nothing downstream can join across houses.
+
+Nothing here reaches a network — asserted on the parsed imports — and no control
+path waits on it. The queue is bounded rather than durable on purpose: a
+fortnight of telemetry recovered after an outage is a fortnight of household
+behaviour travelling long after anybody remembered agreeing to it.
+
+This also gives §29's fourteenth metric its source. `syltra_cloud_connector_enabled`
+reads zero on a hub nobody has turned it on for, which is the evidence the
+platform's central promise deserves.
 
 ### 2.4 Brand assets
 
@@ -335,7 +353,7 @@ Recorded so nobody re-opens them as oversights.
 | Category | Count | Blocked on |
 |---|---|---|
 | Unverified against reality | 6 | a real home, a real Home Assistant, a person |
-| Awaiting your decision | 3 | you |
+| Awaiting your decision | 2 | you |
 | Needs a person | 3 | scheduling |
 | Known engineering gaps | 1 | nobody — pick them up any time |
 | Structural divergence | 3 groups | explained in place, not resolved |

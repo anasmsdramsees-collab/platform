@@ -25,7 +25,7 @@ export interface Product {
   en: ProductCopy;
   ar: ProductCopy;
   tags: ProductTag[];
-  image?: string; // populated once real product photography is uploaded
+  images?: string[]; // slide gallery, first image is the cover
 }
 
 export interface ProductCategory {
@@ -49,6 +49,7 @@ export const productCatalog: ProductCategory[] = [
     items: [
       {
         slug: "hub-mini",
+        images: ["/store/hub-mini.jpg", "/store/hub-mini-2.jpg", "/store/hub-mini-poster.jpg"],
         name: "Syltra Hub Mini",
         tags: ["Wi-Fi", "Zigbee", "Z-Wave"],
         en: {
@@ -76,6 +77,7 @@ export const productCatalog: ProductCategory[] = [
       },
       {
         slug: "hub-pro",
+        images: ["/store/hub-pro.jpg", "/store/hub-pro-2.jpg", "/store/hub-pro-poster.jpg"],
         name: "Syltra Hub Pro",
         tags: ["Wi-Fi", "Zigbee", "Z-Wave", "Thread"],
         en: {
@@ -109,6 +111,7 @@ export const productCatalog: ProductCategory[] = [
       },
       {
         slug: "hub-max",
+        images: ["/store/hub-max.jpg", "/store/hub-max-2.jpg", "/store/hub-max-poster.jpg"],
         name: "Syltra Hub Max",
         tags: ["Wi-Fi", "Zigbee", "Z-Wave", "Thread"],
         en: {
@@ -136,6 +139,7 @@ export const productCatalog: ProductCategory[] = [
       },
       {
         slug: "panel-3",
+        images: ["/store/panel-3.jpg", "/store/panel-3-2.jpg", "/store/panel-3-poster.jpg"],
         name: "Syltra Touch Panel 3″",
         tags: ["Wi-Fi", "Zigbee"],
         en: {
@@ -163,6 +167,7 @@ export const productCatalog: ProductCategory[] = [
       },
       {
         slug: "panel-11",
+        images: ["/store/panel-11.jpg", "/store/panel-11-2.jpg", "/store/panel-11-poster.jpg"],
         name: "Syltra Touch Panel 11″",
         tags: ["Wi-Fi", "Zigbee", "Matter"],
         en: {

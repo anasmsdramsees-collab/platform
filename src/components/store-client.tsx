@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { productCatalog } from "@/lib/products";
 import type { Locale } from "@/lib/i18n/config";
+import ProductSlides from "./product-slides";
 
 interface CartLine {
   slug: string;
@@ -162,6 +163,11 @@ export default function StoreClient({ locale }: { locale: Locale }) {
                   const copy = ar ? p.ar : p.en;
                   return (
                     <div key={p.slug} className="rounded-lg border border-hairline bg-graphite p-5">
+                      {p.images && p.images.length > 0 && (
+                        <div className="mb-4 -mx-1">
+                          <ProductSlides images={p.images} alt={p.name} />
+                        </div>
+                      )}
                       <p className="font-mono text-sm font-semibold text-platinum">{p.name}</p>
                       <p className="mt-1.5 text-xs leading-relaxed text-chrome-dim">{copy.tagline}</p>
                       <div className="mt-3 flex flex-wrap gap-1.5">

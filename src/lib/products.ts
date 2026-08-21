@@ -392,6 +392,39 @@ export const productCatalog: ProductCategory[] = [
     ],
   },
   {
+    key: "cctv",
+    en: {
+      name: "CCTV & Surveillance",
+      desc: "Professional-grade cameras and recording, for homes and businesses.",
+    },
+    ar: {
+      name: "كاميرات المراقبة CCTV",
+      desc: "كاميرات وتسجيل بمستوى احترافي, للمنازل والمنشآت التجارية.",
+    },
+    items: [
+      {
+        slug: "cctv-bullet", name: "Syltra CCTV Bullet", tags: ["Wi-Fi", "App"],
+        en: { tagline: "Outdoor watch, day and night.", description: "A weatherproof outdoor bullet camera with sharp night vision, covers entrances, driveways and perimeters around the clock.", specs: [{ label: "Resolution", value: "4MP, night vision" }, { label: "Build", value: "IP67 weatherproof" }, { label: "Storage", value: "NVR / cloud / microSD" }] },
+        ar: { tagline: "مراقبة خارجية، ليلًا ونهارًا.", description: "كاميرا خارجية مقاومة للعوامل الجوية برؤية ليلية حادة, تغطي المداخل والممرات والأسوار على مدار الساعة.", specs: [{ label: "الدقة", value: "4MP مع رؤية ليلية" }, { label: "التصنيع", value: "مقاومة IP67" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
+      },
+      {
+        slug: "cctv-dome", name: "Syltra CCTV Dome", tags: ["Wi-Fi", "App"],
+        en: { tagline: "Discreet indoor coverage.", description: "A low-profile dome camera for lobbies, shops and indoor spaces, wide view, tamper-resistant housing, clean ceiling mount.", specs: [{ label: "Resolution", value: "4MP wide angle" }, { label: "Mount", value: "Ceiling, tamper-resistant" }, { label: "Storage", value: "NVR / cloud / microSD" }] },
+        ar: { tagline: "تغطية داخلية بحضور هادئ.", description: "كاميرا قبة أنيقة للاستقبال والمحلات والمساحات الداخلية, زاوية واسعة، وهيكل مقاوم للعبث، وتركيب سقفي نظيف.", specs: [{ label: "الدقة", value: "4MP بزاوية واسعة" }, { label: "التركيب", value: "سقفي مقاوم للعبث" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
+      },
+      {
+        slug: "cctv-ptz", name: "Syltra CCTV PTZ", tags: ["Wi-Fi", "App"],
+        en: { tagline: "One camera, the whole yard.", description: "A motorized pan-tilt-zoom camera that tracks movement and sweeps large areas, one unit covers what three fixed cameras would.", specs: [{ label: "Motion", value: "355° pan, 90° tilt, zoom" }, { label: "Tracking", value: "Auto motion tracking" }, { label: "Storage", value: "NVR / cloud / microSD" }] },
+        ar: { tagline: "كاميرا واحدة تغطي الساحة كلها.", description: "كاميرا متحركة بتقريب بصري تتعقب الحركة وتمسح المساحات الواسعة, وحدة واحدة تغطي ما تغطيه ثلاث كاميرات ثابتة.", specs: [{ label: "الحركة", value: "دوران 355° وإمالة 90° وتقريب" }, { label: "التعقب", value: "تعقب تلقائي للحركة" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
+      },
+      {
+        slug: "cctv-nvr", name: "Syltra NVR 8", tags: ["App"],
+        en: { tagline: "Eight channels, weeks of footage.", description: "An 8-channel network video recorder that keeps weeks of footage locally, review any camera from the app, export clips in seconds.", specs: [{ label: "Channels", value: "8 cameras" }, { label: "Storage", value: "Up to 8TB HDD" }, { label: "Access", value: "Live + playback from the app" }] },
+        ar: { tagline: "ثماني قنوات، وأسابيع من التسجيل.", description: "جهاز تسجيل شبكي بثماني قنوات يحفظ أسابيع من التسجيلات محليًا, راجع أي كاميرا من التطبيق وصدّر المقاطع في ثوانٍ.", specs: [{ label: "القنوات", value: "8 كاميرات" }, { label: "التخزين", value: "حتى 8 تيرابايت" }, { label: "الوصول", value: "بث حي ومراجعة من التطبيق" }] },
+      },
+    ],
+  },
+  {
     key: "comfort",
     en: {
       name: "Comfort & Living",

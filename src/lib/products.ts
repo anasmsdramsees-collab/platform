@@ -254,42 +254,42 @@ export const productCatalog: ProductCategory[] = [
     },
     items: [
       {
-        slug: "m1", images: ["/store/m1.jpg"], name: "Syltra M1", tags: ["Zigbee", "Z-Wave", "Wi-Fi"],
+        slug: "m1", images: ["/store/m1.jpg", "/store/m1-2.jpg"], name: "Syltra M1", tags: ["Zigbee", "Z-Wave", "Wi-Fi"],
         en: { tagline: "Hides behind the switch you already have.", description: "A single-channel module that sits behind any existing 1-gang switch, turning it smart without replacing the plate on the wall. Wire it once, control it from the app forever.", specs: [{ label: "Channels", value: "1" }, { label: "Power", value: "100–240V~, 50/60Hz" }, { label: "Max load", value: "16A" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "تختبئ خلف مفتاحك الحالي.", description: "وحدة بخط واحد تُركّب خلف أي مفتاح تقليدي بخط واحد، فتجعله ذكيًا دون تغيير اللوحة الظاهرة على الحائط. وصّلها مرة واحدة، وتحكم بها للأبد من التطبيق.", specs: [{ label: "عدد الخطوط", value: "1" }, { label: "الطاقة", value: "100–240V~, 50/60Hz" }, { label: "أقصى حمل", value: "16 أمبير" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "m2", images: ["/store/m2.jpg"], name: "Syltra M2", tags: ["Zigbee", "Z-Wave", "Wi-Fi"],
+        slug: "m2", images: ["/store/m2.jpg", "/store/m2-2.jpg"], name: "Syltra M2", tags: ["Zigbee", "Z-Wave", "Wi-Fi"],
         en: { tagline: "Two loads, one retrofit.", description: "A dual-channel module for two independent circuits behind a single 2-gang switch, ideal for splitting a room's lighting into zones without new wiring.", specs: [{ label: "Channels", value: "2, independent" }, { label: "Power", value: "100–240V~, 50/60Hz" }, { label: "Max load", value: "2 × 10A" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "حملان، بترقية واحدة.", description: "وحدة بخطين للتحكم المستقل بدائرتين خلف مفتاح واحد بخطين, مثالية لتقسيم إضاءة الغرفة إلى مناطق دون أي أسلاك جديدة.", specs: [{ label: "عدد الخطوط", value: "2، مستقلان" }, { label: "الطاقة", value: "100–240V~, 50/60Hz" }, { label: "أقصى حمل", value: "2 × 10 أمبير" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "m3", images: ["/store/m3.jpg"], name: "Syltra M3", tags: ["Zigbee", "Z-Wave", "Wi-Fi"],
+        slug: "m3", images: ["/store/m3.jpg", "/store/m3-2.jpg"], name: "Syltra M3", tags: ["Zigbee", "Z-Wave", "Wi-Fi"],
         en: { tagline: "A whole circuit, made smart at once.", description: "A triple-channel module behind a 3-gang switch, the fastest way to bring an entire room's lighting circuit onto the Syltra ecosystem in one retrofit.", specs: [{ label: "Channels", value: "3, independent" }, { label: "Power", value: "100–240V~, 50/60Hz" }, { label: "Max load", value: "3 × 10A" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "دائرة كاملة، ذكية دفعة واحدة.", description: "وحدة بثلاثة خطوط خلف مفتاح بثلاثة خطوط, أسرع طريقة لإدخال دائرة إضاءة غرفة كاملة إلى منظومة سيلترا في عملية ترقية واحدة.", specs: [{ label: "عدد الخطوط", value: "3، مستقلة" }, { label: "الطاقة", value: "100–240V~, 50/60Hz" }, { label: "أقصى حمل", value: "3 × 10 أمبير" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "dim", images: ["/store/dim.jpg"], name: "Syltra DIM", tags: ["Zigbee", "Wi-Fi"],
+        slug: "dim", images: ["/store/dim.jpg", "/store/dim-2.jpg"], name: "Syltra DIM", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "Smooth brightness, behind the wall.", description: "A dimmer module for behind an existing dimmer plate, flicker-free brightness control for dimmable LED and halogen fixtures, tuned from the app or the switch itself.", specs: [{ label: "Function", value: "Dimming, 0–100%" }, { label: "Power", value: "100–240V~, 50/60Hz" }, { label: "Max load", value: "300W" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "تعتيم سلس، خلف الحائط.", description: "وحدة تعتيم تُركّب خلف مفتاح تعتيم حالي, تحكم سلس بلا وميض في سطوع مصابيح LED والهالوجين القابلة للتعتيم، عبر التطبيق أو المفتاح نفسه.", specs: [{ label: "الوظيفة", value: "تعتيم من 0 إلى 100%" }, { label: "الطاقة", value: "100–240V~, 50/60Hz" }, { label: "أقصى حمل", value: "300 وات" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "curtain-module", images: ["/store/curtain-module.jpg"], name: "Syltra CURTAIN", tags: ["Zigbee", "Wi-Fi"],
+        slug: "curtain-module", images: ["/store/curtain-module.jpg", "/store/curtain-module-2.jpg"], name: "Syltra CURTAIN", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "Motorizes the track you already own.", description: "A curtain motor module that drives an existing curtain track, schedule it with sunrise, tie it to a scene, or just reach for the app instead of the cord.", specs: [{ label: "Function", value: "Open / Stop / Close" }, { label: "Power", value: "100–240V~, 50/60Hz" }, { label: "Max load", value: "3A" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "تُحرّك السكة التي تملكها بالفعل.", description: "وحدة محرك ستائر تُشغّل سكة الستائر الحالية, اجعلها تعمل مع شروق الشمس، أو اربطها بمشهد كامل، أو ببساطة استخدم التطبيق بدل الحبل.", specs: [{ label: "الوظيفة", value: "فتح / إيقاف / إغلاق" }, { label: "الطاقة", value: "100–240V~, 50/60Hz" }, { label: "أقصى حمل", value: "3 أمبير" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "fan", images: ["/store/fan.jpg"], name: "Syltra FAN", tags: ["Zigbee", "Wi-Fi"],
+        slug: "fan", images: ["/store/fan.jpg", "/store/fan-2.jpg"], name: "Syltra FAN", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "Speed control for the fan on your ceiling.", description: "A fan control module for ceiling and exhaust fans, on/off and speed from the app or a paired touch switch, no new wiring beyond the existing circuit.", specs: [{ label: "Function", value: "On/off, speed control" }, { label: "Power", value: "100–240V~, 50/60Hz" }, { label: "Max load", value: "2A" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "تحكم في سرعة المروحة فوق رأسك.", description: "وحدة تحكم بمراوح السقف والشفط, تشغيل وإطفاء وتحكم في السرعة من التطبيق أو مفتاح لمس مقترن، دون أي أسلاك إضافية بخلاف الدائرة الحالية.", specs: [{ label: "الوظيفة", value: "تشغيل/إطفاء وتحكم بالسرعة" }, { label: "الطاقة", value: "100–240V~, 50/60Hz" }, { label: "أقصى حمل", value: "2 أمبير" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "garage", images: ["/store/garage.jpg"], name: "Syltra GARAGE", tags: ["Zigbee", "Wi-Fi"],
+        slug: "garage", images: ["/store/garage.jpg", "/store/garage-2.jpg"], name: "Syltra GARAGE", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "Know the door is closed, from anywhere.", description: "A garage door module that opens, closes and confirms status straight from the app, the peace of mind of checking the garage without walking back to it.", specs: [{ label: "Function", value: "Open / close / status" }, { label: "Power", value: "100–240V~, 50/60Hz" }, { label: "Max load", value: "5A" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "اطمئن أن الباب مغلق، من أي مكان.", description: "وحدة تحكم بباب الكراج تفتح وتغلق وتؤكد الحالة مباشرة من التطبيق, راحة بال التأكد من الكراج دون الرجوع إليه.", specs: [{ label: "الوظيفة", value: "فتح / إغلاق / تأكيد الحالة" }, { label: "الطاقة", value: "100–240V~, 50/60Hz" }, { label: "أقصى حمل", value: "5 أمبير" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "air", images: ["/store/air.jpg"], name: "Syltra AIR", tags: ["Wi-Fi", "BLE"],
+        slug: "air", images: ["/store/air.jpg", "/store/air-2.jpg"], name: "Syltra AIR", tags: ["Wi-Fi", "BLE"],
         en: { tagline: "Any air conditioner, one app.", description: "A universal infrared module that brings app and voice control to virtually any air conditioner already installed, no need to replace the unit to make it smart.", specs: [{ label: "Function", value: "Universal IR control" }, { label: "Power", value: "100–240V~, 50/60Hz" }, { label: "IR frequency", value: "38KHz" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz, Bluetooth LE" }] },
         ar: { tagline: "أي مكيف، بتطبيق واحد.", description: "وحدة تحكم شاملة بالأشعة تحت الحمراء تمنح أي مكيف مُركّب بالفعل تحكمًا بالتطبيق والصوت, دون الحاجة لاستبدال الجهاز نفسه.", specs: [{ label: "الوظيفة", value: "تحكم شامل بالأشعة تحت الحمراء" }, { label: "الطاقة", value: "100–240V~, 50/60Hz" }, { label: "تردد الأشعة", value: "38 كيلوهرتز" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz، بلوتوث LE" }] },
       },

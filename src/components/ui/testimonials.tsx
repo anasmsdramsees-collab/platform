@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { InfoCard } from "./info-card";
 
 export interface Testimonial {
   /** The quote itself. */
@@ -37,7 +38,7 @@ function Quote({
   className?: string;
 }) {
   return (
-    <figure className={cn("flex flex-col justify-between gap-6 bg-void p-6 sm:p-8", className)}>
+    <InfoCard className={cn("flex flex-col justify-between gap-6", className)}>
       <div>
         {testimonial.logo && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -45,8 +46,8 @@ function Quote({
         )}
         <blockquote
           className={cn(
-            "text-pretty text-chrome-dim",
-            featured ? "text-lg leading-relaxed text-platinum sm:text-xl" : "text-sm leading-relaxed sm:text-base"
+            "text-pretty leading-relaxed",
+            featured ? "text-lg text-platinum sm:text-xl" : "text-sm text-chrome-dim sm:text-base"
           )}
         >
           {testimonial.quote}
@@ -56,7 +57,7 @@ function Quote({
       <figcaption className="flex items-center gap-3">
         <span
           aria-hidden
-          className="flex size-11 shrink-0 items-center justify-center rounded-full border border-hairline-strong bg-graphite font-mono text-[13px] font-semibold text-ion"
+          className="flex size-11 shrink-0 items-center justify-center rounded-full border border-hairline-strong bg-void font-mono text-[13px] font-semibold text-ion"
         >
           {initials(testimonial.name)}
         </span>
@@ -67,7 +68,7 @@ function Quote({
           <span className="block truncate text-[12.5px] text-slate">{testimonial.role}</span>
         </span>
       </figcaption>
-    </figure>
+    </InfoCard>
   );
 }
 
@@ -87,11 +88,11 @@ export function Testimonials({ eyebrow, title, subtitle, testimonials }: Testimo
         </div>
 
         {/* Bento grid: the lead quote holds the left column, the rest stack beside it. */}
-        <div className="mt-12 grid gap-px overflow-hidden bg-hairline sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
-          <Quote testimonial={featured} featured className="sm:col-span-2 lg:row-span-2" />
-          {rest[0] && <Quote testimonial={rest[0]} className="sm:col-span-2" />}
-          {rest[1] && <Quote testimonial={rest[1]} />}
-          {rest[2] && <Quote testimonial={rest[2]} />}
+        <div className="mt-12 grid gap-4 sm:grid-cols-2">
+          <Quote testimonial={featured} featured className="sm:col-span-2" />
+          {rest.map((item) => (
+            <Quote key={item.name + item.quote} testimonial={item} />
+          ))}
         </div>
       </div>
     </section>

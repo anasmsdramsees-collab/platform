@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { SocialLinks } from "@/components/ui/social-links";
 
 export async function generateMetadata({
   params,
@@ -14,6 +15,7 @@ export async function generateMetadata({
 }
 
 const EMAIL = "info@syltraone.com";
+const WHATSAPP = "966533826009";
 const WEB = "www.syltraone.com";
 
 export default async function ContactPage({
@@ -25,6 +27,14 @@ export default async function ContactPage({
   const locale: Locale = isLocale(raw) ? raw : "en";
   const dict = getDictionary(locale);
   const c = dict.contactPage;
+
+  const socials = [
+    { name: "WhatsApp", image: "/social/whatsapp.svg", href: `https://wa.me/${WHATSAPP}` },
+    { name: "Instagram", image: "/social/instagram.svg" },
+    { name: "X", image: "/social/x.svg" },
+    { name: "LinkedIn", image: "/social/linkedin.svg" },
+    { name: "TikTok", image: "/social/tiktok.svg" },
+  ];
 
   const rows = [
     { label: c.hqLabel, value: c.hqValue, href: undefined },
@@ -61,6 +71,13 @@ export default async function ContactPage({
               )}
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 border-t border-hairline pt-12 text-center">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
+            {locale === "ar" ? "تابعنا" : "Follow us"}
+          </p>
+          <SocialLinks className="mt-10 sm:gap-2" socials={socials} />
         </div>
       </div>
     </section>

@@ -46,4 +46,29 @@ export const PROTOCOL_ICONS: Record<string, ReactNode> = {
       <circle cx="12" cy="19.6" r="1.4" fill="currentColor" stroke="none" />
     </svg>
   ),
+  KNX: (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="1.5" y="5" width="21" height="14" rx="3" fill="currentColor" />
+      <path d="M6.5 9v6M6.5 12l3.2-3M6.8 12.3l3.1 2.7M12.2 15V9l3.4 6V9M17.5 9l4 6M21.5 9l-4 6" stroke="#0b0d12" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" transform="scale(0.86) translate(2,1.8)" />
+    </svg>
+  ),
+  Tuya: (
+    // Tuya mark: the rounded square with the t-cloud
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden>
+      <rect x="2" y="2" width="20" height="20" rx="5" strokeWidth="1.8" />
+      <path d="M9 8.5h6M12 8.5V15a2 2 0 002 2h1.5" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+};
+
+// Official brand colors; white where the official mark is monochrome.
+export const PROTOCOL_COLORS: Record<string, string> = {
+  Matter: "#FFFFFF",
+  Thread: "#FFFFFF",
+  "Wi-Fi": "#FFFFFF",
+  "Bluetooth LE": "#0082FC",
+  Zigbee: "#EB0443",
+  "Z-Wave": "#3B9CDF",
+  KNX: "#76B82A",
+  Tuya: "#FF4800",
 };

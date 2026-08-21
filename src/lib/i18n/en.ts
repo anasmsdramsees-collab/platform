@@ -47,7 +47,7 @@ const en: Dictionary = {
   stats: [
     { value: "<10ms", label: "Local response latency" },
     { value: "256-bit", label: "End-to-end encryption" },
-    { value: "6", label: "Native connectivity protocols" },
+    { value: "8", label: "Native connectivity protocols" },
     { value: "10,000+", label: "Devices supported per hub" },
   ],
   ecosystem: {
@@ -84,7 +84,7 @@ const en: Dictionary = {
   },
   protocols: {
     eyebrow: "Connectivity",
-    title: "Six protocols. One standard.",
+    title: "Eight protocols. One standard.",
     subtitle: "Every Syltra device speaks the same language, natively | no bridges, no walled gardens.",
     items: [
       { name: "Matter", desc: "The unifying smart-home standard, certified across the full portfolio." },
@@ -93,6 +93,8 @@ const en: Dictionary = {
       { name: "Wi-Fi", desc: "High-bandwidth connectivity for cameras, displays and speakers." },
       { name: "Bluetooth LE", desc: "Ultra-low-energy proximity connectivity for locks and mobile pairing." },
       { name: "Thread", desc: "A self-healing IPv6 mesh giving every sensor a resilient path to the cloud." },
+      { name: "KNX", desc: "The global standard for professional building automation, ready for villas and towers." },
+      { name: "Tuya", desc: "Compatibility with the world's largest smart device ecosystem out of the box." },
     ],
   },
   homeCta: {

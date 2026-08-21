@@ -1575,6 +1575,79 @@ function responsePlan(detail) {
    And a sentence, in the household's own language, before anything is saved.
    A person approving a standing instruction should be able to read it back. */
 
+/* ── automations the platform noticed ──
+
+   The bridge between the models and the rules. The adaptive engine has always
+   been able to say "turn the light on now, you usually do"; it said it again
+   every evening. This offers the rule instead, once.
+
+   Two things the card must do that a recommendation card does not.
+
+   It shows the evidence rather than a score: "you did this on 7 of the last 7
+   days" is something a person can disagree with, and 0.83 is not.
+
+   And it never enables anything. Accepting creates a normal automation, which
+   arrives switched off like any other, and which the household can edit or
+   delete. An action the model got wrong happens once; a rule it got wrong
+   happens every day until somebody notices. */
+
+function proposedAutomations(home, proposals) {
+  const section = el("section", "card");
+  section.append(el("h2", "type-section-title", t("proposals_title")));
+  section.append(el("p", "muted", t("proposals_detail")));
+
+  for (const proposal of proposals) {
+    const item = el("div", "proposal");
+    const when = `${String(proposal.at_hour).padStart(2, "0")}:${String(proposal.at_minute).padStart(2, "0")}`;
+    item.append(
+      el("p", "type-card-title",
+        t("proposal_sentence")
+          .replace("{time}", when)
+          .replace("{device}", proposal.device_id)
+          .replace("{what}", t(`cap_${proposal.capability.replace(".", "_")}`))),
+    );
+    /* The evidence, not the confidence. */
+    item.append(
+      el("p", "type-caption muted",
+        t("proposal_evidence").replace("{days}", String(proposal.days_observed))),
+    );
+    item.append(badge("advisory", t("advisory")));
+
+    const accept = el("button", "btn btn--primary", t("proposal_accept"));
+    accept.type = "button";
+    accept.addEventListener("click", async () => {
+      accept.setAttribute("aria-busy", "true");
+      try {
+        await api(`/v1/homes/${home}/automations`, {
+          method: "POST",
+          body: JSON.stringify({
+            name: t("proposal_default_name").replace("{time}", when),
+            trigger: {
+              kind: "AT_TIME",
+              at_hour: proposal.at_hour,
+              at_minute: proposal.at_minute,
+              weekdays: proposal.weekdays,
+            },
+            actions: [
+              {
+                device_id: proposal.device_id,
+                capability: proposal.capability,
+                value: true,
+              },
+            ],
+          }),
+        });
+        await refresh();
+      } finally {
+        accept.removeAttribute("aria-busy");
+      }
+    });
+    item.append(accept);
+    section.append(item);
+  }
+  return section;
+}
+
 function automationBuilder(home, options, onSaved) {
   const form = el("form", "card");
   form.noValidate = true;
@@ -1759,6 +1832,7 @@ async function renderAutomations(host) {
   const { data, failed } = await loadHomeView({
     automations: api(`/v1/homes/${home}/automations`),
     options: api(`/v1/homes/${home}/automations/options`),
+    proposals: api(`/v1/homes/${home}/automations/proposals`),
   });
   if (!data.automations) {
     host.append(failureNotice(errorFor(failed, "automations"), t("source_automations")));
@@ -1792,6 +1866,10 @@ async function renderAutomations(host) {
       dryRun.removeAttribute("aria-busy");
     }
   });
+
+  if (data.proposals && (data.proposals.proposals || []).length) {
+    host.append(proposedAutomations(home, data.proposals.proposals));
+  }
 
   if (data.options) {
     host.append(automationBuilder(home, data.options, refresh));

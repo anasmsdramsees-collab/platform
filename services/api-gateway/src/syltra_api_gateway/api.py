@@ -660,6 +660,59 @@ def create_app(
     # Registered before `/{automation_id}`: FastAPI matches routes in the order
     # they are added, so a literal segment declared after a path parameter is
     # never reached. "options" was being parsed as a UUID and answering 422.
+    @app.get("/v1/homes/{home_id}/automations/proposals", tags=["automations"])
+    async def automation_proposals(
+        home_id: str, principal: PrincipalDep, locale: LocaleDep
+    ) -> dict[str, Any]:
+        """Standing rules the platform would write, if the household agreed.
+
+        Read-only, and it stays read-only: accepting one means POSTing the
+        automation through the ordinary endpoint, so a proposal cannot become a
+        rule without passing every check a hand-written automation passes.
+        """
+        check_read(home_id, principal)
+        home = platform.twin.home(home_id)
+        devices = list(home.devices.values()) if home is not None else []
+
+        # A rule the household already has must not be offered again. Compared
+        # on what the automation *does* rather than on its name or id, because
+        # accepting a proposal produces a new automation with neither.
+        existing = {
+            (
+                action.device_id,
+                action.capability,
+                automation.trigger.at_hour,
+                automation.trigger.at_minute,
+            )
+            for automation in platform.automations.list_for(home_id)
+            if automation.trigger.kind is TriggerKind.AT_TIME
+            for action in automation.actions
+        }
+
+        proposals: list[dict[str, Any]] = []
+        for device in devices:
+            for proposal in platform.adaptive.propose_automations(home_id, device.device_id):
+                if proposal.capability not in device.capabilities:
+                    # The routine model tracks one capability across the home;
+                    # only offer it against a device that actually has it.
+                    continue
+                if (
+                    proposal.device_id,
+                    proposal.capability,
+                    proposal.at_hour,
+                    proposal.at_minute,
+                ) in existing:
+                    continue
+                view = proposal.as_view()
+                view["reason"] = translate_reasons([view["reason_code"]], locale)[0]
+                proposals.append(view)
+        return {
+            "home_id": home_id,
+            "proposals": proposals,
+            # Said plainly: the platform is offering, not deciding.
+            "creates_nothing": True,
+        }
+
     @app.get("/v1/homes/{home_id}/automations/options", tags=["automations"])
     async def automation_options(
         home_id: str, principal: PrincipalDep, locale: LocaleDep

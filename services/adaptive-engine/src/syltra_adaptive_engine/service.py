@@ -217,6 +217,35 @@ class AdaptiveEngineService:
 
     # ── drift and suspension (spec §19.4) ──
 
+    def propose_automations(
+        self, home_id: str, device_id: str, now: datetime | None = None
+    ) -> list[Any]:
+        """Standing rules worth offering, from the routine this home has shown.
+
+        Returns descriptions and nothing else. Creating the automation is a
+        person's act through the ordinary endpoint, because an action the model
+        got wrong happens once and a rule the model got wrong happens every day
+        until somebody notices.
+
+        Empty while the household is below RECOMMEND: a hub that is still
+        watching has not earned the right to suggest a standing instruction,
+        and §19.2 puts the ladder in that order for this reason.
+        """
+        from syltra_adaptive_engine.proposals import propose
+
+        if self.mode(home_id) not in (
+            LearningMode.RECOMMEND,
+            LearningMode.APPROVAL_REQUIRED,
+            LearningMode.AUTHORIZED_AUTOMATION,
+        ):
+            return []
+        model = self.fitted_models(home_id).get("routine_baseline")
+        if model is None or "routine_baseline" in self.suspended_models(home_id):
+            return []
+        strongest = model.strongest_buckets(limit=48)
+        capability = model.parameters.get("capability", "light.power")
+        return propose(home_id, device_id, capability, strongest, now)
+
     def health(self, home_id: str, model_name: str) -> ModelHealth:
         """The observed health of one serving model."""
         key = (home_id, model_name)

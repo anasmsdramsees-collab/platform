@@ -80,7 +80,7 @@ def build_platform() -> Platform:
         ConditionKind,
         TriggerKind,
     )
-    from syltra_testing import comfort_history, make_envelope
+    from syltra_testing import comfort_history, make_envelope, routine_history
 
     now = datetime.now(tz=UTC)
     context = ContextService(publisher=_DemoPublisher())  # type: ignore[arg-type]
@@ -117,6 +117,12 @@ def build_platform() -> Platform:
             energy.record(HOME, float(value), now, device_id=device_id, room_id=room)
 
     for event in comfort_history(days=21):
+        adaptive.observe(event.model_copy(update={"home_id": HOME}))
+    # A routine as well as a preference, so the Automations screen has a real
+    # proposal to show. Without it `routine_baseline` never fits and the
+    # proposals endpoint answers with an empty list forever — which is exactly
+    # the shape of "built and never seen working".
+    for event in routine_history(days=28, hour=19, minute=0, home_id=HOME):
         adaptive.observe(event.model_copy(update={"home_id": HOME}))
     adaptive.train_home(HOME)
     adaptive.set_mode(HOME, LearningMode.SHADOW, actor="devserver")

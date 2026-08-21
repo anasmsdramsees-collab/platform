@@ -218,10 +218,30 @@ forever. `AutomationDriver` now runs it every two seconds — slower than the
 safety loop on purpose, because a light two seconds late is a light that came
 on. `system_status` reports `automation_engine` degraded when that loop stops.
 
-**The visual builder is still open.** Automations are written through the API;
-the screen lists, tests and switches them. Whether a household should assemble
-one from dropdowns, and how that stays inside the typed graph ADR-009 requires,
-is a product decision nobody has made.
+**The builder is built.** Four dropdowns and a time field produce the typed
+graph the API accepts, with no free-text field anywhere — a builder that
+smuggled a language back in through a text box would be ADR-009 reversed
+quietly. The vocabulary is served from `/automations/options` rather than
+copied into the console, and capabilities automations may never touch are
+listed with a translated reason instead of hidden.
+
+**And the models now propose rules, not just actions.** The adaptive engine
+could always say "turn the light on now, you usually do at this hour", and said
+it again the next evening; a household that accepted two hundred times had
+taught the platform nothing it could keep. `/automations/proposals` turns the
+routine model's strongest slots into an automation offered once.
+
+The bar is higher than for recommending an action, because an action the model
+got wrong happens once and a rule it got wrong happens every day until somebody
+notices: a stronger threshold, at least three days, the weakest day's strength
+reported rather than the best, nothing offered below RECOMMEND, and nothing
+offered from a suspended model. The card shows the evidence — "you did this on
+7 of the last 7 days" — rather than a confidence score nobody can argue with.
+
+Accepting creates an ordinary automation through the ordinary endpoint, so it
+passes every check a hand-written one passes and arrives switched off. What is
+still open is version history and rollback: editing an automation replaces it,
+and there is nothing to go back to.
 
 ### 2.6 Energy over time — **built**
 

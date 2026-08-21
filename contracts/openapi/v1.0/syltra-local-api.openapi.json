@@ -885,6 +885,101 @@
         ]
       }
     },
+    "/v1/homes/{home_id}/automations/proposals": {
+      "get": {
+        "description": "Standing rules the platform would write, if the household agreed.\n\nRead-only, and it stays read-only: accepting one means POSTing the\nautomation through the ordinary endpoint, so a proposal cannot become a\nrule without passing every check a hand-written automation passes.",
+        "operationId": "automation_proposals_v1_homes__home_id__automations_proposals_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "home_id",
+            "required": true,
+            "schema": {
+              "title": "Home Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Override the negotiated locale",
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Override the negotiated locale",
+              "title": "Locale"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Accept-Language",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Accept-Language"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Automation Proposals V1 Homes  Home Id  Automations Proposals Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Automation Proposals",
+        "tags": [
+          "automations"
+        ]
+      }
+    },
     "/v1/homes/{home_id}/automations/{automation_id}": {
       "get": {
         "operationId": "get_automation_v1_homes__home_id__automations__automation_id__get",

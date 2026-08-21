@@ -102,3 +102,64 @@ def test_every_trigger_kind_the_contract_allows_is_offered(
     from syltra_contracts import TriggerKind
 
     assert set(options(client, auth)["trigger_kinds"]) == {k.value for k in TriggerKind}
+
+
+# ── the bridge from the models to the rules ──
+
+
+def test_a_rule_the_household_already_has_is_not_offered_again(
+    client: TestClient, auth: Callable[..., dict[str, str]], platform: Platform
+) -> None:
+    """Found by clicking Accept and watching the card stay.
+
+    Compared on what the automation does rather than on its name or id,
+    because accepting a proposal produces a new automation with neither.
+    """
+    from uuid import uuid4
+
+    from syltra_contracts import (
+        Automation,
+        AutomationAction,
+        AutomationTrigger,
+        TriggerKind,
+    )
+
+    header = auth(Role.OWNER, {HOME})
+    before = client.get(f"/v1/homes/{HOME}/automations/proposals", headers=header).json()
+    if not before["proposals"]:
+        pytest.skip("this home has no routine to propose from")
+
+    offered = before["proposals"][0]
+    platform.automations.upsert(
+        Automation(
+            automation_id=uuid4(),
+            home_id=HOME,
+            name="Accepted",
+            owner="amal",
+            trigger=AutomationTrigger(
+                kind=TriggerKind.AT_TIME,
+                at_hour=offered["at_hour"],
+                at_minute=offered["at_minute"],
+                weekdays=tuple(offered["weekdays"]),
+            ),
+            actions=(
+                AutomationAction(
+                    capability=offered["capability"],
+                    value=True,
+                    device_id=offered["device_id"],
+                ),
+            ),
+        )
+    )
+
+    after = client.get(f"/v1/homes/{HOME}/automations/proposals", headers=header).json()
+    assert offered["proposal_id"] not in {p["proposal_id"] for p in after["proposals"]}
+
+
+def test_the_endpoint_says_it_creates_nothing(
+    client: TestClient, auth: Callable[..., dict[str, str]]
+) -> None:
+    body = client.get(
+        f"/v1/homes/{HOME}/automations/proposals", headers=auth(Role.OWNER, {HOME})
+    ).json()
+    assert body["creates_nothing"] is True

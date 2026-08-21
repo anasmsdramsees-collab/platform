@@ -192,8 +192,9 @@ Five conflicts from the UI audit (C12, C32–C35) blocked on you:
 
 - the eight §5.4 production SVGs — the guidelines forbid generating them from
   the PNGs without visual review, so the console renders a typed wordmark;
-- a font-licensing decision, so IBM Plex Sans Arabic and Inter can be vendored
-  rather than named and degraded to system fonts;
+- ~~a font-licensing decision~~ — **decided 2026-08-21**. IBM Plex Sans Arabic,
+  Inter and IBM Plex Mono are vendored at four weights each under OFL 1.1, and
+  the console no longer degrades to system fonts;
 - three referenced assets that do not exist in `Identity/`.
 
 ### 2.5 Two automation questions — **scheduled triggers built, builder open**

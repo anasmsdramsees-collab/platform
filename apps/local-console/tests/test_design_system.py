@@ -438,3 +438,66 @@ def test_no_screen_skips_a_heading_level() -> None:
         body = console[console.index(f"function {renderer}") :]
         body = body[: body.index("\n}")]
         assert f'"type-section-title", t("{heading}")' in body, renderer
+
+
+# ── the typefaces the console names must be typefaces it ships ──
+
+FONTS = DESIGN_SYSTEM / "typography" / "fonts"
+FONT_FACES = DESIGN_SYSTEM / "typography" / "fonts.css"
+TYPOGRAPHY = DESIGN_SYSTEM / "typography" / "typography.css"
+
+
+def test_every_font_face_points_at_a_file_that_exists() -> None:
+    """The whole failure this closes.
+
+    `typography.css` named IBM Plex Sans Arabic and Inter for the whole build
+    and shipped neither, so every screen fell through to `system-ui` and Arabic
+    rendered differently on every operating system. A named family with no file
+    is worse than an honest system stack, because it reads as a decision.
+    """
+    for reference in re.findall(r"url\('([^']+)'\)", _text(FONT_FACES)):
+        assert (FONT_FACES.parent / reference).exists(), reference
+
+
+def test_the_families_the_type_scale_names_are_the_families_that_are_shipped() -> None:
+    declared = set(re.findall(r"font-family:\s*'([^']+)'", _text(FONT_FACES)))
+    named = set(re.findall(r"--font-\w+:\s*'([^']+)'", _text(TYPOGRAPHY)))
+    assert named <= declared, sorted(named - declared)
+
+
+def test_every_weight_the_scale_uses_has_a_file() -> None:
+    """A missing weight is a browser synthesising a bold, which is not the
+    typeface and is visibly not the typeface in Arabic."""
+    # Read from the generated stylesheet rather than the token tree: what the
+    # browser asks for is what the CSS says, and the CSS is what ships.
+    used = {int(weight) for weight in re.findall(r"font-weight:\s*(\d+)", _text(TYPOGRAPHY))}
+    shipped = {int(w) for w in re.findall(r"font-weight:\s*(\d+)", _text(FONT_FACES))}
+    assert used <= shipped, f"weights with no file: {sorted(used - shipped)}"
+
+
+def test_no_font_is_fetched_from_a_network() -> None:
+    """§4.2: the console works with no internet, and that includes its text."""
+    body = _text(FONT_FACES)
+    for remote in ("http://", "https://", "//fonts."):
+        assert remote not in body, remote
+
+
+def test_every_shipped_family_carries_its_licence() -> None:
+    """OFL 1.1 requires the text to accompany the files.
+
+    Derived from the families actually declared rather than from a list, so
+    vendoring a fourth family without its licence fails here.
+    """
+    families = set(re.findall(r"font-family:\s*'([^']+)'", _text(FONT_FACES)))
+    licences = {p.name for p in FONTS.glob("*OFL*.txt")}
+    for family in families:
+        stem = family.replace(" ", "")
+        assert f"{stem}-OFL.txt" in licences, family
+    for licence in licences:
+        assert "SIL Open Font License" in _text(FONTS / licence)
+
+
+def test_the_notices_file_names_both_families() -> None:
+    notices = _text(ROOT / "THIRD_PARTY_NOTICES.md")
+    assert "Inter" in notices
+    assert "IBM Plex Sans Arabic" in notices

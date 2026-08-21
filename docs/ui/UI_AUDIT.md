@@ -56,7 +56,7 @@ Severity: **S1** blocks Phase UI-0 acceptance · **S2** must be fixed in UI-0 ·
 | C9 | No type scale — ad-hoc `rem` sizes | S2 | The full §7.2 scale as tokens |
 | C10 | No tabular numerals; §7.1 requires them for metrics, energy, temperature, counts | S2 | `--font-numeric` with `font-variant-numeric: tabular-nums` |
 | C11 | Technical identifiers rendered without direction isolation | S2 | `.identifier` + `<bdi>` helper (§7.3, §10.2) |
-| C12 | Font files are not vendored, and the hub may have no internet (§4.2 local-first) | **S4** | Stacks name the required families first and degrade to system fonts. Vendoring licensed WOFF2 needs a licensing decision — recorded, not guessed |
+| C12 | Font files are not vendored, and the hub may have no internet (§4.2 local-first) | **Closed** | Owner approved vendoring on 2026-08-21. IBM Plex Sans Arabic, Inter and IBM Plex Mono ship with the console at four weights each, all OFL 1.1, licence texts beside the files and in `THIRD_PARTY_NOTICES.md`. Served from the hub, never from a CDN. Tests fail if a declared family has no file, a used weight has no file, a family has no licence, or a `@font-face` names a remote URL |
 
 ### Spacing, radius, elevation, density (§8)
 
@@ -127,7 +127,7 @@ redesign a single screen.
 | S1 — blocks UI-0 acceptance | 6 | 6 | 0 |
 | S2 — must be fixed in UI-0 | 18 | 18 | 0 |
 | S3 — later UI phase | 6 | 5 in UI-1, 1 in UI-2 | 0 |
-| S4 — blocked on an external decision | 5 | 0 | 5 (C12, C32–C35) |
+| S4 — blocked on an external decision | 5 | 1 | 4 (C32–C35) |
 
 Every conflict this repository can close was closed by the end of UI-2. UI-3
 and UI-4 went beyond the register: the intelligence and action screens, the

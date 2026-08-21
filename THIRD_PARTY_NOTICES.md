@@ -53,3 +53,31 @@ Later phases add (and must record here): FastAPI (MIT), SQLAlchemy (MIT), Alembi
 The Next.js website under `src/` has its own dependency set in `package.json`
 (Next.js — MIT, React — MIT, Tailwind CSS — MIT, and others recorded in
 `package-lock.json`).
+
+
+## Vendored typefaces
+
+Both are shipped with the console so it renders identically on every machine
+and needs no network to do it (guidelines §4.2). Neither is modified, and both
+keep their reserved names.
+
+### Inter
+
+Copyright (c) 2016 The Inter Project Authors — https://github.com/rsms/inter
+SIL Open Font License, Version 1.1. Full text:
+`apps/local-console/src/design-system/typography/fonts/Inter-OFL.txt`
+
+### IBM Plex Sans Arabic
+
+Copyright © 2017 IBM Corp. — https://github.com/IBM/plex
+SIL Open Font License, Version 1.1. Full text:
+`apps/local-console/src/design-system/typography/fonts/IBMPlexSansArabic-OFL.txt`
+
+### IBM Plex Mono
+
+Copyright © 2017 IBM Corp. — https://github.com/IBM/plex
+SIL Open Font License, Version 1.1. Full text:
+`apps/local-console/src/design-system/typography/fonts/IBMPlexMono-OFL.txt`
+
+Four weights of each (400, 500, 600, 700) — the ones the type scale uses.
+Shipping the full range would be bytes every hub serves and no screen asks for.

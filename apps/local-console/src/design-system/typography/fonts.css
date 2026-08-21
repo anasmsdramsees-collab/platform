@@ -1,0 +1,127 @@
+/* Vendored typefaces (guidelines §7.1, §4.2, conflict C12).
+ *
+ * `typography.css` named these families for the whole build and shipped none of
+ * them, so every screen fell through to `system-ui`: Arabic rendered
+ * differently on macOS, Windows and Android, and the contrast figures measured
+ * during UI-6 were measured against metrics the hub was not using.
+ *
+ * Loaded from the hub, never from a CDN. §4.2 says the console works with no
+ * internet, and a font fetched from a network is a font a household in a
+ * blackout does not have. This file is the only reason that promise now holds
+ * for text as well as for control.
+ *
+ * Both families are under the SIL Open Font License 1.1, whose licence texts sit
+ * beside the files here and in THIRD_PARTY_NOTICES.md. OFL requires that: the
+ * text travels with the fonts, and a modified font must not keep the reserved
+ * name. Nothing here modifies them.
+ *
+ * Four weights each, not the full range. Every weight is bytes a hub serves and
+ * a browser fetches, and the type scale uses 400, 500, 600 and 700.
+ *
+ * Hand-written rather than generated: `typography.css` comes from tokens.json
+ * and a test fails if it drifts, so an @font-face block belongs beside it, not
+ * inside it.
+ */
+
+/* `swap` on purpose. A household reading a gas alarm should not wait on a
+ * webfont; text in the fallback that reflows is better than no text. */
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  src: url('fonts/IBMPlexSansArabic-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  src: url('fonts/IBMPlexSansArabic-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  src: url('fonts/IBMPlexSansArabic-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  src: url('fonts/IBMPlexSansArabic-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Identifiers, numbers and anything that must line up in a column. Shipped
+ * for the same reason as the other two: a family the stylesheet names and does
+ * not carry reads as a decision rather than as a fallback. */
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('fonts/IBMPlexMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('fonts/IBMPlexMono-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('fonts/IBMPlexMono-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('fonts/IBMPlexMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

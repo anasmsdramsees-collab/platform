@@ -211,32 +211,32 @@ export const productCatalog: ProductCategory[] = [
     },
     items: [
       {
-        slug: "t1", name: "Syltra T1", tags: ["Zigbee", "Wi-Fi"],
+        slug: "t1", images: ["/store/t1.jpg", "/store/t1-2.jpg"], name: "Syltra T1", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "One light, switched cleanly.", description: "A 1-gang toughened-glass touch switch for a single circuit, tap to switch, hold for dimming where supported, control from across the room through the app.", specs: [{ label: "Gangs", value: "1" }, { label: "Surface", value: "Toughened glass" }, { label: "Fire resistance", value: "Up to 850°C" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz, Zigbee 3.0 (optional)" }] },
         ar: { tagline: "مصباح واحد، بتحكم نظيف.", description: "مفتاح لمس بخط واحد وواجهة زجاجية مقساة, لمسة للتشغيل، وضغطة مطولة للتعتيم حيث يتوفر، مع تحكم من أي مكان عبر التطبيق.", specs: [{ label: "عدد الخطوط", value: "1" }, { label: "السطح", value: "زجاج مقسى" }, { label: "مقاومة الحريق", value: "حتى 850°م" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz، Zigbee 3.0 (اختياري)" }] },
       },
       {
-        slug: "t2", name: "Syltra T2", tags: ["Zigbee", "Wi-Fi"],
+        slug: "t2", images: ["/store/t2.jpg", "/store/t2-2.jpg"], name: "Syltra T2", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "Two circuits, one plate.", description: "A 2-gang touch switch for two independently controlled lights or circuits, one clean glass plate instead of a cluster of mechanical switches.", specs: [{ label: "Gangs", value: "2, independent" }, { label: "Surface", value: "Toughened glass" }, { label: "Fire resistance", value: "Up to 850°C" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz, Zigbee 3.0 (optional)" }] },
         ar: { tagline: "دائرتان، بلوحة واحدة.", description: "مفتاح لمس بخطين للتحكم المستقل في مصباحين أو دائرتين, لوحة زجاجية واحدة أنيقة بدل مجموعة مفاتيح ميكانيكية.", specs: [{ label: "عدد الخطوط", value: "2، مستقلان" }, { label: "السطح", value: "زجاج مقسى" }, { label: "مقاومة الحريق", value: "حتى 850°م" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz، Zigbee 3.0 (اختياري)" }] },
       },
       {
-        slug: "t3", name: "Syltra T3", tags: ["Zigbee", "Wi-Fi"],
+        slug: "t3", images: ["/store/t3.jpg", "/store/t3-2.jpg"], name: "Syltra T3", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "A full room, one panel.", description: "A 3-gang touch switch that puts an entire room's lighting on a single glass plate, each circuit switched and scheduled independently from the app.", specs: [{ label: "Gangs", value: "3, independent" }, { label: "Surface", value: "Toughened glass" }, { label: "Fire resistance", value: "Up to 850°C" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz, Zigbee 3.0 (optional)" }] },
         ar: { tagline: "غرفة كاملة، بلوحة واحدة.", description: "مفتاح لمس بثلاثة خطوط يجمع إضاءة الغرفة كاملة في لوحة زجاجية واحدة، مع تحكم وجدولة مستقلة لكل دائرة من التطبيق.", specs: [{ label: "عدد الخطوط", value: "3، مستقلة" }, { label: "السطح", value: "زجاج مقسى" }, { label: "مقاومة الحريق", value: "حتى 850°م" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz، Zigbee 3.0 (اختياري)" }] },
       },
       {
-        slug: "t4", name: "Syltra T4", tags: ["Zigbee", "Wi-Fi"],
+        slug: "t4", images: ["/store/t4.jpg", "/store/t4-2.jpg"], name: "Syltra T4", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "Maximum control, one plate.", description: "A 4-gang touch switch for the busiest walls in the house, four independent circuits on one plate, without four separate mechanical switches interrupting the wall.", specs: [{ label: "Gangs", value: "4, independent" }, { label: "Surface", value: "Toughened glass" }, { label: "Fire resistance", value: "Up to 850°C" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz, Zigbee 3.0 (optional)" }] },
         ar: { tagline: "أقصى تحكم، بلوحة واحدة.", description: "مفتاح لمس بأربعة خطوط لأكثر الحوائط ازدحامًا بالمفاتيح, أربع دوائر مستقلة في لوحة واحدة، بدل أربعة مفاتيح ميكانيكية منفصلة.", specs: [{ label: "عدد الخطوط", value: "4، مستقلة" }, { label: "السطح", value: "زجاج مقسى" }, { label: "مقاومة الحريق", value: "حتى 850°م" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz، Zigbee 3.0 (اختياري)" }] },
       },
       {
-        slug: "td", name: "Syltra TD", tags: ["Zigbee", "Wi-Fi"],
+        slug: "td", images: ["/store/td.jpg", "/store/td-2.jpg"], name: "Syltra TD", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "A slider for light, not a toggle.", description: "A dimmer touch switch with a true brightness slider under the glass, smooth, flicker-free dimming instead of a blunt on/off toggle.", specs: [{ label: "Function", value: "Dimming, 0–100%" }, { label: "Surface", value: "Toughened glass" }, { label: "Max load", value: "300W" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz, Zigbee 3.0 (optional)" }] },
         ar: { tagline: "شريط تحكم في الضوء، لا مجرد مفتاح.", description: "مفتاح لمس بتعتيم مزود بشريط تحكم حقيقي في السطوع أسفل الزجاج, تعتيم سلس بلا وميض، بدل مفتاح تشغيل وإطفاء تقليدي.", specs: [{ label: "الوظيفة", value: "تعتيم من 0 إلى 100%" }, { label: "السطح", value: "زجاج مقسى" }, { label: "أقصى حمل", value: "300 وات" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz، Zigbee 3.0 (اختياري)" }] },
       },
       {
-        slug: "tc", name: "Syltra TC", tags: ["Zigbee", "Wi-Fi"],
+        slug: "tc", images: ["/store/tc.jpg", "/store/tc-2.jpg"], name: "Syltra TC", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "Open, stop, close, from the wall.", description: "A dedicated curtain touch switch with three clear controls, open, stop and close, for anyone who'd rather not reach for their phone to adjust the light.", specs: [{ label: "Function", value: "Open / Stop / Close" }, { label: "Surface", value: "Toughened glass" }, { label: "Max load", value: "3A" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz, Zigbee 3.0 (optional)" }] },
         ar: { tagline: "فتح، إيقاف، إغلاق, من الحائط.", description: "مفتاح لمس مخصص للستائر بثلاثة أزرار واضحة, فتح وإيقاف وإغلاق, لمن يفضل عدم فتح الهاتف لمجرد تعديل الإضاءة.", specs: [{ label: "الوظيفة", value: "فتح / إيقاف / إغلاق" }, { label: "السطح", value: "زجاج مقسى" }, { label: "أقصى حمل", value: "3 أمبير" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz، Zigbee 3.0 (اختياري)" }] },
       },

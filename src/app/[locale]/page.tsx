@@ -163,12 +163,12 @@ export default async function HomePage({
 
       {/* Stats */}
       <section className="border-b border-hairline">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden border-hairline bg-hairline sm:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-5 py-12 sm:grid-cols-4 sm:px-8">
           {dict.stats.map((stat) => (
-            <div key={stat.label} className="bg-void px-5 py-10 text-center sm:px-6">
+            <InfoCard key={stat.label} className="px-5 py-8 text-center">
               <p className="font-mono text-2xl font-medium text-ion sm:text-3xl">{stat.value}</p>
               <p className="mt-2 text-xs text-chrome-dim sm:text-sm">{stat.label}</p>
-            </div>
+            </InfoCard>
           ))}
         </div>
       </section>

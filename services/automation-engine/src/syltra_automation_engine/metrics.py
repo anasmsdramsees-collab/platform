@@ -22,3 +22,9 @@ REGISTERED = Gauge(
     "automations stored, by enabled state",
     ["home_id", "enabled"],
 )
+
+SCHEDULED_FIRINGS = Counter(
+    "syltra_automation_scheduled_firings_total",
+    "scheduled automations that came due, and whether they ran late",
+    ["late"],
+)

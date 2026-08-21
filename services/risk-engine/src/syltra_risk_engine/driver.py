@@ -151,7 +151,10 @@ class RiskDriver:
             return
         occupied, cooking = self._situation(home_id, now)
         changes = self._risk.evaluate(home_id, state, now, occupied=occupied, cooking=cooking)
-        reasons = [f"RISK_{change.kind}" for change in changes]
+        # Hints for the change feed. Some are real reason codes and some are
+        # only "this part changed"; either way the console uses them to decide
+        # what to re-read, not to show a person.
+        changed = [f"RISK_{change.kind}" for change in changes]
         # Isolations are carried out in the same pass that confirmed them.
         # Deferring to the next tick would put a second of avoidable delay
         # between a certified gas reading and a closed valve.
@@ -161,11 +164,11 @@ class RiskDriver:
                 capability=outcome.capability,
                 verified=str(outcome.succeeded).lower(),
             ).inc()
-            reasons.append(outcome.reason_code)
+            changed.append(outcome.reason_code)
         # Only when something happened. A quiet pass every second that told the
         # console to re-read would be the 15-second poll again, faster.
-        if reasons and self._on_change is not None:
-            self._on_change(home_id, tuple(reasons))
+        if changed and self._on_change is not None:
+            self._on_change(home_id, tuple(changed))
 
     def _situation(self, home_id: str, now: datetime) -> tuple[bool | None, bool]:
         """Occupancy and cooking, from context rather than from guesswork.

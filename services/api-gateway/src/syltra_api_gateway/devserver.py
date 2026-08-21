@@ -22,6 +22,7 @@ from syltra_contracts import CommandResult, LearningMode
 from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import HomePolicy, PolicyService
 from syltra_risk_engine import IsolationDispatcher, RiskEngineService
+from syltra_automation_engine.driver import AutomationDriver
 from syltra_risk_engine.driver import RiskDriver
 from syltra_security import Role, TokenStore
 
@@ -182,6 +183,16 @@ def build_platform() -> Platform:
         # pretended success.
         risk=risk,
     )
+    platform.automation_driver = AutomationDriver(
+        context.twin,
+        automations,
+        contexts=context,
+        on_change=_publish_to(platform),
+    )
+    # The household's own clock. A person who writes "7pm" means 7pm here.
+    platform.automation_driver.scheduler.set_timezone(
+        HOME, os.environ.get("SYLTRA_TIMEZONE", "Asia/Riyadh")
+    )
     platform.risk_driver = RiskDriver(
         context.twin,
         risk,
@@ -255,12 +266,16 @@ def main() -> None:
     # it instead of outliving it as an orphaned task.
     driver = app.state.platform.risk_driver
 
+    automations_driver = app.state.platform.automation_driver
+
     @app.on_event("startup")
-    async def _start_risk_driver() -> None:  # pragma: no cover - server lifecycle
+    async def _start_drivers() -> None:  # pragma: no cover - server lifecycle
         await driver.start()
+        await automations_driver.start()
 
     @app.on_event("shutdown")
-    async def _stop_risk_driver() -> None:  # pragma: no cover - server lifecycle
+    async def _stop_drivers() -> None:  # pragma: no cover - server lifecycle
+        await automations_driver.stop()
         await driver.stop()
 
     uvicorn.run(app, host="127.0.0.1", port=port, log_level="warning")

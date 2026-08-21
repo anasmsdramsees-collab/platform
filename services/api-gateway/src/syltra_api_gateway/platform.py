@@ -53,9 +53,19 @@ class Platform:
     # series is reported as empty rather than as a flat line at zero.
     energy: EnergyHistory = field(default_factory=EnergyHistory)
     risk_driver: Any = None
+    # The loop that runs the household's automations. Reported in health for
+    # the same reason the risk driver is: a loop that stopped looks exactly
+    # like a household whose automations were never going to fire.
+    automation_driver: Any = None
     risk_driver_tolerance_seconds: float = 10.0
     hub_id: str = "hub_dev_001"
     started_at: datetime = field(default_factory=lambda: datetime.now(tz=UTC))
+
+    def _loop_health(self, tolerance: float, driver: Any) -> str:
+        """"ok" only while a loop is completing passes."""
+        if driver is None:
+            return "degraded"
+        return "ok" if driver.health.is_healthy(datetime.now(tz=UTC), tolerance) else "degraded"
 
     def _risk_engine_health(self) -> str:
         """"ok" only while something is asking the risk engine to look."""
@@ -102,6 +112,7 @@ class Platform:
                 # the driver is actually doing, and "no driver at all" is a
                 # fault rather than a silence.
                 "risk_engine": self._risk_engine_health(),
+                "automation_engine": self._loop_health(self.risk_driver_tolerance_seconds, self.automation_driver),
                 "feedback_service": "ok",
             },
         }

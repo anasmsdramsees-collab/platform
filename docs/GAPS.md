@@ -178,13 +178,31 @@ Five conflicts from the UI audit (C12, C32–C35) blocked on you:
   rather than named and degraded to system fonts;
 - three referenced assets that do not exist in `Identity/`.
 
-### 2.5 Two automation questions
+### 2.5 Two automation questions — **scheduled triggers built, builder open**
 
-- Is the **visual builder** worth building? Automations are created through the
-  API today; the screen lists, tests and switches them, and says the editor is
-  missing.
-- Are **scheduled triggers** ("at 7pm") in scope? They need a clock source in
-  the evaluation loop, which is a decision about who owns time in this platform.
+**Scheduled triggers: yes, and the clock question is answered.** `AT_TIME`
+stores an hour, a minute and weekdays — not a cron expression, which is a small
+language, and ADR-009 refused a language for the reason it refused an
+interpreter. Time belongs to the household: a wall-clock time plus an IANA
+timezone, resolved when needed, so an automation saved in summer does not fire
+an hour wrong all winter.
+
+Firing once survives a restart across the hour, a clock corrected in either
+direction, and a doubled daylight-saving hour, because the unit compared is the
+local occurrence rather than a timestamp. Lateness is bounded so a hub restored
+from a backup does not run a fortnight of evenings at once.
+
+**A third component turned out to have no caller.** `AutomationEngine.evaluate`
+was reached from the *test run* button and nowhere else: a household could
+write an automation, watch a dry run say it would fire, enable it, and wait
+forever. `AutomationDriver` now runs it every two seconds — slower than the
+safety loop on purpose, because a light two seconds late is a light that came
+on. `system_status` reports `automation_engine` degraded when that loop stops.
+
+**The visual builder is still open.** Automations are written through the API;
+the screen lists, tests and switches them. Whether a household should assemble
+one from dropdowns, and how that stays inside the typed graph ADR-009 requires,
+is a product decision nobody has made.
 
 ### 2.6 Energy over time — **built**
 

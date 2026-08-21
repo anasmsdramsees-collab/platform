@@ -307,12 +307,12 @@ export const productCatalog: ProductCategory[] = [
     },
     items: [
       {
-        slug: "lock", name: "Syltra Lock", tags: ["BLE", "App"],
+        slug: "lock", images: ["/store/lock.jpg"], name: "Syltra Lock", tags: ["BLE", "App"],
         en: { tagline: "The everyday smart lock.", description: "Fingerprint and PIN entry with full app control, the lock most households reach for first, built to feel as fast as a key and as secure as a vault.", specs: [{ label: "Entry methods", value: "Fingerprint, PIN" }, { label: "App control", value: "Unlock, lock, access log" }, { label: "Connectivity", value: "Bluetooth LE" }, { label: "Alerts", value: "Real-time, on every entry" }] },
         ar: { tagline: "القفل الذكي اليومي.", description: "دخول بالبصمة والرقم السري مع تحكم كامل عبر التطبيق, القفل الذي تلجأ إليه أغلب المنازل أولًا، سريع كالمفتاح وآمن كالخزنة.", specs: [{ label: "طرق الدخول", value: "بصمة، رقم سري" }, { label: "تحكم التطبيق", value: "فتح، إغلاق، سجل الدخول" }, { label: "الاتصال", value: "بلوتوث LE" }, { label: "التنبيهات", value: "فورية مع كل عملية دخول" }] },
       },
       {
-        slug: "lock-pro", name: "Syltra Pro", tags: ["BLE", "App"],
+        slug: "lock-pro", images: ["/store/lock-pro.jpg"], name: "Syltra Pro", tags: ["BLE", "App"],
         en: { tagline: "Keyless, and always in your pocket.", description: "App-first lock control built for households ready to leave the key behind entirely, keyless entry, remote access, and a shared log for family and guests.", specs: [{ label: "Entry methods", value: "App, keyless" }, { label: "App control", value: "Remote unlock, guest access" }, { label: "Connectivity", value: "Bluetooth LE" }, { label: "Best for", value: "Everyday households" }] },
         ar: { tagline: "بلا مفتاح، ودائمًا في جيبك.", description: "تحكم كامل بالتطبيق للمنازل المستعدة للاستغناء عن المفتاح تمامًا, دخول بدون مفتاح، وتحكم عن بُعد، وسجل مشترك للعائلة والضيوف.", specs: [{ label: "طرق الدخول", value: "تطبيق، بدون مفتاح" }, { label: "تحكم التطبيق", value: "فتح عن بُعد، دخول للضيوف" }, { label: "الاتصال", value: "بلوتوث LE" }, { label: "الأنسب لـ", value: "الاستخدام المنزلي اليومي" }] },
       },
@@ -322,17 +322,17 @@ export const productCatalog: ProductCategory[] = [
         ar: { tagline: "كل طرق الدخول، في قفل واحد.", description: "بصمة ووجه ورقم سري وبطاقة NFC في قفل فاخر واحد, لمن يريد كل الخيارات مغطاة ولا يريد أن يُحرم من الدخول أبدًا.", specs: [{ label: "طرق الدخول", value: "بصمة، وجه، رقم سري، بطاقة NFC" }, { label: "تحكم التطبيق", value: "إدارة كاملة عن بُعد" }, { label: "الاتصال", value: "NFC، بلوتوث LE" }, { label: "الخامة", value: "معدن فاخر" }] },
       },
       {
-        slug: "lock-bolt", name: "Syltra Bolt", tags: ["BLE", "App"],
+        slug: "lock-bolt", images: ["/store/lock-bolt.jpg"], name: "Syltra Bolt", tags: ["BLE", "App"],
         en: { tagline: "Built for offices and rentals.", description: "A retrofit deadbolt lock designed for offices and rental units, install over the existing bolt, manage access by tenant or shift, no locksmith required.", specs: [{ label: "Type", value: "Retrofit deadbolt" }, { label: "Best for", value: "Offices, rental units" }, { label: "App control", value: "Per-tenant access codes" }, { label: "Connectivity", value: "Bluetooth LE" }] },
         ar: { tagline: "مصمم للمكاتب والوحدات المؤجرة.", description: "قفل ترقية يُركّب فوق القفل الحالي, مناسب للمكاتب والوحدات المؤجرة، مع إدارة صلاحيات الدخول لكل مستأجر أو وردية دون الحاجة لفني أقفال.", specs: [{ label: "النوع", value: "قفل ترقية للباب الحالي" }, { label: "الأنسب لـ", value: "المكاتب والوحدات المؤجرة" }, { label: "تحكم التطبيق", value: "رموز دخول لكل مستأجر" }, { label: "الاتصال", value: "بلوتوث LE" }] },
       },
       {
-        slug: "cam", name: "Syltra Cam", tags: ["Wi-Fi"],
+        slug: "cam", images: ["/store/cam.jpg"], name: "Syltra Cam", tags: ["Wi-Fi"],
         en: { tagline: "AI on the device, not in someone else's cloud.", description: "A 4K camera with on-device AI detection, people, vehicles and packages recognized locally, so footage only leaves the house if you choose to share it.", specs: [{ label: "Resolution", value: "4K" }, { label: "Detection", value: "On-device AI, person, vehicle, package" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz" }, { label: "Storage", value: "Local and optional cloud" }] },
         ar: { tagline: "ذكاء اصطناعي على الجهاز، لا في سحابة أحد آخر.", description: "كاميرا بدقة 4K مع كشف ذكاء اصطناعي محلي, تتعرف على الأشخاص والمركبات والطرود محليًا، فلا تغادر اللقطات المنزل إلا إذا اخترت مشاركتها.", specs: [{ label: "الدقة", value: "4K" }, { label: "الكشف", value: "ذكاء اصطناعي محلي, أشخاص، مركبات، طرود" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz" }, { label: "التخزين", value: "محلي، مع خيار سحابي" }] },
       },
       {
-        slug: "doorbell", name: "Syltra Doorbell", tags: ["Wi-Fi"],
+        slug: "doorbell", images: ["/store/doorbell.jpg"], name: "Syltra Doorbell", tags: ["Wi-Fi"],
         en: { tagline: "See who's there, before you open the door.", description: "An HD video doorbell with instant alerts and two-way talk, answer the door from across the world, or just from the couch.", specs: [{ label: "Video", value: "HD, night vision" }, { label: "Audio", value: "Two-way talk" }, { label: "Alerts", value: "Instant, on motion or press" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz" }] },
         ar: { tagline: "اعرف من بالباب، قبل أن تفتحه.", description: "جرس باب بفيديو عالي الدقة مع تنبيهات فورية ومحادثة مباشرة, رد على الباب من أي مكان في العالم، أو ببساطة من الأريكة.", specs: [{ label: "الفيديو", value: "دقة عالية، رؤية ليلية" }, { label: "الصوت", value: "محادثة ثنائية الاتجاه" }, { label: "التنبيهات", value: "فورية عند الحركة أو الضغط" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz" }] },
       },

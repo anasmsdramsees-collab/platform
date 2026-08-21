@@ -30,7 +30,7 @@ export default async function ContactPage({
 
   const socials = [
     { name: "WhatsApp", image: "/social/whatsapp.svg", href: `https://wa.me/${WHATSAPP}` },
-    { name: "Instagram", image: "/social/instagram.svg" },
+    { name: "Instagram", image: "/social/instagram.svg", href: "https://www.instagram.com/syltrahome/" },
     { name: "X", image: "/social/x.svg" },
     { name: "LinkedIn", image: "/social/linkedin.svg" },
     { name: "TikTok", image: "/social/tiktok.svg" },

@@ -393,22 +393,22 @@ export const productCatalog: ProductCategory[] = [
     },
     items: [
       {
-        slug: "cctv-bullet", images: ["/store/cctv-bullet.jpg", "/store/cctv-bullet-2.jpg"], name: "Syltra CCTV Bullet", tags: ["Wi-Fi", "App"],
+        slug: "cctv-bullet", images: ["/store/cctv-bullet.jpg", "/store/cctv-bullet-2.jpg", "/store/cctv-bullet-3.jpg"], name: "Syltra CCTV Bullet", tags: ["Wi-Fi", "App"],
         en: { tagline: "Around-the-clock perimeter watch.", description: "A weatherproof outdoor camera for entrances, driveways and fences. Sharp 4MP by day, clear night vision after dark, and footage on your recorder or cloud.", specs: [{ label: "Resolution", value: "4MP, night vision" }, { label: "Build", value: "IP67 weatherproof" }, { label: "Storage", value: "NVR / cloud / microSD" }] },
         ar: { tagline: "مراقبة محيط المنزل على مدار الساعة.", description: "كاميرا خارجية مقاومة للعوامل الجوية للمداخل والممرات والأسوار. دقة 4MP نهارًا ورؤية ليلية واضحة، والتسجيل على جهازك أو سحابتك.", specs: [{ label: "الدقة", value: "4MP مع رؤية ليلية" }, { label: "التصنيع", value: "مقاومة IP67" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
       },
       {
-        slug: "cctv-dome", images: ["/store/cctv-dome.jpg", "/store/cctv-dome-2.jpg"], name: "Syltra CCTV Dome", tags: ["Wi-Fi", "App"],
+        slug: "cctv-dome", images: ["/store/cctv-dome.jpg", "/store/cctv-dome-2.jpg", "/store/cctv-dome-3.jpg"], name: "Syltra CCTV Dome", tags: ["Wi-Fi", "App"],
         en: { tagline: "Wide coverage, quiet presence.", description: "A ceiling dome for lobbies, shops and halls. A wide angle covers the space from one point, in a tamper-resistant housing that blends into the ceiling.", specs: [{ label: "Resolution", value: "4MP wide angle" }, { label: "Mount", value: "Ceiling, tamper-resistant" }, { label: "Storage", value: "NVR / cloud / microSD" }] },
         ar: { tagline: "تغطية واسعة بحضور هادئ.", description: "قبة سقفية للاستقبال والمحلات والصالات. زاوية واسعة تغطي المكان من نقطة واحدة، في هيكل مقاوم للعبث يذوب في السقف.", specs: [{ label: "الدقة", value: "4MP بزاوية واسعة" }, { label: "التركيب", value: "سقفي مقاوم للعبث" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
       },
       {
-        slug: "cctv-ptz", images: ["/store/cctv-ptz.jpg", "/store/cctv-ptz-2.jpg"], name: "Syltra CCTV PTZ", tags: ["Wi-Fi", "App"],
+        slug: "cctv-ptz", images: ["/store/cctv-ptz.jpg", "/store/cctv-ptz-2.jpg", "/store/cctv-ptz-3.jpg"], name: "Syltra CCTV PTZ", tags: ["Wi-Fi", "App"],
         en: { tagline: "One camera does the work of three.", description: "A motorized camera that pans, tilts and zooms, and follows motion on its own. One unit sweeps a yard that would need three fixed cameras.", specs: [{ label: "Motion", value: "355° pan, 90° tilt, zoom" }, { label: "Tracking", value: "Auto motion tracking" }, { label: "Storage", value: "NVR / cloud / microSD" }] },
         ar: { tagline: "كاميرا واحدة بعمل ثلاث.", description: "كاميرا متحركة تدور وتميل وتقرب وتتعقب الحركة بنفسها. وحدة واحدة تمسح ساحة كانت تحتاج ثلاث كاميرات ثابتة.", specs: [{ label: "الحركة", value: "دوران 355° وإمالة 90° وتقريب" }, { label: "التعقب", value: "تعقب تلقائي للحركة" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
       },
       {
-        slug: "cctv-solar", images: ["/store/cctv-solar.jpg", "/store/cctv-solar-2.jpg"], name: "Syltra CCTV Solar", tags: ["Wi-Fi", "App"],
+        slug: "cctv-solar", images: ["/store/cctv-solar.jpg", "/store/cctv-solar-2.jpg", "/store/cctv-solar-3.jpg"], name: "Syltra CCTV Solar", tags: ["Wi-Fi", "App"],
         en: { tagline: "Power from the sun, watching nonstop.", description: "A fully wireless camera with its own solar panel and battery. Mount it where the sun reaches and it simply works, no cabling, no electrician, no bills.", specs: [{ label: "Power", value: "Solar panel + built-in battery" }, { label: "Resolution", value: "4MP, color night vision" }, { label: "Build", value: "IP66, fully wireless" }] },
         ar: { tagline: "طاقتها من الشمس ومراقبتها لا تتوقف.", description: "كاميرا لاسلكية بالكامل بلوحها الشمسي وبطاريتها. ثبتها حيث تصل الشمس وستعمل ببساطة، بلا تمديدات ولا كهربائي ولا فواتير.", specs: [{ label: "الطاقة", value: "لوح شمسي + بطارية مدمجة" }, { label: "الدقة", value: "4MP برؤية ليلية ملونة" }, { label: "التصنيع", value: "IP66 لاسلكية بالكامل" }] },
       },
@@ -418,12 +418,12 @@ export const productCatalog: ProductCategory[] = [
         ar: { tagline: "للأراضي التي لا يصلها الإنترنت.", description: "كاميرا شمسية بشريحة 4G للمزارع والمواقع والأراضي البعيدة. لا كهرباء ولا واي فاي، وتبث مع ذلك مباشرة إلى جوالك.", specs: [{ label: "الطاقة", value: "لوح شمسي + بطارية مدمجة" }, { label: "الاتصال", value: "شريحة 4G بدون واي فاي" }, { label: "الاستخدام", value: "مزارع ومواقع وأراضٍ بعيدة" }] },
       },
       {
-        slug: "cctv-solar-ptz", images: ["/store/cctv-solar-ptz.jpg", "/store/cctv-solar-ptz-2.jpg"], name: "Syltra CCTV Solar PTZ", tags: ["Wi-Fi", "App"],
+        slug: "cctv-solar-ptz", images: ["/store/cctv-solar-ptz.jpg", "/store/cctv-solar-ptz-2.jpg", "/store/cctv-solar-ptz-3.jpg"], name: "Syltra CCTV Solar PTZ", tags: ["Wi-Fi", "App"],
         en: { tagline: "Sun-powered, motion-tracking.", description: "A motorized solar camera that sweeps gates and yards and follows movement automatically. Wide coverage with zero wiring.", specs: [{ label: "Motion", value: "355° pan with auto tracking" }, { label: "Power", value: "Solar panel + built-in battery" }, { label: "Build", value: "IP66 outdoor" }] },
         ar: { tagline: "بطاقة الشمس وتتعقب الحركة.", description: "كاميرا شمسية متحركة تمسح البوابات والأحواش وتتابع الحركة تلقائيًا. تغطية واسعة بلا سلك واحد.", specs: [{ label: "الحركة", value: "دوران 355° وتعقب تلقائي" }, { label: "الطاقة", value: "لوح شمسي + بطارية مدمجة" }, { label: "التصنيع", value: "IP66 خارجية" }] },
       },
       {
-        slug: "cctv-nvr", images: ["/store/cctv-nvr.jpg", "/store/cctv-nvr-2.jpg"], name: "Syltra NVR 8", tags: ["App"],
+        slug: "cctv-nvr", images: ["/store/cctv-nvr.jpg", "/store/cctv-nvr-2.jpg", "/store/cctv-nvr-3.jpg"], name: "Syltra NVR 8", tags: ["App"],
         en: { tagline: "Weeks of footage, seconds to find.", description: "An 8-channel recorder that keeps weeks of footage locally. Review any camera from the app, jump by motion events, export a clip in seconds.", specs: [{ label: "Channels", value: "8 cameras" }, { label: "Storage", value: "Up to 8TB HDD" }, { label: "Access", value: "Live + playback from the app" }] },
         ar: { tagline: "أسابيع من التسجيل وثوانٍ للوصول.", description: "جهاز تسجيل بثماني قنوات يحفظ أسابيع من اللقطات محليًا. راجع أي كاميرا من التطبيق وتنقل بين أحداث الحركة وصدّر المقطع في ثوانٍ.", specs: [{ label: "القنوات", value: "8 كاميرات" }, { label: "التخزين", value: "حتى 8 تيرابايت" }, { label: "الوصول", value: "بث حي ومراجعة من التطبيق" }] },
       },

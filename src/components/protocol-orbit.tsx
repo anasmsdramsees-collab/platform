@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import ParticleSphere from "./particle-sphere";
+import { PROTOCOL_ICONS } from "./protocol-icons";
 
 interface ProtocolItem {
   name: string;
@@ -55,7 +56,12 @@ export default function ProtocolOrbit({ items }: { items: ProtocolItem[] }) {
                       } as CSSProperties
                     }
                   >
-                    <span className="whitespace-nowrap font-mono text-[11px] text-platinum">
+                    <span className="flex items-center gap-1.5 whitespace-nowrap font-mono text-[11px] text-platinum">
+                      {PROTOCOL_ICONS[item.name] && (
+                        <span className="h-4 w-4 shrink-0 text-ion [&>svg]:h-full [&>svg]:w-full">
+                          {PROTOCOL_ICONS[item.name]}
+                        </span>
+                      )}
                       {item.name}
                     </span>
                   </div>

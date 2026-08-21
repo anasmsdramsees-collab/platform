@@ -393,22 +393,22 @@ export const productCatalog: ProductCategory[] = [
     },
     items: [
       {
-        slug: "cctv-bullet", name: "Syltra CCTV Bullet", tags: ["Wi-Fi", "App"],
+        slug: "cctv-bullet", images: ["/store/cctv-bullet.jpg"], name: "Syltra CCTV Bullet", tags: ["Wi-Fi", "App"],
         en: { tagline: "Around-the-clock perimeter watch.", description: "A weatherproof outdoor camera for entrances, driveways and fences. Sharp 4MP by day, clear night vision after dark, and footage on your recorder or cloud.", specs: [{ label: "Resolution", value: "4MP, night vision" }, { label: "Build", value: "IP67 weatherproof" }, { label: "Storage", value: "NVR / cloud / microSD" }] },
         ar: { tagline: "مراقبة محيط المنزل على مدار الساعة.", description: "كاميرا خارجية مقاومة للعوامل الجوية للمداخل والممرات والأسوار. دقة 4MP نهارًا ورؤية ليلية واضحة، والتسجيل على جهازك أو سحابتك.", specs: [{ label: "الدقة", value: "4MP مع رؤية ليلية" }, { label: "التصنيع", value: "مقاومة IP67" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
       },
       {
-        slug: "cctv-dome", name: "Syltra CCTV Dome", tags: ["Wi-Fi", "App"],
+        slug: "cctv-dome", images: ["/store/cctv-dome.jpg"], name: "Syltra CCTV Dome", tags: ["Wi-Fi", "App"],
         en: { tagline: "Wide coverage, quiet presence.", description: "A ceiling dome for lobbies, shops and halls. A wide angle covers the space from one point, in a tamper-resistant housing that blends into the ceiling.", specs: [{ label: "Resolution", value: "4MP wide angle" }, { label: "Mount", value: "Ceiling, tamper-resistant" }, { label: "Storage", value: "NVR / cloud / microSD" }] },
         ar: { tagline: "تغطية واسعة بحضور هادئ.", description: "قبة سقفية للاستقبال والمحلات والصالات. زاوية واسعة تغطي المكان من نقطة واحدة، في هيكل مقاوم للعبث يذوب في السقف.", specs: [{ label: "الدقة", value: "4MP بزاوية واسعة" }, { label: "التركيب", value: "سقفي مقاوم للعبث" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
       },
       {
-        slug: "cctv-ptz", name: "Syltra CCTV PTZ", tags: ["Wi-Fi", "App"],
+        slug: "cctv-ptz", images: ["/store/cctv-ptz.jpg"], name: "Syltra CCTV PTZ", tags: ["Wi-Fi", "App"],
         en: { tagline: "One camera does the work of three.", description: "A motorized camera that pans, tilts and zooms, and follows motion on its own. One unit sweeps a yard that would need three fixed cameras.", specs: [{ label: "Motion", value: "355° pan, 90° tilt, zoom" }, { label: "Tracking", value: "Auto motion tracking" }, { label: "Storage", value: "NVR / cloud / microSD" }] },
         ar: { tagline: "كاميرا واحدة بعمل ثلاث.", description: "كاميرا متحركة تدور وتميل وتقرب وتتعقب الحركة بنفسها. وحدة واحدة تمسح ساحة كانت تحتاج ثلاث كاميرات ثابتة.", specs: [{ label: "الحركة", value: "دوران 355° وإمالة 90° وتقريب" }, { label: "التعقب", value: "تعقب تلقائي للحركة" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
       },
       {
-        slug: "cctv-solar", name: "Syltra CCTV Solar", tags: ["Wi-Fi", "App"],
+        slug: "cctv-solar", images: ["/store/cctv-solar.jpg"], name: "Syltra CCTV Solar", tags: ["Wi-Fi", "App"],
         en: { tagline: "Power from the sun, watching nonstop.", description: "A fully wireless camera with its own solar panel and battery. Mount it where the sun reaches and it simply works, no cabling, no electrician, no bills.", specs: [{ label: "Power", value: "Solar panel + built-in battery" }, { label: "Resolution", value: "4MP, color night vision" }, { label: "Build", value: "IP66, fully wireless" }] },
         ar: { tagline: "طاقتها من الشمس ومراقبتها لا تتوقف.", description: "كاميرا لاسلكية بالكامل بلوحها الشمسي وبطاريتها. ثبتها حيث تصل الشمس وستعمل ببساطة، بلا تمديدات ولا كهربائي ولا فواتير.", specs: [{ label: "الطاقة", value: "لوح شمسي + بطارية مدمجة" }, { label: "الدقة", value: "4MP برؤية ليلية ملونة" }, { label: "التصنيع", value: "IP66 لاسلكية بالكامل" }] },
       },

@@ -441,12 +441,12 @@ export const productCatalog: ProductCategory[] = [
     },
     items: [
       {
-        slug: "thermostat", name: "Syltra Thermostat", tags: ["Zigbee", "Wi-Fi"],
+        slug: "thermostat", images: ["/store/thermostat.jpg", "/store/thermostat-2.jpg"], name: "Syltra Thermostat", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "Comfort that learns your rhythm.", description: "A thermostat that studies the household routine and adjusts ahead of it. Cool when you arrive, economical when you leave, without touching a button.", specs: [{ label: "Control", value: "Adaptive scheduling" }, { label: "Display", value: "Live temperature readout" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "راحة تتعلم إيقاعك.", description: "منظم حرارة يدرس روتين البيت ويسبقه بالتعديل. بارد عند وصولك واقتصادي بعد خروجك، دون أن تلمس زرًا.", specs: [{ label: "التحكم", value: "جدولة تكيّفية" }, { label: "الشاشة", value: "عرض حي لدرجة الحرارة" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "ac-control", name: "Syltra AC Control", tags: ["Wi-Fi", "BLE"],
+        slug: "ac-control", images: ["/store/ac-control.jpg", "/store/ac-control-2.jpg"], name: "Syltra AC Control", tags: ["Wi-Fi", "BLE"],
         en: { tagline: "Every remote AC, one app.", description: "Controls any remote-based air conditioner from the phone. Schedules, room targets and a place in the whole-home scenes, for the AC you already own.", specs: [{ label: "Compatibility", value: "Any split or central AC" }, { label: "Control", value: "App + wall panel" }, { label: "Reporting", value: "Energy consumption reports" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz, Bluetooth LE" }] },
         ar: { tagline: "كل المكيفات في تطبيق واحد.", description: "يتحكم بأي مكيف يعمل بالريموت من الجوال. جداول ودرجات مستهدفة ومكان في مشاهد البيت الكاملة، لمكيفك الذي تملكه اليوم.", specs: [{ label: "التوافق", value: "أي مكيف سبليت أو مركزي" }, { label: "التحكم", value: "تطبيق + لوحة حائط" }, { label: "التقارير", value: "تقارير استهلاك الطاقة" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz، بلوتوث LE" }] },
       },
@@ -456,17 +456,17 @@ export const productCatalog: ProductCategory[] = [
         ar: { tagline: "القابس الذي يرد عليك.", description: "قابس ذكي يشغّل أي جهاز ويقيس استهلاكه. اعرف كم يكلف السخان فعلًا، وجدول آلة القهوة، واقطع هدر الاستعداد.", specs: [{ label: "أقصى حمل", value: "16 أمبير" }, { label: "المراقبة", value: "استهلاك طاقة حي" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "light", name: "Syltra Light", tags: ["Zigbee"],
+        slug: "light", images: ["/store/light.jpg", "/store/light-2.jpg"], name: "Syltra Light", tags: ["Zigbee"],
         en: { tagline: "Sixteen million moods.", description: "A smart bulb with full color and warmth control. White for work, warm for the evening, any color for the occasion, all from the app or a word.", specs: [{ label: "Tuning", value: "Warm to cool white, dimmable" }, { label: "Fitting", value: "Standard screw / bayonet" }, { label: "Connectivity", value: "Zigbee 3.0" }] },
         ar: { tagline: "ستة عشر مليون مزاج.", description: "لمبة ذكية بتحكم كامل في اللون والدفء. أبيض للعمل ودافئ للمساء وأي لون للمناسبة، من التطبيق أو بكلمة واحدة.", specs: [{ label: "التعديل", value: "أبيض دافئ إلى بارد، قابل للتعتيم" }, { label: "التركيب", value: "قاعدة قياسية" }, { label: "الاتصال", value: "Zigbee 3.0" }] },
       },
       {
-        slug: "curtain", name: "Syltra Curtain", tags: ["Zigbee", "Wi-Fi"],
+        slug: "curtain", images: ["/store/curtain.jpg", "/store/curtain-2.jpg"], name: "Syltra Curtain", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "The house wakes with the sun.", description: "A quiet curtain motor with app, voice and schedule control. Opens gently with the morning alarm and closes itself at sunset.", specs: [{ label: "Noise level", value: "Under 45dB" }, { label: "Function", value: "Open / Stop / Close, scheduled" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "يصحو البيت مع الشمس.", description: "محرك ستائر هادئ يعمل بالتطبيق والصوت والجدولة. يفتح بهدوء مع منبه الصباح ويغلق نفسه عند الغروب.", specs: [{ label: "مستوى الضجيج", value: "أقل من 45 ديسيبل" }, { label: "الوظيفة", value: "فتح / إيقاف / إغلاق مجدول" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },
       {
-        slug: "robot", name: "Syltra Robot", tags: ["Wi-Fi"],
+        slug: "robot", images: ["/store/robot.jpg", "/store/robot-2.jpg"], name: "Syltra Robot", tags: ["Wi-Fi"],
         en: { tagline: "The floor cleans itself.", description: "A robot vacuum that maps the house, mops and vacuums on schedule, and returns to charge itself. The floor is done before you notice it needed doing.", specs: [{ label: "Mapping", value: "Room-by-room, saved maps" }, { label: "Scheduling", value: "Per-room or whole-home" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz" }] },
         ar: { tagline: "الأرضية تنظف نفسها.", description: "روبوت يمسح خريطة البيت ويكنس ويمسح بجدول ويعود ليشحن نفسه. تجد الأرضية نظيفة قبل أن تنتبه أنها كانت تحتاج تنظيفًا.", specs: [{ label: "التخطيط", value: "غرفة بغرفة، خرائط محفوظة" }, { label: "الجدولة", value: "لكل غرفة أو للمنزل كله" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz" }] },
       },

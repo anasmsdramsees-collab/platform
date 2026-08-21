@@ -9,6 +9,7 @@ import CurtainsOverlay from "@/components/curtains-overlay";
 import SyntraTvMockup from "@/components/syntra-tv-mockup";
 import ProtocolOrbit from "@/components/protocol-orbit";
 import ParticlesBg from "@/components/ui/particles-bg";
+import { HeroCarousel } from "@/components/ui/hero-carousel";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 
@@ -31,6 +32,73 @@ export default async function HomePage({
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const dict = getDictionary(locale);
+
+  const heroSlides =
+    locale === "ar"
+      ? [
+          {
+            src: "/hero/home-dashboard.jpg",
+            label: "سيلترا هوم",
+            title: "كل غرفة. شاشة واحدة.",
+            caption: "خريطة حية لبيتك، ومشاهد جاهزة تعمل بلمسة واحدة.",
+          },
+          {
+            src: "/hero/home-arrive.jpg",
+            label: "سيلترا هوم",
+            title: "يستقبلك البيت جاهزًا.",
+            caption: "الإضاءة مضاءة والتكييف مضبوط قبل أن تفتح الباب.",
+          },
+          {
+            src: "/hero/tv-interface.jpg",
+            label: "سيلترا تي في",
+            title: "شاشة تدير البيت كله.",
+            caption: "قنواتك وأفلامك، والإضاءة والمناخ في متناول يدك.",
+          },
+          {
+            src: "/hero/tv-family.jpg",
+            label: "سيلترا تي في",
+            title: "ليلة فيلم بمشهد واحد.",
+            caption: "تخفت الإضاءة، وتُغلق الستائر، ويبدأ العرض.",
+          },
+          {
+            src: "/hero/home-remote.jpg",
+            label: "سيلترا هوم",
+            title: "بيتك معك أينما كنت.",
+            caption: "اطمئن عليه وتحكم فيه من أي مدينة في العالم.",
+          },
+        ]
+      : [
+          {
+            src: "/hero/home-dashboard.jpg",
+            label: "Syltra Home",
+            title: "Every room. One screen.",
+            caption: "A live map of your home, with scenes that run at a tap.",
+          },
+          {
+            src: "/hero/home-arrive.jpg",
+            label: "Syltra Home",
+            title: "The house is ready before you are.",
+            caption: "Lights on and the air cooled before you reach the door.",
+          },
+          {
+            src: "/hero/tv-interface.jpg",
+            label: "Syltra TV",
+            title: "The screen that runs the house.",
+            caption: "Your channels and films, with lights and climate in reach.",
+          },
+          {
+            src: "/hero/tv-family.jpg",
+            label: "Syltra TV",
+            title: "Movie night in one scene.",
+            caption: "Lights dim, curtains close, and the film begins.",
+          },
+          {
+            src: "/hero/home-remote.jpg",
+            label: "Syltra Home",
+            title: "Home travels with you.",
+            caption: "Check in and take control from any city in the world.",
+          },
+        ];
 
   return (
     <>
@@ -77,23 +145,9 @@ export default async function HomePage({
           </div>
         </div>
 
-        {/* Hero product visual */}
-        <div className="relative mt-4 aspect-[1536/852] w-full sm:mt-10">
-          <Image
-            src={assetPath("/brand/hero-products.jpg")}
-            alt="The Syltra One ecosystem — hub, panel, lock, switch, sensors, camera, doorbell and more"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-top"
-          />
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, var(--color-void) 0%, rgba(11,12,14,0) 12%, rgba(11,12,14,0) 78%, var(--color-void) 100%)",
-            }}
-          />
+        {/* Hero carousel */}
+        <div className="relative mt-4 w-full sm:mt-10">
+          <HeroCarousel slides={heroSlides} rtl={locale === "ar"} />
         </div>
       </section>
 

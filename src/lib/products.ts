@@ -451,7 +451,7 @@ export const productCatalog: ProductCategory[] = [
         ar: { tagline: "كل المكيفات في تطبيق واحد.", description: "يتحكم بأي مكيف يعمل بالريموت من الجوال. جداول ودرجات مستهدفة ومكان في مشاهد البيت الكاملة، لمكيفك الذي تملكه اليوم.", specs: [{ label: "التوافق", value: "أي مكيف سبليت أو مركزي" }, { label: "التحكم", value: "تطبيق + لوحة حائط" }, { label: "التقارير", value: "تقارير استهلاك الطاقة" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz، بلوتوث LE" }] },
       },
       {
-        slug: "plug", name: "Syltra Plug", tags: ["Wi-Fi"],
+        slug: "plug", images: ["/store/plug.jpg"], name: "Syltra Plug", tags: ["Wi-Fi"],
         en: { tagline: "The socket that reports back.", description: "A smart plug that switches anything and measures its power. See what the heater really costs, schedule the coffee machine, and cut standby waste.", specs: [{ label: "Max load", value: "16A" }, { label: "Monitoring", value: "Live energy usage" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz" }] },
         ar: { tagline: "القابس الذي يرد عليك.", description: "قابس ذكي يشغّل أي جهاز ويقيس استهلاكه. اعرف كم يكلف السخان فعلًا، وجدول آلة القهوة، واقطع هدر الاستعداد.", specs: [{ label: "أقصى حمل", value: "16 أمبير" }, { label: "المراقبة", value: "استهلاك طاقة حي" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz" }] },
       },

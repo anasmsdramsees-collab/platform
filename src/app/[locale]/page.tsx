@@ -6,7 +6,6 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { productCatalog } from "@/lib/products";
 import HeroLightsPanel from "@/components/hero-lights-panel";
 import CurtainsOverlay from "@/components/curtains-overlay";
-import SyntraTvMockup from "@/components/syntra-tv-mockup";
 import ProtocolOrbit from "@/components/protocol-orbit";
 import ParticlesBg from "@/components/ui/particles-bg";
 import { HeroCarousel } from "@/components/ui/hero-carousel";
@@ -302,17 +301,17 @@ export default async function HomePage({
                 className="overflow-hidden border border-hairline bg-void"
               >
                 <div className="relative aspect-video overflow-hidden border-b border-hairline">
-                  {card.slug === "home-assistant" ? (
-                    <Image
-                      src={assetPath("/brand/app-home-dashboard.jpg")}
-                      alt={card.name}
-                      fill
-                      sizes="(min-width: 640px) 50vw, 100vw"
-                      className="object-cover object-top"
-                    />
-                  ) : (
-                    <SyntraTvMockup locale={locale} />
-                  )}
+                  <Image
+                    src={assetPath(
+                      card.slug === "home-assistant"
+                        ? "/hero/home-dashboard.jpg"
+                        : "/hero/tv-interface.jpg"
+                    )}
+                    alt={card.name}
+                    fill
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    className="object-cover object-center"
+                  />
                 </div>
                 <div className="p-6 sm:p-8">
                   <p className="font-mono text-[11px] uppercase tracking-widest text-slate">

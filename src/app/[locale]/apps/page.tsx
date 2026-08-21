@@ -2,7 +2,6 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
-import SyntraTvMockup from "@/components/syntra-tv-mockup";
 import { assetPath } from "@/lib/base-path";
 
 export async function generateMetadata({
@@ -46,17 +45,17 @@ export default async function AppsPage({
               className="overflow-hidden border border-hairline bg-void"
             >
               <div className="relative aspect-video overflow-hidden border-b border-hairline">
-                {card.slug === "home-assistant" ? (
-                  <Image
-                    src={assetPath("/brand/app-home-dashboard.jpg")}
-                    alt={card.name}
-                    fill
-                    sizes="(min-width: 640px) 50vw, 100vw"
-                    className="object-cover object-top"
-                  />
-                ) : (
-                  <SyntraTvMockup locale={locale} />
-                )}
+                <Image
+                  src={assetPath(
+                    card.slug === "home-assistant"
+                      ? "/hero/home-dashboard.jpg"
+                      : "/hero/tv-interface.jpg"
+                  )}
+                  alt={card.name}
+                  fill
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  className="object-cover object-center"
+                />
               </div>
               <div className="p-8 sm:p-10">
                 <p className="font-mono text-[11px] uppercase tracking-widest text-slate">

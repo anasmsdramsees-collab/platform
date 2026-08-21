@@ -105,7 +105,15 @@ export default async function HomePage({
       <CurtainsOverlay dict={dict.lightsPanel} />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-hairline">
-        <ParticlesBg />
+        <ParticlesBg
+          className="pointer-events-none z-10"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, #000 0%, #000 58%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0) 84%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, #000 0%, #000 58%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0) 84%)",
+          }}
+        />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
@@ -113,7 +121,7 @@ export default async function HomePage({
               "radial-gradient(65% 55% at 50% 0%, rgba(11,12,14,0.18), rgba(11,12,14,0.62) 75%)",
           }}
         />
-        <div className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
+        <div className="relative z-20 mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
             {dict.hero.eyebrow}
           </p>
@@ -146,7 +154,7 @@ export default async function HomePage({
         </div>
 
         {/* Hero carousel */}
-        <div className="relative mt-4 w-full sm:mt-10">
+        <div className="relative z-0 mt-4 w-full sm:mt-10">
           <HeroCarousel slides={heroSlides} rtl={locale === "ar"} />
         </div>
       </section>

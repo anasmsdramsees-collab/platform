@@ -1,11 +1,18 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
+import { cn } from "@/lib/utils";
 
 // Interactive particle network background (particles.js via CDN).
 // Adapted for Syltra One: the site is dark-only, so the palette is fixed to the
 // brand blue and the container is transparent so it sits on the page's bg-void.
-export default function ParticlesComponent() {
+export default function ParticlesComponent({
+  className,
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const initParticles = useCallback((isDark: boolean) => {
     const oldCanvas = document.querySelector("#particles-js canvas");
     if (oldCanvas) oldCanvas.remove();
@@ -86,7 +93,8 @@ export default function ParticlesComponent() {
     <div
       id="particles-js"
       aria-hidden
-      className="absolute inset-0 h-full w-full bg-transparent"
+      style={style}
+      className={cn("absolute inset-0 h-full w-full bg-transparent", className)}
     />
   );
 }

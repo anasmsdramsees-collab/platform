@@ -6,6 +6,11 @@ life-safety actuators are commanded by deterministic rules through the Safety
 Governor, never by a person holding a permission.
 """
 
+from syltra_security.organisations import (
+    Organisation,
+    OrganisationRegistry,
+    UnitTransfer,
+)
 from syltra_security.directory import (
     DEFAULT_EXPIRY,
     OWNER_APPOINTED,
@@ -15,6 +20,8 @@ from syltra_security.directory import (
     UserDirectory,
 )
 from syltra_security.authorization import (
+    may_see_capability,
+    read_permission_for_capability,
     ROLE_PERMISSIONS,
     AuthorizationError,
     Permission,
@@ -34,6 +41,11 @@ from syltra_security.tokens import (
 )
 
 __all__ = [
+    "UnitTransfer",
+    "OrganisationRegistry",
+    "Organisation",
+    "read_permission_for_capability",
+    "may_see_capability",
     "OWNER_APPOINTED",
     "DEFAULT_EXPIRY",
     "UserDirectory",

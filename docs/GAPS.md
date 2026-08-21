@@ -141,21 +141,37 @@ Still open under the same heading, and deliberately not decided by extension:
 - **siren and breaker** — they pass the deterministic-rule gate and have no
   fail-safe direction anybody has chosen.
 
-### 2.2 Installations — **Users and Roles decided and built**
+### 2.2 Installations — **decided and built**
 
-**Users and Roles is done.** `UserDirectory` holds memberships and the record of
-every change; the API exposes list, grant, change-role and revoke; the console
-screen is live. Both UI-5 criteria that were blocked on it are met: a permission
-change carries a reason (refused at construction, and again at the API so the
-caller gets a named 400), and revoked or expired members stay visible rather
-than vanishing.
+The owner answered the question this was blocked on: SYLTRA sells to
+individuals, distributors, installers and institutions. The consequences are in
+`docs/adr/ADR-010-access-is-an-invitation-not-a-consequence-of-sale.md`.
 
-`SAFETY_OPERATOR` exists and holds no authority over any device — it can close a
-case, not open a valve. `ACT_SAFETY` still appears in no role.
+**A distributor has no access to anything.** Selling a hub does not create a
+relationship with the house it went into. There is no distributor role, no
+fleet view, and no telemetry leaving by default — which is why home isolation
+survived a channel model that usually destroys it.
 
-**Installations is still open.** Commissioning stages, their recoverability, and
-what an "installation" is as a product concept are undecided, and the navigation
-entry stays marked unavailable rather than pretending otherwise.
+The only route in is an invitation. `SUPPORT` is SYLTRA's own technician,
+granted by the owner, expiring in four hours, able to write automations and
+unable to see a camera. `VIEW_CAMERA` is a permission of its own, held by
+`OWNER` and `ADULT` only, and the gateway removes what a caller may not see
+from the payload rather than blanking it — a null value still says *there is a
+camera here*.
+
+`Organisation` holds units a company owns and does not live in; the company is
+the unit's `OWNER`, because a separate role would be the same authority wearing
+a different name. `transfer_ownership` sells one in a single call: the buyer is
+admitted first so the last-owner rule cannot refuse the revocation the sale
+depends on, then everyone else leaves, then the previous occupants' history is
+erased. Erasure is a required argument with no default, so no future edit can
+quietly make it optional.
+
+The resident is told who manages the place they live in, above the member list
+— a condition of the tenancy rather than a discovery.
+
+What is still open is commissioning: the stages of a physical install and their
+recoverability. That needs a hub to install.
 
 ### 2.3 The Cloud Connector — **built, and built to refuse**
 
@@ -374,7 +390,7 @@ Recorded so nobody re-opens them as oversights.
 | Category | Count | Blocked on |
 |---|---|---|
 | Unverified against reality | 6 | a real home, a real Home Assistant, a person |
-| Awaiting your decision | 2 | you |
+| Awaiting your decision | 1 | you |
 | Needs a person | 3 | scheduling |
 | Known engineering gaps | 1 | nobody — pick them up any time |
 | Structural divergence | 3 groups | explained in place, not resolved |

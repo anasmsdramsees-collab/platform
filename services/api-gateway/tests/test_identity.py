@@ -18,6 +18,7 @@ from typing import Any
 
 import pytest
 from fastapi.testclient import TestClient
+from syltra_api_gateway.platform import Platform
 from syltra_security import ROLE_PERMISSIONS, Permission, Role, TokenStore
 
 HOME = "home_001"
@@ -126,3 +127,55 @@ def test_an_audit_entry_records_what_it_acted_on(
     source = inspect.getsource(api_module.create_app)
     assert "**action_entry.detail" in source
     assert "**risk_entry.detail" in source
+
+
+# ── the camera line, through the API (owner decision, 2026-08-21) ──
+
+
+def seed_camera(platform: Platform) -> None:
+    from datetime import UTC, datetime
+
+    from syltra_testing import make_envelope
+
+    platform.twin.apply(
+        make_envelope(
+            capability="camera.recording",
+            value=True,
+            unit=None,
+            home_id=HOME,
+            device_id="camera_hall",
+            room_id="hall",
+            occurred_at=datetime.now(tz=UTC),
+        )
+    )
+
+
+def test_a_camera_is_absent_from_the_device_list_rather_than_blanked(
+    client: TestClient, tokens: TokenStore, platform: Platform
+) -> None:
+    """Removed, not nulled.
+
+    A key present with a null value still tells the reader the camera exists
+    and that somebody decided they may not see it. Whether a room has a camera
+    is itself the kind of thing a property company should not learn from a
+    device list.
+    """
+    seed_camera(platform)
+
+    def capabilities_seen_by(role: Role) -> set[str]:
+        body = client.get(f"/v1/homes/{HOME}/devices", headers=header(tokens, role)).json()
+        return {name for device in body["items"] for name in (device.get("capabilities") or {})}
+
+    assert "camera.recording" in capabilities_seen_by(Role.OWNER)
+    # A support technician debugging a schedule has no business watching the hall.
+    assert "camera.recording" not in capabilities_seen_by(Role.SUPPORT)
+    assert "camera.recording" not in capabilities_seen_by(Role.INSTALLER)
+
+
+def test_the_device_itself_is_still_listed_when_its_camera_is_hidden(
+    client: TestClient, tokens: TokenStore, platform: Platform
+) -> None:
+    """Hiding the device would make a hub look like it has fewer than it does."""
+    seed_camera(platform)
+    body = client.get(f"/v1/homes/{HOME}/devices", headers=header(tokens, Role.SUPPORT)).json()
+    assert any(device["device_id"] == "camera_hall" for device in body["items"])

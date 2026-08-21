@@ -144,3 +144,35 @@ def test_a_missing_membership_is_a_404(
         json={"reason": "tidying up"},
     )
     assert response.status_code == 404
+
+
+# ── who manages the place a resident lives in ──
+
+
+def test_a_privately_owned_home_says_nobody_manages_it(
+    client: TestClient, auth: Callable[..., dict[str, str]]
+) -> None:
+    body = client.get(f"/v1/homes/{HOME}/users", headers=owner_header(auth)).json()
+    assert body["management"]["managed_by"] is None
+
+
+def test_a_resident_of_a_managed_flat_is_told_who_can_see_it(
+    client: TestClient, auth: Callable[..., dict[str, str]], platform: Platform
+) -> None:
+    """A condition of the tenancy, not a discovery.
+
+    Read with a resident's token rather than an owner's, because the resident
+    is the person this line exists for.
+    """
+    from syltra_security import OrganisationRegistry
+
+    registry = OrganisationRegistry(platform.users)
+    company = registry.register("Riyadh Residences", contact="security@example.test")
+    registry.hold(company.organisation_id, HOME, actor="bootstrap", reason="unit acquired")
+    object.__setattr__(platform, "organisations", registry)
+
+    body = client.get(f"/v1/homes/{HOME}/users", headers=auth(Role.ADULT, {HOME})).json()
+    management = body["management"]
+    assert management["managed_by"] == "Riyadh Residences"
+    assert management["sees_devices"] is True
+    assert management["sees_cameras"] is False

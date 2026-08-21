@@ -318,3 +318,98 @@ def test_a_safety_operator_commands_nothing() -> None:
     assert Permission.ACT_SAFETY not in appointed.permissions
     assert Permission.ACT_COMFORT not in appointed.permissions
     assert Permission.ACT_SECURITY not in appointed.permissions
+
+
+# ── support: invited, temporary, and unable to reach anything that matters ──
+
+
+def test_a_support_session_ends_by_itself_and_sooner_than_a_visit() -> None:
+    """One problem, not a relationship.
+
+    The technician looks, fixes, and the door closes behind them without
+    anybody having to remember to close it.
+    """
+    directory, _ = directory_with_owner()
+    support = directory.grant(
+        HOME,
+        "syltra-support",
+        Role.SUPPORT,
+        actor="amal",
+        actor_role=Role.OWNER,
+        reason="the evening schedule is not firing",
+        now=NOW,
+    )
+    assert support.is_active_at(NOW + timedelta(hours=3))
+    assert not support.is_active_at(NOW + timedelta(hours=5))
+    # Shorter than an installer's afternoon.
+    assert support.expires_at is not None
+    installer = directory.grant(
+        HOME,
+        "fitter",
+        Role.INSTALLER,
+        actor="amal",
+        actor_role=Role.OWNER,
+        reason="commissioning",
+        now=NOW,
+    )
+    assert installer.expires_at is not None
+    assert support.expires_at < installer.expires_at
+
+
+def test_support_can_program_and_cannot_open_anything() -> None:
+    """Remote programming is what it is for, and that is safe by construction.
+
+    `AutomationAction` refuses any capability outside NON_CRITICAL and COMFORT,
+    so a support session cannot reach a lock, a valve or a breaker however it
+    is used.
+    """
+    permissions = ROLE_PERMISSIONS[Role.SUPPORT]
+    assert Permission.MANAGE_AUTOMATIONS in permissions
+    assert Permission.READ_DIAGNOSTICS in permissions
+    for forbidden in (
+        Permission.ACT_SECURITY,
+        Permission.ACT_SAFETY,
+        Permission.VIEW_CAMERA,
+        Permission.MANAGE_USERS,
+        Permission.READ_AUDIT,
+    ):
+        assert forbidden not in permissions, forbidden
+
+
+def test_a_distributor_has_no_role_at_all() -> None:
+    """The owner's decision of 2026-08-21, asserted rather than assumed.
+
+    Somebody who sold a hub does not thereby get to look inside the house it
+    went into. There is no distributor role because there is no distributor
+    access — the only route in is an invitation.
+    """
+    assert not any("DISTRIBUTOR" in role.value for role in Role)
+    assert not any("RESELLER" in role.value for role in Role)
+
+
+# ── the camera line ──
+
+
+def test_only_the_household_itself_may_see_a_camera() -> None:
+    holders = {
+        role
+        for role, permissions in ROLE_PERMISSIONS.items()
+        if Permission.VIEW_CAMERA in permissions
+    }
+    assert holders == {Role.OWNER, Role.ADULT}
+
+
+def test_the_camera_rule_covers_a_capability_nobody_has_added_yet() -> None:
+    """Matched by domain, not by full name.
+
+    A name-based exclusion is forgotten by whoever adds `camera.doorbell` next
+    year; a domain rule covers it the day it appears.
+    """
+    from syltra_security import read_permission_for_capability
+
+    assert read_permission_for_capability("camera.doorbell") is Permission.VIEW_CAMERA
+    assert read_permission_for_capability("camera.recording") is Permission.VIEW_CAMERA
+    # Narrow on purpose: everything else is readable by anyone who may see the
+    # home, and pretending otherwise would invite the exception to grow.
+    assert read_permission_for_capability("environment.temperature") is None
+    assert read_permission_for_capability("lock.state") is None

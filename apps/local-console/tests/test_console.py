@@ -1148,7 +1148,7 @@ def test_the_periodic_refresh_does_not_wipe_an_answer_the_user_asked_for() -> No
     assert "state.holdRefresh = false" in route
 
 
-def test_every_capability_and_context_has_a_label_in_both_languages() -> None:
+def test_every_enumerable_key_has_a_label_in_both_languages() -> None:
     """Keys the static scan cannot see.
 
     The builder writes `t(`cap_${capability}`)`, which no regex over the source
@@ -1159,9 +1159,15 @@ def test_every_capability_and_context_has_a_label_in_both_languages() -> None:
     """
     from syltra_contracts import ContextType
     from syltra_contracts.capability_definitions import CAPABILITY_DEFINITIONS
+    from syltra_security import Permission, Role
 
     expected = {f"cap_{c.replace('.', '_')}" for c in CAPABILITY_DEFINITIONS}
     expected |= {f"context_{c.value.lower()}" for c in ContextType}
+    # Roles and permissions are built the same way — `t(`role_${...}`)` — and
+    # were missed by the first version of this test, which is how SUPPORT and
+    # four permissions reached a dropdown as raw keys.
+    expected |= {f"role_{r.value.lower()}" for r in Role}
+    expected |= {f"permission_{p.value}" for p in Permission}
     for language in ("en", "ar"):
         missing = sorted(expected - set(I18N[language]))
         assert not missing, f"{language} has no label for: {missing}"

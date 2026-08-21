@@ -48,6 +48,17 @@ class Permission(StrEnum):
     Policy is what the household allows; this is who the household is. Somebody
     who may tune a comfort threshold has no business granting a stranger a key.
     """
+    VIEW_CAMERA = "VIEW_CAMERA"
+    """See a camera, live or recorded.
+
+    Its own permission rather than an exception carved out by capability name.
+    A name-based exclusion is forgotten by whoever adds `camera.doorbell` next
+    year; a permission nobody holds excludes everything under it by default.
+
+    The owner decided on 2026-08-21 that a property company managing rented
+    units may see the devices and not the cameras, and this is the line that
+    holds it.
+    """
     ACKNOWLEDGE_SAFETY = "ACKNOWLEDGE_SAFETY"
     """Acknowledge a confirmed hazard and close its case once it has cleared.
 
@@ -84,6 +95,19 @@ class Role(StrEnum):
     CHILD = "CHILD"
     GUEST = "GUEST"
     INSTALLER = "INSTALLER"
+    SUPPORT = "SUPPORT"
+    """SYLTRA's own technician, invited by the household for one problem.
+
+    The owner's decision of 2026-08-21: a distributor has no standing access to
+    anything. Somebody who sold a hub does not thereby get to look inside the
+    house it went into. The only route in is a support account the owner grants
+    when they want help, and it ends by itself.
+
+    It can write automations, because remote programming is what it is for, and
+    that is safe by construction rather than by trust: `AutomationAction`
+    refuses any capability outside NON_CRITICAL and COMFORT, so a support
+    session cannot reach a lock, a valve or a breaker however it is used.
+    """
     SAFETY_OPERATOR = "SAFETY_OPERATOR"
     """The person a confirmed hazard is escalated to.
 
@@ -112,6 +136,7 @@ ROLE_PERMISSIONS: Final[dict[Role, frozenset[Permission]]] = {
             Permission.MANAGE_AUTOMATIONS,
             Permission.MANAGE_USERS,
             Permission.ACKNOWLEDGE_SAFETY,
+            Permission.VIEW_CAMERA,
         }
     ),
     Role.ADULT: frozenset(
@@ -121,6 +146,7 @@ ROLE_PERMISSIONS: Final[dict[Role, frozenset[Permission]]] = {
             Permission.ACT_COMFORT,
             Permission.ACT_SECURITY,
             Permission.MANAGE_AUTOMATIONS,
+            Permission.VIEW_CAMERA,
         }
     ),
     # A child may see the home and adjust comfort, but not unlock doors,
@@ -141,6 +167,16 @@ ROLE_PERMISSIONS: Final[dict[Role, frozenset[Permission]]] = {
             Permission.READ_AUDIT,
             Permission.READ_DIAGNOSTICS,
             Permission.ACKNOWLEDGE_SAFETY,
+        }
+    ),
+    # Invited, temporary, and unable to see the house it is helping with beyond
+    # what it needs. No camera: somebody debugging a schedule has no business
+    # watching the living room.
+    Role.SUPPORT: frozenset(
+        {
+            Permission.READ_HOME,
+            Permission.READ_DIAGNOSTICS,
+            Permission.MANAGE_AUTOMATIONS,
         }
     ),
     Role.SERVICE: frozenset({Permission.READ_HOME}),
@@ -175,6 +211,15 @@ _SAFETY_CLASS_PERMISSION: Final[dict[SafetyClass, Permission]] = {
 }
 
 
+#: Capability domains that need a permission of their own to *see*, on top of
+#: whatever it takes to command them. Matched by domain rather than by full
+#: name, so `camera.doorbell` added next year is covered by the rule that
+#: already exists rather than by somebody remembering to extend a list.
+_DOMAIN_READ_PERMISSION: Final[dict[str, Permission]] = {
+    "camera": Permission.VIEW_CAMERA,
+}
+
+
 def permission_for_capability(capability: str) -> Permission:
     """The permission required to command a capability.
 
@@ -183,6 +228,26 @@ def permission_for_capability(capability: str) -> Permission:
     authority requirement.
     """
     return _SAFETY_CLASS_PERMISSION[get_definition(capability).safety_class]
+
+
+def read_permission_for_capability(capability: str) -> Permission | None:
+    """An extra permission needed merely to *look* at a capability, if any.
+
+    Reading is normally implied by READ_HOME: knowing the kitchen is 24 °C is
+    not privileged inside your own house. A camera is different, and the owner
+    decided on 2026-08-21 that a property company managing rented units sees
+    the devices and not the cameras.
+
+    Returns `None` for everything else, which is the honest answer — this is a
+    narrow exception and pretending otherwise would invite it to grow.
+    """
+    return _DOMAIN_READ_PERMISSION.get(capability.split(".", 1)[0])
+
+
+def may_see_capability(principal: "Principal", capability: str) -> bool:
+    """Whether this caller may be shown this capability at all."""
+    needed = read_permission_for_capability(capability)
+    return needed is None or principal.may(needed)
 
 
 @dataclass(frozen=True)

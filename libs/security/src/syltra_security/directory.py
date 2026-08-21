@@ -44,6 +44,10 @@ logger = logging.getLogger(__name__)
 DEFAULT_EXPIRY: dict[Role, timedelta] = {
     Role.GUEST: timedelta(hours=24),
     Role.INSTALLER: timedelta(hours=8),
+    # Shortest of the three. A support session is one problem, not a
+    # relationship: the technician looks, fixes, and the door closes behind
+    # them without anybody having to remember to close it.
+    Role.SUPPORT: timedelta(hours=4),
 }
 
 #: Roles only an Owner may hand out.

@@ -2290,6 +2290,20 @@ async function renderUsers(host) {
 
   const { members = [], may_manage: mayManage, assignable_roles: assignable = [] } = data.users;
 
+  const management = data.users.management || {};
+  if (management.managed_by) {
+    /* Said before the member list, not after it. Somebody scrolling this
+       screen is asking who can see their home, and the answer starts with the
+       company that manages it. */
+    host.append(
+      notice(
+        "partial",
+        t("managed_by_title").replace("{company}", management.managed_by),
+        t("managed_by_detail"),
+      ),
+    );
+  }
+
   if (!mayManage) {
     /* §20: say why the controls are absent rather than rendering a page that
        looks broken. */

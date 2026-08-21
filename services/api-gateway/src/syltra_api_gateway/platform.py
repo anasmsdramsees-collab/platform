@@ -18,7 +18,7 @@ from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import PolicyService
 from syltra_automation_engine import AutomationEngine
 from syltra_risk_engine import RiskEngineService
-from syltra_security import UserDirectory
+from syltra_security import OrganisationRegistry, UserDirectory
 
 from syltra_api_gateway.energy import EnergyHistory
 from syltra_api_gateway.stream import StreamHub
@@ -49,6 +49,9 @@ class Platform:
     # Who the household is. Empty by default: a hub with no members is a hub
     # nobody has claimed yet, which is the honest starting state.
     users: UserDirectory = field(default_factory=UserDirectory)
+    #: Companies holding units. Empty for a household that owns its own home,
+    #: which is the ordinary case and reads as "managed_by: null".
+    organisations: OrganisationRegistry | None = None
     # Measured power over time. Empty until something records into it; an empty
     # series is reported as empty rather than as a flat line at zero.
     energy: EnergyHistory = field(default_factory=EnergyHistory)

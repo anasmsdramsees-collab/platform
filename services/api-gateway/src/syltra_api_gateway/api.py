@@ -53,7 +53,14 @@ from syltra_contracts.automations import AUTOMATABLE_SAFETY_CLASSES, MINIMUM_REA
 from syltra_contracts.capability_definitions import Access, get_definition
 from syltra_digital_twin.core import StateStatus
 from syltra_policy_safety.service import PolicyService
-from syltra_security import ROLE_PERMISSIONS, MembershipRefused, Permission, Role, TokenStore
+from syltra_security import (
+    ROLE_PERMISSIONS,
+    MembershipRefused,
+    Permission,
+    Role,
+    TokenStore,
+    may_see_capability,
+)
 
 API_VERSION = "1.0"
 
@@ -239,6 +246,30 @@ def create_app(
             ],
         }
 
+    def _without_unseeable(device: dict[str, Any], principal: Any) -> dict[str, Any]:
+        """Strip capabilities this caller may not be shown.
+
+        Filtered out of the payload rather than blanked, because a key present
+        with a null value still tells the reader the camera exists and that
+        somebody decided they may not see it. Whether a room has a camera is
+        itself the kind of thing a property company should not learn from a
+        device list.
+
+        A device left with no visible capabilities is still listed: hiding the
+        device would make a hub look like it has fewer devices than it does.
+        """
+        capabilities = device.get("capabilities")
+        if not isinstance(capabilities, dict):
+            return device
+        visible = {
+            name: reading
+            for name, reading in capabilities.items()
+            if may_see_capability(principal, name)
+        }
+        if len(visible) == len(capabilities):
+            return device
+        return {**device, "capabilities": visible}
+
     @app.get("/v1/homes/{home_id}/devices", tags=["home"])
     async def get_devices(
         home_id: str,
@@ -250,7 +281,7 @@ def create_app(
         check_read(home_id, principal)
         snapshot = platform.twin.snapshot(home_id, datetime.now(tz=UTC))
         devices = [
-            device
+            _without_unseeable(device, principal)
             for device in snapshot.devices.values()
             if room_id is None or device["room_id"] == room_id
         ]
@@ -948,8 +979,17 @@ def create_app(
         # to the house you live in is not a privileged question.
         check_read(home_id, principal)
         now = datetime.now(tz=UTC)
+        # Who manages the property, said on the screen where somebody asks who
+        # can see it. A company that can see the devices in the flat you live
+        # in is a condition of the tenancy, not something to discover.
+        management = (
+            platform.organisations.as_view(home_id)
+            if platform.organisations is not None
+            else {"managed_by": None}
+        )
         return {
             "home_id": home_id,
+            "management": management,
             "members": [m.as_view(now) for m in platform.users.members(home_id, now)],
             # The console hides controls it cannot use rather than showing
             # buttons that will be refused.

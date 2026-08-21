@@ -59,16 +59,19 @@
 }
 
 /* The mark is a brand asset and never mirrors (§10.2, §11). */
+/* The product's own mark. An image now rather than a typed letter, so the
+ * accent-coloured tile and the type weight are gone: the artwork carries its
+ * own colour and its own rounded container, and painting a background behind
+ * it would put a second tile around the first.
+ *
+ * `transform: none` stays. §9.2: a brand mark never mirrors in RTL — the
+ * language flips, the identity does not. */
 .app-sidebar__mark {
   inline-size: var(--space-8);
   block-size: var(--space-8);
   flex: none;
-  display: grid;
-  place-items: center;
   border-radius: var(--radius-md);
-  background: var(--accent);
-  color: var(--background);
-  font-weight: var(--weight-semibold);
+  object-fit: contain;
   transform: none !important;
 }
 

@@ -13,6 +13,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SYLTRA Console</title>
+  <!-- The real mark, at the sizes a browser asks for. Raster because a favicon
+       is raster: 16, 32 and 48 are pixel grids, not scalable art. §5.2 asks for
+       an SVG as well, and until a vector original exists these are the honest
+       versions rather than a trace of a gradient. -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/console/brand/syltra-icon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/console/brand/syltra-icon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/console/brand/syltra-icon-48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/console/brand/syltra-icon-180.png">
   <!-- The console has no stylesheet of its own. Every rule it needs is in the
        design system, which is what makes "no feature component contains a
        hardcoded brand colour" true by construction rather than by review. -->
@@ -37,7 +45,12 @@
         <!-- Typed, not the approved lockup: guidelines §5.4 forbids generating
              the production SVGs from the PNGs without product-owner approval,
              and none has been supplied. The brand mark never mirrors (§10.2). -->
-        <span class="app-sidebar__mark icon-universal" aria-hidden="true">S</span>
+        <!-- The product's own mark rather than a typed letter. §5.1 forbids
+             typed text "when an approved production asset is available"; this
+             is the approved raster asset, and the wordmark beside it stays
+             typed until a vector lockup exists. -->
+        <img class="app-sidebar__mark" src="/console/brand/syltra-icon-192.png"
+             alt="" width="32" height="32">
         <span class="app-sidebar__wordmark">SYLTRA</span>
       </div>
 

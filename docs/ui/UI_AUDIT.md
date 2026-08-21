@@ -111,8 +111,8 @@ Severity: **S1** blocks Phase UI-0 acceptance · **S2** must be fixed in UI-0 ·
 
 | # | Conflict | Severity | Resolution |
 |---|---|---|---|
-| C32 | Wordmark is typed text, not the approved lockup | **S4** | §5.1 forbids typed text "when an approved production asset is available" — none is. Blocked on assets |
-| C33 | Favicon is the platform default | **S4** | §5.2 requires the master symbol at 16/32/48/SVG/maskable |
+| C32 | Wordmark is typed text, not the approved lockup | **Partly closed** | The *symbol* is now the product's own artwork rather than a typed letter. The *wordmark* beside it stays typed: there is no vector lockup, and tracing a gradient logo would misrepresent the identity rather than close the gap |
+| C33 | Favicon is the platform default | **Closed** | The product mark at 16/32/48 plus a 180px apple-touch icon, generated from `Identity/syltra-app-icon.png` on 2026-08-21. Raster is the right format here — 16, 32 and 48 are pixel grids. The SVG §5.2 also asks for still needs a vector original |
 | C34 | Guidelines reference `new logo.PNG`, `instagram pp.PNG`, `sila-identity-sheet.png` — none exist in `Identity/` | **S4** | Product owner to supply |
 | C35 | The eight §5.4 production SVGs do not exist | **S4** | §5.4 forbids generating them from PNGs without visual review and product-owner approval. **Not generated.** |
 
@@ -127,7 +127,7 @@ redesign a single screen.
 | S1 — blocks UI-0 acceptance | 6 | 6 | 0 |
 | S2 — must be fixed in UI-0 | 18 | 18 | 0 |
 | S3 — later UI phase | 6 | 5 in UI-1, 1 in UI-2 | 0 |
-| S4 — blocked on an external decision | 5 | 1 | 4 (C32–C35) |
+| S4 — blocked on an external decision | 5 | 2½ | C34, C35, and the wordmark half of C32 |
 
 Every conflict this repository can close was closed by the end of UI-2. UI-3
 and UI-4 went beyond the register: the intelligence and action screens, the

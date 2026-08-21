@@ -501,3 +501,46 @@ def test_the_notices_file_names_both_families() -> None:
     notices = _text(ROOT / "THIRD_PARTY_NOTICES.md")
     assert "Inter" in notices
     assert "IBM Plex Sans Arabic" in notices
+
+
+# ── the brand mark ──
+
+BRAND = ROOT / "apps" / "local-console" / "static" / "brand"
+
+
+def test_the_console_uses_the_product_mark_rather_than_a_typed_letter() -> None:
+    """§5.1 forbids typed text when an approved production asset exists.
+
+    The asset is raster and that is not a compromise for this use: a favicon at
+    16, 32 and 48 is a pixel grid. What is still missing is a vector original
+    for the wordmark lockup, and tracing a gradient would misrepresent the
+    identity rather than close the gap.
+    """
+    html = _text(ROOT / "apps/local-console/static/index.html")
+    assert 'class="app-sidebar__mark" src=' in html
+    assert ">S</span>" not in html, "the typed placeholder letter is gone"
+
+
+def test_every_favicon_size_a_browser_asks_for_exists() -> None:
+    for size in (16, 32, 48, 180):
+        assert (BRAND / f"syltra-icon-{size}.png").exists(), size
+
+
+def test_the_favicons_are_referenced_by_the_console() -> None:
+    html = _text(ROOT / "apps/local-console/static/index.html")
+    for size in (16, 32, 48):
+        assert f'sizes="{size}x{size}"' in html, size
+    assert 'rel="apple-touch-icon"' in html
+
+
+def test_the_mark_never_mirrors_in_rtl() -> None:
+    """§9.2: the language flips, the identity does not."""
+    shell = _without_comments(_text(SHELL))
+    block = shell[shell.index(".app-sidebar__mark") :]
+    assert "transform: none !important" in block[: block.index("}")]
+
+
+def test_no_brand_asset_is_fetched_from_a_network() -> None:
+    html = _text(ROOT / "apps/local-console/static/index.html")
+    for reference in re.findall(r'href="([^"]*syltra-icon[^"]*)"', html):
+        assert reference.startswith("/console/brand/"), reference

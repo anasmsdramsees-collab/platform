@@ -128,3 +128,19 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .syltra-slide-copy { animation: none; }
 }
+
+/* Arabic typography: Cairo and IBM Plex Sans Arabic carry taller ascenders and
+   deeper descenders than the Latin faces, so the tight leading tuned for English
+   headlines makes Arabic lines collide. Relax it for RTL only. */
+html[dir="rtl"] .font-display {
+  line-height: 1.42;
+}
+html[dir="rtl"] body {
+  line-height: 1.8;
+}
+/* Arabic words must never be split across lines. */
+html[dir="rtl"] {
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}

@@ -43,7 +43,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-mono text-[13px] tracking-wide text-chrome-dim transition-colors hover:text-platinum"
+                className="whitespace-nowrap font-mono text-[13px] tracking-wide text-chrome-dim transition-colors hover:text-platinum"
               >
                 {link.label}
               </Link>

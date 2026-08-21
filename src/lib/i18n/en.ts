@@ -127,14 +127,14 @@ const en: Dictionary = {
         name: "Syltra TV",
         tagline: "Entertainment. Anytime. Anywhere.",
         desc: "One interface for live channels, movies, series, apps and AI recommendations, built to work with the rest of the Syltra ecosystem.",
-        status: "In development, targeting 2026",
+        status: "In development, targeting 2027",
       },
       {
         slug: "home-assistant",
         name: "Syltra Home",
         tagline: "One app for every Syltra device, open by design.",
         desc: "The Syltra mobile app for iOS and Android, plus a native integration for the open-source Home Assistant platform.",
-        status: "In development, targeting 2026",
+        status: "In development, targeting 2027",
       },
     ],
   },
@@ -172,7 +172,7 @@ const en: Dictionary = {
         { name: "AI", desc: "Smart recommendations, voice search and a personalized experience." },
       ],
     },
-    status: "In development, targeting a 2026 launch alongside Syltra OS 1.0.",
+    status: "In development, targeting a 2027 launch alongside Syltra OS 1.0.",
   },
   homeAssistantPage: {
     hero: {
@@ -210,7 +210,7 @@ const en: Dictionary = {
       { step: "02", title: "Control everything", desc: "Every room and device, organized the way the household actually uses them." },
       { step: "03", title: "Bring your own platform", desc: "Optionally add the HACS integration and keep using Home Assistant as the front end." },
     ],
-    status: "In development, targeting a 2026 launch alongside Syltra OS 1.0.",
+    status: "In development, targeting a 2027 launch alongside Syltra OS 1.0.",
   },
   aboutPage: {
     hero: {
@@ -259,13 +259,13 @@ const en: Dictionary = {
       { value: "2023", label: "Founded" },
       { value: "Riyadh, KSA", label: "Global Headquarters" },
       { value: "14+", label: "Product Categories" },
-      { value: "2026", label: "Global Launch" },
+      { value: "2027", label: "Global Launch" },
     ],
     roadmap: {
       eyebrow: "Global Expansion",
       title: "From Riyadh to the world.",
       items: [
-        { year: "2026", text: "Global launch, Saudi Arabia & GCC, Syltra OS 1.0." },
+        { year: "2027", text: "Global launch, Saudi Arabia & GCC, Syltra OS 1.0." },
         { year: "2027", text: "Wider MENA expansion, Syltra AI 2.0." },
         { year: "2028", text: "Europe entry, industrial & enterprise product line." },
         { year: "2029", text: "North America market entry." },
@@ -311,7 +311,7 @@ const en: Dictionary = {
       },
       {
         q: "When is Syltra One launching?",
-        a: "Global launch is targeted for 2026 alongside SYLTRA OS 1.0, starting in Saudi Arabia and the GCC, with wider MENA and international expansion to follow.",
+        a: "Global launch is targeted for 2027 alongside SYLTRA OS 1.0, starting in Saudi Arabia and the GCC, with wider MENA and international expansion to follow.",
       },
       {
         q: "Where is Syltra One based?",

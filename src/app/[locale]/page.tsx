@@ -9,6 +9,7 @@ import CurtainsOverlay from "@/components/curtains-overlay";
 import ProtocolOrbit from "@/components/protocol-orbit";
 import ParticlesBg from "@/components/ui/particles-bg";
 import { HeroCarousel } from "@/components/ui/hero-carousel";
+import { ImageSlider } from "@/components/ui/image-slider";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 
@@ -301,16 +302,14 @@ export default async function HomePage({
                 className="overflow-hidden border border-hairline bg-void"
               >
                 <div className="relative aspect-video overflow-hidden border-b border-hairline">
-                  <Image
-                    src={assetPath(
+                  <ImageSlider
+                    images={
                       card.slug === "home-assistant"
-                        ? "/hero/home-dashboard.jpg"
-                        : "/hero/tv-interface.jpg"
-                    )}
+                        ? ["/hero/home-dashboard.jpg", "/hero/home-arrive.jpg", "/hero/home-remote.jpg"]
+                        : ["/hero/tv-interface.jpg", "/hero/tv-family.jpg"]
+                    }
                     alt={card.name}
-                    fill
-                    sizes="(min-width: 640px) 50vw, 100vw"
-                    className="object-cover object-center"
+                    offset={card.slug === "home-assistant" ? 0 : 2200}
                   />
                 </div>
                 <div className="p-6 sm:p-8">

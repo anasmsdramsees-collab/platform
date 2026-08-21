@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ImageSlider } from "@/components/ui/image-slider";
 import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
@@ -45,16 +46,14 @@ export default async function AppsPage({
               className="overflow-hidden border border-hairline bg-void"
             >
               <div className="relative aspect-video overflow-hidden border-b border-hairline">
-                <Image
-                  src={assetPath(
+                <ImageSlider
+                  images={
                     card.slug === "home-assistant"
-                      ? "/hero/home-dashboard.jpg"
-                      : "/hero/tv-interface.jpg"
-                  )}
+                      ? ["/hero/home-dashboard.jpg", "/hero/home-arrive.jpg", "/hero/home-remote.jpg"]
+                      : ["/hero/tv-interface.jpg", "/hero/tv-family.jpg"]
+                  }
                   alt={card.name}
-                  fill
-                  sizes="(min-width: 640px) 50vw, 100vw"
-                  className="object-cover object-center"
+                  offset={card.slug === "home-assistant" ? 0 : 2200}
                 />
               </div>
               <div className="p-8 sm:p-10">

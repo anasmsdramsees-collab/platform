@@ -55,7 +55,7 @@ export function SocialLinks({ socials, className, ...props }: SocialLinksProps) 
                 }
               : {})}
             className={cn(
-              "relative cursor-pointer rounded-md px-5 py-2 transition-opacity duration-200",
+              "relative cursor-pointer rounded-md px-3 py-2 transition-opacity duration-200 sm:px-5",
               "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion",
               hoveredSocial && !isHovered ? "opacity-50" : "opacity-100"
             )}
@@ -68,7 +68,21 @@ export function SocialLinks({ socials, className, ...props }: SocialLinksProps) 
             onBlur={() => setHoveredSocial(null)}
             onClick={() => setClicked(true)}
           >
-            <span className="block text-lg font-medium text-platinum">{social.name}</span>
+            <span className="flex items-center gap-2 text-base font-medium text-platinum sm:text-lg">
+              {/* Always-visible mark, so the row reads as social links on touch
+                  devices too, where the hover pop-up never fires. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={assetPath(social.image)}
+                alt=""
+                aria-hidden
+                className={cn(
+                  "size-5 shrink-0 transition-opacity duration-200 sm:size-[18px]",
+                  isHovered ? "sm:opacity-0" : "sm:opacity-100"
+                )}
+              />
+              {social.name}
+            </span>
             <AnimatePresence>
               {isHovered && !prefersReduced.current && (
                 <motion.div

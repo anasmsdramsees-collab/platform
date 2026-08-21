@@ -297,32 +297,32 @@ export const productCatalog: ProductCategory[] = [
     },
     items: [
       {
-        slug: "lock", images: ["/store/lock.jpg"], name: "Syltra Lock", tags: ["BLE", "App"],
+        slug: "lock", images: ["/store/lock.jpg", "/store/lock-2.jpg"], name: "Syltra Lock", tags: ["BLE", "App"],
         en: { tagline: "Your door, without keys.", description: "A smart handle lock that opens by fingerprint, code or phone. Guests get temporary codes, you get a log of every entry, and the key stays for emergencies only.", specs: [{ label: "Entry methods", value: "Fingerprint, PIN" }, { label: "App control", value: "Unlock, lock, access log" }, { label: "Connectivity", value: "Bluetooth LE" }, { label: "Alerts", value: "Real-time, on every entry" }] },
         ar: { tagline: "بابك بلا مفاتيح.", description: "قفل ذكي بمقبض يفتح بالبصمة أو الرمز أو الجوال. للضيوف رموز مؤقتة، ولك سجل بكل دخول، ويبقى المفتاح للطوارئ فقط.", specs: [{ label: "طرق الدخول", value: "بصمة، رقم سري" }, { label: "تحكم التطبيق", value: "فتح، إغلاق، سجل الدخول" }, { label: "الاتصال", value: "بلوتوث LE" }, { label: "التنبيهات", value: "فورية مع كل عملية دخول" }] },
       },
       {
-        slug: "lock-pro", images: ["/store/lock-pro.jpg"], name: "Syltra Pro", tags: ["BLE", "App"],
+        slug: "lock-pro", images: ["/store/lock-pro.jpg", "/store/lock-pro-2.jpg"], name: "Syltra Pro", tags: ["BLE", "App"],
         en: { tagline: "A fingerprint in the handle itself.", description: "The sensor sits inside the handle, so the door opens in one natural motion. Grip, read, open. Solid metal body and a battery that lasts months per charge.", specs: [{ label: "Entry methods", value: "App, keyless" }, { label: "App control", value: "Remote unlock, guest access" }, { label: "Connectivity", value: "Bluetooth LE" }, { label: "Best for", value: "Everyday households" }] },
         ar: { tagline: "البصمة في المقبض نفسه.", description: "الحساس داخل المقبض، فيُفتح الباب بحركة واحدة طبيعية: أمسك، اقرأ، ادخل. جسم معدني صلب وبطارية تدوم شهورًا بالشحنة.", specs: [{ label: "طرق الدخول", value: "تطبيق، بدون مفتاح" }, { label: "تحكم التطبيق", value: "فتح عن بُعد، دخول للضيوف" }, { label: "الاتصال", value: "بلوتوث LE" }, { label: "الأنسب لـ", value: "الاستخدام المنزلي اليومي" }] },
       },
       {
-        slug: "lock-elite", name: "Syltra Elite", tags: ["NFC", "BLE", "App"],
+        slug: "lock-elite", images: ["/store/lock-elite.jpg", "/store/lock-elite-2.jpg"], name: "Syltra Elite", tags: ["NFC", "BLE", "App"],
         en: { tagline: "The flagship of the door.", description: "Fingerprint, NFC card, code and phone in one flagship lock. A full-metal body, a camera in the peephole, and alerts for every attempt at the door.", specs: [{ label: "Entry methods", value: "Fingerprint, face, PIN, NFC card" }, { label: "App control", value: "Full remote management" }, { label: "Connectivity", value: "NFC, Bluetooth LE" }, { label: "Finish", value: "Premium metal" }] },
         ar: { tagline: "قمة أقفال سيلترا.", description: "بصمة وبطاقة NFC ورمز وجوال في قفل واحد رائد. جسم معدني كامل وكاميرا في العين السحرية وتنبيه عند أي محاولة على الباب.", specs: [{ label: "طرق الدخول", value: "بصمة، وجه، رقم سري، بطاقة NFC" }, { label: "تحكم التطبيق", value: "إدارة كاملة عن بُعد" }, { label: "الاتصال", value: "NFC، بلوتوث LE" }, { label: "الخامة", value: "معدن فاخر" }] },
       },
       {
-        slug: "lock-bolt", images: ["/store/lock-bolt.jpg"], name: "Syltra Bolt", tags: ["BLE", "App"],
+        slug: "lock-bolt", images: ["/store/lock-bolt.jpg", "/store/lock-bolt-2.jpg", "/store/lock-bolt-3.jpg"], name: "Syltra Bolt", tags: ["BLE", "App"],
         en: { tagline: "A deadbolt with a keypad face.", description: "Replaces the deadbolt cylinder with a glass keypad. Codes for the family, temporary codes for the driver and the housekeeper, and a USB-C port for emergency power.", specs: [{ label: "Type", value: "Retrofit deadbolt" }, { label: "Best for", value: "Offices, rental units" }, { label: "App control", value: "Per-tenant access codes" }, { label: "Connectivity", value: "Bluetooth LE" }] },
         ar: { tagline: "سلندر ذكي بلوحة أرقام.", description: "يستبدل سلندر القفل بلوحة أرقام زجاجية. رموز للعائلة ورموز مؤقتة للسائق والعاملة ومنفذ USB-C للطاقة عند الطوارئ.", specs: [{ label: "النوع", value: "قفل ترقية للباب الحالي" }, { label: "الأنسب لـ", value: "المكاتب والوحدات المؤجرة" }, { label: "تحكم التطبيق", value: "رموز دخول لكل مستأجر" }, { label: "الاتصال", value: "بلوتوث LE" }] },
       },
       {
-        slug: "cam", images: ["/store/cam.jpg"], name: "Syltra Cam", tags: ["Wi-Fi"],
+        slug: "cam", images: ["/store/cam.jpg", "/store/cam-2.jpg", "/store/cam-3.jpg"], name: "Syltra Cam", tags: ["Wi-Fi"],
         en: { tagline: "An eye that follows the motion.", description: "An indoor camera that pans and tilts to follow movement. Sharp night vision, two-way talk, and recordings that stay yours, on the card or your private cloud.", specs: [{ label: "Resolution", value: "4K" }, { label: "Detection", value: "On-device AI, person, vehicle, package" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz" }, { label: "Storage", value: "Local and optional cloud" }] },
         ar: { tagline: "عين تتابع الحركة.", description: "كاميرا داخلية تدور وتميل لتتابع الحركة. رؤية ليلية حادة ومحادثة بالاتجاهين وتسجيلات تبقى ملكك على البطاقة أو سحابتك الخاصة.", specs: [{ label: "الدقة", value: "4K" }, { label: "الكشف", value: "ذكاء اصطناعي محلي, أشخاص، مركبات، طرود" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz" }, { label: "التخزين", value: "محلي، مع خيار سحابي" }] },
       },
       {
-        slug: "doorbell", images: ["/store/doorbell.jpg"], name: "Syltra Doorbell", tags: ["Wi-Fi"],
+        slug: "doorbell", images: ["/store/doorbell.jpg", "/store/doorbell-2.jpg", "/store/doorbell-3.jpg"], name: "Syltra Doorbell", tags: ["Wi-Fi"],
         en: { tagline: "See who is there, from anywhere.", description: "A video doorbell that rings your phone. See the visitor, talk to them, and open the smart lock, from the majlis or from another city.", specs: [{ label: "Video", value: "HD, night vision" }, { label: "Audio", value: "Two-way talk" }, { label: "Alerts", value: "Instant, on motion or press" }, { label: "Connectivity", value: "Wi-Fi 2.4GHz" }] },
         ar: { tagline: "شاهد من بالباب من أي مكان.", description: "جرس بكاميرا يرن على جوالك. شاهد الزائر وكلمه وافتح القفل الذكي، من المجلس أو من مدينة أخرى.", specs: [{ label: "الفيديو", value: "دقة عالية، رؤية ليلية" }, { label: "الصوت", value: "محادثة ثنائية الاتجاه" }, { label: "التنبيهات", value: "فورية عند الحركة أو الضغط" }, { label: "الاتصال", value: "Wi-Fi 2.4GHz" }] },
       },
@@ -340,42 +340,42 @@ export const productCatalog: ProductCategory[] = [
     },
     items: [
       {
-        slug: "motion", name: "Syltra Motion Sensor", tags: ["Zigbee"],
+        slug: "motion", images: ["/store/motion.jpg", "/store/motion-2.jpg", "/store/motion-3.jpg"], name: "Syltra Motion Sensor", tags: ["Zigbee"],
         en: { tagline: "The house feels you coming.", description: "A small sensor that turns hallways and bathrooms into rooms that light themselves. Enter, light on. Leave, light off. Two years on one battery.", specs: [{ label: "Detection", value: "PIR, wide-angle" }, { label: "Battery life", value: "Up to 2 years" }, { label: "Connectivity", value: "Zigbee 3.0" }] },
         ar: { tagline: "البيت يشعر بقدومك.", description: "حساس صغير يجعل الممرات ودورات المياه تضيء نفسها. تدخل فيضيء، تخرج فينطفئ. سنتان على بطارية واحدة.", specs: [{ label: "الكشف", value: "PIR، زاوية واسعة" }, { label: "عمر البطارية", value: "حتى سنتين" }, { label: "الاتصال", value: "Zigbee 3.0" }] },
       },
       {
-        slug: "door-window", name: "Syltra Door / Window Sensor", tags: ["Zigbee"],
+        slug: "door-window", images: ["/store/door-window.jpg", "/store/door-window-2.jpg", "/store/door-window-3.jpg"], name: "Syltra Door / Window Sensor", tags: ["Zigbee"],
         en: { tagline: "Knows every open and close.", description: "Two small pieces on the door or window frame. The house knows the moment it opens, arms the scene at night, and tells you if something opened while you were away.", specs: [{ label: "Detection", value: "Magnetic reed contact" }, { label: "Battery life", value: "Up to 2 years" }, { label: "Connectivity", value: "Zigbee 3.0" }] },
         ar: { tagline: "يعرف كل فتح وإغلاق.", description: "قطعتان صغيرتان على إطار الباب أو النافذة. يعرف البيت لحظة الفتح، ويسلّح مشهد الليل، ويخبرك إن انفتح شيء في غيابك.", specs: [{ label: "الكشف", value: "تلامس مغناطيسي" }, { label: "عمر البطارية", value: "حتى سنتين" }, { label: "الاتصال", value: "Zigbee 3.0" }] },
       },
       {
-        slug: "climate", name: "Syltra Temperature & Humidity Sensor", tags: ["Zigbee"],
+        slug: "climate", images: ["/store/climate.jpg", "/store/climate-2.jpg", "/store/climate-3.jpg"], name: "Syltra Temperature & Humidity Sensor", tags: ["Zigbee"],
         en: { tagline: "The number behind comfort.", description: "Reads temperature and humidity in each room and feeds the AC scenes, so cooling follows the actual room, not a guess from the hallway.", specs: [{ label: "Temperature accuracy", value: "±0.5°C" }, { label: "Humidity", value: "0–100% RH" }, { label: "Battery life", value: "Up to 2 years" }, { label: "Connectivity", value: "Zigbee 3.0" }] },
         ar: { tagline: "الرقم الذي خلف الراحة.", description: "يقرأ الحرارة والرطوبة في كل غرفة ويغذي مشاهد التكييف، فيتبع التبريد حال الغرفة فعلًا لا تخمينًا من الممر.", specs: [{ label: "دقة الحرارة", value: "±0.5°م" }, { label: "الرطوبة", value: "0–100%" }, { label: "عمر البطارية", value: "حتى سنتين" }, { label: "الاتصال", value: "Zigbee 3.0" }] },
       },
       {
-        slug: "light-sensor", name: "Syltra Light Sensor", tags: ["Zigbee"],
+        slug: "light-sensor", images: ["/store/light-sensor.jpg", "/store/light-sensor-2.jpg", "/store/light-sensor-3.jpg"], name: "Syltra Light Sensor", tags: ["Zigbee"],
         en: { tagline: "Curtains that follow the sun.", description: "Measures daylight and drives the scenes. Curtains soften the noon glare, lights come on at real dusk, not at a fixed hour.", specs: [{ label: "Detection", value: "Ambient lux level" }, { label: "Battery life", value: "Up to 2 years" }, { label: "Connectivity", value: "Zigbee 3.0" }] },
         ar: { tagline: "ستائر تتبع الشمس.", description: "يقيس ضوء النهار ويقود المشاهد. تلطف الستائر وهج الظهيرة وتضيء الأنوار عند الغسق الحقيقي لا عند ساعة ثابتة.", specs: [{ label: "الكشف", value: "مستوى الإضاءة المحيطة" }, { label: "عمر البطارية", value: "حتى سنتين" }, { label: "الاتصال", value: "Zigbee 3.0" }] },
       },
       {
-        slug: "smoke", name: "Syltra Smoke Sensor", tags: ["Zigbee"],
+        slug: "smoke", images: ["/store/smoke.jpg", "/store/smoke-2.jpg", "/store/smoke-3.jpg"], name: "Syltra Smoke Sensor", tags: ["Zigbee"],
         en: { tagline: "The alarm that reaches your phone.", description: "A smoke sensor that sounds locally and alerts every phone in the family, at home or away. Ties into scenes that flash the lights and open the curtains for exit.", specs: [{ label: "Detection", value: "Photoelectric" }, { label: "Alert", value: "Local siren + instant push alert" }, { label: "Connectivity", value: "Zigbee 3.0" }] },
         ar: { tagline: "إنذار يصل إلى جوالك.", description: "حساس دخان يصفّر محليًا وينبه جوالات العائلة كلها في البيت وخارجه. يرتبط بمشاهد تومض الأنوار وتفتح الستائر لتسهيل الخروج.", specs: [{ label: "الكشف", value: "ضوئي" }, { label: "التنبيه", value: "صفارة محلية + إشعار فوري" }, { label: "الاتصال", value: "Zigbee 3.0" }] },
       },
       {
-        slug: "gas", name: "Syltra Gas Sensor", tags: ["Zigbee"],
+        slug: "gas", images: ["/store/gas.jpg", "/store/gas-2.jpg", "/store/gas-3.jpg"], name: "Syltra Gas Sensor", tags: ["Zigbee"],
         en: { tagline: "Catches the leak early.", description: "Watches for combustible gas in the kitchen and utility room. An early local alarm, an instant notification, and a scene that can shut the gas valve.", specs: [{ label: "Detection", value: "Combustible gas" }, { label: "Alert", value: "Local siren + instant push alert" }, { label: "Connectivity", value: "Zigbee 3.0" }] },
         ar: { tagline: "يلتقط التسرب مبكرًا.", description: "يراقب الغاز القابل للاشتعال في المطبخ وغرفة المرافق. إنذار محلي مبكر وإشعار فوري ومشهد يمكنه إغلاق صمام الغاز.", specs: [{ label: "الكشف", value: "غاز قابل للاشتعال" }, { label: "التنبيه", value: "صفارة محلية + إشعار فوري" }, { label: "الاتصال", value: "Zigbee 3.0" }] },
       },
       {
-        slug: "water-leak", name: "Syltra Water Leak Sensor", tags: ["Zigbee"],
+        slug: "water-leak", images: ["/store/water-leak.jpg", "/store/water-leak-2.jpg", "/store/water-leak-3.jpg"], name: "Syltra Water Leak Sensor", tags: ["Zigbee"],
         en: { tagline: "The first drop, not the flood.", description: "Sits under the sink or beside the heater and catches the first drop. A late-night leak becomes a notification, not a ruined floor.", specs: [{ label: "Detection", value: "Water contact probes" }, { label: "Battery life", value: "Up to 2 years" }, { label: "Connectivity", value: "Zigbee 3.0" }] },
         ar: { tagline: "القطرة الأولى لا الفيضان.", description: "يوضع تحت الحوض أو بجانب السخان ويلتقط القطرة الأولى. تسرب منتصف الليل يصبح إشعارًا على الجوال لا أرضية متضررة.", specs: [{ label: "الكشف", value: "أطراف تلامس مائية" }, { label: "عمر البطارية", value: "حتى سنتين" }, { label: "الاتصال", value: "Zigbee 3.0" }] },
       },
       {
-        slug: "air-quality", name: "Syltra Air Quality Sensor", tags: ["Zigbee", "Wi-Fi"],
+        slug: "air-quality", images: ["/store/air-quality.jpg", "/store/air-quality-2.jpg", "/store/air-quality-3.jpg"], name: "Syltra Air Quality Sensor", tags: ["Zigbee", "Wi-Fi"],
         en: { tagline: "A live number for the air you breathe.", description: "Reads air quality around the clock and drives ventilation and AC scenes, so the house responds to poor air before anyone feels it.", specs: [{ label: "Reading", value: "Live AQI" }, { label: "Automation", value: "Triggers ventilation & AC scenes" }, { label: "Connectivity", value: "Zigbee 3.0, Wi-Fi 2.4GHz" }] },
         ar: { tagline: "رقم حي للهواء الذي تتنفسه.", description: "يقرأ جودة الهواء على مدار الساعة ويقود مشاهد التهوية والتكييف، فيستجيب البيت لرداءة الهواء قبل أن يشعر بها أحد.", specs: [{ label: "القراءة", value: "مؤشر جودة الهواء الحي" }, { label: "الأتمتة", value: "يفعّل مشاهد التهوية والتكييف" }, { label: "الاتصال", value: "Zigbee 3.0، Wi-Fi 2.4GHz" }] },
       },

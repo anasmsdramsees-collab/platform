@@ -66,15 +66,33 @@ household should be told rather than left to notice.
 
 ## Update and rollback
 
-The intended shape, not yet implemented (tracked in `IMPLEMENTATION_STATUS.md`):
+Implemented in `libs/operations/src/syltra_operations/update.py`.
 
-1. Signed image bundle, verified before anything is written.
+1. Signed image bundle, verified before anything is written — nothing reaches
+   the disk until the signature holds, because an unverified bundle is not a
+   slow update but a compromised hub (§25.4).
 2. Database migration applied inside a transaction where the change permits.
 3. Services restarted one at a time, health-checked between each.
-4. **Safety services last** — the platform should never be mid-update on its
-   safety layer while its comfort layer is already running new code.
-5. Automatic rollback if a health check fails after a bounded wait.
+4. **Safety services last.** A failure two services in must not leave the house
+   running new safety code against old everything else for as long as the
+   rollback takes. Safety last means any earlier failure is rolled back with
+   the safety layer untouched — it was watching on known-good code throughout.
+   A bundle that lists its services safety-first is reordered, not obeyed.
+5. Automatic rollback if a health check fails. A rollback that itself fails
+   reports FAILED rather than ROLLED_BACK, because the difference is whether a
+   person has to go and look.
 6. Model versions roll back independently of code (already implemented).
+
+**Power loss** is a first-class case. Each stage is recorded *before* it is
+attempted — a record written afterwards is a record a power cut erases — and
+`recover()` runs at start-up. An update interrupted before its backup existed
+changed nothing and needs no restore; anything later is rolled back, because
+the hub cannot know how much of a stage completed and the only state it can be
+sure of is the one it started from.
+
+The updater moves no files, pulls no images and restarts no containers. Those
+are injected, so what is testable here is the sequence, the crash record and
+the refusals — the parts that are easy to get subtly wrong.
 
 ## Backup
 

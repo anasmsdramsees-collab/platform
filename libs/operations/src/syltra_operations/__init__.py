@@ -1,3 +1,11 @@
+from syltra_operations.update import (
+    Hub,
+    ReleaseBundle,
+    UpdateManager,
+    UpdateRecord,
+    UpdateRefused,
+    UpdateStage,
+)
 """SYLTRA pilot operations (spec §22 Phase 8).
 
 Encrypted backup and restore, service supervision, and the household data
@@ -41,6 +49,12 @@ from syltra_operations.watchdog import (
 )
 
 __all__ = [
+    "UpdateStage",
+    "UpdateRefused",
+    "UpdateRecord",
+    "UpdateManager",
+    "ReleaseBundle",
+    "Hub",
     "BACKUP_FORMAT",
     "DEFAULT_SERVICES",
     "HOUSEHOLD_TABLES",

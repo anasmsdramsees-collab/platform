@@ -294,16 +294,15 @@ a cost computed from the wrong one is worse than none.
 
 ## 4. Known engineering gaps
 
-Scoped, understood, nobody blocked on a decision.
-
-| Gap | Consequence | Size |
-|---|---|---|
-| Update and rollback is designed, not implemented | `docs/architecture/DEPLOYMENT.md` describes the sequence. Spec §22 Phase 8 asked for a *design*, so this is beyond what the MVP required — but a pilot hub will eventually need updating | medium |
+**None.** Every entry that stood here has been built, and the ones that mattered
+each turned up something the tests could not see — which is why this section
+emptying is worth less than the list of what emptying it revealed.
 
 ### Closed
 
 | Was | Now |
 |---|---|
+| Update and rollback designed, not implemented | Built. Signed bundle verified before anything is written; services restarted one at a time with safety last, so a failure anywhere earlier rolls back with the safety layer untouched; automatic rollback, and a rollback that itself fails says FAILED because that is whether a person has to look. Power loss is first-class: every stage is recorded before it is attempted, and `recover()` at start-up rolls back anything that changed |
 | The console polled every 15 seconds | `/v1/stream` carries change notifications with per-home sequence numbers, a heartbeat, resume-from-cursor and a `resync` when the cursor is too old to answer. The console re-reads on notification and falls back to polling only while the socket is unhealthy. Measured live: an external change reached the screen in about one second. The stream deliberately carries notifications rather than data — a second copy of every view model is a second copy that can disagree with the first |
 | Nothing drove risk evaluation | `RiskDriver` evaluates every known home on a timer and carries out what that authorizes, started for the life of the app. Found while wiring the gas isolation: `evaluate` was called by the test suite and by nothing else, so the governor, the seven risk states and the shutoff were all reachable only from a caller the product did not have. `system_status` now reports the risk engine degraded when no driver is running or its loop has stalled, instead of the hard-coded `"ok"` that made a hub with nothing reading its detectors look healthy |
 | `contracts/openapi/` empty | `make contracts` writes `contracts/openapi/v1.0/syltra-local-api.openapi.json` from the app itself; a test fails the build when a route changes without regenerating. The WebSocket `/v1/stream` is absent because OpenAPI 3.1 cannot describe one, and a test asserts that absence so it stays a known limitation |
@@ -392,7 +391,7 @@ Recorded so nobody re-opens them as oversights.
 | Unverified against reality | 6 | a real home, a real Home Assistant, a person |
 | Awaiting your decision | 1 | you |
 | Needs a person | 3 | scheduling |
-| Known engineering gaps | 1 | nobody — pick them up any time |
+| Known engineering gaps | 0 | — |
 | Structural divergence | 3 groups | explained in place, not resolved |
 
 Nothing in §1 through §5 is a *critical blocker* in the sense of §32 item 18:

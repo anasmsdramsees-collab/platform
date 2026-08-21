@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { InfoCard } from "@/components/ui/info-card";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 
@@ -40,12 +41,12 @@ export default async function AboutPage({
 
       {/* Facts strip */}
       <section className="border-b border-hairline">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden bg-hairline sm:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-5 py-10 sm:grid-cols-4 sm:px-8">
           {a.facts.map((fact) => (
-            <div key={fact.label} className="bg-void px-5 py-10 text-center">
+            <InfoCard key={fact.label} className="px-5 py-8 text-center">
               <p className="font-mono text-xl font-medium text-ion sm:text-2xl">{fact.value}</p>
               <p className="mt-2 text-xs text-chrome-dim sm:text-sm">{fact.label}</p>
-            </div>
+            </InfoCard>
           ))}
         </div>
       </section>
@@ -69,23 +70,23 @@ export default async function AboutPage({
 
       {/* Mission / Vision */}
       <section className="border-b border-hairline">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-px overflow-hidden bg-hairline sm:grid-cols-2">
-          <div className="bg-void p-10 sm:p-12">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-5 py-16 sm:grid-cols-2 sm:px-8">
+          <InfoCard className="p-8 sm:p-10">
             <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
               {a.mission.label}
             </p>
             <p className="font-display mt-4 text-balance text-xl font-semibold text-platinum sm:text-2xl">
               {a.mission.text}
             </p>
-          </div>
-          <div className="bg-void p-10 sm:p-12">
+          </InfoCard>
+          <InfoCard className="p-8 sm:p-10">
             <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
               {a.vision.label}
             </p>
             <p className="font-display mt-4 text-balance text-xl font-semibold text-platinum sm:text-2xl">
               {a.vision.text}
             </p>
-          </div>
+          </InfoCard>
         </div>
       </section>
 
@@ -100,13 +101,13 @@ export default async function AboutPage({
               {a.values.title}
             </h2>
           </div>
-          <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {a.values.items.map((v, i) => (
-              <div key={v.name} className="bg-void p-6">
+              <InfoCard key={v.name}>
                 <p className="font-mono text-xs text-ion">{String(i + 1).padStart(2, "0")}</p>
                 <p className="mt-3 font-semibold text-platinum">{v.name}</p>
-                <p className="mt-2 text-sm text-chrome-dim">{v.desc}</p>
-              </div>
+                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{v.desc}</p>
+              </InfoCard>
             ))}
           </div>
         </div>
@@ -118,13 +119,15 @@ export default async function AboutPage({
           <p className="text-center font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
             {a.chairman.eyebrow}
           </p>
-          <blockquote className="font-display mt-6 text-balance text-center text-xl font-medium leading-relaxed text-platinum sm:text-2xl">
-            “{a.chairman.quote}”
-          </blockquote>
-          <div className="mt-8 text-center">
-            <p className="font-semibold text-platinum">{a.chairman.name}</p>
-            <p className="mt-1 text-sm text-chrome-dim">{a.chairman.role}</p>
-          </div>
+          <InfoCard className="mt-8 p-8 text-center sm:p-12">
+            <blockquote className="font-display text-balance text-xl font-medium leading-relaxed text-platinum sm:text-2xl">
+              “{a.chairman.quote}”
+            </blockquote>
+            <div className="mt-8">
+              <p className="font-semibold text-platinum">{a.chairman.name}</p>
+              <p className="mt-1 text-sm text-chrome-dim">{a.chairman.role}</p>
+            </div>
+          </InfoCard>
         </div>
       </section>
 
@@ -137,12 +140,12 @@ export default async function AboutPage({
           <h2 className="font-display mt-3 text-3xl font-bold text-platinum sm:text-4xl">
             {a.roadmap.title}
           </h2>
-          <div className="mt-10 divide-y divide-hairline border-y border-hairline">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
             {a.roadmap.items.map((item) => (
-              <div key={item.year} className="flex items-baseline gap-6 py-5">
-                <span className="font-mono text-sm text-ion">{item.year}</span>
-                <p className="text-sm text-chrome-dim">{item.text}</p>
-              </div>
+              <InfoCard key={item.year}>
+                <span className="font-mono text-xs text-ion">{item.year}</span>
+                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{item.text}</p>
+              </InfoCard>
             ))}
           </div>
         </div>

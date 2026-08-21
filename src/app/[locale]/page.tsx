@@ -11,6 +11,7 @@ import ParticlesBg from "@/components/ui/particles-bg";
 import { HeroCarousel } from "@/components/ui/hero-carousel";
 import { ImageSlider } from "@/components/ui/image-slider";
 import { Testimonials } from "@/components/ui/testimonials";
+import { InfoCard } from "@/components/ui/info-card";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 
@@ -184,13 +185,13 @@ export default async function HomePage({
             </h2>
             <p className="mt-4 text-chrome-dim">{dict.ecosystem.subtitle}</p>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden bg-hairline sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {dict.ecosystem.pillars.map((pillar, i) => (
-              <div key={pillar.name} className="bg-void p-6">
+              <InfoCard key={pillar.name}>
                 <p className="font-mono text-xs text-ion">{String(i + 1).padStart(2, "0")}</p>
-                <p className="mt-3 font-semibold text-platinum">{pillar.name}</p>
-                <p className="mt-2 text-sm text-chrome-dim">{pillar.desc}</p>
-              </div>
+                <p className="mt-3 font-semibold leading-snug text-platinum">{pillar.name}</p>
+                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{pillar.desc}</p>
+              </InfoCard>
             ))}
           </div>
         </div>
@@ -205,15 +206,13 @@ export default async function HomePage({
           <h2 className="font-display mt-3 text-balance text-center text-3xl font-bold text-platinum sm:text-4xl">
             {dict.why.title}
           </h2>
-          <div className="mt-12 divide-y divide-hairline border-y border-hairline">
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
             {dict.why.items.map((item, i) => (
-              <div key={item.name} className="flex items-start gap-6 py-6">
-                <span className="font-mono text-sm text-ion">{String(i + 1).padStart(2, "0")}</span>
-                <div>
-                  <p className="font-semibold text-platinum">{item.name}</p>
-                  <p className="mt-1 text-sm text-chrome-dim">{item.desc}</p>
-                </div>
-              </div>
+              <InfoCard key={item.name}>
+                <span className="font-mono text-xs text-ion">{String(i + 1).padStart(2, "0")}</span>
+                <p className="mt-3 font-semibold leading-snug text-platinum">{item.name}</p>
+                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{item.desc}</p>
+              </InfoCard>
             ))}
           </div>
         </div>
@@ -273,12 +272,12 @@ export default async function HomePage({
             <p className="mt-4 text-chrome-dim">{dict.protocols.subtitle}</p>
           </div>
           <ProtocolOrbit items={dict.protocols.items} coreLabel={locale === "ar" ? "محرك سيلترا التكيفي" : "SYLTRA ADAPTIVE"} />
-          <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden bg-hairline sm:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {dict.protocols.items.map((p) => (
-              <div key={p.name} className="bg-void p-6">
-                <p className="font-mono text-sm text-platinum">{p.name}</p>
-                <p className="mt-2 text-sm text-chrome-dim">{p.desc}</p>
-              </div>
+              <InfoCard key={p.name}>
+                <p className="font-mono text-sm font-semibold text-platinum">{p.name}</p>
+                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{p.desc}</p>
+              </InfoCard>
             ))}
           </div>
         </div>
@@ -300,7 +299,7 @@ export default async function HomePage({
             {dict.appsPage.cards.map((card) => (
               <div
                 key={card.slug}
-                className="overflow-hidden border border-hairline bg-void"
+                className="overflow-hidden rounded-2xl border border-hairline bg-graphite/70 transition-colors duration-300 hover:border-hairline-strong"
               >
                 <div className="relative aspect-video overflow-hidden border-b border-hairline">
                   <ImageSlider

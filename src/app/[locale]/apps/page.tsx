@@ -43,7 +43,7 @@ export default async function AppsPage({
           {a.cards.map((card) => (
             <div
               key={card.slug}
-              className="overflow-hidden border border-hairline bg-void"
+              className="overflow-hidden rounded-2xl border border-hairline bg-graphite/70 transition-colors duration-300 hover:border-hairline-strong"
             >
               <div className="relative aspect-video overflow-hidden border-b border-hairline">
                 <ImageSlider

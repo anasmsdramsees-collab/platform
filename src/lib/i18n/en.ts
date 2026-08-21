@@ -97,6 +97,12 @@ const en: Dictionary = {
       { name: "Tuya", desc: "Compatibility with the world's largest smart device ecosystem out of the box." },
     ],
   },
+  testimonials: {
+    eyebrow: "Testimonials",
+    title: "What people say about Syltra",
+    subtitle: "Words from the homes, installers and partners running on Syltra.",
+    items: [] as { quote: string; name: string; role: string }[],
+  },
   homeCta: {
     title: "Let's build the future of living, together.",
     subtitle: "From a single room to an entire city | one ecosystem, engineered to scale.",

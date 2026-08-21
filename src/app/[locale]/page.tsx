@@ -10,6 +10,7 @@ import ProtocolOrbit from "@/components/protocol-orbit";
 import ParticlesBg from "@/components/ui/particles-bg";
 import { HeroCarousel } from "@/components/ui/hero-carousel";
 import { ImageSlider } from "@/components/ui/image-slider";
+import { Testimonials } from "@/components/ui/testimonials";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 
@@ -337,6 +338,13 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+
+      <Testimonials
+        eyebrow={dict.testimonials.eyebrow}
+        title={dict.testimonials.title}
+        subtitle={dict.testimonials.subtitle}
+        testimonials={dict.testimonials.items}
+      />
 
       {/* CTA */}
       <section>

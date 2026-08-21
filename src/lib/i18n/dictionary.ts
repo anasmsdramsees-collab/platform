@@ -63,6 +63,12 @@ export interface Dictionary {
     subtitle: string;
     items: { name: string; desc: string }[];
   };
+  testimonials: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    items: { quote: string; name: string; role: string; logo?: string }[];
+  };
   homeCta: {
     title: string;
     subtitle: string;

@@ -153,6 +153,11 @@
     },
     "status": {
       "$ref": "#/$defs/ActionStatus"
+    },
+    "verified": {
+      "default": false,
+      "title": "Verified",
+      "type": "boolean"
     }
   },
   "required": [

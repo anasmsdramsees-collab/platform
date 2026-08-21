@@ -205,6 +205,12 @@ class ActionResult(BaseModel):
     attempts: list[ActionAttempt] = Field(default_factory=list)
     reason_codes: list[str] = Field(default_factory=list)
     observed_value: Any = None
+    #: Whether the device confirmed the new state, rather than merely accepting
+    #: the command. Declared rather than carried on `extra="allow"`, which is
+    #: how it arrived: an undeclared field works at runtime, is absent from the
+    #: JSON Schema, and is invisible to every consumer reading the contract
+    #: instead of the object.
+    verified: bool = False
     compensated: bool = False
     completed_at: datetime
     audit_recorded: bool = True

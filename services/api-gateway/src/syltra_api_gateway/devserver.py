@@ -45,12 +45,51 @@ class _DemoPublisher:
 
 
 class _DemoGateway:
+    """Stands in for Home Assistant, including the half people forget.
+
+    A real device does not only accept a command — it then reports its new
+    state, which travels back through the Edge Agent into the twin. Without
+    that return path the demo accepted every press and showed nothing changing,
+    which is how a working control looks broken: the light was on in the
+    gateway and off on every screen reading the twin.
+    """
+
     def __init__(self) -> None:
         self.state: dict[tuple[str, str], Any] = {}
+        self.twin: Any = None
 
     async def execute_capability_command(self, command: Any) -> CommandResult:
         self.state[(command.device_id, command.capability)] = command.value
+        self._report_back(command)
         return CommandResult(accepted=True)
+
+    def _report_back(self, command: Any) -> None:
+        """What Home Assistant would send after the device obeyed.
+
+        The room comes from the twin rather than from the command, because a
+        `CapabilityCommand` does not carry one — reading it off the command
+        raised, the action was recorded as failed, and the state dict had
+        already been written, so the *next* press found the light "already as
+        requested". A demo that fails in a way that looks like success is worse
+        than one that fails plainly.
+        """
+        if self.twin is None:
+            return
+        from syltra_testing import make_envelope
+
+        home = self.twin.home(HOME)
+        device = home.devices.get(command.device_id) if home is not None else None
+        self.twin.apply(
+            make_envelope(
+                capability=command.capability,
+                value=command.value,
+                unit=None,
+                home_id=HOME,
+                device_id=command.device_id,
+                room_id=device.room_id if device is not None else None,
+                occurred_at=datetime.now(tz=UTC),
+            )
+        )
 
     async def read(self, device_id: str, capability: str) -> Any:
         return self.state.get((device_id, capability))
@@ -88,7 +127,37 @@ def build_platform() -> Platform:
     policy = PolicyService()
     policy.set_policy(HOME, HomePolicy())
     gateway = _DemoGateway()
+    gateway.twin = context.twin
     energy = EnergyHistory()
+
+    # Names, because a wall panel showing `light_living` is a panel that looks
+    # unfinished to whoever lives there. The twin learns a name from a
+    # `device.discovered` event, which is what Home Assistant supplies from its
+    # own device registry.
+    named = {
+        "motion_living": "Living room motion",
+        "temp_living": "Living room temperature",
+        "humidity_living": "Living room humidity",
+        "light_living": "Living room light",
+        "ac_living": "Living room air conditioner",
+        "meter_home": "Whole-home meter",
+        "gas_kitchen": "Kitchen gas detector",
+        "leak_kitchen": "Kitchen leak detector",
+        "tracker_phone": "Phone",
+    }
+    for device_id, label in named.items():
+        context.twin.apply(
+            make_envelope(
+                capability="device.online",
+                value=label,
+                unit=None,
+                home_id=HOME,
+                device_id=device_id,
+                room_id=None,
+                occurred_at=now,
+                event_type="device.discovered",
+            )
+        )
 
     seeded = [
         ("motion_living", "living_room", "occupancy.motion", True, None),

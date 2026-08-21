@@ -40,6 +40,7 @@ from syltra_api_gateway.platform import Platform
 from syltra_api_gateway.stream import HEARTBEAT_SECONDS
 from syltra_api_gateway.translations import is_rtl, translate_reasons
 from pydantic import ValidationError
+from syltra_action_orchestrator import ActionRefused, build_manual_action
 from syltra_contracts import (
     Automation,
     ConditionKind,
@@ -55,6 +56,7 @@ from syltra_digital_twin.core import StateStatus
 from syltra_policy_safety.service import PolicyService
 from syltra_security import (
     ROLE_PERMISSIONS,
+    permission_for_capability,
     MembershipRefused,
     Permission,
     Role,
@@ -72,6 +74,18 @@ def _console_directory() -> Path | None:
     usable in a headless deployment or a test that only exercises endpoints.
     """
     candidate = Path(__file__).resolve().parents[4] / "apps" / "local-console" / "static"
+    return candidate if candidate.is_dir() else None
+
+
+def _panel_directory() -> Path | None:
+    """The wall panel's static files.
+
+    A separate app rather than a mode of the console, because it is a separate
+    product: the console is somebody at a laptop deciding, and the panel is
+    anybody walking past. Sharing a codebase would make every console change a
+    change to a screen in somebody's hallway.
+    """
+    candidate = Path(__file__).resolve().parents[4] / "apps" / "wall-panel" / "static"
     return candidate if candidate.is_dir() else None
 
 
@@ -161,6 +175,10 @@ def create_app(
             StaticFiles(directory=design_system_root),
             name="design-system",
         )
+
+    panel_root = _panel_directory()
+    if panel_root is not None:
+        app.mount("/panel", StaticFiles(directory=panel_root, html=True), name="panel")
 
     console_root = _console_directory()
     if console_root is not None:
@@ -261,14 +279,29 @@ def create_app(
         capabilities = device.get("capabilities")
         if not isinstance(capabilities, dict):
             return device
-        visible = {
-            name: reading
-            for name, reading in capabilities.items()
-            if may_see_capability(principal, name)
-        }
-        if len(visible) == len(capabilities):
-            return device
+        visible: dict[str, Any] = {}
+        for name, reading in capabilities.items():
+            if not may_see_capability(principal, name):
+                continue
+            visible[name] = {**reading, "operable": _operable_by(principal, name)}
         return {**device, "capabilities": visible}
+
+    def _operable_by(principal: Any, capability: str) -> bool:
+        """Whether *this caller* may switch this, answered by the server.
+
+        A client cannot work this out without a copy of the capability
+        registry, and a second copy is one that drifts — so a wall panel asking
+        "what can I press" gets the answer rather than deriving it. The field
+        answers "can you", not "is it writable", because that is the question a
+        screen is actually asking: a motion sensor and a lock are both
+        unpressable from a hallway panel, for entirely different reasons, and
+        the panel does not need to know which.
+        """
+        definition = get_definition(capability)
+        if definition.access is Access.READ:
+            return False
+        allowed: bool = principal.may(permission_for_capability(capability))
+        return allowed
 
     @app.get("/v1/homes/{home_id}/devices", tags=["home"])
     async def get_devices(
@@ -1075,7 +1108,156 @@ def create_app(
             )
         except MembershipRefused as exc:
             raise forbidden(exc.reason_code, exc.detail) from exc
-        return membership.as_view(datetime.now(tz=UTC))
+
+        # Revoking a membership must revoke the credential with it. A panel
+        # whose row says "access taken away" while its token still opens the
+        # API is a console that lies about the one thing it is for — and the
+        # same is true of a support session somebody thought they had ended.
+        revoked_tokens = app.state.tokens.revoke_subject(membership.subject)
+        view = membership.as_view(datetime.now(tz=UTC))
+        view["tokens_revoked"] = revoked_tokens
+        return view
+
+    # ── manual control (spec §0 rule 5) ──
+
+    @app.post("/v1/homes/{home_id}/devices/{device_id}/{capability}", tags=["home"])
+    async def operate_device(
+        home_id: str,
+        device_id: str,
+        capability: str,
+        principal: PrincipalDep,
+        locale: LocaleDep,
+        payload: Annotated[dict[str, Any], Body()],
+    ) -> dict[str, Any]:
+        """A person operating a device directly.
+
+        This did not exist. The policy chain had a manual-override rule, the
+        translations had reason codes for it, and `record_manual_change` was
+        called by two tests and nothing else — so §0 rule 5 held for somebody
+        flipping a physical switch, which Home Assistant reports, and had no
+        path at all through SYLTRA's own surfaces. The console could approve a
+        recommendation and could not turn on a light.
+
+        The permission required comes from the capability's declared safety
+        class, so a wall panel reaches comfort and stops at a lock without any
+        list of allowed capabilities existing anywhere.
+        """
+        check_read(home_id, principal)
+        try:
+            needed = permission_for_capability(capability)
+        except KeyError as exc:
+            raise not_found("UNKNOWN_CAPABILITY", f"no capability {capability}") from exc
+        if not principal.may(needed):
+            raise forbidden(
+                "NOT_ALLOWED_HERE",
+                f"{principal.role.value} may not operate {capability}",
+            )
+        if "value" not in payload:
+            raise bad_request("VALUE_REQUIRED", "say what to set it to")
+
+        try:
+            decision = platform.policy.authorize_manual_control(
+                home_id,
+                device_id,
+                capability,
+                payload["value"],
+                actor=principal.subject,
+            )
+        except ValueError as exc:
+            raise forbidden("NOT_OPERABLE_BY_HAND", str(exc)) from exc
+
+        request = build_manual_action(decision, device_id, capability, payload["value"])
+        try:
+            result = await platform.orchestrator.execute(request)
+        except ActionRefused as exc:
+            raise conflict(exc.reason_code, str(exc)) from exc
+        return {
+            "device_id": device_id,
+            "capability": capability,
+            "status": result.status.value,
+            "verified": result.verified,
+            "reason_codes": result.reason_codes,
+            "reasons": translate_reasons(result.reason_codes, locale),
+        }
+
+    # ── wall panels (owner decision, 2026-08-21) ──
+
+    #: A panel's token lives as long as the panel is on the wall. Unlike a
+    #: guest or a support session, there is no visit for it to outlast — what
+    #: ends it is the owner taking it down, from the console.
+    PANEL_TTL = timedelta(days=3650)
+
+    @app.get("/v1/homes/{home_id}/panels", tags=["panels"])
+    async def list_panels(
+        home_id: str, principal: PrincipalDep, locale: LocaleDep
+    ) -> dict[str, Any]:
+        check_read(home_id, principal)
+        now = datetime.now(tz=UTC)
+        return {
+            "home_id": home_id,
+            "panels": [
+                membership.as_view(now)
+                for membership in platform.users.members(home_id, now)
+                if membership.role is Role.PANEL
+            ],
+            "may_manage": principal.may(Permission.MANAGE_USERS),
+        }
+
+    @app.post("/v1/homes/{home_id}/panels", tags=["panels"])
+    async def register_panel(
+        home_id: str,
+        principal: PrincipalDep,
+        locale: LocaleDep,
+        payload: Annotated[dict[str, Any], Body()],
+    ) -> dict[str, Any]:
+        """Register a wall panel and hand back its token, once.
+
+        Named by where it hangs rather than by a person, because that is what
+        the audit trail will have to say: "the hall panel" is checkable and
+        "somebody" is not.
+
+        The token is returned in this response and never again — the same rule
+        every other token in this platform follows, and the reason a lost panel
+        is re-registered rather than looked up.
+        """
+        check_users(home_id, principal)
+        reason = _required_reason(payload)
+        location = str(payload.get("location", "")).strip()
+        if not location:
+            raise bad_request(
+                "LOCATION_REQUIRED",
+                "a panel is named by where it hangs; the audit trail will need it",
+            )
+
+        try:
+            membership = platform.users.grant(
+                home_id,
+                subject=f"panel:{location}",
+                role=Role.PANEL,
+                actor=principal.subject,
+                actor_role=principal.role,
+                reason=reason,
+                display_name=location,
+                # Explicit, so the directory's expiring-role defaults do not
+                # quietly give a wall panel a guest's twenty-four hours.
+                expires_at=datetime.now(tz=UTC) + PANEL_TTL,
+            )
+        except MembershipRefused as exc:
+            raise forbidden(exc.reason_code, exc.detail) from exc
+
+        token, _ = app.state.tokens.issue(
+            subject=f"panel:{location}",
+            role=Role.PANEL,
+            home_ids={home_id},
+            ttl=PANEL_TTL,
+            display_name=location,
+        )
+        view = membership.as_view(datetime.now(tz=UTC))
+        # Shown once. A panel that lost its token is re-registered, not
+        # recovered — which is also what makes revoking one meaningful.
+        view["token"] = token
+        view["token_shown_once"] = True
+        return view
 
     # ── audit ──
 

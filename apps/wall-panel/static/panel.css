@@ -1,0 +1,215 @@
+/* SYLTRA wall panel.
+ *
+ * Every number here comes from one of three facts about where this screen
+ * lives, rather than from a phone stylesheet scaled up.
+ *
+ * **It is read from two or three metres.** Type is roughly double the
+ * console's, and there are perhaps six things on the screen. A panel that
+ * needs to be approached is a panel that gets approached, read, and then
+ * left alone.
+ *
+ * **It is pressed by a thumb, by somebody not really looking.** Targets are
+ * 96px, not the 44px the console uses — that number is for a phone held in
+ * your hand with your eyes on it. Somebody passing a hallway gets one attempt.
+ *
+ * **It is on all day and all night.** Nothing animates on a loop, nothing
+ * flashes, and the whole surface dims after dark rather than lighting a
+ * hallway at three in the morning.
+ */
+
+.panel-body {
+  margin: 0;
+  block-size: 100dvb;
+  overflow: hidden;
+  /* Nothing here scrolls. A pull-to-refresh or a rubber-band bounce on a wall
+   * panel is a gesture nobody meant to make. */
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* A wall panel has no cursor and no hover; a lingering highlight after a
+   * press is a panel that looks stuck. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.panel {
+  block-size: 100dvb;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  box-sizing: border-box;
+}
+
+/* ── the head: the time, the place, and whether anything is wrong ── */
+
+.panel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.panel__clock {
+  margin: 0;
+  font-size: 4rem;
+  line-height: 1;
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.panel__place {
+  margin: var(--space-1) 0 0;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+}
+
+/* The one line somebody reads from across the room. It says whether anything
+ * needs them, and nothing else. */
+.panel__all-well {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: var(--weight-semibold);
+  color: var(--status-success);
+}
+
+.panel__all-well[data-attention="true"] {
+  color: var(--status-warning);
+}
+
+/* ── the controls ── */
+
+.panel__controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--space-4);
+  align-content: start;
+  overflow: hidden;
+}
+
+.control {
+  /* 96px, not 44. A thumb, in passing, with one attempt. */
+  min-block-size: 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.control__name {
+  font-size: 1.5rem;
+  font-weight: var(--weight-medium);
+}
+
+.control__state {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+}
+
+/* On and off are not carried by colour alone (§8): the border thickens and the
+ * word changes with it, so the state survives a glance, a colour-blind reader
+ * and a sun-washed screen. */
+.control[data-on="true"] {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+.control[aria-busy="true"] {
+  opacity: 0.6;
+}
+
+/* A control the panel is not allowed to operate is not rendered at all — see
+ * panel.js. There is no disabled state here on purpose: a greyed-out lock
+ * still tells whoever is standing there that a lock exists. */
+
+.panel__foot {
+  min-block-size: 2rem;
+}
+
+.panel__status {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--text-tertiary);
+}
+
+.panel__status[data-error="true"] {
+  color: var(--status-critical);
+}
+
+/* ── a confirmed hazard ──
+ *
+ * Takes the screen. This may be the only thing somebody sees, and a gas alarm
+ * next to the air-conditioning temperature is a gas alarm nobody notices.
+ *
+ * It does not flash. A flashing screen in a dark hallway is harder to read,
+ * not easier, and somebody walking towards a gas leak needs to read it. */
+
+.hazard {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  align-content: center;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  background: var(--status-critical);
+  color: #fff;
+}
+
+.hazard[hidden] {
+  display: none;
+}
+
+.hazard__what {
+  margin: 0;
+  font-size: 4.5rem;
+  line-height: 1.05;
+  font-weight: var(--weight-semibold);
+}
+
+.hazard__where {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+/* What the platform has already done, in the same breath as the alarm. A
+ * household reading "gas detected" needs to know whether the valve is shut
+ * without going to look. */
+.hazard__done {
+  margin: 0;
+  font-size: 1.75rem;
+  opacity: 0.92;
+}
+
+/* ── night ──
+ *
+ * A hallway panel at three in the morning should not light the hallway. Dimmed
+ * rather than switched off: a dark rectangle is indistinguishable from a
+ * broken one, and somebody should be able to see at a glance that the house is
+ * still being watched. */
+
+.panel-body[data-night="true"] .panel {
+  opacity: 0.45;
+}
+
+/* The hazard never dims. */
+.panel-body[data-night="true"] .hazard {
+  opacity: 1;
+}
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

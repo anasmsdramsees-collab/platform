@@ -51,7 +51,20 @@ DEFAULT_EXPIRY: dict[Role, timedelta] = {
 }
 
 #: Roles only an Owner may hand out.
-OWNER_APPOINTED: frozenset[Role] = frozenset({Role.OWNER, Role.SAFETY_OPERATOR})
+OWNER_APPOINTED: frozenset[Role] = frozenset(
+    {Role.OWNER, Role.SAFETY_OPERATOR, Role.PANEL}
+)
+"""A panel is on this list because installing one is a physical decision.
+
+Anybody who can register a panel can put a permanent, always-on control surface
+on a wall — and the person who decides where that goes is the person who owns
+the house.
+"""
+
+#: Roles that are a surface rather than a person. Their actions are attributed
+#: to the thing, because inventing a name for whoever pressed a shared panel
+#: would be a lie, and an audit trail that lies is worse than one with a gap.
+NOT_A_PERSON: frozenset[Role] = frozenset({Role.PANEL, Role.SERVICE})
 
 
 class MembershipRefused(PermissionError):

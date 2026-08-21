@@ -95,6 +95,24 @@ class Role(StrEnum):
     CHILD = "CHILD"
     GUEST = "GUEST"
     INSTALLER = "INSTALLER"
+    PANEL = "PANEL"
+    """A wall panel, not a person.
+
+    A shared surface anybody in the house can reach, authenticated by standing
+    in front of it. Physical presence is a fair credential for comfort —
+    somebody in your hallway could already flip the light switch — and not for
+    anything else. A panel by the front door that can unlock the front door is
+    a panel a burglar reaches through a letterbox.
+
+    So it holds exactly what a light switch holds, and it is registered,
+    named and revoked from the console by the owner. It is subordinate to the
+    console rather than a second console.
+
+    Deliberately not reusing CHILD, which happens to carry the same two
+    permissions today. They are the same set for different reasons, and a
+    change to what a child may do must not silently change what a wall panel
+    may do.
+    """
     SUPPORT = "SUPPORT"
     """SYLTRA's own technician, invited by the household for one problem.
 
@@ -179,6 +197,9 @@ ROLE_PERMISSIONS: Final[dict[Role, frozenset[Permission]]] = {
             Permission.MANAGE_AUTOMATIONS,
         }
     ),
+    # What a light switch can do, and nothing beyond it. No lock, no garage, no
+    # camera, no audit trail, nobody's permissions.
+    Role.PANEL: frozenset({Permission.READ_HOME, Permission.ACT_COMFORT}),
     Role.SERVICE: frozenset({Permission.READ_HOME}),
 }
 

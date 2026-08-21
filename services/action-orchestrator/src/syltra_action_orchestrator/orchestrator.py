@@ -126,6 +126,44 @@ class AuditEntry:
     detail: dict[str, Any] = field(default_factory=dict)
 
 
+def build_manual_action(
+    decision: PolicyDecision,
+    device_id: str,
+    capability: str,
+    value: Any,
+    now: datetime | None = None,
+    ttl_seconds: float = 30.0,
+) -> ActionRequest:
+    """An action from a person pressing something, rather than from a model.
+
+    Separate from `build_action_request` because that one takes a
+    `Recommendation` and a manual press has none — and inventing a synthetic
+    recommendation to reuse the function would put a fake model reference in
+    the audit trail, where somebody would later read it as a model's decision.
+
+    The window is short. A press is a thing somebody is doing now, and an
+    action still waiting thirty seconds later is one nobody is standing at the
+    switch for any more.
+    """
+    from datetime import timedelta
+
+    moment = now or datetime.now(tz=UTC)
+    definition = get_definition(capability)
+    return ActionRequest(
+        action_id=uuid4(),
+        idempotency_key=f"{decision.home_id}:{decision.decision_id}:{capability}",
+        decision_id=decision.decision_id,
+        home_id=decision.home_id,
+        correlation_id=uuid4(),
+        target=ActionTarget(device_id=device_id, capability=capability),
+        value=value,
+        expected_state=ExpectedState(capability=capability, value=value),
+        safety_class=definition.safety_class,
+        created_at=moment,
+        expires_at=moment + timedelta(seconds=ttl_seconds),
+    )
+
+
 def build_action_request(
     decision: PolicyDecision,
     recommendation: Recommendation,

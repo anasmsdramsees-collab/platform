@@ -1,0 +1,65 @@
+<!doctype html>
+<!-- SYLTRA wall panel.
+
+     A separate app from the console because it is a separate product. The
+     console is somebody at a laptop deciding things; this is anybody walking
+     past a wall. It is read from two or three metres, pressed with a thumb by
+     someone not really looking, and it is on all day and all night.
+
+     It shares the design system — the same tokens, the same fonts, the same
+     RTL rules — and almost none of the console's layout. -->
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SYLTRA</title>
+
+  <!-- Fixed to the wall and never scrolled by hand: a pull-to-refresh or a
+       rubber-band bounce on a panel is a gesture nobody meant to make. -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" sizes="32x32" href="/console/brand/syltra-icon-32.png">
+
+  <link rel="stylesheet" href="/design-system/typography/fonts.css">
+  <link rel="stylesheet" href="/design-system/tokens/tokens.css">
+  <link rel="stylesheet" href="/design-system/themes/dark-theme.css">
+  <link rel="stylesheet" href="/design-system/themes/light-theme.css">
+  <link rel="stylesheet" href="/design-system/typography/typography.css">
+  <link rel="stylesheet" href="/design-system/tokens/motion.css">
+  <link rel="stylesheet" href="/design-system/foundation.css">
+  <link rel="stylesheet" href="/design-system/primitives.css">
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body class="panel-body">
+
+  <!-- A confirmed hazard replaces the panel rather than appearing on it. This
+       screen may be the only thing somebody sees, and a gas alarm beside the
+       air-conditioning temperature is a gas alarm nobody notices. -->
+  <div class="hazard" id="hazard" hidden role="alert" aria-live="assertive">
+    <p class="hazard__what" id="hazard-what"></p>
+    <p class="hazard__where" id="hazard-where"></p>
+    <p class="hazard__done" id="hazard-done"></p>
+  </div>
+
+  <main class="panel" id="panel">
+    <header class="panel__head">
+      <div>
+        <p class="panel__clock" id="clock" aria-hidden="true"></p>
+        <p class="panel__place" id="place"></p>
+      </div>
+      <!-- One line, and the only thing on the panel that is always true or
+           always false. Everything else is detail. -->
+      <p class="panel__all-well" id="all-well"></p>
+    </header>
+
+    <section class="panel__controls" id="controls" aria-labelledby="controls-heading">
+      <h1 class="visually-hidden" id="controls-heading"></h1>
+    </section>
+
+    <footer class="panel__foot">
+      <p class="panel__status" id="status"></p>
+    </footer>
+  </main>
+
+  <script src="panel.js"></script>
+</body>
+</html>

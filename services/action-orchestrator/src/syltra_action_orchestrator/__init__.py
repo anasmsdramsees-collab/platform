@@ -12,6 +12,7 @@ from syltra_action_orchestrator.orchestrator import (
     AuditEntry,
     OrchestratorConfig,
     build_action_request,
+    build_manual_action,
 )
 
 __all__ = [
@@ -21,4 +22,5 @@ __all__ = [
     "AuditEntry",
     "OrchestratorConfig",
     "build_action_request",
+    "build_manual_action",
 ]

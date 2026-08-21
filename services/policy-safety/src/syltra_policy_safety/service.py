@@ -19,6 +19,7 @@ from uuid import UUID, uuid4
 
 from syltra_contracts import (
     PolicyDecision,
+    SafetyClass,
     PolicyOutcome,
     Recommendation,
     compute_input_hash,
@@ -38,6 +39,7 @@ logger = logging.getLogger(__name__)
 DECISION_TTL = timedelta(minutes=15)
 APPROVAL_TTL = timedelta(minutes=30)
 SAFETY_ISOLATION_TTL = timedelta(seconds=60)
+MANUAL_CONTROL_TTL = timedelta(seconds=30)
 """How long a confirmed hazard's isolation stays executable."""
 """Approval requests live longer — a person needs time to answer."""
 
@@ -247,6 +249,90 @@ class PolicyService:
             value,
             confirmed_by,
         )
+        return decision
+
+    def authorize_manual_control(
+        self,
+        home_id: str,
+        device_id: str,
+        capability: str,
+        value: Any,
+        actor: str,
+        now: datetime | None = None,
+    ) -> PolicyDecision:
+        """Authorize a person operating a device directly (spec §0 rule 5).
+
+        A person is not a recommendation. The rule chain exists to decide
+        whether the *platform* should act — confidence, learning mode, quiet
+        hours, rate limits — and none of it applies to somebody pressing a
+        switch. Running a manual press through it would let a household's own
+        adaptive settings refuse the household.
+
+        So this is a separate, short-lived ALLOW carrying no recommendation,
+        and it does two things the ordinary path does not:
+
+        - it records the press as a manual change, so the adaptive engine backs
+          off this device for the override window rather than immediately
+          arguing with the person who just pressed it;
+        - it refuses anything outside what the actor's own authority covers,
+          which is checked at the API boundary and asserted again here, because
+          a permissions check that exists in one layer is a check the next
+          caller skips.
+        """
+        moment = now or datetime.now(tz=UTC)
+        safety_class = safety_class_for(capability)
+
+        # Manual or not, nobody commands a life-safety actuator through this
+        # path. Those are driven by deterministic rules from certified
+        # evidence, and a person wanting one operates it by hand.
+        if safety_class in (SafetyClass.LIFE_SAFETY_CRITICAL, SafetyClass.SAFETY_RELATED):
+            msg = (
+                f"{capability} is {safety_class.value} and is not operable by hand "
+                "through this platform"
+            )
+            raise ValueError(msg)
+
+        decision = PolicyDecision(
+            decision_id=uuid4(),
+            recommendation_id=None,
+            home_id=home_id,
+            decision=PolicyOutcome.ALLOW,
+            evaluated_at=moment,
+            # Short: a press is a thing somebody is doing now. A manual
+            # decision still sitting in a queue two minutes later is one nobody
+            # is standing at the switch for any more.
+            expires_at=moment + MANUAL_CONTROL_TTL,
+            reason_codes=["MANUAL_CONTROL"],
+            safety_class=safety_class,
+            policy_version=POLICY_RULES_VERSION,
+            input_hash=compute_input_hash(
+                {
+                    "home_id": home_id,
+                    "device_id": device_id,
+                    "capability": capability,
+                    "value": value,
+                    "actor": actor,
+                }
+            ),
+            evidence={"deciding_rule": "manual_control", "actor": actor},
+        )
+        self.decisions[decision.decision_id] = decision
+        # §0 rule 5: manual control overrides adaptive automation. Recorded
+        # here rather than by the caller, so no path can operate a device
+        # manually without the adaptive layer learning that it happened.
+        self.record_manual_change(home_id, device_id, capability, moment)
+        self._audit(
+            decision,
+            action="MANUAL_CONTROL_AUTHORIZED",
+            actor=actor,
+            extra={"capability": capability, "device_id": device_id, "value": value},
+        )
+        metrics.DECISIONS.labels(
+            outcome=decision.decision.value, safety_class=decision.safety_class.value
+        ).inc()
+        metrics.DECIDING_RULE.labels(
+            rule="manual_control", outcome=decision.decision.value
+        ).inc()
         return decision
 
     def approve(

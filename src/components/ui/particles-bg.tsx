@@ -25,12 +25,12 @@ export default function ParticlesComponent() {
     // @ts-ignore
     window.particlesJS("particles-js", {
       particles: {
-        number: { value: 110, density: { enable: true, value_area: 900 } },
+        number: { value: 150, density: { enable: true, value_area: 800 } },
         color: { value: colors.particles },
         shape: { type: "circle", stroke: { width: 0.5, color: colors.accent } },
-        opacity: { value: 0.55, random: true, anim: { enable: true, speed: 1, opacity_min: 0.2 } },
-        size: { value: 2.5, random: true, anim: { enable: true, speed: 2, size_min: 0.8 } },
-        line_linked: { enable: true, distance: 150, color: colors.lines, opacity: 0.28, width: 1 },
+        opacity: { value: 0.95, random: true, anim: { enable: true, speed: 1, opacity_min: 0.5 } },
+        size: { value: 3.4, random: true, anim: { enable: true, speed: 2, size_min: 1.4 } },
+        line_linked: { enable: true, distance: 165, color: colors.lines, opacity: 0.75, width: 1.4 },
         move: { enable: true, speed: 1.4, random: true, out_mode: "bounce" },
       },
       interactivity: {
@@ -41,7 +41,7 @@ export default function ParticlesComponent() {
           resize: true,
         },
         modes: {
-          grab: { distance: 200, line_linked: { opacity: 0.7 } },
+          grab: { distance: 220, line_linked: { opacity: 1 } },
           push: { particles_nb: 4 },
           repulse: { distance: 180, duration: 0.4 },
         },

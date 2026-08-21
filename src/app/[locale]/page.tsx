@@ -42,7 +42,7 @@ export default async function HomePage({
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(60% 50% at 50% 0%, rgba(11,12,14,0.35), rgba(11,12,14,0.85) 70%)",
+              "radial-gradient(65% 55% at 50% 0%, rgba(11,12,14,0.10), rgba(11,12,14,0.45) 75%)",
           }}
         />
         <div className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">

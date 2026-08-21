@@ -19,18 +19,18 @@ export default function ParticlesComponent() {
     }
 
     const colors = isDark
-      ? { particles: "#4c8dff", lines: "#4c8dff", accent: "#a56bff" }
+      ? { particles: "#6f97d6", lines: "#4a6b9c", accent: "#6f97d6" }
       : { particles: "#0277bd", lines: "#0288d1", accent: "#039be5" };
 
     // @ts-ignore
     window.particlesJS("particles-js", {
       particles: {
-        number: { value: 150, density: { enable: true, value_area: 800 } },
+        number: { value: 120, density: { enable: true, value_area: 900 } },
         color: { value: colors.particles },
         shape: { type: "circle", stroke: { width: 0.5, color: colors.accent } },
-        opacity: { value: 0.95, random: true, anim: { enable: true, speed: 1, opacity_min: 0.5 } },
-        size: { value: 3.4, random: true, anim: { enable: true, speed: 2, size_min: 1.4 } },
-        line_linked: { enable: true, distance: 165, color: colors.lines, opacity: 0.75, width: 1.4 },
+        opacity: { value: 0.6, random: true, anim: { enable: true, speed: 1, opacity_min: 0.25 } },
+        size: { value: 2.6, random: true, anim: { enable: true, speed: 2, size_min: 1 } },
+        line_linked: { enable: true, distance: 160, color: colors.lines, opacity: 0.42, width: 1 },
         move: { enable: true, speed: 1.4, random: true, out_mode: "bounce" },
       },
       interactivity: {
@@ -41,7 +41,7 @@ export default function ParticlesComponent() {
           resize: true,
         },
         modes: {
-          grab: { distance: 220, line_linked: { opacity: 1 } },
+          grab: { distance: 210, line_linked: { opacity: 0.75 } },
           push: { particles_nb: 4 },
           repulse: { distance: 180, duration: 0.4 },
         },

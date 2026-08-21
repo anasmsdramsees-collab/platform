@@ -8,7 +8,7 @@ import HeroLightsPanel from "@/components/hero-lights-panel";
 import CurtainsOverlay from "@/components/curtains-overlay";
 import SyntraTvMockup from "@/components/syntra-tv-mockup";
 import ProtocolOrbit from "@/components/protocol-orbit";
-import RibbonMesh from "@/components/ribbon-mesh";
+import ParticlesBg from "@/components/ui/particles-bg";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 
@@ -37,7 +37,7 @@ export default async function HomePage({
       <CurtainsOverlay dict={dict.lightsPanel} />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-hairline">
-        <RibbonMesh />
+        <ParticlesBg />
         <div
           className="pointer-events-none absolute inset-0"
           style={{

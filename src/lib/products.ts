@@ -418,42 +418,24 @@ export const productCatalog: ProductCategory[] = [
         ar: { tagline: "كاميرا واحدة تغطي الساحة كلها.", description: "كاميرا متحركة بتقريب بصري تتعقب الحركة وتمسح المساحات الواسعة, وحدة واحدة تغطي ما تغطيه ثلاث كاميرات ثابتة.", specs: [{ label: "الحركة", value: "دوران 355° وإمالة 90° وتقريب" }, { label: "التعقب", value: "تعقب تلقائي للحركة" }, { label: "التخزين", value: "جهاز تسجيل / سحابي / بطاقة ذاكرة" }] },
       },
       {
+        slug: "cctv-solar", name: "Syltra CCTV Solar", tags: ["Wi-Fi", "App"],
+        en: { tagline: "No wiring, no bills, always watching.", description: "A fully wireless outdoor camera powered by its own solar panel and built-in battery, mount it anywhere the sun reaches, no cabling and no electrician.", specs: [{ label: "Power", value: "Solar panel + built-in battery" }, { label: "Resolution", value: "4MP, color night vision" }, { label: "Build", value: "IP66, fully wireless" }] },
+        ar: { tagline: "بلا تمديدات، بلا فواتير، تراقب دائمًا.", description: "كاميرا خارجية لاسلكية بالكامل تعمل بلوحها الشمسي وبطاريتها المدمجة, ركّبها في أي مكان تصله الشمس، من غير تمديدات ولا كهربائي.", specs: [{ label: "الطاقة", value: "لوح شمسي + بطارية مدمجة" }, { label: "الدقة", value: "4MP برؤية ليلية ملونة" }, { label: "التصنيع", value: "IP66 لاسلكية بالكامل" }] },
+      },
+      {
+        slug: "cctv-solar-4g", name: "Syltra CCTV Solar 4G", tags: ["App"],
+        en: { tagline: "Solar power, cellular reach.", description: "A solar camera with a 4G SIM slot for farms, sites and land with no internet, streams from the middle of nowhere straight to your phone.", specs: [{ label: "Power", value: "Solar panel + built-in battery" }, { label: "Connectivity", value: "4G SIM, no Wi-Fi needed" }, { label: "Use", value: "Farms, sites, remote land" }] },
+        ar: { tagline: "طاقة من الشمس، واتصال من شبكة الجوال.", description: "كاميرا شمسية بشريحة 4G للمزارع والمواقع والأراضي التي لا يصلها إنترنت, تبث من أبعد نقطة مباشرة إلى جوالك.", specs: [{ label: "الطاقة", value: "لوح شمسي + بطارية مدمجة" }, { label: "الاتصال", value: "شريحة 4G بدون واي فاي" }, { label: "الاستخدام", value: "مزارع ومواقع وأراضٍ بعيدة" }] },
+      },
+      {
+        slug: "cctv-solar-ptz", name: "Syltra CCTV Solar PTZ", tags: ["Wi-Fi", "App"],
+        en: { tagline: "Sweeping coverage, powered by the sun.", description: "A motorized pan-tilt solar camera with auto tracking, wide coverage for yards and gates with zero wiring.", specs: [{ label: "Motion", value: "355° pan with auto tracking" }, { label: "Power", value: "Solar panel + built-in battery" }, { label: "Build", value: "IP66 outdoor" }] },
+        ar: { tagline: "تغطية متحركة، بطاقة الشمس.", description: "كاميرا شمسية متحركة بتعقب تلقائي للحركة, تغطية واسعة للأحواش والبوابات بدون أي تمديد كهربائي.", specs: [{ label: "الحركة", value: "دوران 355° وتعقب تلقائي" }, { label: "الطاقة", value: "لوح شمسي + بطارية مدمجة" }, { label: "التصنيع", value: "IP66 خارجية" }] },
+      },
+      {
         slug: "cctv-nvr", name: "Syltra NVR 8", tags: ["App"],
         en: { tagline: "Eight channels, weeks of footage.", description: "An 8-channel network video recorder that keeps weeks of footage locally, review any camera from the app, export clips in seconds.", specs: [{ label: "Channels", value: "8 cameras" }, { label: "Storage", value: "Up to 8TB HDD" }, { label: "Access", value: "Live + playback from the app" }] },
         ar: { tagline: "ثماني قنوات، وأسابيع من التسجيل.", description: "جهاز تسجيل شبكي بثماني قنوات يحفظ أسابيع من التسجيلات محليًا, راجع أي كاميرا من التطبيق وصدّر المقاطع في ثوانٍ.", specs: [{ label: "القنوات", value: "8 كاميرات" }, { label: "التخزين", value: "حتى 8 تيرابايت" }, { label: "الوصول", value: "بث حي ومراجعة من التطبيق" }] },
-      },
-    ],
-  },
-  {
-    key: "solar",
-    en: {
-      name: "Solar Energy",
-      desc: "Panels, inverters and batteries, clean power for homes and businesses.",
-    },
-    ar: {
-      name: "الطاقة الشمسية",
-      desc: "ألواح ومحولات وبطاريات, طاقة نظيفة للمنازل والمنشآت.",
-    },
-    items: [
-      {
-        slug: "solar-panel", name: "Syltra Solar Panel 450W", tags: ["App"],
-        en: { tagline: "450 watts from the Saudi sun.", description: "A high-efficiency monocrystalline panel built for high temperatures and desert dust, the building block of every Syltra solar system.", specs: [{ label: "Power", value: "450W monocrystalline" }, { label: "Efficiency", value: "21.5%, heat-tolerant" }, { label: "Warranty", value: "25-year performance" }] },
-        ar: { tagline: "450 واط من شمس السعودية.", description: "لوح أحادي البلورة عالي الكفاءة مصمم للحرارة العالية وغبار الصحراء, حجر الأساس في كل منظومة سيلترا الشمسية.", specs: [{ label: "القدرة", value: "450 واط أحادي البلورة" }, { label: "الكفاءة", value: "21.5% وتحمّل حراري عالٍ" }, { label: "الضمان", value: "أداء مضمون 25 سنة" }] },
-      },
-      {
-        slug: "solar-inverter", name: "Syltra Hybrid Inverter 5kW", tags: ["Wi-Fi", "App"],
-        en: { tagline: "The brain of your solar system.", description: "A hybrid inverter that runs your home from solar first, batteries second and the grid last, with live production stats in the app.", specs: [{ label: "Output", value: "5kW hybrid, pure sine" }, { label: "Modes", value: "Solar / battery / grid priority" }, { label: "Monitoring", value: "Live stats in the app" }] },
-        ar: { tagline: "عقل المنظومة الشمسية.", description: "محول هجين يشغّل منزلك من الشمس أولًا ثم البطاريات ثم الشبكة, مع إحصائيات إنتاج حية في التطبيق.", specs: [{ label: "القدرة", value: "5 كيلوواط هجين، موجة نقية" }, { label: "الأوضاع", value: "أولوية شمس / بطارية / شبكة" }, { label: "المراقبة", value: "إحصائيات حية في التطبيق" }] },
-      },
-      {
-        slug: "solar-battery", name: "Syltra PowerBank 10kWh", tags: ["Wi-Fi", "App"],
-        en: { tagline: "Sunlight, stored for the night.", description: "A lithium iron phosphate battery that stores daytime production for the evening, and keeps the essentials running through any outage.", specs: [{ label: "Capacity", value: "10kWh LiFePO4" }, { label: "Cycles", value: "6000+ cycles" }, { label: "Backup", value: "Automatic outage switchover" }] },
-        ar: { tagline: "ضوء النهار، مخزّن لليل.", description: "بطارية ليثيوم فوسفات الحديد تخزّن إنتاج النهار للمساء, وتُبقي الأساسيات شغالة في أي انقطاع للكهرباء.", specs: [{ label: "السعة", value: "10 كيلوواط ساعة LiFePO4" }, { label: "دورات الشحن", value: "أكثر من 6000 دورة" }, { label: "الطوارئ", value: "تحويل تلقائي عند الانقطاع" }] },
-      },
-      {
-        slug: "solar-kit", name: "Syltra Solar Home Kit", tags: ["Wi-Fi", "App"],
-        en: { tagline: "A complete system, sized for your home.", description: "Panels, inverter, battery and installation as one package, we survey the roof, size the system and hand it over producing.", specs: [{ label: "Includes", value: "Panels + inverter + battery" }, { label: "Sizing", value: "Custom survey per home" }, { label: "Handover", value: "Installed and producing" }] },
-        ar: { tagline: "منظومة كاملة على مقاس منزلك.", description: "ألواح ومحول وبطارية وتركيب في باقة واحدة, نعاين السطح ونحدد الحجم المناسب ونسلّمك المنظومة وهي تنتج.", specs: [{ label: "تشمل", value: "ألواح + محول + بطارية" }, { label: "التحجيم", value: "معاينة مخصصة لكل منزل" }, { label: "التسليم", value: "مركّبة وتعمل" }] },
       },
     ],
   },

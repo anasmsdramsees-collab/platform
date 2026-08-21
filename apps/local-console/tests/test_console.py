@@ -1146,3 +1146,22 @@ def test_the_periodic_refresh_does_not_wipe_an_answer_the_user_asked_for() -> No
     route = JS_CODE[JS_CODE.index("async function route()") :]
     route = route[: route.index("\n}")]
     assert "state.holdRefresh = false" in route
+
+
+def test_every_capability_and_context_has_a_label_in_both_languages() -> None:
+    """Keys the static scan cannot see.
+
+    The builder writes `t(`cap_${capability}`)`, which no regex over the source
+    can resolve — so `test_every_translation_key_used_in_the_ui_exists` passed
+    while all thirty-one capability dropdowns would have rendered raw keys. The
+    families are enumerable, so they are checked against the registry itself
+    rather than against what the source happens to spell out.
+    """
+    from syltra_contracts import ContextType
+    from syltra_contracts.capability_definitions import CAPABILITY_DEFINITIONS
+
+    expected = {f"cap_{c.replace('.', '_')}" for c in CAPABILITY_DEFINITIONS}
+    expected |= {f"context_{c.value.lower()}" for c in ContextType}
+    for language in ("en", "ar"):
+        missing = sorted(expected - set(I18N[language]))
+        assert not missing, f"{language} has no label for: {missing}"

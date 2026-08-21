@@ -42,10 +42,15 @@ from syltra_api_gateway.translations import is_rtl, translate_reasons
 from pydantic import ValidationError
 from syltra_contracts import (
     Automation,
+    ConditionKind,
+    ContextType,
     FeedbackKind,
     FeedbackSource,
     PolicyOutcome,
+    TriggerKind,
 )
+from syltra_contracts.automations import AUTOMATABLE_SAFETY_CLASSES, MINIMUM_REARM
+from syltra_contracts.capability_definitions import Access, get_definition
 from syltra_digital_twin.core import StateStatus
 from syltra_policy_safety.service import PolicyService
 from syltra_security import ROLE_PERMISSIONS, MembershipRefused, Permission, Role, TokenStore
@@ -650,6 +655,81 @@ def create_app(
                 _automation_view(automation, locale)
                 for automation in platform.automations.list_for(home_id)
             ],
+        }
+
+    # Registered before `/{automation_id}`: FastAPI matches routes in the order
+    # they are added, so a literal segment declared after a path parameter is
+    # never reached. "options" was being parsed as a UUID and answering 422.
+    @app.get("/v1/homes/{home_id}/automations/options", tags=["automations"])
+    async def automation_options(
+        home_id: str, principal: PrincipalDep, locale: LocaleDep
+    ) -> dict[str, Any]:
+        """Everything a household may build an automation out of.
+
+        Served rather than hard-coded in the console, because the console would
+        otherwise carry a second copy of the capability vocabulary and the two
+        would drift. This one is derived from the registry and from what the
+        home actually has, so a device that is not there cannot be chosen and a
+        capability the platform forbids cannot be offered.
+
+        Critical capabilities are absent by construction: `AutomationAction`
+        refuses to be built with anything outside NON_CRITICAL and COMFORT, so
+        offering a valve here would produce a form whose submission always
+        fails. The console says why they are missing rather than hiding the
+        fact (§20).
+        """
+        check_read(home_id, principal)
+        home = platform.twin.home(home_id)
+        devices = list(home.devices.values()) if home is not None else []
+
+        def describe(device: Any, capability: str) -> dict[str, Any]:
+            definition = get_definition(capability)
+            return {
+                "device_id": device.device_id,
+                "room_id": device.room_id,
+                "capability": capability,
+                "data_type": definition.data_type.value,
+                "unit": definition.unit,
+                "minimum": definition.minimum,
+                "maximum": definition.maximum,
+                "allowed_values": list(definition.allowed_values),
+            }
+
+        actionable: list[dict[str, Any]] = []
+        observable: list[dict[str, Any]] = []
+        excluded: list[dict[str, Any]] = []
+        for device in devices:
+            for capability in sorted(device.capabilities):
+                definition = get_definition(capability)
+                writable = definition.access in (Access.WRITE, Access.READ_WRITE)
+                if writable and definition.safety_class in AUTOMATABLE_SAFETY_CLASSES:
+                    actionable.append(describe(device, capability))
+                elif writable:
+                    # Named, not hidden: a household that cannot automate its
+                    # gas valve should be told that is deliberate.
+                    excluded.append(
+                        {
+                            "device_id": device.device_id,
+                            "capability": capability,
+                            "safety_class": definition.safety_class.value,
+                            "reason_code": "CAPABILITY_NOT_AUTOMATABLE",
+                            "reason": translate_reasons(["CAPABILITY_NOT_AUTOMATABLE"], locale)[0],
+                        }
+                    )
+                if definition.access in (Access.READ, Access.READ_WRITE):
+                    observable.append(describe(device, capability))
+
+        return {
+            "home_id": home_id,
+            "watch": observable,
+            "act_on": actionable,
+            "not_automatable": excluded,
+            "trigger_kinds": [kind.value for kind in TriggerKind],
+            "condition_kinds": [kind.value for kind in ConditionKind],
+            "context_types": [context.value for context in ContextType],
+            # The engine's own guard rails, so the form can explain a refusal
+            # before it happens rather than after.
+            "minimum_rearm_seconds": int(MINIMUM_REARM.total_seconds()),
         }
 
     @app.get("/v1/homes/{home_id}/automations/{automation_id}", tags=["automations"])

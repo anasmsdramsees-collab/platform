@@ -1557,10 +1557,208 @@ function responsePlan(detail) {
  * That is worth having on its own: "why didn't my automation run?" is the
  * question this screen exists to answer.
  */
+/* ── the automation builder (§2.3, ADR-009) ──
+
+   The whole point is that nobody writes anything. Four dropdowns and a time
+   field produce the same typed graph the API accepts, because ADR-009 refused
+   an interpreter and this must not smuggle one back in: there is no free-text
+   field here, and every value comes from a list the server supplied.
+
+   Three things the form has to teach without a manual, because a household
+   meets them the first time an automation surprises them:
+
+   - the capabilities it will not offer, and that the refusal is deliberate;
+   - that touching a device by hand silences its automation;
+   - that an automation cannot re-fire immediately, so "it did not run" is
+     sometimes the guard rail rather than a fault.
+
+   And a sentence, in the household's own language, before anything is saved.
+   A person approving a standing instruction should be able to read it back. */
+
+function automationBuilder(home, options, onSaved) {
+  const form = el("form", "card");
+  form.noValidate = true;
+  form.append(el("h2", "type-section-title", t("build_title")));
+  form.append(el("p", "muted", t("build_detail")));
+
+  const name = labelledInput("automation-name", t("automation_name"), "text");
+
+  // ── when ──
+  const when = selectField("automation-when", t("build_when"), [
+    { value: "STATE_EQUALS", label: t("when_state_equals") },
+    { value: "THRESHOLD_ABOVE", label: t("when_above") },
+    { value: "THRESHOLD_BELOW", label: t("when_below") },
+    { value: "CONTEXT_STARTED", label: t("when_context") },
+    { value: "AT_TIME", label: t("when_at_time") },
+  ]);
+
+  const watch = selectField(
+    "automation-watch",
+    t("build_watch"),
+    options.watch.map((entry) => ({
+      value: `${entry.device_id}|${entry.capability}`,
+      label: `${entry.device_id} — ${t(`cap_${entry.capability.replace(".", "_")}`)}`,
+    })),
+  );
+  const triggerValue = labelledInput("automation-trigger-value", t("build_value"), "text");
+  const context = selectField(
+    "automation-context",
+    t("build_context"),
+    options.context_types.map((value) => ({ value, label: t(`context_${value.toLowerCase()}`) })),
+  );
+  const hour = labelledInput("automation-hour", t("build_hour"), "number");
+  hour.input.min = "0";
+  hour.input.max = "23";
+  const minute = labelledInput("automation-minute", t("build_minute"), "number");
+  minute.input.min = "0";
+  minute.input.max = "59";
+
+  // ── then ──
+  const act = selectField(
+    "automation-act",
+    t("build_then"),
+    options.act_on.map((entry) => ({
+      value: `${entry.device_id}|${entry.capability}`,
+      label: `${entry.device_id} — ${t(`cap_${entry.capability.replace(".", "_")}`)}`,
+    })),
+  );
+  const actionValue = labelledInput("automation-action-value", t("build_action_value"), "text");
+
+  const preview = el("p", "notice notice--partial");
+  const submit = el("button", "btn btn--primary", t("build_submit"));
+  submit.type = "submit";
+  const outcome = el("div");
+
+  form.append(
+    name.node, when.node, watch.node, triggerValue.node, context.node,
+    hour.node, minute.node, act.node, actionValue.node, preview, submit, outcome,
+  );
+
+  /* Only the fields the chosen trigger uses. A form that shows every field for
+     every trigger asks a person to work out which ones matter. */
+  function showRelevantFields() {
+    const kind = when.select.value;
+    watch.node.hidden = kind === "CONTEXT_STARTED" || kind === "AT_TIME";
+    triggerValue.node.hidden = kind !== "STATE_EQUALS" && !kind.startsWith("THRESHOLD");
+    context.node.hidden = kind !== "CONTEXT_STARTED";
+    hour.node.hidden = minute.node.hidden = kind !== "AT_TIME";
+    preview.textContent = previewSentence();
+  }
+
+  function previewSentence() {
+    const kind = when.select.value;
+    const target = act.select.value.split("|");
+    const actLabel = act.select.options[act.select.selectedIndex]?.text || "";
+    let trigger = "";
+    if (kind === "AT_TIME") {
+      trigger = t("preview_at_time")
+        .replace("{hour}", String(hour.input.value || 0).padStart(2, "0"))
+        .replace("{minute}", String(minute.input.value || 0).padStart(2, "0"));
+    } else if (kind === "CONTEXT_STARTED") {
+      trigger = t("preview_context").replace(
+        "{context}", context.select.options[context.select.selectedIndex]?.text || "",
+      );
+    } else {
+      const watchLabel = watch.select.options[watch.select.selectedIndex]?.text || "";
+      trigger = t(`preview_${kind.toLowerCase()}`)
+        .replace("{what}", watchLabel)
+        .replace("{value}", triggerValue.input.value || "…");
+    }
+    return t("preview_sentence")
+      .replace("{trigger}", trigger)
+      .replace("{action}", actLabel)
+      .replace("{value}", actionValue.input.value || "…")
+      .replace("{device}", target[0] || "");
+  }
+
+  for (const field of [when.select, watch.select, context.select, act.select]) {
+    field.addEventListener("change", showRelevantFields);
+  }
+  for (const field of [triggerValue.input, actionValue.input, hour.input, minute.input]) {
+    field.addEventListener("input", showRelevantFields);
+  }
+  showRelevantFields();
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    outcome.replaceChildren();
+    submit.setAttribute("aria-busy", "true");
+    try {
+      await api(`/v1/homes/${home}/automations`, {
+        method: "POST",
+        body: JSON.stringify(buildPayload()),
+      });
+      await onSaved();
+    } catch (error) {
+      /* The server's refusal, in the household's language. ADR-009's rules are
+         enforced there and explained here rather than duplicated. */
+      outcome.append(failureNotice(error, t("source_automations")));
+    } finally {
+      submit.removeAttribute("aria-busy");
+    }
+  });
+
+  function buildPayload() {
+    const kind = when.select.value;
+    const [watchDevice, watchCapability] = watch.select.value.split("|");
+    const [actDevice, actCapability] = act.select.value.split("|");
+    const trigger = { kind };
+    if (kind === "AT_TIME") {
+      trigger.at_hour = Number(hour.input.value || 0);
+      trigger.at_minute = Number(minute.input.value || 0);
+    } else if (kind === "CONTEXT_STARTED") {
+      trigger.context_type = context.select.value;
+    } else {
+      trigger.device_id = watchDevice;
+      trigger.capability = watchCapability;
+      trigger.value = coerce(triggerValue.input.value);
+    }
+    return {
+      name: name.input.value.trim() || t("automation_untitled"),
+      trigger,
+      actions: [
+        {
+          device_id: actDevice,
+          capability: actCapability,
+          value: coerce(actionValue.input.value),
+        },
+      ],
+    };
+  }
+
+  return form;
+}
+
+/* Dropdowns carry typed values, so "true" from a select is a boolean and "23"
+   is a number by the time it reaches a contract that checks types. */
+function coerce(raw) {
+  const value = String(raw).trim();
+  if (value === "true") return true;
+  if (value === "false") return false;
+  if (value !== "" && !Number.isNaN(Number(value))) return Number(value);
+  return value;
+}
+
+function selectField(id, label, options) {
+  const node = el("div", "field");
+  const element = el("label", null, label);
+  element.htmlFor = id;
+  const select = el("select", "select");
+  select.id = id;
+  for (const option of options) {
+    const item = el("option", null, option.label);
+    item.value = option.value;
+    select.append(item);
+  }
+  node.append(element, select);
+  return { node, select };
+}
+
 async function renderAutomations(host) {
   const home = state.homeId;
   const { data, failed } = await loadHomeView({
     automations: api(`/v1/homes/${home}/automations`),
+    options: api(`/v1/homes/${home}/automations/options`),
   });
   if (!data.automations) {
     host.append(failureNotice(errorFor(failed, "automations"), t("source_automations")));
@@ -1595,6 +1793,28 @@ async function renderAutomations(host) {
     }
   });
 
+  if (data.options) {
+    host.append(automationBuilder(home, data.options, refresh));
+    /* Said once, near the form, because a household meets these the first time
+       an automation does not do what they expected. */
+    host.append(
+      notice("partial", t("build_rules_title"),
+        t("build_rules_detail").replace(
+          "{seconds}", String(data.options.minimum_rearm_seconds))),
+    );
+    if ((data.options.not_automatable || []).length) {
+      const excluded = el("ul", "list");
+      for (const entry of data.options.not_automatable) {
+        excluded.append(el("li", null, `${entry.device_id} — ${entry.reason}`));
+      }
+      const section = el("section", "card");
+      section.append(el("h2", "type-section-title", t("not_automatable_title")));
+      section.append(el("p", "muted", t("not_automatable_detail")));
+      section.append(excluded);
+      host.append(section);
+    }
+  }
+
   if (!items.length) {
     host.append(notice("partial", t("no_automations"), t("no_automations_detail")));
   } else {
@@ -1613,9 +1833,12 @@ async function renderAutomations(host) {
     );
   }
 
-  /* §17.8 asks for a builder, version history and rollback. None is built, and
-     an empty screen would read as a product that forgot them. */
-  host.append(notice("partial", t("no_builder"), t("no_builder_detail")));
+  /* §17.8 asks for a builder, version history and rollback. The builder is
+     above; the other two are not built, and saying so beats an empty screen
+     that reads as a product which forgot them. */
+  /* What is still missing, now that the builder is not. Version history and
+     rollback would let a household undo an edit rather than rebuild it. */
+  host.append(notice("partial", t("no_history"), t("no_history_detail")));
 }
 
 /* Switching an automation off is a real change to what the home does, so it

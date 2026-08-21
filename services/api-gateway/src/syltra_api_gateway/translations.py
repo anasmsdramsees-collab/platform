@@ -82,6 +82,10 @@ REASON_CODES: Final[dict[str, dict[str, str]]] = {
     "NO_DATA": {"en": "No data available", "ar": "لا توجد بيانات متاحة"},
     # policy
     "WITHIN_POLICY": {"en": "Allowed by your settings", "ar": "مسموح به وفق إعداداتك"},
+    "CAPABILITY_NOT_AUTOMATABLE": {
+        "en": "This can only be operated by the safety system, never by an automation",
+        "ar": "هذا لا يُشغَّل إلا من نظام السلامة، ولا يمكن لأي أتمتة تشغيله",
+    },
     "AUTHORIZED_BY_SAFETY_GOVERNOR": {
         "en": "Authorized by the safety system, not by a setting",
         "ar": "مصرّح به من نظام السلامة، لا من إعداد",

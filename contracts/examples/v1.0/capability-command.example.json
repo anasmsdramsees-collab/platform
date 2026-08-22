@@ -1,0 +1,6 @@
+{
+  "capability": "climate.target_temperature",
+  "correlation_id": null,
+  "device_id": "ac_living",
+  "value": 23.0
+}

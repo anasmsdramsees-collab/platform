@@ -1,0 +1,167 @@
+{
+  "$defs": {
+    "ActionTarget": {
+      "additionalProperties": true,
+      "properties": {
+        "capability": {
+          "title": "Capability",
+          "type": "string"
+        },
+        "device_id": {
+          "title": "Device Id",
+          "type": "string"
+        },
+        "room_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Room Id"
+        }
+      },
+      "required": [
+        "device_id",
+        "capability"
+      ],
+      "title": "ActionTarget",
+      "type": "object"
+    },
+    "ExpectedState": {
+      "description": "What the device must report for the action to count as successful.",
+      "properties": {
+        "capability": {
+          "title": "Capability",
+          "type": "string"
+        },
+        "operator": {
+          "default": "equals",
+          "title": "Operator",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value"
+        }
+      },
+      "required": [
+        "capability",
+        "value"
+      ],
+      "title": "ExpectedState",
+      "type": "object"
+    },
+    "SafetyClass": {
+      "description": "Capability safety classes (spec \u00a710.3).",
+      "enum": [
+        "NON_CRITICAL",
+        "COMFORT",
+        "SECURITY_SENSITIVE",
+        "SAFETY_RELATED",
+        "LIFE_SAFETY_CRITICAL"
+      ],
+      "title": "SafetyClass",
+      "type": "string"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/action-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "An authorized, time-bounded, verifiable device command (spec \u00a717).",
+  "properties": {
+    "action_id": {
+      "format": "uuid",
+      "title": "Action Id",
+      "type": "string"
+    },
+    "correlation_id": {
+      "format": "uuid",
+      "title": "Correlation Id",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "decision_id": {
+      "format": "uuid",
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "expected_state": {
+      "$ref": "#/$defs/ExpectedState"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "home_id": {
+      "title": "Home Id",
+      "type": "string"
+    },
+    "idempotency_key": {
+      "title": "Idempotency Key",
+      "type": "string"
+    },
+    "max_attempts": {
+      "default": 2,
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Max Attempts",
+      "type": "integer"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "origin": {
+      "default": "adaptive",
+      "title": "Origin",
+      "type": "string"
+    },
+    "previous_value": {
+      "default": null,
+      "title": "Previous Value"
+    },
+    "reversible": {
+      "default": true,
+      "title": "Reversible",
+      "type": "boolean"
+    },
+    "safety_class": {
+      "$ref": "#/$defs/SafetyClass"
+    },
+    "target": {
+      "$ref": "#/$defs/ActionTarget"
+    },
+    "timeout_seconds": {
+      "default": 10.0,
+      "title": "Timeout Seconds",
+      "type": "number"
+    },
+    "value": {
+      "title": "Value"
+    }
+  },
+  "required": [
+    "action_id",
+    "idempotency_key",
+    "decision_id",
+    "home_id",
+    "correlation_id",
+    "target",
+    "value",
+    "expected_state",
+    "safety_class",
+    "created_at",
+    "expires_at"
+  ],
+  "title": "ActionRequest",
+  "type": "object"
+}

@@ -1,0 +1,264 @@
+{
+  "$defs": {
+    "EvidenceOrigin": {
+      "description": "Where a piece of risk evidence came from \u2014 the load-bearing field.\n\nA `CERTIFIED_ALARM` reading is a device designed and approved to detect the\nhazard. `INFERENCE` is SYLTRA reasoning about combinations of ordinary\nsensors. Only the former may confirm.",
+      "enum": [
+        "CERTIFIED_ALARM",
+        "SENSOR_READING",
+        "INFERENCE",
+        "USER_REPORT",
+        "SYSTEM_HEALTH"
+      ],
+      "title": "EvidenceOrigin",
+      "type": "string"
+    },
+    "RiskCategory": {
+      "description": "Risk Engine case categories (spec \u00a714.5).",
+      "enum": [
+        "GAS",
+        "SMOKE_FIRE",
+        "CARBON_MONOXIDE",
+        "WATER_LEAK",
+        "ELECTRICAL",
+        "TEMPERATURE",
+        "INTRUSION",
+        "DEVICE_FAILURE",
+        "CONNECTIVITY"
+      ],
+      "title": "RiskCategory",
+      "type": "string"
+    },
+    "RiskEvidenceItem": {
+      "additionalProperties": true,
+      "description": "One observation supporting a risk case, with its provenance.",
+      "properties": {
+        "capability": {
+          "title": "Capability",
+          "type": "string"
+        },
+        "device_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Id"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed At"
+        },
+        "origin": {
+          "$ref": "#/$defs/EvidenceOrigin"
+        },
+        "room_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Room Id"
+        },
+        "status": {
+          "default": "KNOWN",
+          "title": "Status",
+          "type": "string"
+        },
+        "value": {
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "origin",
+        "capability"
+      ],
+      "title": "RiskEvidenceItem",
+      "type": "object"
+    },
+    "RiskSeverity": {
+      "enum": [
+        "INFO",
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ],
+      "title": "RiskSeverity",
+      "type": "string"
+    },
+    "RiskState": {
+      "description": "Risk case lifecycle states (spec \u00a714.5).\n\nAI services may only ever produce WATCH and PRE_ALERT; CONFIRMED and\nbeyond require deterministic approved conditions (safety invariant 6).",
+      "enum": [
+        "NORMAL",
+        "WATCH",
+        "PRE_ALERT",
+        "CONFIRMED",
+        "ACTION_IN_PROGRESS",
+        "RECOVERY",
+        "CLOSED"
+      ],
+      "title": "RiskState",
+      "type": "string"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/risk-case.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "An open or closed risk case (spec \u00a714.5).",
+  "properties": {
+    "case_id": {
+      "format": "uuid",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "category": {
+      "$ref": "#/$defs/RiskCategory"
+    },
+    "closed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Closed At"
+    },
+    "confidence": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "confirmed_by": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confirmed By"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/RiskEvidenceItem"
+      },
+      "minItems": 1,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "expires_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Expires At"
+    },
+    "home_id": {
+      "title": "Home Id",
+      "type": "string"
+    },
+    "last_updated_at": {
+      "format": "date-time",
+      "title": "Last Updated At",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "opened_at": {
+      "format": "date-time",
+      "title": "Opened At",
+      "type": "string"
+    },
+    "producer": {
+      "title": "Producer",
+      "type": "string"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "room_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Room Id"
+    },
+    "severity": {
+      "$ref": "#/$defs/RiskSeverity"
+    },
+    "state": {
+      "$ref": "#/$defs/RiskState"
+    }
+  },
+  "required": [
+    "case_id",
+    "home_id",
+    "category",
+    "state",
+    "severity",
+    "confidence",
+    "opened_at",
+    "last_updated_at",
+    "evidence",
+    "reason_codes",
+    "producer"
+  ],
+  "title": "RiskCase",
+  "type": "object"
+}

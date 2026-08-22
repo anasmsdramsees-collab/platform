@@ -1,0 +1,110 @@
+/* GENERATED FROM tokens.json — DO NOT EDIT BY HAND.
+ * Regenerate with `make tokens`. A test fails if this file drifts from
+ * tokens.json (guidelines §24, ADR-008).
+ */
+
+:root {
+  /* Families (§7.1). Named families first, system fallbacks after. */
+  --font-arabic: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', system-ui, sans-serif;
+  --font-latin: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Weights — no more than three (§7.3). */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Type scale (§7.2). */
+  --type-display-size: 32px;
+  --type-display-line: 40px;
+  --type-display-weight: 600;
+  --type-page-title-size: 28px;
+  --type-page-title-line: 36px;
+  --type-page-title-weight: 600;
+  --type-section-title-size: 22px;
+  --type-section-title-line: 30px;
+  --type-section-title-weight: 600;
+  --type-card-title-size: 18px;
+  --type-card-title-line: 26px;
+  --type-card-title-weight: 600;
+  --type-body-large-size: 16px;
+  --type-body-large-line: 26px;
+  --type-body-large-weight: 400;
+  --type-body-size: 14px;
+  --type-body-line: 22px;
+  --type-body-weight: 400;
+  --type-label-size: 13px;
+  --type-label-line: 20px;
+  --type-label-weight: 500;
+  --type-caption-size: 12px;
+  --type-caption-line: 18px;
+  --type-caption-weight: 400;
+  --type-metric-large-size: 32px;
+  --type-metric-large-line: 38px;
+  --type-metric-large-weight: 600;
+  --type-metric-size: 20px;
+  --type-metric-line: 26px;
+  --type-metric-weight: 600;
+}
+
+/* Arabic needs a little more line height than the equivalent
+ * English text (§7.3). */
+[lang="ar"] {
+  --line-height-factor: 1.15;
+}
+
+/* Utility classes for the scale. */
+.type-display {
+  font-size: var(--type-display-size);
+  line-height: calc(var(--type-display-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-display-weight);
+}
+.type-page-title {
+  font-size: var(--type-page-title-size);
+  line-height: calc(var(--type-page-title-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-page-title-weight);
+}
+.type-section-title {
+  font-size: var(--type-section-title-size);
+  line-height: calc(var(--type-section-title-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-section-title-weight);
+}
+.type-card-title {
+  font-size: var(--type-card-title-size);
+  line-height: calc(var(--type-card-title-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-card-title-weight);
+}
+.type-body-large {
+  font-size: var(--type-body-large-size);
+  line-height: calc(var(--type-body-large-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-body-large-weight);
+}
+.type-body {
+  font-size: var(--type-body-size);
+  line-height: calc(var(--type-body-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-body-weight);
+}
+.type-label {
+  font-size: var(--type-label-size);
+  line-height: calc(var(--type-label-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-label-weight);
+}
+.type-caption {
+  font-size: var(--type-caption-size);
+  line-height: calc(var(--type-caption-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-caption-weight);
+}
+.type-metric-large {
+  font-size: var(--type-metric-large-size);
+  line-height: calc(var(--type-metric-large-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-metric-large-weight);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+.type-metric {
+  font-size: var(--type-metric-size);
+  line-height: calc(var(--type-metric-line) * var(--line-height-factor, 1));
+  font-weight: var(--type-metric-weight);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}

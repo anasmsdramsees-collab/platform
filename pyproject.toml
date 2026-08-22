@@ -1,0 +1,102 @@
+# SYLTRA Adaptive Edge Platform — workspace root (virtual: no root package).
+# The Next.js website in src/ is untouched by this toolchain.
+
+[tool.uv.workspace]
+members = [
+    "libs/contracts",
+    "libs/eventing",
+    "libs/observability",
+    "libs/design-tokens",
+    "libs/operations",
+    "libs/security",
+    "libs/testing",
+    "services/edge-agent",
+    "services/digital-twin",
+    "services/context-engine",
+    "services/adaptive-engine",
+    "services/automation-engine",
+    "services/cloud-connector",
+    "services/policy-safety",
+    "services/action-orchestrator",
+    "services/feedback-service",
+    "services/risk-engine",
+    "services/api-gateway",
+    "apps/sila-interface",
+    "simulator",
+]
+# further services join as their first real code lands (Phase 2+).
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12",
+    "mypy>=1.16",
+    "pytest>=8.3",
+    "pytest-asyncio>=1.0",
+    "hypothesis>=6.130",
+    "bandit>=1.8",
+    "coverage[toml]>=7.8",
+    "httpx>=0.28.1",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 99
+extend-exclude = ["src", "node_modules", "public", "scripts"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",    # pycodestyle
+    "F",         # pyflakes
+    "I",         # isort
+    "B",         # bugbear
+    "UP",        # pyupgrade
+    "S",         # bandit-flavored security rules
+    "DTZ",       # naive-datetime bans (UTC discipline, spec §7.4)
+    "RUF",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests only: assert is the point of a test; S105/S106 fire on synthetic
+# credential fixtures used to PROVE redaction works; S311 on seeded RNGs used
+# to make jitter deterministic. Production code keeps every security rule.
+"**/tests/**" = ["S101", "S105", "S106", "S311"]
+"tests/**" = ["S101", "S105", "S106", "S311"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+files = ["libs", "services", "simulator", "tests", "infrastructure/scripts"]
+# `infrastructure/scripts` is not a package, so it needs to be on the search
+# path for the token-drift test to import the builder it verifies.
+mypy_path = ["infrastructure/scripts"]
+# Anchored: excludes the website's root src/ without matching simulator/src/.
+exclude = ["^src/", "^node_modules/"]
+
+# These packages ship no type stubs; we still type-check our own use of them.
+[[tool.mypy.overrides]]
+module = ["sklearn.*", "skl2onnx.*", "onnxruntime.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+# `apps` is in this list because it was not: the wall panel's and the console's
+# own test files were being written, passing when run by hand, and skipped by
+# every `make test` and every CI run. A test nobody runs is documentation with a
+# false badge on it.
+testpaths = ["apps", "libs", "services", "simulator", "tests"]
+asyncio_mode = "auto"
+# importlib import mode lets several services each own a `test_api.py` without
+# the module-name collision the default prepend mode would raise.
+addopts = "-q --strict-markers --import-mode=importlib"
+consider_namespace_packages = true
+markers = [
+    "safety: deterministic safety-invariant tests (must pass with AI services absent)",
+    "contract: schema/contract validation tests",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["libs", "services", "simulator"]
+
+[tool.coverage.report]
+show_missing = true

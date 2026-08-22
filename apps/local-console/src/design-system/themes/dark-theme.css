@@ -1,0 +1,34 @@
+/* GENERATED FROM tokens.json — DO NOT EDIT BY HAND.
+ * Regenerate with `make tokens`. A test fails if this file drifts from
+ * tokens.json (guidelines §24, ADR-008).
+ */
+
+/* Dark theme — the primary platform experience (§6.3).
+ * Declared on bare :root so it is what a browser gets before any
+ * preference is read. */
+:root,
+[data-theme="dark"] {
+  --background: #0A0D10;
+  --surface: #11171C;
+  --surface-raised: #151D23;
+  --surface-overlay: #1C252C;
+  --border: #29343B;
+  --border-strong: #62777F;
+  --text-primary: #F7F4EC;
+  --text-secondary: #B5BEC3;
+  --text-tertiary: #89969D;
+  --text-disabled: #647078;
+  --accent: #2BC4D9;
+  --accent-hover: #59D6E6;
+  --accent-pressed: #169DB0;
+  --focus-ring: #59D6E6;
+  --status-success: #22C55E;
+  --status-warning: #F59E0B;
+  --status-critical: #F87171;
+  --status-info: #60A5FA;
+  --status-unknown: #99A6AE;
+  --status-offline: #829098;
+}
+
+/* An explicit light choice wins over this, and over the system
+ * preference, in both directions. */

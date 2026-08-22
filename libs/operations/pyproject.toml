@@ -1,0 +1,21 @@
+[project]
+name = "syltra-operations"
+version = "0.1.0"
+description = "SYLTRA pilot operations: encrypted backup and restore, watchdogs, privacy tooling"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "cryptography>=44.0",
+    "psycopg2-binary>=2.9",
+    "sqlalchemy>=2.0",
+    "syltra-contracts",
+]
+
+[tool.uv.sources]
+syltra-contracts = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/syltra_operations"]

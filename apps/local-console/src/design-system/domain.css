@@ -1,0 +1,603 @@
+/* SYLTRA domain components (guidelines §13, §14, §20).
+ *
+ * These are the components that know what SYLTRA is about: a property, a room,
+ * a device, an inference, a risk. Everything they need for layout comes from
+ * `primitives.css`; what they add is the arrangement each one is specified to
+ * have, and the states each one must be able to show.
+ *
+ * No colour literals. Every state colour is a status token, and every state
+ * also carries a shape or a label, so none of this depends on seeing colour.
+ */
+
+/* ── 13.1 property status header ── */
+
+.property-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-6);
+  padding: var(--density-card-padding, var(--space-5));
+  background: var(--surface);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-block-end: var(--space-5);
+}
+
+.property-header__identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-inline-end: auto;
+  min-inline-size: 0;
+}
+
+.property-header__name {
+  font-size: var(--type-section-title-size);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+}
+
+/* Each fact is a labelled pair, not a bare number: "23 °C" beside "18:42"
+ * beside "2" is a puzzle, and §23 asks for plain language over density. */
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-inline-size: 0;
+}
+
+.fact__label {
+  font-size: var(--type-caption-size);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.fact__value {
+  font-size: var(--type-body-large-size);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 13.2 room card ── */
+
+.room-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--density-card-padding, var(--space-5));
+  background: var(--surface);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+}
+
+.room-card:hover {
+  border-color: var(--border-strong);
+}
+
+.room-card__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.room-card__name {
+  font-size: var(--type-card-title-size);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+  margin-inline-end: auto;
+}
+
+/* §13.2 says not to put every room metric on the card. Three at most, so the
+ * card stays scannable and the detail view keeps a reason to exist. */
+.room-card__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* ── 13.3 device row ── */
+
+.device-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-inline-size: 0;
+}
+
+/* A device type icon aids recognition; it is never the only thing naming the
+ * device, and it is marked aria-hidden at the usage site. */
+.device-type {
+  inline-size: var(--space-6);
+  block-size: var(--space-6);
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+}
+
+/* §14: OFFLINE shows last seen, STALE shows the age of the data. The age is
+ * part of the state, not a footnote, so it sits with the badge. */
+.state-with-age {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  align-items: flex-start;
+}
+
+.state-age {
+  font-size: var(--type-caption-size);
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 13.5 context indicator ── */
+
+.context-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--density-card-padding, var(--space-5));
+  background: var(--surface);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* Confidence is shown as a qualified level with the number beside it (§13.4:
+ * "do not present confidence as certainty"). The bar is a redundant encoding
+ * of the same number, never the only one. */
+.confidence {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.confidence__level {
+  font-weight: var(--weight-medium);
+}
+
+.confidence__value {
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.confidence__track {
+  flex: 1;
+  min-inline-size: var(--space-16);
+  block-size: var(--space-2);
+  border-radius: var(--radius-round);
+  background: var(--surface-raised);
+  border: var(--control-border-width) solid var(--border);
+  overflow: hidden;
+}
+
+.confidence__fill {
+  block-size: 100%;
+  background: var(--accent);
+}
+
+/* An inference whose evidence has gone stale is not a current inference. */
+.context-card[data-stale] {
+  border-inline-start: 3px solid var(--status-warning);
+}
+
+/* ── 13.4 recommendation card ── */
+
+.recommendation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--density-card-padding, var(--space-5));
+  background: var(--surface);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.recommendation__proposal {
+  font-size: var(--type-card-title-size);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+}
+
+.recommendation__targets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.recommendation__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-start: var(--space-2);
+}
+
+.expiry {
+  font-size: var(--type-caption-size);
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 13.6 risk case card ── */
+
+.risk-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--density-card-padding, var(--space-5));
+  background: var(--surface);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* A confirmed hazard is not a louder advisory. It gets its own edge so the two
+ * cannot be skimmed as the same thing (§15). */
+.risk-card[data-confirmed] {
+  border-inline-start: 4px solid var(--status-critical);
+}
+
+.risk-card[data-advisory] {
+  border-inline-start: 4px dashed var(--status-warning);
+}
+
+/* ── §20 states ── */
+
+/* Every one of these explains what happened, says what is affected, and where
+ * it can, offers one recovery action. None of them is "something went wrong".
+ */
+.notice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.notice__title {
+  font-weight: var(--weight-semibold);
+  margin: 0;
+}
+
+.notice__detail {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.notice__meta {
+  font-size: var(--type-caption-size);
+  color: var(--text-tertiary);
+}
+
+.notice__actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-block-start: var(--space-1);
+}
+
+.notice--offline {
+  border-color: var(--status-offline);
+  border-inline-start-width: 4px;
+}
+
+.notice--stale {
+  border-color: var(--status-warning);
+  border-inline-start-width: 4px;
+  border-inline-start-style: dashed;
+}
+
+.notice--partial {
+  border-color: var(--status-warning);
+  border-inline-start-width: 4px;
+}
+
+.notice--denied {
+  border-color: var(--status-unknown);
+  border-inline-start-width: 4px;
+  border-inline-start-style: dotted;
+}
+
+.notice--failure {
+  border-color: var(--status-critical);
+  border-inline-start-width: 4px;
+}
+
+/* ── filters (§17.6) ── */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+  margin-block-end: var(--space-4);
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.filter__label {
+  font-size: var(--type-caption-size);
+  color: var(--text-secondary);
+}
+
+.filter-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-inline-start: auto;
+  font-size: var(--type-caption-size);
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── definition list for detail views (§17.7) ── */
+
+.detail-list {
+  display: grid;
+  grid-template-columns: minmax(8rem, max-content) minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.detail-list dt {
+  color: var(--text-tertiary);
+  font-size: var(--type-caption-size);
+}
+
+.detail-list dd {
+  margin: 0;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+/* §17.7: low-level identifiers are for authorized technicians. The section is
+ * marked so it never reads as ordinary product information. */
+.diagnostics {
+  border: var(--control-border-width) dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-block-start: var(--space-4);
+}
+
+.diagnostics__label {
+  font-size: var(--type-caption-size);
+  color: var(--text-tertiary);
+  margin-block: 0 var(--space-3);
+}
+
+/* ── §21 critical-action confirmation ──
+ *
+ * For locks, valves, breakers, sirens, security modes and emergency responses.
+ * §21 lists ten things such a dialog must show and eight patterns it must not
+ * use. The layout below exists so those ten have somewhere to go and cannot be
+ * quietly dropped when someone builds the first one in a hurry.
+ *
+ * Nothing here is a shortcut: there is no swipe affordance, no preselected
+ * destructive option, and the confirming control is styled as its own thing
+ * rather than a generic primary button, because §21 forbids a generic "OK" for
+ * a critical confirmation.
+ */
+.critical-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-inline-size: 34rem;
+  padding: var(--space-6);
+  background: var(--surface-overlay);
+  border: 2px solid var(--status-critical);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elevation-dialog);
+}
+
+.critical-confirm__title {
+  font-size: var(--type-section-title-size);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+}
+
+/* The state change is the sentence a person actually reads. Current and
+ * intended sit side by side so the difference is the thing that stands out,
+ * and the arrow mirrors in Arabic because it is directional. */
+.state-change {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: var(--control-border-width) solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.state-change__from,
+.state-change__to {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-inline-size: 0;
+}
+
+.state-change__label {
+  font-size: var(--type-caption-size);
+  color: var(--text-tertiary);
+}
+
+.state-change__value {
+  font-size: var(--type-body-large-size);
+  font-weight: var(--weight-semibold);
+}
+
+.state-change__to .state-change__value {
+  color: var(--status-critical);
+}
+
+.state-change__arrow {
+  flex: none;
+  color: var(--text-tertiary);
+}
+
+/* Impact, permission and reversibility are three separate claims and §21 asks
+ * for all three. Collapsing them into one paragraph is how they get lost. */
+.critical-confirm__facts {
+  display: grid;
+  grid-template-columns: minmax(7rem, max-content) minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.critical-confirm__facts dt {
+  color: var(--text-tertiary);
+  font-size: var(--type-caption-size);
+}
+
+.critical-confirm__facts dd {
+  margin: 0;
+}
+
+/* Reversibility is the one a person most needs to see before deciding, so it
+ * is marked rather than left as one row among four. */
+.reversible-no {
+  color: var(--status-critical);
+  font-weight: var(--weight-semibold);
+}
+
+.critical-confirm__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Cancel comes first in the reading order and carries no destructive styling.
+ * §21 forbids a preselected dangerous option, so nothing here is autofocused
+ * and the confirming control is never the default. */
+.critical-confirm__actions .btn--critical-confirm {
+  margin-inline-start: auto;
+}
+
+/* Dispatch and verification progress (§21 points 9 and 10). A critical result
+ * is never auto-dismissed, so this stays until it is acknowledged. */
+.dispatch-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.dispatch-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.dispatch-step__marker {
+  inline-size: var(--space-3);
+  block-size: var(--space-3);
+  flex: none;
+  border-radius: var(--radius-round);
+  border: 2px solid var(--border-strong);
+}
+
+.dispatch-step[data-state="done"] .dispatch-step__marker {
+  background: var(--status-success);
+  border-color: var(--status-success);
+}
+
+.dispatch-step[data-state="active"] .dispatch-step__marker {
+  border-color: var(--accent);
+  border-style: dashed;
+}
+
+.dispatch-step[data-state="failed"] .dispatch-step__marker {
+  background: var(--status-critical);
+  border-color: var(--status-critical);
+}
+
+/* ── §17.11 data quality ── */
+
+/* "Data completeness and freshness" is a first-class part of an energy view,
+ * not a footnote: a number computed from two of five meters is a different
+ * claim from the same number computed from all five. */
+.data-quality {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: var(--control-border-width) dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  margin-block-end: var(--space-5);
+}
+
+.coverage-bar {
+  inline-size: 100%;
+  block-size: var(--space-2);
+  border-radius: var(--radius-round);
+  background: var(--surface-raised);
+  border: var(--control-border-width) solid var(--border);
+  overflow: hidden;
+}
+
+.coverage-bar__fill {
+  block-size: 100%;
+  background: var(--accent);
+}
+
+/* ── power over time (§27 criterion 9) ──
+ *
+ * Bars rather than a line, because the series has holes in it by design and a
+ * line would have to either join across a gap — claiming a consumption nobody
+ * measured — or break in a way that reads as a rendering fault. A missing hour
+ * is simply a column that is not there.
+ */
+.chart--bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-1);
+  block-size: 8rem;
+  padding-block: var(--space-2);
+  border-block-end: var(--control-border-width) solid var(--border);
+  overflow-x: auto;
+}
+
+.chart__column {
+  position: relative;
+  flex: 1 0 var(--space-3);
+  block-size: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.chart__bar {
+  inline-size: 100%;
+  background: var(--accent);
+  border-start-start-radius: var(--radius-sm);
+  border-start-end-radius: var(--radius-sm);
+}
+
+/* An hour the meter barely reported in. Hatched rather than merely paler:
+ * §8 forbids carrying a state by colour alone, and "we are less sure of this
+ * bar" is a state. */
+.chart__bar[data-sparse="true"] {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--accent),
+    var(--accent) 2px,
+    transparent 2px,
+    transparent 5px
+  );
+}
+
+/* The peak inside the hour, which the mean hides. */
+.chart__peak {
+  position: absolute;
+  inline-size: 100%;
+  block-size: 2px;
+  background: var(--text-tertiary);
+}

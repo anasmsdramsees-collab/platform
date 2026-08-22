@@ -1,0 +1,189 @@
+{
+  "$defs": {
+    "ContextType": {
+      "description": "Initial contexts (spec \u00a714.3). A closed vocabulary.",
+      "enum": [
+        "HOME_OCCUPIED",
+        "HOME_EMPTY",
+        "ROOM_OCCUPIED",
+        "SLEEPING",
+        "COOKING",
+        "ARRIVING",
+        "LEAVING",
+        "QUIET_HOURS",
+        "CHILD_PRESENT",
+        "HIGH_ENERGY_USAGE",
+        "POSSIBLE_WATER_LEAK",
+        "POSSIBLE_GAS_RISK",
+        "DEVICE_CONNECTIVITY_DEGRADED"
+      ],
+      "title": "ContextType",
+      "type": "string"
+    },
+    "EvidenceItem": {
+      "additionalProperties": true,
+      "description": "One observation supporting a context, with its provenance.",
+      "properties": {
+        "capability": {
+          "title": "Capability",
+          "type": "string"
+        },
+        "device_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Id"
+        },
+        "event_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Event Id"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed At"
+        },
+        "room_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Room Id"
+        },
+        "status": {
+          "default": "KNOWN",
+          "title": "Status",
+          "type": "string"
+        },
+        "value": {
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "capability"
+      ],
+      "title": "EvidenceItem",
+      "type": "object"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/context-record.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "An active or expired context (spec \u00a714.3 required fields).",
+  "properties": {
+    "confidence": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "context_id": {
+      "format": "uuid",
+      "title": "Context Id",
+      "type": "string"
+    },
+    "context_type": {
+      "$ref": "#/$defs/ContextType"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/EvidenceItem"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "home_id": {
+      "title": "Home Id",
+      "type": "string"
+    },
+    "last_updated_at": {
+      "format": "date-time",
+      "title": "Last Updated At",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "producer": {
+      "title": "Producer",
+      "type": "string"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "scope": {
+      "title": "Scope",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "context_id",
+    "home_id",
+    "context_type",
+    "scope",
+    "started_at",
+    "last_updated_at",
+    "expires_at",
+    "confidence",
+    "producer"
+  ],
+  "title": "ContextRecord",
+  "type": "object"
+}

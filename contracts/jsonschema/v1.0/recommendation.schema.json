@@ -1,0 +1,148 @@
+{
+  "$defs": {
+    "ModelReference": {
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "ModelReference",
+      "type": "object"
+    },
+    "RecommendationTarget": {
+      "additionalProperties": true,
+      "properties": {
+        "capability": {
+          "title": "Capability",
+          "type": "string"
+        },
+        "device_id": {
+          "title": "Device Id",
+          "type": "string"
+        },
+        "room_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Room Id"
+        }
+      },
+      "required": [
+        "device_id",
+        "capability"
+      ],
+      "title": "RecommendationTarget",
+      "type": "object"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/recommendation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "An advisory proposal produced by the Adaptive Engine (spec \u00a715).",
+  "properties": {
+    "confidence": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "evidence_event_ids": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "title": "Evidence Event Ids",
+      "type": "array"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "home_id": {
+      "title": "Home Id",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "model": {
+      "$ref": "#/$defs/ModelReference"
+    },
+    "proposed_value": {
+      "title": "Proposed Value"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "recommendation_id": {
+      "format": "uuid",
+      "title": "Recommendation Id",
+      "type": "string"
+    },
+    "recommendation_type": {
+      "title": "Recommendation Type",
+      "type": "string"
+    },
+    "required_policy": {
+      "title": "Required Policy",
+      "type": "string"
+    },
+    "requires_user_approval": {
+      "default": true,
+      "title": "Requires User Approval",
+      "type": "boolean"
+    },
+    "shadow": {
+      "default": false,
+      "title": "Shadow",
+      "type": "boolean"
+    },
+    "target": {
+      "$ref": "#/$defs/RecommendationTarget"
+    }
+  },
+  "required": [
+    "recommendation_id",
+    "home_id",
+    "recommendation_type",
+    "created_at",
+    "expires_at",
+    "target",
+    "proposed_value",
+    "confidence",
+    "reason_codes",
+    "model",
+    "required_policy"
+  ],
+  "title": "Recommendation",
+  "type": "object"
+}

@@ -1,0 +1,12 @@
+{
+  "domain": "syltra_edge",
+  "name": "SYLTRA Edge",
+  "codeowners": ["@syltra"],
+  "config_flow": true,
+  "documentation": "https://docs.syltra.local/integrations/syltra_edge",
+  "integration_type": "service",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://docs.syltra.local/support",
+  "requirements": [],
+  "version": "0.1.0"
+}

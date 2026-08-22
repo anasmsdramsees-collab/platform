@@ -1,0 +1,54 @@
+/* GENERATED FROM tokens.json — DO NOT EDIT BY HAND.
+ * Regenerate with `make tokens`. A test fails if this file drifts from
+ * tokens.json (guidelines §24, ADR-008).
+ */
+
+/* Light theme (§6.4). Applied by explicit choice, or by system
+ * preference when no explicit choice has been made. */
+[data-theme="light"] {
+  --background: #F5F3ED;
+  --surface: #FFFFFF;
+  --surface-raised: #FBFAF7;
+  --surface-overlay: #FFFFFF;
+  --border: #D7D3C9;
+  --border-strong: #8C8474;
+  --text-primary: #11171C;
+  --text-secondary: #4E5A61;
+  --text-tertiary: #626D73;
+  --text-disabled: #7E8B90;
+  --accent: #0E7281;
+  --accent-hover: #169DB0;
+  --accent-pressed: #0A5661;
+  --focus-ring: #0E7281;
+  --status-success: #15803D;
+  --status-warning: #8A5A05;
+  --status-critical: #C81E1E;
+  --status-info: #1259C3;
+  --status-unknown: #5F6B72;
+  --status-offline: #556169;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --background: #F5F3ED;
+    --surface: #FFFFFF;
+    --surface-raised: #FBFAF7;
+    --surface-overlay: #FFFFFF;
+    --border: #D7D3C9;
+    --border-strong: #8C8474;
+    --text-primary: #11171C;
+    --text-secondary: #4E5A61;
+    --text-tertiary: #626D73;
+    --text-disabled: #7E8B90;
+    --accent: #0E7281;
+    --accent-hover: #169DB0;
+    --accent-pressed: #0A5661;
+    --focus-ring: #0E7281;
+    --status-success: #15803D;
+    --status-warning: #8A5A05;
+    --status-critical: #C81E1E;
+    --status-info: #1259C3;
+    --status-unknown: #5F6B72;
+    --status-offline: #556169;
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "case_id": "99999999-9999-4999-8999-999999999999",
+  "category": "WATER_LEAK",
+  "closed_at": null,
+  "confidence": 0.4,
+  "confirmed_by": null,
+  "evidence": [
+    {
+      "capability": "environment.humidity",
+      "device_id": "humidity_bath",
+      "note": "Inference only. WATCH cannot act; only a certified alarm confirms.",
+      "observed_at": "2026-08-20T21:30:00Z",
+      "origin": "SENSOR_READING",
+      "room_id": "bathroom",
+      "status": "KNOWN",
+      "value": 78.0
+    }
+  ],
+  "expires_at": null,
+  "home_id": "home_example",
+  "last_updated_at": "2026-08-20T21:30:00Z",
+  "metadata": {},
+  "opened_at": "2026-08-20T21:30:00Z",
+  "producer": "risk-engine",
+  "reason_codes": [
+    "ADVISORY_PENDING_CONFIRMATION"
+  ],
+  "room_id": null,
+  "severity": "LOW",
+  "state": "WATCH"
+}

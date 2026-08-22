@@ -1,0 +1,11 @@
+# Provisioned so the stack comes up already configured. A dashboard that needs
+# a person to add a datasource before it shows anything is a dashboard nobody
+# opens twice.
+apiVersion: 1
+datasources:
+  - name: SYLTRA
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: false

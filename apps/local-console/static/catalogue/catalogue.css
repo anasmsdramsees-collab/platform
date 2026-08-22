@@ -1,0 +1,270 @@
+/* Layout for the component catalogue itself (ADR-008).
+ *
+ * This stylesheet dresses the catalogue page. The components it displays are
+ * styled entirely by the design system — nothing here restyles a component, or
+ * the catalogue would stop being evidence of what the design system does.
+ *
+ * No colour literals: the catalogue is subject to the same rule as every other
+ * surface, and the test suite checks it.
+ */
+
+.catalogue {
+  min-block-size: 100vh;
+}
+
+/* ── controls bar ── */
+
+.catalogue__bar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: var(--surface);
+  border-block-end: 1px solid var(--border);
+}
+
+.catalogue__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-inline-end: auto;
+}
+
+.catalogue__wordmark {
+  font-size: var(--type-section-title-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.08em;
+}
+
+.catalogue__tagline {
+  color: var(--text-tertiary);
+  font-size: var(--type-caption-size);
+}
+
+.catalogue__control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--type-caption-size);
+  color: var(--text-secondary);
+}
+
+/* ── page shell ── */
+
+.catalogue__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-6);
+}
+
+@media (min-width: 60rem) {
+  .catalogue__body {
+    grid-template-columns: 14rem minmax(0, 1fr);
+  }
+}
+
+.catalogue__nav {
+  align-self: start;
+  position: sticky;
+  inset-block-start: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.catalogue__nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.catalogue__nav a:hover {
+  background: var(--surface-raised);
+  color: var(--text-primary);
+}
+
+.catalogue__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  min-inline-size: 0;
+}
+
+/* ── sections and specimens ── */
+
+.section > h2 {
+  font-size: var(--type-section-title-size);
+  font-weight: var(--weight-semibold);
+  margin-block: 0 var(--space-2);
+}
+
+.section__intent {
+  color: var(--text-secondary);
+  max-inline-size: var(--layout-readable-column);
+  margin-block: 0 var(--space-6);
+}
+
+.specimen {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-block-end: var(--space-6);
+}
+
+.specimen__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-raised);
+  border-block-end: 1px solid var(--border);
+  font-size: var(--type-caption-size);
+  font-weight: var(--weight-medium);
+}
+
+.specimen__note {
+  font-weight: var(--weight-regular);
+  color: var(--text-tertiary);
+}
+
+.specimen__stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--surface);
+}
+
+.specimen__stage--column {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ── swatches ── */
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--space-3);
+  inline-size: 100%;
+}
+
+.swatch {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.swatch__chip {
+  block-size: var(--space-12);
+}
+
+.swatch__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-raised);
+  font-size: var(--type-caption-size);
+}
+
+.swatch__value {
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+
+/* ── contrast readout ── */
+
+.contrast-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: var(--surface-raised);
+  border-block-start: 1px solid var(--border);
+  font-size: var(--type-caption-size);
+}
+
+.contrast-summary strong {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── spacing and radius rulers ── */
+
+.ruler {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  inline-size: 100%;
+}
+
+.ruler__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--type-caption-size);
+}
+
+.ruler__key {
+  inline-size: 6rem;
+  color: var(--text-secondary);
+}
+
+.ruler__bar {
+  block-size: var(--space-3);
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.radius-sample {
+  inline-size: var(--space-16);
+  block-size: var(--space-16);
+  display: grid;
+  place-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+  font-size: var(--type-caption-size);
+  color: var(--text-secondary);
+}
+
+/* ── type ramp ── */
+
+.ramp__row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-block: var(--space-2);
+  border-block-end: 1px solid var(--border);
+}
+
+.ramp__key {
+  inline-size: 8rem;
+  flex: none;
+  color: var(--text-tertiary);
+  font-size: var(--type-caption-size);
+}
+
+/* The shell is `min-block-size: 100vh` by design, so the catalogue shows it
+ * inside a bounded frame. The frame constrains height only — every geometry
+ * the specimen demonstrates is the shell's own. */
+.shell-frame {
+  block-size: 26rem;
+  inline-size: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  container-type: inline-size;
+}
+
+.shell-frame .app-shell {
+  min-block-size: 100%;
+  block-size: 100%;
+}

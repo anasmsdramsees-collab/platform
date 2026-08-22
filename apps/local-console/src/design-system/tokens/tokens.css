@@ -1,0 +1,96 @@
+/* GENERATED FROM tokens.json — DO NOT EDIT BY HAND.
+ * Regenerate with `make tokens`. A test fails if this file drifts from
+ * tokens.json (guidelines §24, ADR-008).
+ */
+
+:root {
+  /* Brand palette (§6.1) — Graphite, Sand, Electric Cyan. */
+  --syltra-graphite-950: #080B0D;
+  --syltra-graphite-900: #0A0D10;
+  --syltra-graphite-850: #0E1317;
+  --syltra-graphite-800: #11171C;
+  --syltra-graphite-750: #151D23;
+  --syltra-graphite-700: #1C252C;
+  --syltra-graphite-600: #29343B;
+  --syltra-sand-50: #F7F4EC;
+  --syltra-sand-100: #EFEADF;
+  --syltra-sand-200: #DDD6C8;
+  --syltra-cyan-400: #59D6E6;
+  --syltra-cyan-500: #2BC4D9;
+  --syltra-cyan-600: #169DB0;
+  --syltra-cyan-700: #0E7281;
+
+  /* Semantic status (§6.2). Green lives here and nowhere else. */
+  --status-success: #22C55E;
+  --status-warning: #F59E0B;
+  --status-critical: #EF4444;
+  --status-info: #3B82F6;
+  --status-unknown: #7D8A92;
+  --status-offline: #64727A;
+
+  /* Spacing, 4px base (§8.1). */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radius (§8.2). */
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-round: 999px;
+
+  /* Elevation (§8.3) — popovers, dialogs, menus only. */
+  --elevation-none: none;
+  --elevation-popover: 0 4px 12px rgba(8, 11, 13, 0.24);
+  --elevation-dialog: 0 12px 32px rgba(8, 11, 13, 0.36);
+  --elevation-drawer: 0 8px 24px rgba(8, 11, 13, 0.28);
+
+  /* Motion (§19). */
+  --motion-fast: 120ms;
+  --motion-standard: 180ms;
+  --motion-slow: 240ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0.2, 1);
+  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Desktop shell geometry (§9.2). */
+  --layout-sidebar-expanded: 232px;
+  --layout-sidebar-collapsed: 72px;
+  --layout-topbar-height: 64px;
+  --layout-content-padding-inline: 36px;
+  --layout-content-padding-block: 28px;
+  --layout-grid-columns: 12;
+  --layout-grid-gap: 24px;
+  --layout-readable-column: 72ch;
+  --layout-breakpoint-minimum: 768px;
+  --layout-breakpoint-tablet-wide: 900px;
+  --layout-breakpoint-desktop: 1200px;
+  --layout-breakpoint-desktop-large: 1440px;
+
+  /* Control sizing (§12.1, §22). */
+  --control-height-comfortable: 44px;
+  --control-height-compact: 36px;
+  --control-height-minimum: 24px;
+  --control-focus-ring-width: 3px;
+  --control-focus-ring-offset: 2px;
+  --control-border-width: 1px;
+}
+
+/* Density (§8.4). Comfortable is the default. */
+:root, [data-density='comfortable'] {
+  --density-control-height: 44px;
+  --density-row-padding-block: 12px;
+  --density-card-padding: 20px;
+}
+[data-density='compact'] {
+  --density-control-height: 36px;
+  --density-row-padding-block: 8px;
+  --density-card-padding: 16px;
+}

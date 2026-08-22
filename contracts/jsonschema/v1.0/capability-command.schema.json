@@ -1,0 +1,37 @@
+{
+  "$id": "https://contracts.syltra.local/1.0/capability-command.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "A normalized write against a capability \u2014 the ONLY way core services\nexpress device control. Vendor service mapping happens inside the adapter.",
+  "properties": {
+    "capability": {
+      "title": "Capability",
+      "type": "string"
+    },
+    "correlation_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Correlation Id"
+    },
+    "device_id": {
+      "title": "Device Id",
+      "type": "string"
+    },
+    "value": {
+      "title": "Value"
+    }
+  },
+  "required": [
+    "device_id",
+    "capability",
+    "value"
+  ],
+  "title": "CapabilityCommand",
+  "type": "object"
+}

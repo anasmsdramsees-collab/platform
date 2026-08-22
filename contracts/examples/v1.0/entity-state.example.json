@@ -1,0 +1,9 @@
+{
+  "attributes": {
+    "temperature": 23.0
+  },
+  "available": true,
+  "entity_id": "climate.living_room",
+  "last_updated": "2026-08-20T19:30:03Z",
+  "state": "cool"
+}

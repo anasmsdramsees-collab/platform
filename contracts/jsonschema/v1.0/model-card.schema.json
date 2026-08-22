@@ -1,0 +1,65 @@
+{
+  "$defs": {
+    "PrivacyClass": {
+      "description": "Data privacy classes (spec \u00a726).",
+      "enum": [
+        "PUBLIC",
+        "SYSTEM_INTERNAL",
+        "HOUSEHOLD_PRIVATE",
+        "PERSONAL_SENSITIVE",
+        "SAFETY_CRITICAL"
+      ],
+      "title": "PrivacyClass",
+      "type": "string"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/model-card.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Human-readable account of what a model is and is not (spec \u00a719.3).",
+  "properties": {
+    "ethical_and_safety_notes": {
+      "title": "Ethical And Safety Notes",
+      "type": "string"
+    },
+    "evaluation": {
+      "title": "Evaluation",
+      "type": "string"
+    },
+    "intended_use": {
+      "title": "Intended Use",
+      "type": "string"
+    },
+    "limitations": {
+      "title": "Limitations",
+      "type": "string"
+    },
+    "out_of_scope_use": {
+      "title": "Out Of Scope Use",
+      "type": "string"
+    },
+    "privacy_classification": {
+      "$ref": "#/$defs/PrivacyClass",
+      "default": "HOUSEHOLD_PRIVATE"
+    },
+    "summary": {
+      "title": "Summary",
+      "type": "string"
+    },
+    "training_data": {
+      "title": "Training Data",
+      "type": "string"
+    }
+  },
+  "required": [
+    "summary",
+    "intended_use",
+    "out_of_scope_use",
+    "training_data",
+    "evaluation",
+    "limitations",
+    "ethical_and_safety_notes"
+  ],
+  "title": "ModelCard",
+  "type": "object"
+}

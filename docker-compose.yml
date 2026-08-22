@@ -1,0 +1,255 @@
+# SYLTRA Adaptive Edge Platform — development stack (Phase 0 skeleton).
+#
+# Phase 0 defines the infrastructure services; SYLTRA services (edge-agent,
+# digital-twin, ...) join in Phase 1+ as they gain real implementations.
+# Security posture (spec §25.2): brokers and the database live on the private
+# `backend` network; only developer-facing ports are published, and only on
+# loopback. No default public listeners.
+#
+# Credentials come from .env (see .env.example — placeholders only, never
+# commit real values).
+
+# Project name must stay distinct from any other compose project on the host:
+# a shared name makes Compose adopt (and recreate) the other project's
+# containers as if they were ours. An unrelated `syltra-platform` project
+# already exists on this machine.
+name: syltra-adaptive-edge
+
+networks:
+  backend:
+    internal: false # becomes internal once all SYLTRA services are containerized (Phase 1)
+
+volumes:
+  postgres-data:
+  nats-data:
+  mosquitto-data:
+  prometheus-data:
+  grafana-data:
+
+services:
+  homeassistant:
+    # Home Assistant Core: embedded, replaceable, UNMODIFIED integration runtime
+    # (ADR-001). Dev/installer diagnostic UI only — never the SYLTRA customer UI.
+    # Pinned exactly; compatibility matrix in docs/adr/ADR-002 (addendum).
+    image: ghcr.io/home-assistant/home-assistant:2026.8.1
+    restart: unless-stopped
+    networks: [backend]
+    ports:
+      - "127.0.0.1:8123:8123" # dev diagnostic UI
+    volumes:
+      - ./config/home-assistant:/config
+    environment:
+      TZ: ${TZ:-UTC}
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request as u; u.urlopen('http://localhost:8123/', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    networks: [backend]
+    ports:
+      - "127.0.0.1:1883:1883" # local dev access; containers use the backend network
+    volumes:
+      - ./config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - mosquitto-data:/mosquitto/data
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -E -t '$$SYS/#' -i healthcheck || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  nats:
+    image: nats:2.11-alpine
+    restart: unless-stopped
+    networks: [backend]
+    command:
+      - "--jetstream"
+      - "--store_dir=/data"
+      - "--user=${NATS_USER:-syltra}"
+      - "--pass=${NATS_PASSWORD:?set NATS_PASSWORD in .env}"
+      # Monitoring endpoint, required by the healthcheck below. Bound inside
+      # the container only — it is not published to the host.
+      - "--http_port=8222"
+    ports:
+      - "127.0.0.1:4222:4222" # local dev access; containers use the backend network
+    volumes:
+      - nats-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:8222/healthz || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  postgres:
+    # Plain PostgreSQL 16. Spec §7.4 makes TimescaleDB conditional ("if
+    # compatible with the selected target"); ADR-005 records why it is deferred
+    # until event volumes justify it. Nothing in the schema depends on it.
+    image: postgres:16-alpine
+    restart: unless-stopped
+    networks: [backend]
+    ports:
+      - "127.0.0.1:5432:5432" # local dev access; containers use the backend network
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-syltra}
+      POSTGRES_USER: ${POSTGRES_USER:-syltra}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  edge-agent:
+    build:
+      context: .
+      dockerfile: services/edge-agent/Dockerfile
+    restart: unless-stopped
+    networks: [backend]
+    depends_on:
+      nats:
+        condition: service_healthy
+      homeassistant:
+        condition: service_started
+    ports:
+      - "127.0.0.1:8081:8081" # health and metrics
+    environment:
+      HOME_ASSISTANT_URL: http://homeassistant:8123
+      HOME_ASSISTANT_TOKEN: ${HOME_ASSISTANT_TOKEN:?create a long-lived token in HA and set it in .env}
+      NATS_URL: nats://nats:4222
+      NATS_USER: ${NATS_USER:-syltra}
+      NATS_PASSWORD: ${NATS_PASSWORD:?set NATS_PASSWORD in .env}
+      SYLTRA_HOME_ID: ${SYLTRA_HOME_ID:-home_dev_001}
+      SYLTRA_HUB_ID: ${SYLTRA_HUB_ID:-hub_dev_001}
+      SYLTRA_ENVIRONMENT: ${SYLTRA_ENVIRONMENT:-development}
+      SYLTRA_LOG_LEVEL: ${SYLTRA_LOG_LEVEL:-INFO}
+
+  digital-twin:
+    build:
+      context: .
+      dockerfile: services/digital-twin/Dockerfile
+    restart: unless-stopped
+    networks: [backend]
+    depends_on:
+      nats:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8082:8082" # health, metrics and read APIs
+    environment:
+      NATS_URL: nats://nats:4222
+      NATS_USER: ${NATS_USER:-syltra}
+      NATS_PASSWORD: ${NATS_PASSWORD:?set NATS_PASSWORD in .env}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-syltra}
+      POSTGRES_USER: ${POSTGRES_USER:-syltra}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      SYLTRA_HOME_ID: ${SYLTRA_HOME_ID:-home_dev_001}
+      SYLTRA_HUB_ID: ${SYLTRA_HUB_ID:-hub_dev_001}
+      SYLTRA_LOG_LEVEL: ${SYLTRA_LOG_LEVEL:-INFO}
+
+  context-engine:
+    build:
+      context: .
+      dockerfile: services/context-engine/Dockerfile
+    restart: unless-stopped
+    networks: [backend]
+    depends_on:
+      nats:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8083:8083" # health, metrics and context API
+    environment:
+      NATS_URL: nats://nats:4222
+      NATS_USER: ${NATS_USER:-syltra}
+      NATS_PASSWORD: ${NATS_PASSWORD:?set NATS_PASSWORD in .env}
+      SYLTRA_HOME_ID: ${SYLTRA_HOME_ID:-home_dev_001}
+      SYLTRA_HUB_ID: ${SYLTRA_HUB_ID:-hub_dev_001}
+      SYLTRA_LOG_LEVEL: ${SYLTRA_LOG_LEVEL:-INFO}
+
+  adaptive-engine:
+    build:
+      context: .
+      dockerfile: services/adaptive-engine/Dockerfile
+    restart: unless-stopped
+    networks: [backend]
+    depends_on:
+      nats:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8084:8084" # health, metrics, model and shadow APIs
+    environment:
+      NATS_URL: nats://nats:4222
+      NATS_USER: ${NATS_USER:-syltra}
+      NATS_PASSWORD: ${NATS_PASSWORD:?set NATS_PASSWORD in .env}
+      SYLTRA_HOME_ID: ${SYLTRA_HOME_ID:-home_dev_001}
+      SYLTRA_HUB_ID: ${SYLTRA_HUB_ID:-hub_dev_001}
+      SYLTRA_LOG_LEVEL: ${SYLTRA_LOG_LEVEL:-INFO}
+      # Phase 4 ships in SHADOW: predictions recorded, never shown or executed.
+      DEFAULT_LEARNING_MODE: ${DEFAULT_LEARNING_MODE:-SHADOW}
+
+  # ── observability (spec §29) ──
+  #
+  # Behind a profile, so `make up` stays the small stack and a hub that does not
+  # want two more containers does not get them:
+  #
+  #     docker compose --profile observability up -d
+  #
+  # Both are bound to 127.0.0.1 and sit on the backend network. Nothing here
+  # reaches outside the hub: spec §0 rule 14 says loss of internet must not stop
+  # local control, and an observability stack that phoned home would be the
+  # first thing to break that.
+
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    profiles: ["observability"]
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      # A pilot week, kept locally. Long enough to read the week back; short
+      # enough that a hub disk does not fill while nobody is watching.
+      - --storage.tsdb.retention.time=30d
+      - --web.listen-address=0.0.0.0:9090
+    volumes:
+      - ./config/observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "127.0.0.1:9090:9090" # local dev access only
+    networks: [backend]
+
+  grafana:
+    image: grafana/grafana:11.5.1
+    profiles: ["observability"]
+    restart: unless-stopped
+    depends_on: [prometheus]
+    environment:
+      # A pilot hub on a household network. Anonymous read access with no
+      # sign-up, no telemetry home, and no alerting to an address nobody owns.
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?set GRAFANA_ADMIN_PASSWORD in .env}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_NEWS_NEWS_FEED_ENABLED: "false"
+    volumes:
+      - ./config/observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./config/observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "127.0.0.1:3001:3000" # 3000 is the website's; the hub dashboard takes 3001
+    networks: [backend]
+
+  # ── Phase 5+ services (uncommented as their implementations land) ──
+  # risk-engine:           services/risk-engine
+  # policy-safety:         services/policy-safety
+  # action-orchestrator:   services/action-orchestrator
+  # feedback-service:      services/feedback-service
+  # api-gateway:           services/api-gateway   (the only publicly exposed SYLTRA service)
+  # simulator:             simulator/

@@ -1,0 +1,32 @@
+/* GENERATED FROM tokens.json — DO NOT EDIT BY HAND.
+ * Regenerate with `make tokens`. A test fails if this file drifts from
+ * tokens.json (guidelines §24, ADR-008).
+ */
+
+:root {
+  --motion-fast: 120ms;
+  --motion-standard: 180ms;
+  --motion-slow: 240ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0.2, 1);
+  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* §19 and §22: respect prefers-reduced-motion. Durations collapse to
+ * a value that is effectively instant but still fires transitionend,
+ * so state-change handlers that wait on it do not hang. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 1ms;
+    --motion-standard: 1ms;
+    --motion-slow: 1ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

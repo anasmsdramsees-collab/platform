@@ -1,0 +1,608 @@
+/* SYLTRA primitives (guidelines §12).
+ *
+ * The shared component layer. Phase UI-0 builds the primitives the guidelines
+ * require *before* screens (rule 1); the shell, navigation and domain
+ * components follow in UI-1 and UI-2.
+ *
+ * No colour literal appears in this file. Every value is a token, so a theme
+ * change never requires a layout change — the UI-0 acceptance criterion.
+ */
+
+/* ── buttons (§12.1) ── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: var(--density-control-height, var(--control-height-comfortable));
+  padding-inline: var(--space-4);
+  padding-block: var(--space-2);
+  border: var(--control-border-width) solid transparent;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--motion-ease),
+    border-color var(--motion-fast) var(--motion-ease);
+}
+
+/* One primary action per local action group (§12.1). */
+.btn--primary {
+  background: var(--accent);
+  color: var(--background);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn--primary:active:not(:disabled) {
+  background: var(--accent-pressed);
+}
+
+.btn--secondary {
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  border-color: var(--border-strong);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--surface-raised);
+  color: var(--text-primary);
+}
+
+/* Destructive requires explicit context; red is reserved for genuinely
+ * destructive actions, not ordinary settings (§6.5, §12.1). */
+.btn--destructive {
+  background: transparent;
+  color: var(--status-critical);
+  border-color: var(--status-critical);
+}
+
+.btn--destructive:hover:not(:disabled) {
+  background: var(--status-critical);
+  color: var(--background);
+}
+
+/* Critical confirmation uses red only at the final confirmation step (§12.1).
+ * It is deliberately a separate class so an ordinary destructive button cannot
+ * be mistaken for one. */
+.btn--critical-confirm {
+  background: var(--status-critical);
+  color: var(--background);
+  border-color: var(--status-critical);
+  font-weight: var(--weight-semibold);
+}
+
+.btn--icon {
+  padding-inline: var(--space-2);
+  min-inline-size: var(--density-control-height, var(--control-height-comfortable));
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Loading state preserves button width (§12.1) — the label stays in flow and
+ * is hidden visually, so the button cannot resize mid-action. */
+.btn[aria-busy="true"] .btn__label {
+  visibility: hidden;
+}
+
+.btn[aria-busy="true"] {
+  position: relative;
+}
+
+.btn[aria-busy="true"]::after {
+  content: "";
+  position: absolute;
+  inline-size: 1em;
+  block-size: 1em;
+  border: 2px solid currentColor;
+  border-block-start-color: transparent;
+  border-radius: var(--radius-round);
+  animation: syltra-spin var(--motion-slow) linear infinite;
+}
+
+@keyframes syltra-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── form fields (§12.2) ── */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Every field has a persistent visible label (§12.2). */
+.field__label {
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+.field__required {
+  color: var(--status-critical);
+  margin-inline-start: var(--space-1);
+}
+
+.input,
+.select,
+.textarea {
+  min-block-size: var(--density-control-height, var(--control-height-comfortable));
+  padding-inline: var(--space-3);
+  padding-block: var(--space-2);
+  background: var(--surface);
+  color: var(--text-primary);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  font: inherit;
+  text-align: start;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  /* Placeholder is an example, not the label (§12.2). */
+  color: var(--text-tertiary);
+}
+
+.input:disabled,
+.select:disabled,
+.textarea:disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+/* Help and error text occupy predictable space (§12.2), so a message appearing
+ * does not shift the form beneath it. */
+.field__help,
+.field__error {
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  min-block-size: var(--type-caption-line);
+}
+
+.field__help {
+  color: var(--text-tertiary);
+}
+
+/* Validation must not rely on colour (§12.2): the error carries an icon and
+ * text, and the control gains a thicker border as a non-colour cue. */
+.field__error {
+  color: var(--status-critical);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.input[aria-invalid="true"],
+.select[aria-invalid="true"],
+.textarea[aria-invalid="true"] {
+  border-color: var(--status-critical);
+  border-inline-start-width: 3px;
+}
+
+.textarea {
+  min-block-size: calc(var(--space-16) + var(--space-8));
+  resize: vertical;
+}
+
+/* Switch is for immediate binary settings only (§12.2). */
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.switch__track {
+  inline-size: var(--space-10);
+  block-size: var(--space-5);
+  background: var(--surface-overlay);
+  border: var(--control-border-width) solid var(--border-strong);
+  border-radius: var(--radius-round);
+  position: relative;
+  transition: background var(--motion-fast) var(--motion-ease);
+}
+
+.switch input:checked + .switch__track {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.switch__thumb {
+  position: absolute;
+  inset-block-start: 1px;
+  inset-inline-start: 1px;
+  inline-size: calc(var(--space-4) - 2px);
+  block-size: calc(var(--space-4) - 2px);
+  background: var(--text-primary);
+  border-radius: var(--radius-round);
+  transition: inset-inline-start var(--motion-fast) var(--motion-ease);
+}
+
+.switch input:checked + .switch__track .switch__thumb {
+  inset-inline-start: calc(100% - var(--space-4) + 1px);
+}
+
+/* ── cards (§12.3) ── */
+
+/* Cards are for bounded content only: metric, device, room, recommendation,
+ * risk summary, action result. Not every section is a card (§12.3). */
+.card {
+  background: var(--surface);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--density-card-padding, var(--space-5));
+}
+
+.card__title {
+  font-size: var(--type-card-title-size);
+  line-height: var(--type-card-title-line);
+  font-weight: var(--type-card-title-weight);
+  margin: 0 0 var(--space-2);
+}
+
+/* A grid of cards (§12.3). Unlike `.metric-row` this is not capped at four:
+ * a device or context list is as long as the home is, and capping it would
+ * waste the width rather than protect the reader. */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: var(--layout-grid-gap);
+}
+
+.card-grid > * {
+  min-inline-size: 0;
+}
+
+/* Why the platform believes something (§13.4, §13.6). Reason codes arrive
+ * already translated by the API, so this only has to lay them out. */
+.reasons {
+  margin-block: var(--space-2) 0;
+  padding-inline-start: var(--space-5);
+  color: var(--text-secondary);
+}
+
+.evidence {
+  margin-block-start: var(--space-2);
+  padding-inline-start: var(--space-3);
+  border-inline-start: 2px solid var(--border);
+  color: var(--text-secondary);
+  font-size: var(--type-caption-size);
+}
+
+/* ── status badge (§12.5) ── */
+
+/* Every badge carries label, shape, semantic colour and accessible text.
+ * The ::before dot is the non-colour shape cue (§0 rule 8). */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-inline: var(--space-3);
+  padding-block: var(--space-1);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-round);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: "";
+  inline-size: var(--space-2);
+  block-size: var(--space-2);
+  border-radius: var(--radius-round);
+  background: currentColor;
+  flex: none;
+}
+
+/* §14 device states. ONLINE is neutral, not bright green everywhere. */
+.badge--online {
+  color: var(--status-success);
+  border-color: var(--status-success);
+}
+
+.badge--offline {
+  color: var(--status-offline);
+  border-color: var(--status-offline);
+}
+
+.badge--stale {
+  color: var(--status-warning);
+  border-color: var(--status-warning);
+}
+
+.badge--unknown {
+  color: var(--status-unknown);
+  border-color: var(--status-unknown);
+}
+
+.badge--degraded {
+  color: var(--status-warning);
+  border-color: var(--status-warning);
+}
+
+.badge--error {
+  color: var(--status-critical);
+  border-color: var(--status-critical);
+}
+
+.badge--updating,
+.badge--commissioning {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.badge--disabled,
+.badge--removed {
+  color: var(--text-disabled);
+  border-color: var(--border);
+}
+
+/* Advisory vs confirmed must never look identical (§15). Advisory uses a
+ * dashed border as a shape cue independent of colour. */
+.badge--advisory {
+  border-style: dashed;
+  color: var(--status-warning);
+  border-color: var(--status-warning);
+}
+
+.badge--confirmed {
+  color: var(--status-critical);
+  border-color: var(--status-critical);
+  font-weight: var(--weight-semibold);
+}
+
+/* Shadow mode (§19.2): the model is running and its output is recorded, but
+ * nothing acts on it. Dotted rather than dashed, so it cannot be mistaken for
+ * an advisory at a glance or in greyscale. */
+.badge--shadow {
+  border-style: dotted;
+  color: var(--text-secondary);
+  border-color: var(--text-secondary);
+}
+
+/* ── tables (§12.4) ── */
+
+/* A device table has more columns than a narrow viewport or a 200% zoom can
+ * hold, and §22 requires that reflow lose no content. Without this wrapper the
+ * table is clipped by whatever card contains it and the far columns become
+ * unreachable — so every `.table` belongs inside one.
+ *
+ * `tabindex="0"` is not decoration: a scroll container that only a mouse can
+ * reach fails WCAG 2.1.1. Give it `role="region"` and a label at the usage
+ * site so a screen reader announces what is being scrolled.
+ */
+.table-scroll {
+  overflow-x: auto;
+  max-inline-size: 100%;
+}
+
+/* Adding the wrapper has one consequence worth stating plainly: an element that
+ * scrolls in one axis is a scroll container in both, and `position: sticky`
+ * resolves against the nearest scroll container. So `.table th` sticks to this
+ * wrapper, not to the viewport — and a wrapper with no height constraint never
+ * scrolls vertically, which means the header never appears to stick at all.
+ *
+ * Use this modifier when the table is long enough to want a pinned header. It
+ * gives the wrapper a real scrollport, so the header pins as the rows move.
+ */
+.table-scroll--pinned-header {
+  max-block-size: 60vh;
+}
+
+.table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: start;
+  padding-inline: var(--space-3);
+  padding-block: var(--density-row-padding-block, var(--space-3));
+  border-block-end: var(--control-border-width) solid var(--border);
+}
+
+.table th {
+  color: var(--text-secondary);
+  font-size: var(--type-label-size);
+  font-weight: var(--weight-semibold);
+  /* Small caps with air between them — an instrument's column heading rather
+   * than a sentence, which is how this surface has always set them.
+   *
+   * Latin only, and not by preference. Arabic is a joined script: letter
+   * spacing pulls the joins apart and renders a word as a row of disconnected
+   * shapes, and there is no case to raise. So the treatment is scoped, and the
+   * Arabic heading keeps the same size, weight and colour without it. */
+  text-transform: none;
+  position: sticky;
+  inset-block-start: 0;
+  background: var(--surface);
+}
+
+[dir="ltr"] .table th {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* A link that is a table cell's whole content is a discrete target, not a link
+ * inline in a sentence — so WCAG 2.5.8's inline exception does not cover it and
+ * it needs the 24px minimum. Padding rather than a fixed height, so a wrapped
+ * device name still grows. */
+.table a,
+.detail-list a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--control-height-minimum);
+  padding-block: var(--space-1);
+}
+
+/* Numbers align to the end and use tabular figures (§12.4). */
+.table td.numeric,
+.table th.numeric {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── tabs (§12.6) ── */
+
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  border-block-end: var(--control-border-width) solid var(--border);
+}
+
+.tab {
+  padding-inline: var(--space-4);
+  padding-block: var(--space-3);
+  background: none;
+  border: none;
+  border-block-end: 2px solid transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  cursor: pointer;
+  min-block-size: var(--density-control-height, var(--control-height-comfortable));
+}
+
+/* The active tab stays visible in both directions (§12.6). */
+.tab[aria-selected="true"] {
+  color: var(--text-primary);
+  border-block-end-color: var(--accent);
+  font-weight: var(--weight-medium);
+}
+
+/* ── dialog and drawer (§12.7) ── */
+
+.dialog {
+  background: var(--surface-overlay);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elevation-dialog);
+  padding: var(--space-6);
+  max-inline-size: 32rem;
+}
+
+.dialog::backdrop {
+  background: rgb(8 11 13 / 0.6);
+}
+
+.drawer {
+  background: var(--surface);
+  border-inline-start: var(--control-border-width) solid var(--border);
+  box-shadow: var(--elevation-drawer);
+  block-size: 100%;
+  inline-size: min(28rem, 100%);
+}
+
+/* ── toast (§12.8) ── */
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: var(--surface-overlay);
+  border: var(--control-border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-popover);
+  padding: var(--space-4);
+}
+
+/* ── skeleton and progress (§12.9) ── */
+
+.skeleton {
+  background: var(--surface-raised);
+  border-radius: var(--radius-sm);
+  block-size: var(--space-4);
+  animation: syltra-pulse 1.6s var(--motion-ease) infinite;
+}
+
+@keyframes syltra-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.progress {
+  inline-size: 100%;
+  block-size: var(--space-2);
+  background: var(--surface-raised);
+  border-radius: var(--radius-round);
+  overflow: hidden;
+}
+
+.progress__fill {
+  block-size: 100%;
+  background: var(--accent);
+  transition: inline-size var(--motion-standard) var(--motion-ease);
+}
+
+/* ── empty, error and stale states (§20) ── */
+
+.state-notice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.state-notice--error {
+  color: var(--status-critical);
+}
+
+/* Stale data is never hidden (§0 rule 13, §20). */
+.stale-notice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-raised);
+  border-inline-start: 3px solid var(--status-warning);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--type-caption-size);
+}
+
+/* ── risk banner (§25 priority component, §15) ── */
+
+.risk-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--control-border-width) solid var(--status-critical);
+  border-inline-start-width: 4px;
+  background: var(--surface-raised);
+}
+
+.risk-banner--watch {
+  border-color: var(--status-warning);
+}
+
+.risk-banner--info {
+  border-color: var(--status-info);
+}

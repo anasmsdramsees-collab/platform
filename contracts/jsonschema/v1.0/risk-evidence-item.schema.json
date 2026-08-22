@@ -1,0 +1,93 @@
+{
+  "$defs": {
+    "EvidenceOrigin": {
+      "description": "Where a piece of risk evidence came from \u2014 the load-bearing field.\n\nA `CERTIFIED_ALARM` reading is a device designed and approved to detect the\nhazard. `INFERENCE` is SYLTRA reasoning about combinations of ordinary\nsensors. Only the former may confirm.",
+      "enum": [
+        "CERTIFIED_ALARM",
+        "SENSOR_READING",
+        "INFERENCE",
+        "USER_REPORT",
+        "SYSTEM_HEALTH"
+      ],
+      "title": "EvidenceOrigin",
+      "type": "string"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/risk-evidence-item.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "One observation supporting a risk case, with its provenance.",
+  "properties": {
+    "capability": {
+      "title": "Capability",
+      "type": "string"
+    },
+    "device_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Device Id"
+    },
+    "note": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Note"
+    },
+    "observed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Observed At"
+    },
+    "origin": {
+      "$ref": "#/$defs/EvidenceOrigin"
+    },
+    "room_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Room Id"
+    },
+    "status": {
+      "default": "KNOWN",
+      "title": "Status",
+      "type": "string"
+    },
+    "value": {
+      "default": null,
+      "title": "Value"
+    }
+  },
+  "required": [
+    "origin",
+    "capability"
+  ],
+  "title": "RiskEvidenceItem",
+  "type": "object"
+}

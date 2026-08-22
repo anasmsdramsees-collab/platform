@@ -1,0 +1,32 @@
+{
+  "devices": [
+    {
+      "device_id": "ac_living",
+      "entity_ids": [
+        "climate.living_room"
+      ],
+      "manufacturer": null,
+      "model": null,
+      "name": "Living room air conditioner",
+      "room_id": "living_room"
+    }
+  ],
+  "entities": [
+    {
+      "capability": "climate.target_temperature",
+      "device_id": "ac_living",
+      "entity_id": "climate.living_room",
+      "room_id": "living_room"
+    }
+  ],
+  "states": [
+    {
+      "attributes": {},
+      "available": true,
+      "entity_id": "climate.living_room",
+      "last_updated": null,
+      "state": "cool"
+    }
+  ],
+  "taken_at": "2026-08-20T19:30:00Z"
+}

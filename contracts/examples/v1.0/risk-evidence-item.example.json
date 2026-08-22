@@ -1,0 +1,10 @@
+{
+  "capability": "safety.water_leak",
+  "device_id": "leak_kitchen",
+  "note": "A certified alarm is the only evidence that can confirm a hazard.",
+  "observed_at": "2026-08-20T21:30:00Z",
+  "origin": "CERTIFIED_ALARM",
+  "room_id": "kitchen",
+  "status": "KNOWN",
+  "value": true
+}

@@ -1,0 +1,195 @@
+/* SYLTRA design-system foundation (guidelines §10, §22).
+ *
+ * Bidirectional layout and the accessibility baseline. Everything here is
+ * written with logical properties, so Arabic is genuine mirroring produced by
+ * `dir="rtl"` alone — not a second stylesheet that can drift from the first.
+ *
+ * This file contains no colour literals. Every colour comes from a theme
+ * token, which is what makes the UI-0 acceptance criterion "no feature
+ * component contains hardcoded brand colour" checkable rather than aspirational.
+ */
+
+/* ── document ── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Zoom to 200% must not break layout (§22), so nothing here fixes a root
+   * font size in px. */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-latin);
+  font-size: var(--type-body-size);
+  line-height: calc(var(--type-body-line) * var(--line-height-factor, 1));
+  font-weight: var(--weight-regular);
+}
+
+/* Arabic uses its own family and a slightly larger line height (§7.3). */
+[lang="ar"] body,
+body[lang="ar"],
+[lang="ar"] {
+  font-family: var(--font-arabic);
+}
+
+/* ── bidirectional helpers (§10.2) ── */
+
+/* Technical identifiers stay LTR inside a direction-isolated container:
+ * entity ids, serial numbers, IP and MAC addresses, firmware versions, model
+ * versions, correlation ids (§7.3, §10.2). */
+.identifier,
+bdi.identifier {
+  unicode-bidi: isolate;
+  direction: ltr;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* User-generated text of unknown direction. Pair with dir="auto" on inputs. */
+.auto-direction {
+  unicode-bidi: plaintext;
+}
+
+/* Numeric values in tables and metrics: tabular, and direction-isolated so an
+ * Arabic row cannot reorder a number (§10.2). */
+.numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  unicode-bidi: isolate;
+}
+
+/* Chronological charts stay visually LTR while their labels localize (§10.2). */
+.chart-canvas {
+  direction: ltr;
+}
+
+/* Icons that must NOT mirror: power, play, pause, check, warning, device,
+ * product and brand marks (§4, §10.2). Directional icons mirror by default. */
+[dir="rtl"] .icon-directional {
+  transform: scaleX(-1);
+}
+
+.icon-universal {
+  transform: none !important;
+}
+
+/* ── text utilities ── */
+
+/* Secondary text, at the same size as its surroundings. Distinct from
+ * `.type-caption`, which also changes the size — a note beside a value is not
+ * necessarily smaller than it, only quieter. */
+.muted {
+  color: var(--text-secondary);
+}
+
+/* ── layout primitives ── */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.grid {
+  display: grid;
+  gap: var(--layout-grid-gap);
+}
+
+/* Long-form settings and forms stay in a readable column (§9.3). */
+.readable-column {
+  max-inline-size: var(--layout-readable-column);
+}
+
+/* Content region padding (§9.2). */
+.content-region {
+  padding-inline: var(--layout-content-padding-inline);
+  padding-block: var(--layout-content-padding-block);
+}
+
+/* ── accessibility baseline (§22) ── */
+
+/* Visible keyboard focus on everything interactive. Uses the theme's focus
+ * ring token so it stays visible in both themes. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--control-focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--control-focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* Minimum target size. §22 requires 24px; §12.1 recommends 44px, which is the
+ * SYLTRA default via the density tokens. */
+:where(button, [role="button"], a.action, input[type="checkbox"], input[type="radio"]) {
+  min-block-size: var(--control-height-minimum);
+  min-inline-size: var(--control-height-minimum);
+}
+
+/* `fixed`, not `absolute`: an absolutely positioned skip link resolves against
+ * the initial containing block, so once the page has scrolled it would appear
+ * above the viewport and be focusable but invisible. */
+.skip-link {
+  position: fixed;
+  inset-block-start: calc(var(--space-12) * -1);
+  inset-inline-start: var(--space-4);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent);
+  color: var(--background);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  inset-block-start: var(--space-4);
+}
+
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Text-spacing adjustments must not break layout (§22). Nothing here sets a
+ * fixed block-size on a text container. */
+
+/* Windows high contrast / forced colors (§22 manual tests). Borders and focus
+ * must survive when the OS replaces every colour. */
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 3px solid CanvasText;
+  }
+
+  .badge,
+  .card,
+  .control {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* ── print ── */
+
+@media print {
+  .skip-link,
+  nav {
+    display: none;
+  }
+}

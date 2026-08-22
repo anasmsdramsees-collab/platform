@@ -1,0 +1,9 @@
+# SYLTRA-specific services only. Nothing here duplicates a standard entity
+# service (spec §27) — device control belongs to Home Assistant's own domains,
+# and to the Edge Agent through the supported APIs.
+
+refresh_health:
+  name: Refresh SYLTRA Edge health
+  description: >
+    Poll the SYLTRA Edge Agent immediately instead of waiting for the next
+    scheduled check. Useful while commissioning a hub.

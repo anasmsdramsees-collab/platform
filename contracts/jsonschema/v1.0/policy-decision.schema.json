@@ -1,0 +1,118 @@
+{
+  "$defs": {
+    "PolicyOutcome": {
+      "description": "Policy and Safety Service decision outcomes (spec \u00a714.6).",
+      "enum": [
+        "ALLOW",
+        "DENY",
+        "REQUIRE_USER_APPROVAL",
+        "PREPARE_ONLY",
+        "ESCALATE_TO_FIXED_SAFETY_RULE"
+      ],
+      "title": "PolicyOutcome",
+      "type": "string"
+    },
+    "SafetyClass": {
+      "description": "Capability safety classes (spec \u00a710.3).",
+      "enum": [
+        "NON_CRITICAL",
+        "COMFORT",
+        "SECURITY_SENSITIVE",
+        "SAFETY_RELATED",
+        "LIFE_SAFETY_CRITICAL"
+      ],
+      "title": "SafetyClass",
+      "type": "string"
+    }
+  },
+  "$id": "https://contracts.syltra.local/1.0/policy-decision.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "The authorization record for one proposed action (spec \u00a716).",
+  "properties": {
+    "decision": {
+      "$ref": "#/$defs/PolicyOutcome"
+    },
+    "decision_id": {
+      "format": "uuid",
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "evaluated_at": {
+      "format": "date-time",
+      "title": "Evaluated At",
+      "type": "string"
+    },
+    "evidence": {
+      "additionalProperties": true,
+      "title": "Evidence",
+      "type": "object"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "home_id": {
+      "title": "Home Id",
+      "type": "string"
+    },
+    "input_hash": {
+      "title": "Input Hash",
+      "type": "string"
+    },
+    "policy_version": {
+      "default": "1.0.0",
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "recommendation_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Recommendation Id"
+    },
+    "required_approval_from": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Required Approval From"
+    },
+    "safety_class": {
+      "$ref": "#/$defs/SafetyClass"
+    }
+  },
+  "required": [
+    "decision_id",
+    "home_id",
+    "decision",
+    "evaluated_at",
+    "expires_at",
+    "reason_codes",
+    "safety_class",
+    "input_hash"
+  ],
+  "title": "PolicyDecision",
+  "type": "object"
+}

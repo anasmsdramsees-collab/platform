@@ -1,0 +1,94 @@
+name: Platform CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "libs/**"
+      - "services/**"
+      - "simulator/**"
+      - "tests/**"
+      - "contracts/**"
+      - "infrastructure/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "Makefile"
+      - "docker-compose.yml"
+      - ".github/workflows/platform-ci.yml"
+  pull_request:
+    paths:
+      - "libs/**"
+      - "services/**"
+      - "simulator/**"
+      - "tests/**"
+      - "contracts/**"
+      - "infrastructure/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "Makefile"
+      - "docker-compose.yml"
+      - ".github/workflows/platform-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Lint, types, tests, security
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Bootstrap workspace (pinned Python + locked deps)
+        run: |
+          uv python install 3.12
+          uv sync --all-packages --locked
+
+      - name: Format check
+        run: uv run ruff format --check .
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Type check (strict)
+        run: uv run mypy
+
+      - name: Contract schemas are up to date
+        run: |
+          uv run python -m syltra_contracts.schema_export
+          git diff --exit-code contracts/jsonschema/ \
+            || (echo '::error::JSON Schemas are stale — run make contracts'; exit 1)
+
+      - name: Unit and contract tests
+        run: uv run pytest
+
+      - name: Safety-marked tests (must pass with no AI services present)
+        run: uv run pytest -m safety
+
+      - name: Coverage
+        run: |
+          uv run coverage run -m pytest
+          uv run coverage report
+
+      - name: Security lint (bandit)
+        run: uv run bandit -q -r libs services simulator -x "*/tests/*"
+
+      - name: Dependency vulnerability scan
+        run: uvx pip-audit --locked || uvx pip-audit
+
+      - name: Record dependency licenses (spec §30)
+        run: |
+          uvx pip-licenses --python "$(uv python find)" --format=markdown --with-urls > dependency-licenses.md
+          cat dependency-licenses.md
+
+      - name: Upload license report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-licenses
+          path: dependency-licenses.md

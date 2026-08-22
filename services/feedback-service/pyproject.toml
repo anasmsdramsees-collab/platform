@@ -1,0 +1,30 @@
+[project]
+name = "syltra-feedback-service"
+version = "0.1.0"
+description = "SYLTRA Feedback Service: records household responses and adjusts preference evidence"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.34",
+    "prometheus-client>=0.21",
+    "pydantic-settings>=2.8",
+    "nats-py>=2.10",
+    "syltra-contracts",
+    "syltra-eventing",
+    "syltra-observability",
+]
+
+[project.scripts]
+syltra-feedback-service = "syltra_feedback_service.main:run"
+
+[tool.uv.sources]
+syltra-contracts = { workspace = true }
+syltra-eventing = { workspace = true }
+syltra-observability = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/syltra_feedback_service"]

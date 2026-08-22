@@ -1,0 +1,10 @@
+{
+  "ethical_and_safety_notes": "Output is a recommendation, never an action. Policy and the Safety Governor stand between this model and any device.",
+  "evaluation": "Held-out final 5 days; mean absolute error 0.6 \u00b0C.",
+  "intended_use": "Proposing a comfort setpoint for review. Advisory only.",
+  "limitations": "Cold-starts for the first three weeks and after a household change. Suspended automatically when drift is detected.",
+  "out_of_scope_use": "Any safety decision, any life-safety actuator, and any home other than the one it was trained on.",
+  "privacy_classification": "HOUSEHOLD_PRIVATE",
+  "summary": "Predicts the temperature this household chooses at this hour.",
+  "training_data": "21 days of this home's own thermostat changes. No data leaves the hub."
+}

@@ -1,0 +1,60 @@
+{
+  "$id": "https://contracts.syltra.local/1.0/deadletter-record.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "An event that could not be processed, preserved for diagnosis.",
+  "properties": {
+    "deadletter_id": {
+      "format": "uuid",
+      "title": "Deadletter Id",
+      "type": "string"
+    },
+    "error": {
+      "title": "Error",
+      "type": "string"
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "title": "Occurred At",
+      "type": "string"
+    },
+    "original_subject": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Original Subject"
+    },
+    "payload": {
+      "additionalProperties": true,
+      "title": "Payload",
+      "type": "object"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "service": {
+      "title": "Service",
+      "type": "string"
+    }
+  },
+  "required": [
+    "deadletter_id",
+    "service",
+    "occurred_at",
+    "reason_codes",
+    "error"
+  ],
+  "title": "DeadLetterRecord",
+  "type": "object"
+}

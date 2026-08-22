@@ -1,0 +1,26 @@
+{
+  "confidence": 0.83,
+  "created_at": "2026-08-20T19:30:00Z",
+  "evidence_event_ids": [],
+  "expires_at": "2026-08-20T19:45:00Z",
+  "home_id": "home_example",
+  "metadata": {},
+  "model": {
+    "name": "temperature_preference",
+    "version": "1.0.0"
+  },
+  "proposed_value": 23.0,
+  "reason_codes": [
+    "REPEATED_USER_PATTERN"
+  ],
+  "recommendation_id": "44444444-4444-4444-8444-444444444444",
+  "recommendation_type": "climate.precondition",
+  "required_policy": "COMFORT_AUTOMATION",
+  "requires_user_approval": false,
+  "shadow": false,
+  "target": {
+    "capability": "climate.target_temperature",
+    "device_id": "ac_living",
+    "room_id": "living_room"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "action_id": null,
+  "actor": "occupant",
+  "feedback_id": "77777777-7777-4777-8777-777777777777",
+  "home_id": "home_example",
+  "kind": "ACCEPT",
+  "metadata": {},
+  "modified_value": null,
+  "note": null,
+  "recommendation_id": "44444444-4444-4444-8444-444444444444",
+  "recorded_at": "2026-08-20T19:30:20Z",
+  "source": "USER"
+}

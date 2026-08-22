@@ -1,0 +1,41 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to SYLTRA Edge",
+        "description": "Enter the local address of your SYLTRA Edge Agent. This stays on your home network.",
+        "data": {
+          "edge_url": "SYLTRA Edge address",
+          "verify_tls": "Verify TLS certificate"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach SYLTRA Edge at that address.",
+      "invalid_scheme": "The address must start with http:// or https://.",
+      "invalid_host": "That address has no host name."
+    },
+    "abort": {
+      "already_configured": "This SYLTRA Edge Agent is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "SYLTRA Edge options",
+        "data": { "verify_tls": "Verify TLS certificate" }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "edge_connection": { "name": "Edge connection" }
+    }
+  },
+  "services": {
+    "refresh_health": {
+      "name": "Refresh SYLTRA Edge health",
+      "description": "Poll the SYLTRA Edge Agent immediately."
+    }
+  }
+}

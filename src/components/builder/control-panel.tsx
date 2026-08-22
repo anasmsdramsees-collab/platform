@@ -143,17 +143,32 @@ export function ControlPanel({
       <div className="mt-2.5 grid grid-cols-2 gap-2.5">
         <div
           className={cn(
-            "rounded-xl border p-3",
+            "col-span-2 rounded-xl border p-3",
             has("curtains") ? "border-hairline bg-void-2" : "border-hairline bg-void-2 opacity-35"
           )}
         >
-          <span className="flex items-center gap-2">
-            <span
-              className="size-2 rounded-full bg-[#8ab4ff] transition-opacity"
-              style={{ opacity: 0.25 + (state.curtains / 100) * 0.75 }}
-            />
-            <span className="text-[11px] text-slate">{ar ? "الستائر" : "Curtains"}</span>
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="flex items-center gap-2">
+              <span
+                className="size-2 rounded-full bg-[#8ab4ff] transition-opacity"
+                style={{ opacity: 0.25 + (state.curtains / 100) * 0.75 }}
+              />
+              <span className="text-[11px] text-slate">{ar ? "الستائر" : "Curtains"}</span>
+            </span>
+            <span className="font-mono text-sm font-semibold text-platinum">{state.curtains}%</span>
+          </div>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            step={5}
+            value={state.curtains}
+            disabled={!has("curtains")}
+            onChange={(e) => setState((prev) => ({ ...prev, curtains: Number(e.target.value) }))}
+            onPointerUp={() => has("curtains") && playCurtain()}
+            aria-label={ar ? "فتح الستائر" : "Curtain opening"}
+            className="mt-2.5 w-full accent-[#8ab4ff] disabled:cursor-not-allowed"
+          />
           <div className="mt-1.5 flex gap-1">
             {[
               { v: 0, ar: "مغلقة", en: "Shut" },
@@ -166,7 +181,7 @@ export function ControlPanel({
                 disabled={!has("curtains")}
                 onClick={() => {
                   playCurtain();
-                  setState((s) => ({ ...s, curtains: o.v }));
+                  setState((prev) => ({ ...prev, curtains: o.v }));
                 }}
                 className={cn(
                   "flex-1 rounded-md py-1 text-[10px] transition-colors disabled:cursor-not-allowed",
@@ -180,6 +195,7 @@ export function ControlPanel({
             ))}
           </div>
         </div>
+
         <Tile
           label={ar ? "الباب" : "Door"}
           value={state.locked ? (ar ? "مقفل" : "Locked") : ar ? "مفتوح" : "Unlocked"}

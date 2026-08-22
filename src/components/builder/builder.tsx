@@ -15,6 +15,7 @@ import {
   systemCopy,
 } from "@/lib/builder-data";
 import { ControlPanel, type HomeState } from "./control-panel";
+import { WallPanel } from "./wall-panel";
 
 // The 3D canvas is heavy and browser-only; keep it out of the first payload.
 const BuilderScene = dynamic(() => import("./scene").then((m) => m.BuilderScene), {
@@ -104,7 +105,8 @@ export function Builder({ locale }: { locale: Locale }) {
   const activeRoom = property.rooms.find((r) => `${r.level}-${r.id}` === selectedRoom);
 
   return (
-    // Fills the viewport under the header so nothing needs scrolling on desktop.
+    <>
+    {/* Fills the viewport under the header so nothing needs scrolling on desktop. */}
     <div className="flex flex-col gap-3 px-3 py-3 sm:px-5 lg:h-[calc(100dvh-4.5rem)]">
       {/* Compact header row */}
       <div className="flex shrink-0 flex-wrap items-center justify-between gap-2">
@@ -218,6 +220,26 @@ export function Builder({ locale }: { locale: Locale }) {
           />
         </div>
       </div>
+
+      {/* Hint that the wall panel sits below */}
+      <div className="hidden shrink-0 justify-center pb-1 lg:flex">
+        <span className="flex items-center gap-1.5 font-mono text-[10px] text-slate">
+          {ar ? "شاشة التحكم بالأسفل" : "Wall panel below"}
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </span>
+      </div>
     </div>
+
+    <WallPanel
+      locale={locale}
+      property={property}
+      chosen={chosen}
+      climate={property.climate}
+      state={state}
+      setState={setState}
+    />
+    </>
   );
 }

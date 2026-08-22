@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Html, RoundedBox } from "@react-three/drei";
+import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import * as THREE from "three";
 import type { Locale } from "@/lib/i18n/config";
 import {
@@ -207,7 +208,42 @@ export function BuilderScene({
     return Math.max(maxX, maxZ) * 2.8;
   }, [property]);
 
+  const controls = useRef<OrbitControlsImpl>(null);
+  const [touched, setTouched] = useState(false);
+
+  /** Nudge the camera around the model, for people who do not think to drag. */
+  const spin = useCallback((delta: number) => {
+    const c = controls.current;
+    if (!c) return;
+    setTouched(true);
+    c.setAzimuthalAngle(c.getAzimuthalAngle() + delta);
+    c.update();
+  }, []);
+
+  const zoom = useCallback((factor: number) => {
+    const c = controls.current;
+    if (!c) return;
+    setTouched(true);
+    const camera = c.object;
+    const target = c.target;
+    const offset = camera.position.clone().sub(target);
+    const distance = Math.min(
+      Math.max(offset.length() * factor, c.minDistance),
+      c.maxDistance
+    );
+    camera.position.copy(target).add(offset.setLength(distance));
+    c.update();
+  }, []);
+
+  const reset = useCallback(() => {
+    const c = controls.current;
+    if (!c) return;
+    setTouched(false);
+    c.reset();
+  }, []);
+
   return (
+    <div className="relative size-full">
     <Canvas
       shadows={false}
       dpr={[1, 1.75]}
@@ -245,15 +281,76 @@ export function BuilderScene({
       ))}
 
       <OrbitControls
+        ref={controls}
         makeDefault
         enablePan={false}
-        minPolarAngle={0.25}
-        maxPolarAngle={Math.PI / 2.35}
-        minDistance={radius * 0.7}
-        maxDistance={radius * 2.1}
-        autoRotate={!selectedRoom}
-        autoRotateSpeed={0.5}
+        enableRotate
+        enableZoom
+        rotateSpeed={0.85}
+        minPolarAngle={0.2}
+        maxPolarAngle={Math.PI / 2.15}
+        minDistance={radius * 0.55}
+        maxDistance={radius * 2.3}
+        // Idle spin only until the visitor takes over.
+        autoRotate={!touched && !selectedRoom}
+        autoRotateSpeed={0.45}
+        onStart={() => setTouched(true)}
       />
     </Canvas>
+
+      {/* View controls, so rotating never depends on discovering the drag */}
+      <div className="pointer-events-none absolute bottom-2 end-2 flex flex-col items-end gap-1.5">
+        <div className="pointer-events-auto flex overflow-hidden rounded-lg border border-hairline bg-void/85 backdrop-blur-sm">
+          <button
+            onClick={() => spin(-0.4)}
+            aria-label="rotate left"
+            className="px-2.5 py-2 text-platinum transition-colors hover:bg-white/10"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <path d="M9 14 4 9l5-5" />
+              <path d="M4 9h10a6 6 0 0 1 0 12h-3" />
+            </svg>
+          </button>
+          <button
+            onClick={() => spin(0.4)}
+            aria-label="rotate right"
+            className="border-s border-hairline px-2.5 py-2 text-platinum transition-colors hover:bg-white/10"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <path d="m15 14 5-5-5-5" />
+              <path d="M20 9H10a6 6 0 0 0 0 12h3" />
+            </svg>
+          </button>
+          <button
+            onClick={() => zoom(0.82)}
+            aria-label="zoom in"
+            className="border-s border-hairline px-2.5 py-2 text-platinum transition-colors hover:bg-white/10"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+          <button
+            onClick={() => zoom(1.22)}
+            aria-label="zoom out"
+            className="border-s border-hairline px-2.5 py-2 text-platinum transition-colors hover:bg-white/10"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <path d="M5 12h14" />
+            </svg>
+          </button>
+          <button
+            onClick={reset}
+            aria-label="reset view"
+            className="border-s border-hairline px-2.5 py-2 text-platinum transition-colors hover:bg-white/10"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <path d="M3 12a9 9 0 1 0 3-6.7" />
+              <path d="M3 4v5h5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -4,6 +4,7 @@ Imports nothing from the Adaptive Engine: safety invariant 7 requires fixed
 automations to keep working when every model is suspended.
 """
 
+from syltra_automation_engine.dispatcher import AutomationDispatcher, DispatchOutcome
 from syltra_automation_engine.engine import (
     ECHO_WINDOW,
     AutomationEngine,
@@ -14,8 +15,10 @@ from syltra_automation_engine.engine import (
 
 __all__ = [
     "ECHO_WINDOW",
+    "AutomationDispatcher",
     "AutomationEngine",
     "AutomationProposal",
+    "DispatchOutcome",
     "Evaluation",
     "SkipReason",
 ]

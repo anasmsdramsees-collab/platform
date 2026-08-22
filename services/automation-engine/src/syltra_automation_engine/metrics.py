@@ -28,3 +28,17 @@ SCHEDULED_FIRINGS = Counter(
     "scheduled automations that came due, and whether they ran late",
     ["late"],
 )
+
+DISPATCHES = Counter(
+    "syltra_automation_dispatches_total",
+    "automation actions that reached the policy gate, by outcome and whether "
+    "the device confirmed the new state",
+    ["outcome", "carried_out"],
+)
+"""The counter that would have caught the gap this dispatcher closed.
+
+`PROPOSALS` counted rules firing and rose every day. Nothing counted what
+happened next, so a graph of a healthy-looking hub was a graph of a hub that
+had never turned on a light. `carried_out` is the label that matters: a
+dispatch nothing read back is not a light that came on.
+"""

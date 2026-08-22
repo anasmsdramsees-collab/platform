@@ -164,6 +164,52 @@ def build_manual_action(
     )
 
 
+def build_rule_action(
+    decision: PolicyDecision,
+    device_id: str | None,
+    capability: str,
+    value: Any,
+    room_id: str | None = None,
+    now: datetime | None = None,
+    ttl_seconds: float = 60.0,
+    metadata: dict[str, Any] | None = None,
+) -> ActionRequest:
+    """An action from a rule the household wrote, rather than from a model.
+
+    The third builder, and the reason there are three is worth stating: each
+    one exists because the audit trail has to say honestly where the command
+    came from. `build_action_request` carries a recommendation and a model
+    reference. `build_manual_action` carries neither, because a person pressed
+    something. This one carries the automation's identity — so a household
+    reading "the hall light came on at 03:12" can find the rule that did it,
+    and will not find a model that did not.
+
+    A minute rather than the manual path's thirty seconds: nobody is standing
+    at the switch, and a hub that was busy for forty seconds should still
+    finish what the rule asked for. Long enough to survive a slow device, short
+    enough that a command never outlives the condition that produced it.
+    """
+    from datetime import timedelta
+
+    moment = now or datetime.now(tz=UTC)
+    definition = get_definition(capability)
+    return ActionRequest(
+        action_id=uuid4(),
+        idempotency_key=f"{decision.home_id}:{decision.decision_id}:{capability}",
+        decision_id=decision.decision_id,
+        home_id=decision.home_id,
+        correlation_id=uuid4(),
+        target=ActionTarget(device_id=device_id, capability=capability, room_id=room_id),
+        value=value,
+        expected_state=ExpectedState(capability=capability, value=value),
+        safety_class=definition.safety_class,
+        created_at=moment,
+        expires_at=moment + timedelta(seconds=ttl_seconds),
+        reversible=definition.reversible,
+        metadata=metadata or {},
+    )
+
+
 def build_action_request(
     decision: PolicyDecision,
     recommendation: Recommendation,

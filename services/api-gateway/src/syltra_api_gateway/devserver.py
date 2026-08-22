@@ -22,6 +22,7 @@ from syltra_contracts import CommandResult, LearningMode
 from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import HomePolicy, PolicyService
 from syltra_risk_engine import IsolationDispatcher, RiskEngineService
+from syltra_automation_engine import AutomationDispatcher
 from syltra_automation_engine.driver import AutomationDriver
 from syltra_risk_engine.driver import RiskDriver
 from syltra_security import Role, TokenStore
@@ -300,6 +301,10 @@ def build_platform() -> Platform:
         automations,
         contexts=context,
         on_change=_publish_to(platform),
+        # Wired, so an automation in this demo actually turns on the light
+        # rather than proposing to. It reaches comfort capabilities and nothing
+        # else, and every command still goes through the policy gate.
+        dispatcher=AutomationDispatcher(policy, orchestrator),
     )
     # The household's own clock. A person who writes "7pm" means 7pm here.
     platform.automation_driver.scheduler.set_timezone(

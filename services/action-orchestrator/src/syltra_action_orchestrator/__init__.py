@@ -13,6 +13,7 @@ from syltra_action_orchestrator.orchestrator import (
     OrchestratorConfig,
     build_action_request,
     build_manual_action,
+    build_rule_action,
 )
 
 __all__ = [
@@ -23,4 +24,5 @@ __all__ = [
     "OrchestratorConfig",
     "build_action_request",
     "build_manual_action",
+    "build_rule_action",
 ]

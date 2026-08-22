@@ -20,6 +20,15 @@ changed. Time triggers need only the clock, and the `Scheduler` decides which
 occurrences are owed. Both are settled in the same pass so a scheduled
 automation and a state-driven one cannot disagree about what time it is.
 
+## Evaluating is not acting
+
+The first version of this file stopped at the proposal, which meant the loop ran
+every two seconds for weeks and never turned on a light: `ActionOrchestrator`
+had one caller in the whole platform, and it was a person pressing a control.
+A `dispatcher` closes that gap. It stays optional — a hub that wants to watch
+its automations without letting them act constructs the driver without one, and
+that is exactly what the shadow phase of a pilot needs.
+
 ## Why it is slower than the safety loop
 
 Two seconds rather than one. Nothing here is life-safety: a light that comes on
@@ -36,6 +45,7 @@ from datetime import UTC, datetime
 from typing import Any, Protocol
 
 from syltra_automation_engine import metrics
+from syltra_automation_engine.dispatcher import AutomationDispatcher
 from syltra_automation_engine.scheduler import Scheduler
 
 logger = logging.getLogger(__name__)
@@ -96,6 +106,7 @@ class AutomationDriver:
         scheduler: Scheduler | None = None,
         interval_seconds: float = DEFAULT_INTERVAL_SECONDS,
         on_change: Callable[[str, tuple[str, ...]], None] | None = None,
+        dispatcher: AutomationDispatcher | None = None,
     ) -> None:
         self._twin = twin
         self._engine = engine
@@ -103,6 +114,7 @@ class AutomationDriver:
         self.scheduler = scheduler or Scheduler()
         self._interval = interval_seconds
         self._on_change = on_change
+        self._dispatcher = dispatcher
         self._task: asyncio.Task[None] | None = None
         self.health = AutomationDriverHealth()
 
@@ -148,7 +160,24 @@ class AutomationDriver:
         # shown to a household, while these only tell a console which part of
         # the screen to re-read. Named `changed` so the difference is visible
         # and so the reason-code translation check does not claim them.
-        changed = [f"AUTOMATION_{p.automation_id}" for p in getattr(result, "proposals", ())]
+        proposals = tuple(getattr(result, "proposals", ()))
+        changed = [f"AUTOMATION_{p.automation_id}" for p in proposals]
+
+        # And then it happens. Without this the loop is a very thorough way of
+        # deciding to do nothing.
+        if proposals and self._dispatcher is not None:
+            for outcome in await self._dispatcher.dispatch_all(proposals, now):
+                metrics.DISPATCHES.labels(
+                    outcome=outcome.outcome,
+                    carried_out=str(outcome.carried_out).lower(),
+                ).inc()
+                logger.info(
+                    "automation %s → %s %s%s",
+                    outcome.name,
+                    outcome.capability,
+                    outcome.intended_value,
+                    "" if outcome.carried_out else f" (not carried out: {outcome.outcome})",
+                )
 
         # Scheduled automations, decided by the clock rather than by the house.
         for occurrence in self.scheduler.due(home_id, self._engine.list_for(home_id), now):

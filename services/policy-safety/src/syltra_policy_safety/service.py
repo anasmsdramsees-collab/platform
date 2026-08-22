@@ -40,6 +40,7 @@ DECISION_TTL = timedelta(minutes=15)
 APPROVAL_TTL = timedelta(minutes=30)
 SAFETY_ISOLATION_TTL = timedelta(seconds=60)
 MANUAL_CONTROL_TTL = timedelta(seconds=30)
+AUTOMATION_CONTROL_TTL = timedelta(seconds=60)
 """How long a confirmed hazard's isolation stays executable."""
 """Approval requests live longer — a person needs time to answer."""
 
@@ -333,6 +334,116 @@ class PolicyService:
         metrics.DECIDING_RULE.labels(
             rule="manual_control", outcome=decision.decision.value
         ).inc()
+        return decision
+
+    def authorize_automation(
+        self,
+        home_id: str,
+        device_id: str | None,
+        capability: str,
+        value: Any,
+        automation_id: str,
+        now: datetime | None = None,
+    ) -> PolicyDecision:
+        """Authorize a rule the household wrote acting on its own (spec §2.3).
+
+        Between a recommendation and a press, and it is neither. A
+        recommendation is SYLTRA's idea and is weighed for confidence, learning
+        mode and quiet hours. A press is a person deciding, and skips all of
+        it. An automation is the household's own decision, made earlier, being
+        carried out now with nobody in the room — so it skips the rules that
+        judge *SYLTRA's* judgement, and keeps every rule that protects the
+        household from the house acting at a bad moment.
+
+        Kept, and why:
+
+        - **A confirmed hazard stops it.** While the platform is isolating a
+          gas supply, nothing else may add commands to the same house.
+        - **A person who just touched this overrides it** (§0 rule 5, safety
+          invariant 5). The window is the household's own; inside it the rule
+          loses, every time and without argument.
+        - **The rate limit holds.** A rule that has gone wrong is exactly the
+          thing a rate limit is for, and it is the same counter everything else
+          shares.
+
+        Dropped, and why:
+
+        - **Confidence.** A rule is not a guess. It matched or it did not.
+        - **Quiet hours.** They exist so SYLTRA does not wake a household with
+          its own idea at 3am. A household that wrote "porch light on at 3am"
+          asked for it.
+        - **The learning ladder** (§19.2). It governs how far SYLTRA may act on
+          what it inferred. It has nothing to say about a rule a person wrote,
+          and gating one on the other would mean a new hub could not turn on a
+          light until it had watched the household for a fortnight.
+        """
+        moment = now or datetime.now(tz=UTC)
+        safety_class = safety_class_for(capability)
+        state = self._homes[home_id]
+        key = f"{device_id}:{capability}"
+
+        if safety_class not in (SafetyClass.NON_CRITICAL, SafetyClass.COMFORT):
+            # `AutomationAction` already refuses to be constructed with one of
+            # these, so reaching this line means something built a request some
+            # other way. Asserted again because a check that exists in one
+            # layer is a check the next caller skips.
+            msg = f"{capability} is {safety_class.value}; automations act on comfort only"
+            raise ValueError(msg)
+
+        reason_codes = ["WITHIN_POLICY"]
+        outcome = PolicyOutcome.ALLOW
+        deciding_rule = "automation_permitted"
+
+        manual_at = state.last_manual_change.get(key)
+        if state.active_risk:
+            outcome, deciding_rule = PolicyOutcome.DENY, "active_risk"
+            reason_codes = ["ACTIVE_RISK_CASE"]
+        elif manual_at is not None and moment - manual_at < state.policy.manual_override_window:
+            outcome, deciding_rule = PolicyOutcome.DENY, "manual_override"
+            reason_codes = ["RECENT_MANUAL_OVERRIDE", "USER_CONTROL_TAKES_PRECEDENCE"]
+        else:
+            window_start = moment - state.policy.rate_window
+            recent = sum(1 for stamp in state.recent_actions if stamp >= window_start)
+            if recent >= state.policy.rate_limit:
+                outcome, deciding_rule = PolicyOutcome.DENY, "rate_limit"
+                reason_codes = ["RATE_LIMIT_EXCEEDED"]
+
+        decision = PolicyDecision(
+            decision_id=uuid4(),
+            recommendation_id=None,
+            home_id=home_id,
+            decision=outcome,
+            evaluated_at=moment,
+            expires_at=moment + AUTOMATION_CONTROL_TTL,
+            reason_codes=reason_codes,
+            safety_class=safety_class,
+            policy_version=POLICY_RULES_VERSION,
+            input_hash=compute_input_hash(
+                {
+                    "home_id": home_id,
+                    "device_id": device_id,
+                    "capability": capability,
+                    "value": value,
+                    "automation_id": automation_id,
+                }
+            ),
+            evidence={"deciding_rule": deciding_rule, "automation_id": automation_id},
+        )
+        self.decisions[decision.decision_id] = decision
+        if outcome is PolicyOutcome.ALLOW and device_id is not None:
+            # Counted against the same rate limit as everything else. A rule
+            # that has gone wrong is exactly what that limit is for.
+            self.record_action(home_id, device_id, capability, moment)
+        self._audit(
+            decision,
+            action="AUTOMATION_AUTHORIZED",
+            actor=f"automation:{automation_id}",
+            extra={"capability": capability, "device_id": device_id, "value": value},
+        )
+        metrics.DECISIONS.labels(
+            outcome=decision.decision.value, safety_class=decision.safety_class.value
+        ).inc()
+        metrics.DECIDING_RULE.labels(rule=deciding_rule, outcome=decision.decision.value).inc()
         return decision
 
     def approve(

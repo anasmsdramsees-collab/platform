@@ -22,7 +22,12 @@ from syltra_contracts import CommandResult, LearningMode
 from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import HomePolicy, PolicyService
 from syltra_risk_engine import IsolationDispatcher, RiskEngineService
-from syltra_automation_engine import AutomationDispatcher, SceneActivator, SceneRegistry
+from syltra_automation_engine import (
+    AutomationDispatcher,
+    GoalRegistry,
+    SceneActivator,
+    SceneRegistry,
+)
 from syltra_automation_engine.driver import AutomationDriver
 from syltra_risk_engine.driver import RiskDriver
 from syltra_security import Role, TokenStore
@@ -114,6 +119,8 @@ def build_platform() -> Platform:
     from syltra_automation_engine import AutomationEngine
     from syltra_contracts import (
         Automation,
+        Goal,
+        GoalComparison,
         Scene,
         SceneStep,
         AutomationAction,
@@ -315,6 +322,37 @@ def build_platform() -> Platform:
         # expansion happens at activation rather than at authoring.
         scenes.upsert(Scene(home_id=HOME, name=name, steps=steps, owner="demo-owner"))
 
+    goals = GoalRegistry()
+    goals.upsert(
+        Goal(
+            home_id=HOME,
+            name="غرفة النوم لا تتجاوز ٢٤°",
+            capability="environment.temperature",
+            comparison=GoalComparison.AT_MOST,
+            value=24,
+            room_id="living_room",
+            actions=(
+                AutomationAction(
+                    capability="climate.target_temperature", value=22, device_id="ac_living"
+                ),
+            ),
+            owner="demo-owner",
+        )
+    )
+    goals.upsert(
+        # No actions: a goal that only reports is a perfectly good goal, and is
+        # the honest shape for anything the hub cannot fix by itself.
+        Goal(
+            home_id=HOME,
+            name="الهواء بالخارج مقبول",
+            capability="environment.air_quality",
+            comparison=GoalComparison.AT_MOST,
+            value=100,
+            room_id="outside",
+            owner="demo-owner",
+        )
+    )
+
     platform = Platform(
         automations=automations,
         twin=context.twin,
@@ -333,6 +371,7 @@ def build_platform() -> Platform:
         risk=risk,
         scenes=scenes,
         scene_activator=SceneActivator(policy, orchestrator, context.twin),
+        goals=goals,
     )
     platform.automation_driver = AutomationDriver(
         context.twin,
@@ -343,6 +382,8 @@ def build_platform() -> Platform:
         # rather than proposing to. It reaches comfort capabilities and nothing
         # else, and every command still goes through the policy gate.
         dispatcher=AutomationDispatcher(policy, orchestrator),
+        goals=goals,
+        manual_override=policy.manual_override_active,
     )
     # The household's own clock. A person who writes "7pm" means 7pm here.
     platform.automation_driver.scheduler.set_timezone(

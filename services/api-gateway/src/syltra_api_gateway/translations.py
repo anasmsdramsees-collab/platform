@@ -157,6 +157,19 @@ REASON_CODES: Final[dict[str, dict[str, str]]] = {
     # command that was sent and not confirmed: nothing left the hub for this
     # one, and a household deciding whether to walk back and check needs to
     # know which of the two happened.
+    # Goals. "Unmeasured" is the one that matters: a goal whose sensor has gone
+    # quiet is not satisfied, and the wording must never let it read that way.
+    "GOAL_HOLDS": {"en": "Holding", "ar": "محقَّق"},
+    "GOAL_NOT_HOLDING": {"en": "Not holding", "ar": "غير محقَّق"},
+    "GOAL_UNMEASURED": {
+        "en": "Nothing is measuring this right now",
+        "ar": "لا يوجد قياس لهذا حالياً",
+    },
+    "GOAL_HELD_BY_HAND": {
+        "en": "Paused — someone is controlling this by hand",
+        "ar": "موقوف مؤقتاً — أحدهم يتحكم بهذا يدوياً",
+    },
+    "GOAL_SWITCHED_OFF": {"en": "Switched off", "ar": "موقوف"},
     "DEVICE_DID_NOT_ANSWER": {
         "en": "The device did not answer",
         "ar": "الجهاز لم يستجب",

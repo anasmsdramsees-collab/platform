@@ -16,7 +16,12 @@ from syltra_context_engine.service import ContextService
 from syltra_digital_twin.core import TwinProjection
 from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import PolicyService
-from syltra_automation_engine import AutomationEngine, SceneActivator, SceneRegistry
+from syltra_automation_engine import (
+    AutomationEngine,
+    GoalRegistry,
+    SceneActivator,
+    SceneRegistry,
+)
 from syltra_risk_engine import RiskEngineService
 from syltra_security import OrganisationRegistry, UserDirectory
 
@@ -48,6 +53,10 @@ class Platform:
     #: being able to press them — which is what the OpenAPI export and most
     #: tests want.
     scene_activator: SceneActivator | None = None
+    #: What the household says must stay true. Checked on a clock by the
+    #: automation driver, and answered live by the API from the twin — the two
+    #: must never disagree, which is why both call the same `assess`.
+    goals: GoalRegistry = field(default_factory=GoalRegistry)
     # The loop that feeds the risk engine. Optional so tests and the OpenAPI
     # export construct a platform without starting one, and reported as
     # degraded when absent rather than assumed fine.

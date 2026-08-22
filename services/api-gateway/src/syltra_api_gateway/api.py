@@ -43,9 +43,10 @@ from syltra_api_gateway.stream import HEARTBEAT_SECONDS
 from syltra_api_gateway.translations import is_rtl, translate_reasons
 from pydantic import ValidationError
 from syltra_action_orchestrator import ActionRefused, build_manual_action
-from syltra_automation_engine import SceneRefused
+from syltra_automation_engine import SceneRefused, assess, with_manual_hold
 from syltra_contracts import (
     Automation,
+    Goal,
     Scene,
     ConditionKind,
     ContextType,
@@ -873,6 +874,85 @@ def create_app(
                 for outcome in activation.outcomes
             ],
         }
+
+    # ── goals (what the household says must stay true) ──
+
+    def _goal_view(goal: Any, locale: str) -> dict[str, Any]:
+        """A goal and where it stands, worked out now rather than remembered.
+
+        The driver reviews on a clock; this answers from the twin at the moment
+        somebody asks. Both call the same `assess`, so the screen and the loop
+        can never give a household two different answers about the same room.
+        """
+        home = platform.twin.home(goal.home_id)
+        status = assess(goal, home, datetime.now(tz=UTC))
+        status = with_manual_hold(
+            status,
+            goal,
+            lambda device_id, capability: platform.policy.manual_override_active(
+                goal.home_id, device_id, capability
+            ),
+        )
+        corrected = platform.goals.last_corrected(goal.home_id, goal.goal_id)
+        return {
+            "goal_id": str(goal.goal_id),
+            "home_id": goal.home_id,
+            "name": goal.name,
+            "enabled": goal.enabled,
+            "summary": goal.summary(),
+            "capability": goal.capability,
+            "comparison": goal.comparison.value,
+            "value": goal.value,
+            "room_id": goal.room_id,
+            "device_id": goal.device_id,
+            "actions": [a.model_dump(mode="json", exclude_none=True) for a in goal.actions],
+            "review_seconds": goal.review_seconds,
+            "owner": goal.owner,
+            "version": goal.version,
+            "state": status.state.value,
+            # The measured value that decided it — the worst reading in scope,
+            # never a mean, and null when nothing fresh measured it.
+            "measured": status.measured,
+            "measured_by": status.device_id,
+            "reason_code": status.reason_code,
+            "reason": translate_reasons([status.reason_code], locale)[0],
+            "checked_at": status.checked_at.isoformat(),
+            "last_corrected_at": corrected.isoformat() if corrected else None,
+        }
+
+    @app.get("/v1/homes/{home_id}/goals", tags=["goals"])
+    async def list_goals(
+        home_id: str, principal: PrincipalDep, locale: LocaleDep
+    ) -> dict[str, Any]:
+        check_read(home_id, principal)
+        return {
+            "home_id": home_id,
+            "items": [_goal_view(goal, locale) for goal in platform.goals.list_for(home_id)],
+        }
+
+    @app.post("/v1/homes/{home_id}/goals", tags=["goals"], status_code=201)
+    async def create_goal(
+        home_id: str,
+        principal: PrincipalDep,
+        locale: LocaleDep,
+        payload: Annotated[dict[str, Any], Body()],
+    ) -> dict[str, Any]:
+        check_automations(home_id, principal)
+        try:
+            goal = Goal(**{**payload, "home_id": home_id, "owner": principal.subject})
+        except ValidationError as exc:
+            raise bad_request("INVALID_GOAL", str(exc)) from exc
+        stored = platform.goals.upsert(goal)
+        platform.stream.publish(home_id, f"GOAL_{stored.goal_id}")
+        return _goal_view(stored, locale)
+
+    @app.delete("/v1/homes/{home_id}/goals/{goal_id}", tags=["goals"], status_code=204)
+    async def delete_goal(home_id: str, goal_id: UUID, principal: PrincipalDep) -> Response:
+        check_automations(home_id, principal)
+        if not platform.goals.remove(home_id, goal_id):
+            raise not_found("NO_SUCH_GOAL", f"no goal {goal_id}")
+        platform.stream.publish(home_id, f"GOAL_{goal_id}")
+        return Response(status_code=204)
 
     # ── automations (spec §2.3, ADR-009) ──
 

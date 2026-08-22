@@ -5,6 +5,7 @@ automations to keep working when every model is suspended.
 """
 
 from syltra_automation_engine.dispatcher import AutomationDispatcher, DispatchOutcome
+from syltra_automation_engine.goals import GoalRegistry, GoalStatus, assess, with_manual_hold
 from syltra_automation_engine.scenes import (
     Activation,
     SceneActivator,
@@ -27,6 +28,10 @@ __all__ = [
     "AutomationProposal",
     "Activation",
     "DispatchOutcome",
+    "GoalRegistry",
+    "GoalStatus",
+    "assess",
+    "with_manual_hold",
     "SceneActivator",
     "SceneRefused",
     "SceneRegistry",

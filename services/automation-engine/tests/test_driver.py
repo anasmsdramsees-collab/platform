@@ -143,3 +143,93 @@ def test_a_platform_with_no_automation_driver_reports_degraded() -> None:
 
     platform = _empty_platform()
     assert platform.system_status()["components"]["automation_engine"] == "degraded"
+
+
+# ── goals ride the same loop ──
+
+
+async def test_the_driver_corrects_a_goal_that_is_not_holding() -> None:
+    """A goal is checked on a clock rather than fired by an event — a hub that
+    only reacted to readings would never notice a goal it broke by doing
+    nothing."""
+    from syltra_automation_engine import GoalRegistry
+    from syltra_contracts import Goal, GoalComparison
+
+    goals = GoalRegistry()
+    goals.upsert(
+        Goal(
+            home_id=HOME,
+            name="الصالة لا تتجاوز ٢٤",
+            capability="environment.temperature",
+            comparison=GoalComparison.AT_MOST,
+            value=24,
+            room_id="living_room",
+            actions=(
+                AutomationAction(
+                    capability="climate.target_temperature", value=22, device_id="ac_living"
+                ),
+            ),
+        )
+    )
+
+    dispatched: list[Any] = []
+
+    class Dispatcher:
+        async def dispatch_all(self, proposals: Any, now: Any = None) -> tuple[Any, ...]:
+            dispatched.extend(proposals)
+            return tuple(type("O", (), {"carried_out": True, "name": p.name})() for p in proposals)
+
+    hot = home(
+        device("temp_living", "living_room", a=reading("environment.temperature", 27.0, NOW)),
+        home_id=HOME,
+    )
+    driver = AutomationDriver(
+        Twin({HOME: hot}),
+        AutomationEngine(),
+        dispatcher=Dispatcher(),  # type: ignore[arg-type]
+        goals=goals,
+    )
+    await driver.run_once(NOW)
+
+    assert [p.action.capability for p in dispatched] == ["climate.target_temperature"]
+
+
+async def test_the_driver_never_corrects_a_goal_it_cannot_measure() -> None:
+    """Correcting a room nobody can see is guessing with somebody's air
+    conditioning."""
+    from syltra_automation_engine import GoalRegistry
+    from syltra_contracts import Goal, GoalComparison
+
+    goals = GoalRegistry()
+    goals.upsert(
+        Goal(
+            home_id=HOME,
+            name="غرفة بلا حسّاس",
+            capability="environment.temperature",
+            comparison=GoalComparison.AT_MOST,
+            value=24,
+            room_id="cellar",
+            actions=(
+                AutomationAction(
+                    capability="climate.target_temperature", value=22, device_id="ac_cellar"
+                ),
+            ),
+        )
+    )
+
+    dispatched: list[Any] = []
+
+    class Dispatcher:
+        async def dispatch_all(self, proposals: Any, now: Any = None) -> tuple[Any, ...]:
+            dispatched.extend(proposals)
+            return ()
+
+    driver = AutomationDriver(
+        Twin({HOME: house()}),
+        AutomationEngine(),
+        dispatcher=Dispatcher(),  # type: ignore[arg-type]
+        goals=goals,
+    )
+    await driver.run_once(NOW)
+
+    assert dispatched == []

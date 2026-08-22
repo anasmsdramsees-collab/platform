@@ -83,6 +83,22 @@ class PolicyService:
         """
         self._homes[home_id].last_manual_change[f"{device_id}:{capability}"] = at
 
+    def manual_override_active(
+        self, home_id: str, device_id: str | None, capability: str, now: datetime | None = None
+    ) -> bool:
+        """Whether a person has this device by the hand right now.
+
+        Exposed as a question rather than kept private, because a screen has to
+        answer it too: a goal that cannot cool a room somebody just adjusted is
+        being *held*, not failing, and showing it as a failure teaches a
+        household to ignore the colour.
+        """
+        moment = now or datetime.now(tz=UTC)
+        at = self._homes[home_id].last_manual_change.get(f"{device_id}:{capability}")
+        if at is None:
+            return False
+        return moment - at < self._homes[home_id].policy.manual_override_window
+
     def record_action(
         self, home_id: str, device_id: str, capability: str, at: datetime
     ) -> None:

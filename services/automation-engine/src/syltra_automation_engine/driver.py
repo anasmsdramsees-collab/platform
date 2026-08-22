@@ -29,6 +29,14 @@ A `dispatcher` closes that gap. It stays optional — a hub that wants to watch
 its automations without letting them act constructs the driver without one, and
 that is exactly what the shadow phase of a pilot needs.
 
+## Goals ride the same loop
+
+A goal is checked on a clock rather than fired by an event, which would suggest
+a third timer. It does not get one: each goal carries its own review interval
+and this pass simply asks which are due. A hub has two loops — one at a gas
+leak's pace and one at a household's — and a third would be a third thing that
+can stop without anybody noticing.
+
 ## Why it is slower than the safety loop
 
 Two seconds rather than one. Nothing here is life-safety: a light that comes on
@@ -41,11 +49,13 @@ import logging
 from collections.abc import Callable, Iterable, Mapping
 from contextlib import suppress
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any, Protocol
 
 from syltra_automation_engine import metrics
 from syltra_automation_engine.dispatcher import AutomationDispatcher
+from syltra_automation_engine.engine import AutomationProposal
+from syltra_automation_engine.goals import GoalRegistry, assess, with_manual_hold
 from syltra_automation_engine.scheduler import Scheduler
 
 logger = logging.getLogger(__name__)
@@ -107,6 +117,8 @@ class AutomationDriver:
         interval_seconds: float = DEFAULT_INTERVAL_SECONDS,
         on_change: Callable[[str, tuple[str, ...]], None] | None = None,
         dispatcher: AutomationDispatcher | None = None,
+        goals: GoalRegistry | None = None,
+        manual_override: Callable[[str, str | None, str], bool] | None = None,
     ) -> None:
         self._twin = twin
         self._engine = engine
@@ -115,6 +127,8 @@ class AutomationDriver:
         self._interval = interval_seconds
         self._on_change = on_change
         self._dispatcher = dispatcher
+        self._goals = goals
+        self._manual_override = manual_override
         self._task: asyncio.Task[None] | None = None
         self.health = AutomationDriverHealth()
 
@@ -191,8 +205,65 @@ class AutomationDriver:
                 f" ({occurrence.late_by.total_seconds():.0f}s late)" if occurrence.was_late else "",
             )
 
+        changed.extend(await self._review_goals(home_id, state, now))
+
         if changed and self._on_change is not None:
             self._on_change(home_id, tuple(changed))
+
+    async def _review_goals(self, home_id: str, state: Any, now: datetime) -> list[str]:
+        """Ask each goal that is due whether it still holds, and act if it does not."""
+        if self._goals is None:
+            return []
+        changed: list[str] = []
+        for goal in self._goals.list_for(home_id):
+            if not goal.enabled or not self._goals.due(goal, now):
+                continue
+            self._goals.mark_reviewed(goal, now)
+            status = assess(goal, state, now)
+            if self._manual_override is not None:
+                status = with_manual_hold(
+                    status,
+                    goal,
+                    lambda device_id, capability: bool(
+                        self._manual_override(home_id, device_id, capability)  # type: ignore[misc]
+                    ),
+                )
+            changed.append(f"GOAL_{goal.goal_id}")
+
+            if not status.needs_correcting or not goal.actions:
+                # Nothing to do, or nothing this goal is allowed to do about it.
+                # A goal that only reports is a perfectly good goal.
+                continue
+            if not self._goals.may_correct(goal, now) or self._dispatcher is None:
+                continue
+
+            proposals = tuple(
+                AutomationProposal(
+                    automation_id=goal.goal_id,
+                    home_id=home_id,
+                    name=goal.name,
+                    action=action,
+                    triggered_at=now,
+                    expires_at=now + timedelta(seconds=goal.review_seconds),
+                    reason_codes=("GOAL_NOT_HOLDING",),
+                )
+                for action in goal.actions
+            )
+            outcomes = await self._dispatcher.dispatch_all(proposals, now)
+            if any(outcome.carried_out for outcome in outcomes):
+                # Marked only when something actually happened. A correction
+                # policy refused is not a correction, and must not start the
+                # clock that stops the next attempt.
+                self._goals.mark_corrected(goal, now)
+            logger.info(
+                "goal %s not holding (%s vs %s) — corrected %d/%d",
+                goal.name,
+                status.measured,
+                goal.value,
+                sum(1 for o in outcomes if o.carried_out),
+                len(outcomes),
+            )
+        return changed
 
     async def _loop(self) -> None:
         while True:

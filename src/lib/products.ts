@@ -430,6 +430,44 @@ export const productCatalog: ProductCategory[] = [
     ],
   },
   {
+    key: "audio",
+    en: {
+      name: "Audio Systems",
+      desc: "Sound built into the room, not sitting on top of it.",
+    },
+    ar: {
+      name: "أنظمة الصوت",
+      desc: "صوت مدمج داخل المكان، لا موضوع فوقه.",
+    },
+    items: [
+      {
+        slug: "ceiling-speaker", name: "Syltra Ceiling Speaker", tags: ["App"],
+        en: { tagline: "Sound with nothing to look at.", description: "A speaker that disappears into the ceiling and leaves the room exactly as the designer drew it. Music follows you from the majlis to the kitchen without a single box on a shelf.", specs: [{ label: "Driver", value: "6.5\" woofer with silk tweeter" }, { label: "Power", value: "60W continuous" }, { label: "Install", value: "Flush ceiling mount, paintable grille" }] },
+        ar: { tagline: "صوت بلا شيء تراه.", description: "سماعة تختفي داخل السقف وتترك الغرفة كما رسمها المصمم تمامًا. تتبعك الموسيقى من المجلس إلى المطبخ دون صندوق واحد على الرف.", specs: [{ label: "الوحدة", value: "ووفر 6.5 إنش مع تويتر حريري" }, { label: "القدرة", value: "60 واط مستمرة" }, { label: "التركيب", value: "غاطس في السقف بشبك قابل للدهان" }] },
+      },
+      {
+        slug: "ceiling-speaker-pro", name: "Syltra Ceiling Speaker Pro", tags: ["App"],
+        en: { tagline: "For the rooms that carry the evening.", description: "The larger driver for majlis spaces and open living areas. Fills a wide room evenly, so the far corner hears what the near one hears.", specs: [{ label: "Driver", value: "8\" woofer with pivoting tweeter" }, { label: "Power", value: "100W continuous" }, { label: "Coverage", value: "Wide dispersion for large rooms" }] },
+        ar: { tagline: "للغرف التي تحمل السهرة.", description: "الوحدة الأكبر للمجالس والصالات المفتوحة. تملأ الغرفة الواسعة بتوازن، فيسمع الركن البعيد ما يسمعه القريب.", specs: [{ label: "الوحدة", value: "ووفر 8 إنش مع تويتر متحرك" }, { label: "القدرة", value: "100 واط مستمرة" }, { label: "التغطية", value: "انتشار واسع للغرف الكبيرة" }] },
+      },
+      {
+        slug: "zone-amp", name: "Syltra Zone Amp 4", tags: ["Wi-Fi", "App"],
+        en: { tagline: "Four rooms, four different moods.", description: "A four-zone amplifier hidden in the rack. Play something different in every zone, or send one source through the whole house, all from the app.", specs: [{ label: "Zones", value: "4 independent stereo zones" }, { label: "Power", value: "4 × 100W" }, { label: "Sources", value: "Streaming, TV, line in" }] },
+        ar: { tagline: "أربع غرف، أربعة أمزجة.", description: "مضخم بأربع مناطق يختفي داخل الراك. شغّل شيئًا مختلفًا في كل منطقة، أو مرّر مصدرًا واحدًا على المنزل كله، من التطبيق.", specs: [{ label: "المناطق", value: "4 مناطق ستيريو مستقلة" }, { label: "القدرة", value: "4 × 100 واط" }, { label: "المصادر", value: "بث، تلفزيون، مدخل خطي" }] },
+      },
+      {
+        slug: "soundbar", name: "Syltra Soundbar", tags: ["Wi-Fi", "BLE", "App"],
+        en: { tagline: "The TV finally sounds like the picture looks.", description: "A slim bar under the screen that carries dialogue clearly and still hits hard when the scene calls for it. Joins the movie scene alongside the lights and curtains.", specs: [{ label: "Channels", value: "3.1 with wireless subwoofer" }, { label: "Connectivity", value: "HDMI eARC, Wi-Fi, Bluetooth" }, { label: "Scenes", value: "Part of Syltra scenes" }] },
+        ar: { tagline: "أخيرًا صوت التلفزيون بمستوى صورته.", description: "شريط نحيف تحت الشاشة يحمل الحوار بوضوح، ويضرب بقوة حين يطلب المشهد. ينضم لمشهد الفيلم مع الإضاءة والستائر.", specs: [{ label: "القنوات", value: "3.1 مع مضخم لاسلكي" }, { label: "الاتصال", value: "HDMI eARC وواي فاي وبلوتوث" }, { label: "المشاهد", value: "جزء من مشاهد سيلترا" }] },
+      },
+      {
+        slug: "cinema", name: "Syltra Cinema 5.1", tags: ["Wi-Fi", "App"],
+        en: { tagline: "A cinema row inside the house.", description: "Surround sound with a subwoofer and rear units for the media room. Say movie night, and the lights dim, the curtains close and the room turns into a theater.", specs: [{ label: "Channels", value: "5.1 surround" }, { label: "Includes", value: "Subwoofer + rear satellites" }, { label: "Calibration", value: "Room tuning at handover" }] },
+        ar: { tagline: "صف سينما داخل البيت.", description: "صوت محيطي مع مضخم ووحدات خلفية لغرفة الترفيه. قل ليلة أفلام، فتخفت الإضاءة وتُغلق الستائر وتتحول الغرفة إلى صالة عرض.", specs: [{ label: "القنوات", value: "محيطي 5.1" }, { label: "يشمل", value: "مضخم + وحدات خلفية" }, { label: "المعايرة", value: "ضبط على الغرفة عند التسليم" }] },
+      },
+    ],
+  },
+  {
     key: "comfort",
     en: {
       name: "Comfort & Living",

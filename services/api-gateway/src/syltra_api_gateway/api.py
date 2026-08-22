@@ -37,7 +37,7 @@ from syltra_api_gateway.dependencies import (
 from syltra_api_gateway.energy import Resolution
 from syltra_api_gateway.errors import bad_request, conflict, forbidden, not_found
 from syltra_api_gateway.platform import Platform
-from syltra_api_gateway.weather import outdoor_weather
+from syltra_api_gateway.weather import home_weather
 from syltra_api_gateway.stream import HEARTBEAT_SECONDS
 from syltra_api_gateway.translations import is_rtl, translate_reasons
 from pydantic import ValidationError
@@ -368,7 +368,7 @@ def create_app(
         """
         check_read(home_id, principal)
         snapshot = platform.twin.snapshot(home_id, datetime.now(tz=UTC))
-        return outdoor_weather(snapshot.devices.values()).as_view(home_id)
+        return home_weather(snapshot.devices.values()).as_view(home_id)
 
     # ── contexts ──
 

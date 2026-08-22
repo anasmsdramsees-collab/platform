@@ -1394,3 +1394,38 @@ still says مكيّف الصالة.
 Verified live: pressing **+** on the living room air conditioner moved 23° to
 24° through policy, orchestrator, gateway and twin; the kitchen light toggled.
 Full suite: 1214 passed, 29 skipped. `make lint` clean over 210 source files.
+
+### Two temperatures
+
+"41 outside" is half a fact. The half a household acts on is the difference —
+open a window, or is the cooling winning — so the band now carries an indoor
+temperature beside the outdoor one, and the gap between them in words: **أبرد بـ
+17°**.
+
+The indoor figure is **one room's thermometer, named**. Not an average of the
+house: averaging a shaded bedroom with a sunlit majlis produces a temperature no
+sensor measured and no room feels like. The freshest reading wins, ties break on
+the room name so the same house always shows the same room rather than whichever
+device the twin returned first — a panel whose indoor reading hops between rooms
+every five seconds is a panel nobody trusts. `indoor_rooms` says how many rooms
+it is *not* speaking for.
+
+The difference is withdrawn when either side is stale, because a difference
+between a current reading and an hour-old one is arithmetic on two different
+afternoons.
+
+Room names get wording for the common ones and pass through untouched otherwise:
+a room name is the household's own words, not a string the platform translates.
+
+**A rendering bug fixed while looking at it.** A bare `38°` inside an Arabic
+sentence renders as `°38` — the degree sign is direction-neutral and takes the
+direction of the text around it. Every figure on the panel is now wrapped in a
+directional isolate (U+2066 / U+2069). This affects any right-to-left screen
+showing a number with a unit, which is most of them.
+
+Verified live: بالخارج 41° مشمس · يُحَسّ كأنه 38° / بالداخل · الصالة 24° · أبرد
+بـ 17°. Full suite: 1218 passed, 29 skipped; `make lint` clean.
+
+**Checked while I was in there:** with no client attached, a freshly started hub
+dispatches zero actions in eighty seconds and every device holds its seeded
+value. Nothing in the platform commands an actuator on its own.

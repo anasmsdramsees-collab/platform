@@ -321,3 +321,42 @@ def test_an_enum_is_not_offered_as_something_to_cycle_through() -> None:
     code = _without_comments(JS)
     assert "if (node) controls.append(node)" in code
     assert "!reading.control" in code
+
+
+# ── two temperatures ──
+
+
+def test_the_panel_shows_inside_as_well_as_outside() -> None:
+    """ "41 outside" is half a fact. The half a household acts on is the
+    difference: whether to open a window, whether the cooling is winning."""
+    code = _without_comments(JS)
+    assert "weather.indoor" in code
+    assert "weather.difference_c" in code
+    for key in ("weather_outside", "weather_inside", "weather_cooler_by", "weather_warmer_by"):
+        assert key in I18N["en"] and key in I18N["ar"], key
+
+
+def test_the_indoor_temperature_names_its_room() -> None:
+    """One thermometer in a five-room house is one room's temperature. A panel
+    that calls it "inside" without saying where is making a claim it cannot
+    support."""
+    code = _without_comments(JS)
+    assert "roomLabel(indoor.room_id)" in code
+
+
+def test_a_room_the_household_named_itself_passes_through_untranslated() -> None:
+    """A room name is the household's own words. Common names have wording;
+    anything else is shown as it was given."""
+    code = _without_comments(JS)
+    assert "table[key] || roomId" in code
+
+
+def test_figures_inside_arabic_text_keep_their_own_direction() -> None:
+    """A bare "38°" inside an Arabic sentence renders "°38": the degree sign is
+    direction-neutral and takes the direction around it. Every figure on this
+    panel is wrapped in an isolate."""
+    code = _without_comments(JS)
+    # U+2066 FIRST STRONG ISOLATE and U+2069 POP DIRECTIONAL ISOLATE, written as
+    # escapes so they are visible to whoever reads this file.
+    assert code.count(r"\u2066") == code.count(r"\u2069") >= 3
+    assert "function degrees(" in code

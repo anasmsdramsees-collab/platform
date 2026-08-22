@@ -176,7 +176,7 @@ function stepTile(device, capability, reading) {
   const value = el(
     "span",
     "control__reading",
-    `${Math.round(reading.value).toLocaleString(state.locale)}${suffixFor(control.unit)}`,
+    `\u2066${Math.round(reading.value).toLocaleString(state.locale)}${suffixFor(control.unit)}\u2069`,
   );
   stepper.append(buttons[0], value, buttons[1]);
   node.append(stepper, nameOf(device));
@@ -228,8 +228,17 @@ function setStatus(text, isError = false) {
    when it has gone stale, is decided by the server; this draws what it is sent.
 */
 
+/* A figure, wrapped in a directional isolate.
+   Arabic runs right to left and a bare "38°" inside an Arabic sentence gets
+   rendered "°38" — the degree sign is direction-neutral, so it takes the
+   direction of the text around it. The isolate says "this fragment has its own
+   direction", which is true of every number on this panel. */
 function number(value) {
-  return value.toLocaleString(state.locale);
+  return `\u2066${value.toLocaleString(state.locale)}\u2069`;
+}
+
+function degrees(value) {
+  return `\u2066${Math.round(value).toLocaleString(state.locale)}°\u2069`;
 }
 
 function ageLabel(seconds) {
@@ -248,11 +257,21 @@ function detailCell(label, value, reading) {
   return cell;
 }
 
+/* A room as it is written on a wall. Common names have wording; anything a
+   household called something of its own passes through untouched, because a
+   room name is the household's own words and not a string to translate. */
+function roomLabel(roomId) {
+  if (!roomId) return "";
+  const key = `room_${roomId}`;
+  const table = state.dict[state.locale] || state.dict.en || {};
+  return table[key] || roomId.replace(/_/g, " ");
+}
+
 function showWeather(weather) {
   const band = document.getElementById("weather");
   if (!weather || !weather.measured) {
-    /* No outdoor sensor, so no weather. The panel does not fall back to an
-       indoor thermometer relabelled as the sky. */
+    /* No sensor, so no weather. The panel does not fall back to an indoor
+       thermometer relabelled as the sky, or the reverse. */
     band.hidden = true;
     return;
   }
@@ -264,8 +283,13 @@ function showWeather(weather) {
   const light = readings["environment.illuminance"];
 
   document.getElementById("weather-heading").textContent = t("weather_heading");
+
+  /* ── outside ── */
+  const outdoor = document.getElementById("weather-outdoor");
+  outdoor.hidden = !temperature && !weather.condition;
+  document.getElementById("weather-outdoor-where").textContent = t("weather_outside");
   document.getElementById("weather-temperature").textContent = temperature
-    ? `${number(Math.round(temperature.value))}°`
+    ? degrees(temperature.value)
     : "—";
   document.getElementById("weather-condition").textContent = weather.condition
     ? t(`weather_${weather.condition.toLowerCase()}`)
@@ -275,11 +299,37 @@ function showWeather(weather) {
      missing one here means the house cannot currently say. */
   const feels = document.getElementById("weather-feels");
   if (weather.feels_like_c !== null && weather.feels_like_c !== undefined) {
-    feels.textContent = t("weather_feels").replace("{t}", number(Math.round(weather.feels_like_c)));
+    feels.textContent = t("weather_feels").replace("{t}", degrees(weather.feels_like_c));
   } else if (temperature && temperature.stale) {
     feels.textContent = ageLabel(temperature.age_seconds);
   } else {
     feels.textContent = "";
+  }
+
+  /* ── inside ── */
+  const indoorBand = document.getElementById("weather-indoor");
+  const indoor = weather.indoor;
+  indoorBand.hidden = !indoor;
+  if (indoor) {
+    /* The room is on the label, not implied. One thermometer in a five-room
+       house is one room's temperature, and a panel that calls it "inside"
+       without saying where is a panel making a claim it cannot support. */
+    document.getElementById("weather-indoor-where").textContent = `${t("weather_inside")} · ${roomLabel(indoor.room_id)}`;
+    document.getElementById("weather-indoor-temperature").textContent = degrees(indoor.value);
+
+    const difference = document.getElementById("weather-difference");
+    if (indoor.stale) {
+      difference.textContent = ageLabel(indoor.age_seconds);
+    } else if (weather.difference_c !== null && weather.difference_c !== undefined) {
+      /* The number a household acts on: whether to open a window, whether the
+         air conditioning is winning. */
+      const gap = Math.abs(weather.difference_c);
+      const key = weather.difference_c >= 0 ? "weather_cooler_by" : "weather_warmer_by";
+      difference.textContent =
+        Math.round(gap) === 0 ? t("weather_the_same") : t(key).replace("{n}", degrees(gap));
+    } else {
+      difference.textContent = "";
+    }
   }
 
   document.getElementById("weather-source").textContent = t("weather_measured_here");
@@ -288,7 +338,11 @@ function showWeather(weather) {
   detail.replaceChildren();
   if (humidity) {
     detail.append(
-      detailCell(t("weather_humidity"), `${number(Math.round(humidity.value))}%`, humidity),
+      detailCell(
+        t("weather_humidity"),
+        `\u2066${Math.round(humidity.value).toLocaleString(state.locale)}%\u2069`,
+        humidity,
+      ),
     );
   }
   if (air && weather.air_band) {
@@ -296,7 +350,11 @@ function showWeather(weather) {
   }
   if (light) {
     detail.append(
-      detailCell(t("weather_light"), t("weather_lux").replace("{n}", number(Math.round(light.value))), light),
+      detailCell(
+        t("weather_light"),
+        t("weather_lux").replace("{n}", number(Math.round(light.value))),
+        light,
+      ),
     );
   }
 

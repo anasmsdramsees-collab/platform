@@ -25,6 +25,19 @@ relabelled, not a figure carried over from a room. ``measured`` is false when
 there is no outdoor sensor at all, and the panel shows nothing rather than
 something.
 
+## Two temperatures, and the room one of them is in
+
+"41 outside" is half a fact. The half a household acts on is the difference:
+whether to open a window, whether the air conditioning is winning, whether the
+room somebody is about to walk into is worse than the one they are leaving.
+
+So the payload carries an indoor temperature beside the outdoor one — and names
+the room it came from. It is one room's thermometer, not an average of the
+house: averaging a shaded bedroom with a sunlit majlis produces a temperature no
+sensor measured and no room feels like. A house with thermometers in four rooms
+still gets one number here, labelled with which room, and the console is where
+somebody compares all four.
+
 ## Stale is shown, not hidden
 
 Environment readings are stale past their freshness budget (§10.3). A stale
@@ -143,6 +156,7 @@ class Measurement:
     unit: str | None
     age_seconds: float
     device_id: str
+    room_id: str = ""
 
     @property
     def stale(self) -> bool:
@@ -155,6 +169,7 @@ class Measurement:
             "age_seconds": round(self.age_seconds, 1),
             "stale": self.stale,
             "device_id": self.device_id,
+            "room_id": self.room_id,
         }
 
 
@@ -163,10 +178,30 @@ class Weather:
     """What the house can say about outside, and nothing further."""
 
     readings: Mapping[str, Measurement]
+    indoor: Measurement | None = None
+    indoor_rooms: int = 0
+    """How many rooms have a thermometer, so nothing pretends one speaks for
+    the house."""
 
     @property
     def measured(self) -> bool:
-        return bool(self.readings)
+        return bool(self.readings) or self.indoor is not None
+
+    @property
+    def difference_c(self) -> float | None:
+        """How much colder it is inside, in degrees, or None.
+
+        The number a household actually acts on: whether to open a window,
+        whether the air conditioning is winning. Withdrawn when either side is
+        stale, because a difference between a current reading and an hour-old
+        one is arithmetic on two different afternoons.
+        """
+        outside = self.readings.get(TEMPERATURE)
+        if outside is None or self.indoor is None:
+            return None
+        if outside.stale or self.indoor.stale:
+            return None
+        return round(outside.value - self.indoor.value, 1)
 
     @property
     def condition(self) -> str | None:
@@ -209,39 +244,75 @@ class Weather:
             "condition": self.condition,
             "air_band": self.air_band,
             "feels_like_c": self.feels_like_c,
+            "indoor": self.indoor.as_view() if self.indoor is not None else None,
+            "indoor_rooms": self.indoor_rooms,
+            "difference_c": self.difference_c,
             "readings": {name: m.as_view() for name, m in sorted(self.readings.items())},
         }
 
 
-def outdoor_weather(devices: Iterable[Mapping[str, Any]]) -> Weather:
-    """Read the weather off the devices the twin says are outdoors.
+def _reading(
+    device: Mapping[str, Any], capability: str, room_id: str
+) -> Measurement | None:
+    capabilities = device.get("capabilities")
+    if not isinstance(capabilities, Mapping):
+        return None
+    reading = capabilities.get(capability)
+    if not isinstance(reading, Mapping) or reading.get("status") != "KNOWN":
+        return None
+    value = reading.get("value")
+    if not isinstance(value, int | float) or isinstance(value, bool):
+        return None
+    return Measurement(
+        capability=capability,
+        value=float(value),
+        unit=reading.get("unit"),
+        age_seconds=float(reading.get("age_seconds") or 0.0),
+        device_id=str(device.get("device_id", "")),
+        room_id=room_id,
+    )
 
-    Where two sensors report the same thing — a balcony thermometer and one on
-    the roof — the fresher wins. Averaging them would produce a temperature no
-    sensor measured, which is the one thing this module will not do.
+
+def home_weather(devices: Iterable[Mapping[str, Any]]) -> Weather:
+    """Read the weather off the devices the twin knows about.
+
+    Where two sensors report the same thing outdoors — a balcony thermometer and
+    one on the roof — the fresher wins. Averaging them would produce a
+    temperature no sensor measured, which is the one thing this module will not
+    do; the same reasoning picks a single room for the indoor figure rather than
+    a mean of the house.
     """
-    best: dict[str, Measurement] = {}
+    outdoor: dict[str, Measurement] = {}
+    indoor: Measurement | None = None
+    rooms_with_thermometer: set[str] = set()
+
     for device in devices:
-        if str(device.get("room_id") or "").lower() not in OUTDOOR_ROOMS:
+        room_id = str(device.get("room_id") or "")
+        if room_id.lower() in OUTDOOR_ROOMS:
+            for name in WEATHER_CAPABILITIES:
+                found = _reading(device, name, room_id)
+                if found is None:
+                    continue
+                current = outdoor.get(name)
+                if current is None or found.age_seconds < current.age_seconds:
+                    outdoor[name] = found
             continue
-        capabilities = device.get("capabilities")
-        if not isinstance(capabilities, Mapping):
+
+        inside = _reading(device, TEMPERATURE, room_id)
+        if inside is None:
             continue
-        for name in WEATHER_CAPABILITIES:
-            reading = capabilities.get(name)
-            if not isinstance(reading, Mapping) or reading.get("status") != "KNOWN":
-                continue
-            value = reading.get("value")
-            if not isinstance(value, int | float) or isinstance(value, bool):
-                continue
-            found = Measurement(
-                capability=name,
-                value=float(value),
-                unit=reading.get("unit"),
-                age_seconds=float(reading.get("age_seconds") or 0.0),
-                device_id=str(device.get("device_id", "")),
-            )
-            current = best.get(name)
-            if current is None or found.age_seconds < current.age_seconds:
-                best[name] = found
-    return Weather(readings=best)
+        rooms_with_thermometer.add(room_id)
+        # Freshest wins, and ties break on the room name so the same house
+        # always shows the same room rather than whichever dict came first.
+        if (
+            indoor is None
+            or inside.age_seconds < indoor.age_seconds
+            or (inside.age_seconds == indoor.age_seconds and inside.room_id < indoor.room_id)
+        ):
+            indoor = inside
+
+    return Weather(
+        readings=outdoor,
+        indoor=indoor,
+        indoor_rooms=len(rooms_with_thermometer),
+    )

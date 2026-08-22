@@ -113,8 +113,31 @@
 
 .weather__now {
   display: flex;
-  align-items: center;
-  gap: var(--space-5);
+  align-items: flex-start;
+  /* Wide enough that the two temperatures are read as two facts rather than a
+   * range. On a narrow panel they wrap and stack instead. */
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+
+/* One temperature and what belongs to it. Outside carries the sky and the heat
+ * index; inside carries the room it was measured in and the difference. */
+.weather__reading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.weather__reading[hidden] {
+  display: none;
+}
+
+/* Which of the two this is. Small and above the number, because from three
+ * metres the number is what reads and this only has to disambiguate. */
+.weather__where {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--text-tertiary);
 }
 
 .weather__temperature {
@@ -126,12 +149,6 @@
    * beside it on a screen somebody sees a hundred times a day. */
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
-}
-
-.weather__words {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
 }
 
 .weather__condition {

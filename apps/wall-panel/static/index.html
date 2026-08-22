@@ -61,14 +61,24 @@
     <section class="weather" id="weather" hidden aria-labelledby="weather-heading">
       <h2 class="visually-hidden" id="weather-heading"></h2>
       <div class="weather__now">
-        <p class="weather__temperature" id="weather-temperature"></p>
-        <div class="weather__words">
+        <!-- Two temperatures, because "41 outside" is half a fact. The half a
+             household acts on is the difference between them. -->
+        <div class="weather__reading" id="weather-outdoor">
+          <p class="weather__where" id="weather-outdoor-where"></p>
+          <p class="weather__temperature" id="weather-temperature"></p>
           <p class="weather__condition" id="weather-condition"></p>
           <p class="weather__feels" id="weather-feels"></p>
-          <p class="weather__source" id="weather-source"></p>
+        </div>
+        <div class="weather__reading" id="weather-indoor" hidden>
+          <!-- Named with the room it was taken in. One thermometer does not
+               speak for a house. -->
+          <p class="weather__where" id="weather-indoor-where"></p>
+          <p class="weather__temperature" id="weather-indoor-temperature"></p>
+          <p class="weather__condition" id="weather-difference"></p>
         </div>
       </div>
       <dl class="weather__detail" id="weather-detail"></dl>
+      <p class="weather__source" id="weather-source"></p>
     </section>
 
     <section class="panel__controls" id="controls" aria-labelledby="controls-heading">

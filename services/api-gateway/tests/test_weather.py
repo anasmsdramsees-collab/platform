@@ -15,7 +15,7 @@ from syltra_api_gateway.weather import (
     ILLUMINANCE,
     TEMPERATURE,
     heat_index_c,
-    outdoor_weather,
+    home_weather,
 )
 
 
@@ -38,15 +38,70 @@ def _device(
 
 
 def test_an_indoor_thermometer_is_not_the_sky() -> None:
-    """A house without an outdoor sensor gets no weather, not a relabelled
-    living room."""
-    weather = outdoor_weather([_device("t", "living_room", TEMPERATURE, 22.0, "C")])
-    assert weather.measured is False
-    assert weather.as_view("home_1")["readings"] == {}
+    """A house without an outdoor sensor gets no outdoor temperature, not a
+    relabelled living room. The reading still appears — as the indoor half,
+    with the room it was taken in on it."""
+    weather = home_weather([_device("t", "living_room", TEMPERATURE, 22.0, "C")])
+    assert weather.readings == {}
+    assert weather.condition is None
+    assert weather.indoor is not None
+    assert weather.indoor.room_id == "living_room"
+
+
+def test_the_indoor_temperature_is_one_room_rather_than_an_average() -> None:
+    """Averaging a shaded bedroom with a sunlit majlis produces a temperature no
+    sensor measured and no room feels like."""
+    weather = home_weather(
+        [
+            _device("a", "majlis", TEMPERATURE, 31.0, "C", age=90.0),
+            _device("b", "bedroom", TEMPERATURE, 21.0, "C", age=10.0),
+        ]
+    )
+    assert weather.indoor is not None
+    assert weather.indoor.value == 21.0
+    assert weather.indoor.room_id == "bedroom"
+    # And it says how many rooms it is not speaking for.
+    assert weather.indoor_rooms == 2
+
+
+def test_the_same_house_always_shows_the_same_room() -> None:
+    """A tie on freshness breaks on the room name rather than on whichever
+    device the twin happened to return first — a panel whose indoor reading
+    hops between rooms every five seconds is a panel nobody trusts."""
+    devices = [
+        _device("a", "majlis", TEMPERATURE, 31.0, "C", age=10.0),
+        _device("b", "bedroom", TEMPERATURE, 21.0, "C", age=10.0),
+    ]
+    first = home_weather(devices).indoor
+    second = home_weather(list(reversed(devices))).indoor
+    assert first is not None and second is not None
+    assert first.room_id == second.room_id == "bedroom"
+
+
+def test_the_difference_is_the_number_a_household_acts_on() -> None:
+    weather = home_weather(
+        [
+            _device("out", "outside", TEMPERATURE, 41.0, "C"),
+            _device("in", "living_room", TEMPERATURE, 24.0, "C"),
+        ]
+    )
+    assert weather.difference_c == 17.0
+
+
+def test_a_difference_is_not_computed_across_two_different_afternoons() -> None:
+    weather = home_weather(
+        [
+            _device("out", "outside", TEMPERATURE, 41.0, "C", age=10.0),
+            _device("in", "living_room", TEMPERATURE, 24.0, "C", age=5000.0),
+        ]
+    )
+    assert weather.indoor is not None
+    assert weather.indoor.stale is True
+    assert weather.difference_c is None
 
 
 def test_the_payload_never_carries_a_forecast() -> None:
-    view = outdoor_weather([_device("t", "outside", TEMPERATURE, 30.0, "C")]).as_view("home_1")
+    view = home_weather([_device("t", "outside", TEMPERATURE, 30.0, "C")]).as_view("home_1")
     assert view["forecast"] is None
     assert view["source"] == "HOME_SENSORS"
 
@@ -54,7 +109,7 @@ def test_the_payload_never_carries_a_forecast() -> None:
 def test_two_sensors_for_the_same_thing_do_not_become_an_average() -> None:
     """Averaging a balcony and a roof produces a temperature no sensor
     measured. The fresher reading wins instead."""
-    weather = outdoor_weather(
+    weather = home_weather(
         [
             _device("roof", "roof", TEMPERATURE, 44.0, "C", age=600.0),
             _device("balcony", "balcony", TEMPERATURE, 39.0, "C", age=20.0),
@@ -65,7 +120,7 @@ def test_two_sensors_for_the_same_thing_do_not_become_an_average() -> None:
 
 
 def test_a_reading_the_twin_does_not_know_is_left_out() -> None:
-    weather = outdoor_weather([_device("t", "outside", TEMPERATURE, None, "C", status="UNKNOWN")])
+    weather = home_weather([_device("t", "outside", TEMPERATURE, None, "C", status="UNKNOWN")])
     assert weather.measured is False
 
 
@@ -74,7 +129,7 @@ def test_a_reading_the_twin_does_not_know_is_left_out() -> None:
     [(0.0, "NIGHT"), (4.0, "NIGHT"), (300.0, "TWILIGHT"), (8000.0, "CLOUD"), (94000.0, "SUN")],
 )
 def test_the_condition_comes_from_measured_light(lux: float, condition: str) -> None:
-    weather = outdoor_weather([_device("l", "outside", ILLUMINANCE, lux, "lx")])
+    weather = home_weather([_device("l", "outside", ILLUMINANCE, lux, "lx")])
     assert weather.condition == condition
 
 
@@ -88,14 +143,14 @@ def test_no_condition_claims_rain() -> None:
 
 
 def test_a_house_that_cannot_see_the_sky_says_nothing_about_it() -> None:
-    weather = outdoor_weather([_device("t", "outside", TEMPERATURE, 30.0, "C")])
+    weather = home_weather([_device("t", "outside", TEMPERATURE, 30.0, "C")])
     assert weather.condition is None
 
 
 def test_air_quality_is_banded_on_the_scale_the_capability_declares() -> None:
-    assert outdoor_weather([_device("a", "outside", AIR_QUALITY, 20.0)]).air_band == "GOOD"
-    assert outdoor_weather([_device("a", "outside", AIR_QUALITY, 68.0)]).air_band == "MODERATE"
-    assert outdoor_weather([_device("a", "outside", AIR_QUALITY, 460.0)]).air_band == "HAZARDOUS"
+    assert home_weather([_device("a", "outside", AIR_QUALITY, 20.0)]).air_band == "GOOD"
+    assert home_weather([_device("a", "outside", AIR_QUALITY, 68.0)]).air_band == "MODERATE"
+    assert home_weather([_device("a", "outside", AIR_QUALITY, 460.0)]).air_band == "HAZARDOUS"
 
 
 def test_dry_heat_feels_cooler_than_the_thermometer_says() -> None:
@@ -120,7 +175,7 @@ def test_a_cold_night_gets_no_feels_like_because_there_is_no_wind_sensor() -> No
 
 
 def test_a_stale_input_withdraws_the_feels_like_rather_than_ageing_it() -> None:
-    weather = outdoor_weather(
+    weather = home_weather(
         [
             _device("t", "outside", TEMPERATURE, 41.0, "C", age=10.0),
             _device("h", "outside", HUMIDITY, 12.0, "%", age=5000.0),
@@ -132,7 +187,7 @@ def test_a_stale_input_withdraws_the_feels_like_rather_than_ageing_it() -> None:
 
 def test_a_stale_reading_is_still_shown_with_its_age() -> None:
     """A blank where a temperature used to be reads as a broken panel."""
-    view = outdoor_weather([_device("t", "outside", TEMPERATURE, 34.0, "C", age=5000.0)]).as_view(
+    view = home_weather([_device("t", "outside", TEMPERATURE, 34.0, "C", age=5000.0)]).as_view(
         "home_1"
     )
     reading = view["readings"][TEMPERATURE]

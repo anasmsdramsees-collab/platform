@@ -799,9 +799,58 @@ function deviceTable(devices) {
     icon.setAttribute("aria-hidden", "true");
     name.append(icon);
     name.append(link(`#/devices/${device.device_id}`, null, deviceLabel(device)));
-    return [name, device.room_id || "—", primaryReading(device), deviceStateCell(device)];
+    return [
+      name,
+      device.room_id || "—",
+      primaryReading(device),
+      deviceStateCell(device),
+      manualControl(device),
+    ];
   });
-  return scrollableTable(["device", "room", "state", "availability"], rows);
+  return scrollableTable(["device", "room", "state", "availability", "control"], rows);
+}
+
+/* ── manual control (§0 rule 5) ──
+
+   The console could approve a recommendation and could not switch anything on.
+   Manual override was honoured by the policy chain and produced by nothing, so
+   the rule held for a physical switch — which Home Assistant reports — and had
+   no path through this screen at all.
+
+   The server says which capabilities this caller may operate, so a column that
+   is empty for a lock is empty because the answer came back that way, not
+   because the console decided. */
+
+function manualControl(device) {
+  const operable = Object.entries(device.capabilities || {}).filter(
+    ([, reading]) => reading.operable && typeof reading.value === "boolean",
+  );
+  if (!operable.length) return el("span", "muted", "—");
+
+  const wrapper = el("div", "row");
+  for (const [capability, reading] of operable) {
+    const on = reading.value === true;
+    const button = el("button", "btn btn--secondary", on ? t("turn_off") : t("turn_on"));
+    button.type = "button";
+    button.addEventListener("click", async () => {
+      button.setAttribute("aria-busy", "true");
+      try {
+        await api(`/v1/homes/${state.homeId}/devices/${device.device_id}/${capability}`, {
+          method: "POST",
+          body: JSON.stringify({ value: !on }),
+        });
+        await refresh();
+      } catch (error) {
+        /* Shown rather than swallowed: a button that silently does nothing is
+           worse than one that says it was refused. */
+        button.after(failureNotice(error, t("source_devices")));
+      } finally {
+        button.removeAttribute("aria-busy");
+      }
+    });
+    wrapper.append(button);
+  }
+  return wrapper;
 }
 
 async function renderDevices(host) {
@@ -2317,6 +2366,8 @@ async function renderUsers(host) {
     return;
   }
 
+  if (mayManage) host.append(panelSection(home));
+
   const rows = members.map((member) => {
     const who = el("div");
     who.append(el("span", "identifier", member.display_name || member.subject));
@@ -2341,6 +2392,96 @@ async function renderUsers(host) {
       rows,
     ),
   );
+}
+
+/* ── wall panels ──
+ *
+ * Registered here rather than on the panel itself, because a screen on a wall
+ * that can enrol itself is a screen anybody in the hallway can enrol. The
+ * owner decides where a permanent control surface goes.
+ *
+ * The token is shown once and never again. That is what makes revoking one
+ * mean something: a panel that lost its token is re-registered, not recovered.
+ */
+
+function panelSection(home) {
+  const section = el("section", "card");
+  section.append(el("h2", "type-section-title", t("panels_title")));
+  section.append(el("p", "muted", t("panels_detail")));
+
+  const listing = el("div");
+  section.append(listing);
+
+  const location = labelledInput("panel-location", t("panel_location"), "text");
+  const reason = labelledInput("panel-reason", t("reason_for_change"), "text");
+  const add = el("button", "btn btn--primary", t("panel_add"));
+  add.type = "button";
+  const outcome = el("div");
+  section.append(location.node, reason.node, add, outcome);
+
+  async function load() {
+    listing.replaceChildren();
+    try {
+      const body = await api(`/v1/homes/${home}/panels`);
+      const panels = body.panels || [];
+      if (!panels.length) {
+        listing.append(el("p", "muted", t("no_panels")));
+        return;
+      }
+      listing.append(
+        scrollableTable(
+          ["who", "access_state", "granted_by", "manage"],
+          panels.map((panel) => [
+            panel.display_name || panel.subject,
+            panel.active ? badge("online", t("access_active")) : badge("offline", t("access_revoked")),
+            panel.granted_by,
+            panel.active ? revokeButton(home, panel) : el("span", "muted", "—"),
+          ]),
+        ),
+      );
+    } catch (error) {
+      listing.append(failureNotice(error, t("source_users")));
+    }
+  }
+
+  add.addEventListener("click", async () => {
+    outcome.replaceChildren();
+    if (!location.input.value.trim() || !reason.input.value.trim()) {
+      outcome.append(notice("error", t("reason_required"), t("reason_required_detail")));
+      return;
+    }
+    add.setAttribute("aria-busy", "true");
+    try {
+      const created = await api(`/v1/homes/${home}/panels`, {
+        method: "POST",
+        body: JSON.stringify({
+          location: location.input.value.trim(),
+          reason: reason.input.value.trim(),
+        }),
+      });
+      /* Shown once, and said so. A household that closes this without copying
+         it registers the panel again — which is the same rule every other
+         credential here follows. */
+      const shown = notice(
+        "partial",
+        t("panel_token_title"),
+        t("panel_token_detail").replace("{url}", `${window.location.origin}/panel/`),
+      );
+      const code = el("p", "identifier", created.token);
+      shown.append(code);
+      outcome.append(shown);
+      location.input.value = "";
+      reason.input.value = "";
+      await load();
+    } catch (error) {
+      outcome.append(failureNotice(error, t("source_users")));
+    } finally {
+      add.removeAttribute("aria-busy");
+    }
+  });
+
+  load();
+  return section;
 }
 
 function inviteForm(home, assignable) {

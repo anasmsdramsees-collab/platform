@@ -6,12 +6,12 @@ This repository hosts two codebases side by side:
 
 1. **The SYLTRA SMART website** — Next.js app under `src/` (see `AGENTS.md` above; read
    `node_modules/next/dist/docs/` before touching website code).
-2. **The SYLTRA Adaptive Edge Platform** — Python monorepo under `platform/`
+2. **The SYLTRA Adaptive Edge Platform** — Python monorepo under `syltra-home-assistant/`
    (`services/`, `libs/`, `apps/`, `simulator/`, `contracts/`, `home-assistant/`,
    `infrastructure/`, `tests/`, `docs/` inside it), governed by
    `SYLTRA_Claude_Code_Master_Build_Spec.md`. Read that spec before platform work.
 
-   **Every platform command runs from `platform/`** — `make`, `uv`, `pytest`. The
+   **Every platform command runs from `syltra-home-assistant/`** — `make`, `uv`, `pytest`. The
    workspace, the lockfile and the virtualenv all live there.
 
 ## Platform summary

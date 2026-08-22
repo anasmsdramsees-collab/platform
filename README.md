@@ -4,7 +4,7 @@ This repository contains two codebases:
 
 | Codebase | Where | What it is |
 |---|---|---|
-| **SYLTRA Adaptive Edge Platform** | `platform/` (`services/`, `libs/`, `apps/`, `simulator/`, `contracts/`, `home-assistant/`, `infrastructure/`, `tests/`, `docs/` inside it) | Local-first adaptive smart-home intelligence platform (Python). Governed by `SYLTRA_Claude_Code_Master_Build_Spec.md`. |
+| **SYLTRA Adaptive Edge Platform** | `syltra-home-assistant/` (`services/`, `libs/`, `apps/`, `simulator/`, `contracts/`, `home-assistant/`, `infrastructure/`, `tests/`, `docs/` inside it) | Local-first adaptive smart-home intelligence platform (Python). Governed by `SYLTRA_Claude_Code_Master_Build_Spec.md`. |
 | **SYLTRA SMART website** | `src/`, `public/` | The marketing website (Next.js). See [Website](#website) below. |
 
 ---
@@ -20,7 +20,7 @@ internet access; raw household data stays local by default.
 **Architecture in one line:** Devices → Home Assistant Core (embedded, replaceable
 integration runtime) → SYLTRA Edge Agent → NATS JetStream → Digital Twin / Context
 Engine / Adaptive Engine / Risk Engine → Policy & Safety → Action Orchestrator → back to
-devices. See `platform/docs/adr/ADR-001-home-assistant-as-replaceable-integration-runtime.md`.
+devices. See `syltra-home-assistant/docs/adr/ADR-001-home-assistant-as-replaceable-integration-runtime.md`.
 
 ### Prerequisites
 

@@ -75,18 +75,18 @@ htmlcov/
 coverage.xml
 
 # local runtime data (never commit household or broker data)
-/platform/data/
-/platform/config/home-assistant/.storage/
-/platform/config/home-assistant/home-assistant_v2.db*
-/platform/config/home-assistant/*.log*
-/platform/config/home-assistant/secrets.yaml
-/platform/config/home-assistant/.HA_VERSION
-/platform/config/home-assistant/blueprints/
-/platform/config/home-assistant/deps/
-/platform/config/home-assistant/tts/
+/syltra-home-assistant/data/
+/syltra-home-assistant/config/home-assistant/.storage/
+/syltra-home-assistant/config/home-assistant/home-assistant_v2.db*
+/syltra-home-assistant/config/home-assistant/*.log*
+/syltra-home-assistant/config/home-assistant/secrets.yaml
+/syltra-home-assistant/config/home-assistant/.HA_VERSION
+/syltra-home-assistant/config/home-assistant/blueprints/
+/syltra-home-assistant/config/home-assistant/deps/
+/syltra-home-assistant/config/home-assistant/tts/
 
 # model artifacts built locally (exported models are promoted deliberately)
-/platform/models/training/**/output/
+/syltra-home-assistant/models/training/**/output/
 *.joblib
 
 # secrets and certificates — defense in depth on top of the .env* rule above

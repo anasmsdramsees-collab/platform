@@ -1,33 +1,33 @@
-name: Platform CI
+name: Hub CI
 
 on:
   push:
     branches: [main]
     paths:
-      - "platform/libs/**"
-      - "platform/services/**"
-      - "platform/simulator/**"
-      - "platform/tests/**"
-      - "platform/contracts/**"
-      - "platform/infrastructure/**"
-      - "platform/pyproject.toml"
-      - "platform/uv.lock"
-      - "platform/Makefile"
-      - "platform/docker-compose.yml"
-      - ".github/workflows/platform-ci.yml"
+      - "syltra-home-assistant/libs/**"
+      - "syltra-home-assistant/services/**"
+      - "syltra-home-assistant/simulator/**"
+      - "syltra-home-assistant/tests/**"
+      - "syltra-home-assistant/contracts/**"
+      - "syltra-home-assistant/infrastructure/**"
+      - "syltra-home-assistant/pyproject.toml"
+      - "syltra-home-assistant/uv.lock"
+      - "syltra-home-assistant/Makefile"
+      - "syltra-home-assistant/docker-compose.yml"
+      - ".github/workflows/hub-ci.yml"
   pull_request:
     paths:
-      - "platform/libs/**"
-      - "platform/services/**"
-      - "platform/simulator/**"
-      - "platform/tests/**"
-      - "platform/contracts/**"
-      - "platform/infrastructure/**"
-      - "platform/pyproject.toml"
-      - "platform/uv.lock"
-      - "platform/Makefile"
-      - "platform/docker-compose.yml"
-      - ".github/workflows/platform-ci.yml"
+      - "syltra-home-assistant/libs/**"
+      - "syltra-home-assistant/services/**"
+      - "syltra-home-assistant/simulator/**"
+      - "syltra-home-assistant/tests/**"
+      - "syltra-home-assistant/contracts/**"
+      - "syltra-home-assistant/infrastructure/**"
+      - "syltra-home-assistant/pyproject.toml"
+      - "syltra-home-assistant/uv.lock"
+      - "syltra-home-assistant/Makefile"
+      - "syltra-home-assistant/docker-compose.yml"
+      - ".github/workflows/hub-ci.yml"
   workflow_dispatch:
 
 permissions:
@@ -42,7 +42,7 @@ jobs:
         # The platform lives in its own directory beside the website. Declared
         # once here rather than on each step, so a step added later cannot
         # forget it and quietly run against the repository root.
-        working-directory: platform
+        working-directory: syltra-home-assistant
     steps:
       - uses: actions/checkout@v4
 

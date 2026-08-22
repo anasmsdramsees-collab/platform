@@ -14,8 +14,7 @@ import {
   roomName,
   systemCopy,
 } from "@/lib/builder-data";
-import { ControlPanel, type HomeState } from "./control-panel";
-import { WallPanel } from "./wall-panel";
+import { WallPanel, type HomeState } from "./wall-panel";
 
 // The 3D canvas is heavy and browser-only; keep it out of the first payload.
 const BuilderScene = dynamic(() => import("./scene").then((m) => m.BuilderScene), {
@@ -103,12 +102,12 @@ export function Builder({ locale }: { locale: Locale }) {
   /* ---------- step 2: build and control ---------- */
   const copy = propertyCopy(property, locale);
   const activeRoom = property.rooms.find((r) => `${r.level}-${r.id}` === selectedRoom);
+  const sensors = (["motion", "gas", "health"] as SystemKey[]).filter((k) => chosen.includes(k));
 
   return (
-    <>
-    {/* Fills the viewport under the header so nothing needs scrolling on desktop. */}
-    <div className="flex flex-col gap-3 px-3 py-3 sm:px-5 lg:h-[calc(100dvh-4.5rem)]">
-      {/* Compact header row */}
+    // One screen: header, then systems + model, then the wall panel strip.
+    <div className="flex flex-col gap-2.5 px-3 py-3 sm:px-5 lg:h-[calc(100dvh-4.5rem)]">
+      {/* Header row */}
       <div className="flex shrink-0 flex-wrap items-center justify-between gap-2">
         <div className="flex items-baseline gap-3">
           <h1 className="font-display text-lg font-bold text-platinum sm:text-xl">{copy.name}</h1>
@@ -137,14 +136,13 @@ export function Builder({ locale }: { locale: Locale }) {
         </div>
       </div>
 
-      {/* Main area: systems rail, 3D stage, control rail */}
-      <div className="grid min-h-0 flex-1 gap-3 lg:grid-cols-[15rem_1fr_19rem]">
-        {/* Systems */}
-        <div className="order-2 min-h-0 overflow-y-auto rounded-2xl border border-hairline bg-graphite/70 p-3 lg:order-1">
-          <p className="font-mono text-[10.5px] uppercase tracking-widest text-slate">
+      {/* Systems rail + 3D stage */}
+      <div className="grid min-h-0 flex-1 gap-2.5 lg:grid-cols-[13rem_1fr]">
+        <div className="order-2 min-h-0 overflow-y-auto rounded-2xl border border-hairline bg-graphite/70 p-2.5 lg:order-1">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-slate">
             {ar ? "الأنظمة" : "Systems"}
           </p>
-          <div className="mt-2.5 grid grid-cols-2 gap-1.5 lg:grid-cols-1">
+          <div className="mt-2 grid grid-cols-2 gap-1.5 lg:grid-cols-1">
             {SYSTEMS.map((s) => {
               const on = chosen.includes(s.key);
               const c = systemCopy(s.key, locale);
@@ -154,7 +152,7 @@ export function Builder({ locale }: { locale: Locale }) {
                   onClick={() => toggle(s.key)}
                   title={c.desc}
                   className={cn(
-                    "flex items-center gap-2 rounded-lg border px-2.5 py-2 text-start transition-colors",
+                    "flex items-center gap-2 rounded-lg border px-2.5 py-1.5 text-start transition-colors",
                     on ? "border-transparent bg-white/10" : "border-hairline hover:border-hairline-strong"
                   )}
                 >
@@ -162,15 +160,45 @@ export function Builder({ locale }: { locale: Locale }) {
                     className="size-2 shrink-0 rounded-full transition-opacity"
                     style={{ backgroundColor: s.color, opacity: on ? 1 : 0.3 }}
                   />
-                  <span className="truncate text-[12px] font-medium text-platinum">{c.name}</span>
+                  <span className="truncate text-[11.5px] font-medium text-platinum">{c.name}</span>
                 </button>
               );
             })}
           </div>
+
+          {/* Sensor readouts live with the systems now */}
+          {sensors.length > 0 && (
+            <div className="mt-3 border-t border-hairline pt-2.5">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-slate">
+                {ar ? "الحساسات" : "Sensors"}
+              </p>
+              <div className="mt-1.5 space-y-1">
+                {chosen.includes("motion") && (
+                  <p className="flex justify-between text-[10.5px]">
+                    <span className="text-chrome-dim">{ar ? "الحركة" : "Motion"}</span>
+                    <span className="font-mono text-[#7ee08a]">{ar ? "لا حركة" : "Clear"}</span>
+                  </p>
+                )}
+                {chosen.includes("gas") && (
+                  <p className="flex justify-between text-[10.5px]">
+                    <span className="text-chrome-dim">{ar ? "الغاز" : "Gas"}</span>
+                    <span className="font-mono text-[#7ee08a]">{ar ? "سليم" : "Normal"}</span>
+                  </p>
+                )}
+                {chosen.includes("health") && (
+                  <div className="rounded-lg bg-void-2 px-2 py-1.5">
+                    <p className="text-[10px] text-slate">{ar ? "سيلترا هيلث" : "Syltra Health"}</p>
+                    <p className="mt-0.5 font-mono text-[10.5px] text-chrome-dim">
+                      {ar ? `هواء 32 · ${state.temperature}° · 38dB` : `AQI 32 · ${state.temperature}° · 38dB`}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* 3D stage */}
-        <div className="relative order-1 min-h-[20rem] overflow-hidden rounded-2xl border border-hairline bg-void lg:order-2 lg:min-h-0">
+        <div className="relative order-1 min-h-[18rem] overflow-hidden rounded-2xl border border-hairline bg-void lg:order-2 lg:min-h-0">
           <BuilderScene
             property={property}
             locale={locale}
@@ -182,7 +210,7 @@ export function Builder({ locale }: { locale: Locale }) {
             selectedRoom={selectedRoom}
             onSelectRoom={setSelectedRoom}
           />
-          <p className="pointer-events-none absolute bottom-2 start-0 end-0 text-center font-mono text-[10px] text-slate">
+          <p className="pointer-events-none absolute bottom-2 start-3 font-mono text-[10px] text-slate">
             {ar ? "اسحب للدوران · اضغط أي غرفة" : "Drag to orbit · tap any room"}
           </p>
           {activeRoom && (
@@ -208,38 +236,18 @@ export function Builder({ locale }: { locale: Locale }) {
             </div>
           )}
         </div>
-
-        {/* Control panel */}
-        <div className="order-3 min-h-0 overflow-y-auto">
-          <ControlPanel
-            locale={locale}
-            chosen={chosen}
-            climate={property.climate}
-            state={state}
-            setState={setState}
-          />
-        </div>
       </div>
 
-      {/* Hint that the wall panel sits below */}
-      <div className="hidden shrink-0 justify-center pb-1 lg:flex">
-        <span className="flex items-center gap-1.5 font-mono text-[10px] text-slate">
-          {ar ? "شاشة التحكم بالأسفل" : "Wall panel below"}
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </span>
+      {/* Wall panel strip */}
+      <div className="shrink-0">
+        <WallPanel
+          locale={locale}
+          chosen={chosen}
+          climate={property.climate}
+          state={state}
+          setState={setState}
+        />
       </div>
     </div>
-
-    <WallPanel
-      locale={locale}
-      property={property}
-      chosen={chosen}
-      climate={property.climate}
-      state={state}
-      setState={setState}
-    />
-    </>
   );
 }

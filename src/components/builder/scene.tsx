@@ -244,12 +244,15 @@ export function BuilderScene({
 
   return (
     <div className="relative size-full">
+    <div className="absolute inset-0">
     <Canvas
       shadows={false}
       dpr={[1, 1.75]}
-      camera={{ position: [radius * 0.95, radius * 0.85, radius * 0.95], fov: 42 }}
+      // The stage is wide but short, so start far enough back to frame the whole building.
+      camera={{ position: [radius * 1.3, radius * 1.15, radius * 1.3], fov: 40 }}
       onPointerMissed={() => onSelectRoom(null)}
-      style={{ touchAction: "none" }}
+      resize={{ debounce: 0 }}
+      style={{ touchAction: "none", width: "100%", height: "100%" }}
     >
       <color attach="background" args={["#0e1016"]} />
       <fog attach="fog" args={["#0b0c0e", radius * 1.6, radius * 3.4]} />
@@ -289,14 +292,15 @@ export function BuilderScene({
         rotateSpeed={0.85}
         minPolarAngle={0.2}
         maxPolarAngle={Math.PI / 2.15}
-        minDistance={radius * 0.55}
-        maxDistance={radius * 2.3}
+        minDistance={radius * 0.6}
+        maxDistance={radius * 2.8}
         // Idle spin only until the visitor takes over.
         autoRotate={!touched && !selectedRoom}
         autoRotateSpeed={0.45}
         onStart={() => setTouched(true)}
       />
     </Canvas>
+    </div>
 
       {/* View controls, so rotating never depends on discovering the drag */}
       <div className="pointer-events-none absolute bottom-2 end-2 flex flex-col items-end gap-1.5">

@@ -7,6 +7,7 @@ import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import SinaWidget from "@/components/sina-widget";
 import SylaWake from "@/components/syla-wake";
+import { HideOnBuilder } from "@/components/chrome-hider";
 import { WhatsappCta } from "@/components/ui/whatsapp-cta";
 import EnergyReminder from "@/components/energy-reminder";
 import JsonLd from "@/components/json-ld";
@@ -138,7 +139,9 @@ export default async function LocaleLayout({
         <HomeControlsProvider>
           <SiteNav locale={locale} dict={dict} />
           <main className="flex-1">{children}</main>
-          <SiteFooter locale={locale} dict={dict} />
+          <HideOnBuilder>
+            <SiteFooter locale={locale} dict={dict} />
+          </HideOnBuilder>
           <EnergyReminder dict={dict.energyReminder} />
           <SinaWidget dict={dict.sina} locale={locale} />
           <SylaWake locale={locale} />

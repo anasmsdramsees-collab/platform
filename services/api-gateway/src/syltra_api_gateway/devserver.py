@@ -134,16 +134,36 @@ def build_platform() -> Platform:
     # unfinished to whoever lives there. The twin learns a name from a
     # `device.discovered` event, which is what Home Assistant supplies from its
     # own device registry.
+    #
+    # In Arabic, because a device name is the household's own words rather than
+    # a string the platform translates — a screen switched to English still says
+    # "مكيّف الصالة", exactly as it would in the house this demo stands for.
     named = {
-        "motion_living": "Living room motion",
-        "temp_living": "Living room temperature",
-        "humidity_living": "Living room humidity",
-        "light_living": "Living room light",
-        "ac_living": "Living room air conditioner",
-        "meter_home": "Whole-home meter",
-        "gas_kitchen": "Kitchen gas detector",
-        "leak_kitchen": "Kitchen leak detector",
-        "tracker_phone": "Phone",
+        "motion_living": "حركة الصالة",
+        "temp_living": "حرارة الصالة",
+        "humidity_living": "رطوبة الصالة",
+        "light_living": "إضاءة الصالة",
+        "light_kitchen": "إضاءة المطبخ",
+        "light_hall": "إضاءة الممر",
+        "light_bedroom": "إضاءة غرفة النوم",
+        "light_majlis": "إضاءة المجلس",
+        "plug_tv": "التلفزيون",
+        "plug_coffee": "آلة القهوة",
+        "plug_heater": "سخان الماء",
+        "ac_living": "مكيّف الصالة",
+        "ac_bedroom": "مكيّف غرفة النوم",
+        "curtain_living": "ستارة الصالة",
+        "meter_home": "عدّاد المنزل",
+        "gas_kitchen": "كاشف الغاز في المطبخ",
+        "leak_kitchen": "كاشف تسرّب الماء",
+        "tracker_phone": "الجوال",
+        # Outdoors. A wall panel's weather comes from the household's own
+        # sensors rather than from a forecast service: it works with the line
+        # to the outside world down, which is the whole premise of the hub.
+        "outdoor_temp": "حرارة الخارج",
+        "outdoor_humidity": "رطوبة الخارج",
+        "outdoor_light": "ضوء النهار",
+        "outdoor_air": "جودة الهواء بالخارج",
     }
     for device_id, label in named.items():
         context.twin.apply(
@@ -160,15 +180,32 @@ def build_platform() -> Platform:
         )
 
     seeded = [
+        # Things a household switches.
+        ("light_living", "living_room", "light.power", True, None),
+        ("light_kitchen", "kitchen", "light.power", False, None),
+        ("light_hall", "hall", "light.power", True, None),
+        ("light_bedroom", "bedroom", "light.power", False, None),
+        ("light_majlis", "majlis", "light.power", False, None),
+        ("plug_tv", "living_room", "switch.power", True, None),
+        ("plug_coffee", "kitchen", "switch.power", False, None),
+        ("plug_heater", "utility", "switch.power", True, None),
+        ("ac_living", "living_room", "climate.target_temperature", 23.0, "C"),
+        ("ac_bedroom", "bedroom", "climate.target_temperature", 22.0, "C"),
+        ("curtain_living", "living_room", "cover.position", 60.0, "%"),
+        # Things it reads.
         ("motion_living", "living_room", "occupancy.motion", True, None),
-        ("temp_living", "living_room", "environment.temperature", 27.4, "C"),
-        ("humidity_living", "living_room", "environment.humidity", 41.0, "%"),
-        ("light_living", "living_room", "light.power", False, None),
-        ("ac_living", "living_room", "climate.target_temperature", 26.0, "C"),
-        ("meter_home", "utility", "energy.power", 780.0, "W"),
+        ("temp_living", "living_room", "environment.temperature", 24.1, "C"),
+        ("humidity_living", "living_room", "environment.humidity", 38.0, "%"),
+        ("meter_home", "utility", "energy.power", 1420.0, "W"),
         ("gas_kitchen", "kitchen", "safety.gas_alarm", False, None),
         ("leak_kitchen", "kitchen", "safety.water_leak", False, None),
         ("tracker_phone", "entrance", "occupancy.presence", True, None),
+        # Outdoors — a Riyadh afternoon in August, which is what the weather
+        # tile is reading rather than a forecast from anywhere.
+        ("outdoor_temp", "outside", "environment.temperature", 41.0, "C"),
+        ("outdoor_humidity", "outside", "environment.humidity", 12.0, "%"),
+        ("outdoor_light", "outside", "environment.illuminance", 94000.0, "lx"),
+        ("outdoor_air", "outside", "environment.air_quality", 68.0, None),
     ]
     for device_id, room, capability, value, unit in seeded:
         envelope = make_envelope(

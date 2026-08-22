@@ -51,6 +51,26 @@
       <p class="panel__all-well" id="all-well"></p>
     </header>
 
+    <!-- Outside, measured by this house.
+
+         Not a forecast and not a service: every number in this band comes from
+         a sensor on this building, which is why it is still here when the line
+         to the internet is not. It says so, in small type, under the reading —
+         because every other weather block anybody has seen means "somewhere
+         near you, from somewhere else". -->
+    <section class="weather" id="weather" hidden aria-labelledby="weather-heading">
+      <h2 class="visually-hidden" id="weather-heading"></h2>
+      <div class="weather__now">
+        <p class="weather__temperature" id="weather-temperature"></p>
+        <div class="weather__words">
+          <p class="weather__condition" id="weather-condition"></p>
+          <p class="weather__feels" id="weather-feels"></p>
+          <p class="weather__source" id="weather-source"></p>
+        </div>
+      </div>
+      <dl class="weather__detail" id="weather-detail"></dl>
+    </section>
+
     <section class="panel__controls" id="controls" aria-labelledby="controls-heading">
       <h1 class="visually-hidden" id="controls-heading"></h1>
     </section>

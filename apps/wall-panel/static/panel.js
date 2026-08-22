@@ -110,46 +110,92 @@ function glyphFor(capability) {
   return GLYPHS[capability.split(".", 1)[0]] || "◉";
 }
 
-function controlFor(device, capability, reading) {
+/* A unit as it is written next to a number on a wall rather than in a data
+   sheet. Presentation only — nothing here decides what may be operated. */
+const UNIT_SUFFIX = { C: "°", "%": "%" };
+
+function suffixFor(unit) {
+  return UNIT_SUFFIX[unit] || (unit ? ` ${unit}` : "");
+}
+
+function nameOf(device) {
+  return el("span", "control__name", device.name || device.device_id);
+}
+
+/* A switch: the whole tile is the target, because a button inside a card asks
+   somebody to aim and a tile asks them to hit a wall. */
+function toggleTile(device, capability, reading) {
   const button = el("button", "control");
   button.type = "button";
   button.dataset.deviceId = device.device_id;
   button.dataset.capability = capability;
-
-  const isBoolean = typeof reading.value === "boolean";
   const on = reading.value === true;
-  if (isBoolean) button.dataset.on = String(on);
+  button.dataset.on = String(on);
 
   const icon = el("span", "control__icon", glyphFor(capability));
   icon.setAttribute("aria-hidden", "true");
 
   const body = el("span");
-  body.append(
-    el("span", "control__name", device.name || device.device_id),
-    el(
-      "span",
-      "control__state",
-      isBoolean ? (on ? t("on") : t("off")) : `${reading.value}${reading.unit || ""}`,
-    ),
-  );
+  body.append(nameOf(device), el("span", "control__state", on ? t("on") : t("off")));
   button.append(icon, body);
-
-  /* Booleans only. A wall panel is a light switch, and a temperature dial with
-     no room to drag needs a screen somebody is looking at. */
-  if (!isBoolean) {
-    button.disabled = true;
-    return button;
-  }
-
   button.addEventListener("click", () => operate(button, device.device_id, capability, !on));
   return button;
 }
 
-async function operate(button, deviceId, capability, value) {
+/* A dial: an air conditioner's temperature, a curtain's opening. The range and
+   the size of one press come from the server, so this file holds no opinion
+   about what any particular device can do — and a house in a climate where the
+   air conditioning matters does not get a wall panel that omits it. */
+function stepTile(device, capability, reading) {
+  const control = reading.control;
+  const node = el("div", "control control--step");
+  node.dataset.deviceId = device.device_id;
+  node.dataset.capability = capability;
+
+  const stepper = el("div", "control__stepper");
+  const buttons = [
+    [-control.step, "−", "lower"],
+    [control.step, "+", "raise"],
+  ].map(([delta, label, key]) => {
+    const button = el("button", "control__step", label);
+    button.type = "button";
+    /* The face of the button is a symbol, so it says what it does out loud. */
+    button.setAttribute("aria-label", `${t(key)}: ${device.name || device.device_id}`);
+    const target = Math.min(
+      control.maximum,
+      Math.max(control.minimum, Math.round((reading.value + delta) * 10) / 10),
+    );
+    /* At the end of the range the button stops rather than sending a value the
+       server would refuse: a press that produces an error is worse than one
+       that produces nothing. */
+    button.disabled = target === reading.value;
+    button.addEventListener("click", () => operate(node, device.device_id, capability, target));
+    return button;
+  });
+
+  const value = el(
+    "span",
+    "control__reading",
+    `${Math.round(reading.value).toLocaleString(state.locale)}${suffixFor(control.unit)}`,
+  );
+  stepper.append(buttons[0], value, buttons[1]);
+  node.append(stepper, nameOf(device));
+  return node;
+}
+
+function controlFor(device, capability, reading) {
+  /* The server said how this is offered. The panel renders that — it does not
+     decide that a temperature is a dial, it is told. */
+  if (reading.control.kind === "TOGGLE") return toggleTile(device, capability, reading);
+  if (reading.control.kind === "STEP") return stepTile(device, capability, reading);
+  return null;
+}
+
+async function operate(node, deviceId, capability, value) {
   const key = `${deviceId}:${capability}`;
   if (state.busy.has(key)) return;
   state.busy.add(key);
-  button.setAttribute("aria-busy", "true");
+  node.setAttribute("aria-busy", "true");
   setStatus("");
   try {
     await api(`/v1/homes/${state.homeId}/devices/${deviceId}/${capability}`, {
@@ -163,7 +209,7 @@ async function operate(button, deviceId, capability, value) {
     setStatus(error.status === 403 ? t("not_allowed_here") : t("did_not_work"), true);
   } finally {
     state.busy.delete(key);
-    button.removeAttribute("aria-busy");
+    node.removeAttribute("aria-busy");
   }
 }
 
@@ -173,15 +219,104 @@ function setStatus(text, isError = false) {
   status.dataset.error = String(Boolean(isError));
 }
 
+/* ── outside ──
+
+   A weather app, except that none of it comes from a weather service. Every
+   figure here was measured by a sensor on this building, which is why the band
+   is still correct with the line to the internet cut — and why there is no
+   "tomorrow" anywhere on it. What each reading is allowed to be called, and
+   when it has gone stale, is decided by the server; this draws what it is sent.
+*/
+
+function number(value) {
+  return value.toLocaleString(state.locale);
+}
+
+function ageLabel(seconds) {
+  const minutes = Math.max(1, Math.round(seconds / 60));
+  if (minutes < 60) return t("weather_minutes_ago").replace("{n}", number(minutes));
+  return t("weather_hours_ago").replace("{n}", number(Math.round(minutes / 60)));
+}
+
+function detailCell(label, value, reading) {
+  const cell = el("div", "weather__cell");
+  cell.append(el("dt", "weather__label", label), el("dd", "weather__value", value));
+  /* A stale reading is shown with its age rather than dropped: a blank where a
+     humidity used to be reads as a broken panel, and "20 minutes ago" is
+     useful. What it must never do is look current. */
+  if (reading.stale) cell.append(el("dd", "weather__age", ageLabel(reading.age_seconds)));
+  return cell;
+}
+
+function showWeather(weather) {
+  const band = document.getElementById("weather");
+  if (!weather || !weather.measured) {
+    /* No outdoor sensor, so no weather. The panel does not fall back to an
+       indoor thermometer relabelled as the sky. */
+    band.hidden = true;
+    return;
+  }
+
+  const readings = weather.readings || {};
+  const temperature = readings["environment.temperature"];
+  const humidity = readings["environment.humidity"];
+  const air = readings["environment.air_quality"];
+  const light = readings["environment.illuminance"];
+
+  document.getElementById("weather-heading").textContent = t("weather_heading");
+  document.getElementById("weather-temperature").textContent = temperature
+    ? `${number(Math.round(temperature.value))}°`
+    : "—";
+  document.getElementById("weather-condition").textContent = weather.condition
+    ? t(`weather_${weather.condition.toLowerCase()}`)
+    : "";
+
+  /* "Feels like" is withdrawn by the server when either input is stale, so a
+     missing one here means the house cannot currently say. */
+  const feels = document.getElementById("weather-feels");
+  if (weather.feels_like_c !== null && weather.feels_like_c !== undefined) {
+    feels.textContent = t("weather_feels").replace("{t}", number(Math.round(weather.feels_like_c)));
+  } else if (temperature && temperature.stale) {
+    feels.textContent = ageLabel(temperature.age_seconds);
+  } else {
+    feels.textContent = "";
+  }
+
+  document.getElementById("weather-source").textContent = t("weather_measured_here");
+
+  const detail = document.getElementById("weather-detail");
+  detail.replaceChildren();
+  if (humidity) {
+    detail.append(
+      detailCell(t("weather_humidity"), `${number(Math.round(humidity.value))}%`, humidity),
+    );
+  }
+  if (air && weather.air_band) {
+    detail.append(detailCell(t("weather_air"), t(`air_${weather.air_band.toLowerCase()}`), air));
+  }
+  if (light) {
+    detail.append(
+      detailCell(t("weather_light"), t("weather_lux").replace("{n}", number(Math.round(light.value))), light),
+    );
+  }
+
+  band.hidden = false;
+}
+
 /* ── one pass ── */
 
 async function refresh() {
   let devices;
   let risks;
+  let weather;
   try {
-    [devices, risks] = await Promise.all([
+    [devices, risks, weather] = await Promise.all([
       api(`/v1/homes/${state.homeId}/devices`),
       api(`/v1/homes/${state.homeId}/risks`),
+      /* The weather is the one thing here nobody depends on. A hub that cannot
+         answer for outside should still show the lights, so this failure is
+         swallowed while the other two are not. */
+      api(`/v1/homes/${state.homeId}/weather`).catch(() => null),
     ]);
   } catch (error) {
     /* A panel that cannot reach the hub says so. It does not keep showing the
@@ -203,6 +338,8 @@ async function refresh() {
 
   if (showHazard(risks)) return;
 
+  showWeather(weather);
+
   const controls = document.getElementById("controls");
   const heading = document.getElementById("controls-heading");
   heading.textContent = t("controls_heading");
@@ -216,10 +353,10 @@ async function refresh() {
       /* The server says what this panel may press. Without it the panel was
          rendering a motion sensor and a gas alarm as buttons — pressable
          things that do nothing, next to a real light switch. */
-      if (!reading.operable) continue;
-      if (typeof reading.value !== "boolean") continue;
+      if (!reading.operable || !reading.control) continue;
       if (reading.status !== "KNOWN") continue;
-      controls.append(controlFor(device, capability, reading));
+      const node = controlFor(device, capability, reading);
+      if (node) controls.append(node);
     }
   }
   if (controls.childElementCount === 1) {
@@ -241,7 +378,11 @@ function tick() {
 }
 
 async function boot() {
-  const response = await fetch("./i18n.json");
+  /* Revalidated rather than taken from the cache. A wall panel is powered on
+     for years without anybody reloading it, and a hub update that adds wording
+     would otherwise leave the screen showing the previous dictionary — or,
+     after a new key, the key itself. */
+  const response = await fetch("./i18n.json", { cache: "no-cache" });
   state.dict = await response.json();
   document.documentElement.lang = state.locale;
   document.documentElement.dir = t("dir") === "rtl" ? "rtl" : "ltr";

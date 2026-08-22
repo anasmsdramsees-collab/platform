@@ -39,7 +39,7 @@
 .panel {
   block-size: 100dvb;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto auto 1fr auto;
   gap: var(--space-5);
   padding: var(--space-6);
   box-sizing: border-box;
@@ -83,6 +83,108 @@
 
 .panel__all-well[data-attention="true"] {
   color: var(--status-warning);
+}
+
+/* ── outside ──
+ *
+ * The weather band. It reads like a weather app on purpose — one large
+ * temperature, a word for the sky, a few details underneath — and it is built
+ * out of this building's own sensors, which is the part no weather app can do.
+ *
+ * One line of small type says so. Everybody has been trained by a decade of
+ * phones to read a temperature as "somewhere near you, from the internet", and
+ * the whole point of this one is that it is neither. */
+
+.weather {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--elevation-popover);
+}
+
+.weather[hidden] {
+  display: none;
+}
+
+.weather__now {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.weather__temperature {
+  margin: 0;
+  font-size: 4rem;
+  line-height: 1;
+  font-weight: var(--weight-semibold);
+  /* Same reason as the clock: a degree ticking over should not shift the words
+   * beside it on a screen somebody sees a hundred times a day. */
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.weather__words {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.weather__condition {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: var(--weight-medium);
+}
+
+.weather__feels {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+}
+
+/* Deliberately the smallest thing in the band, and deliberately present. */
+.weather__source {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-tertiary);
+}
+
+.weather__detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin: 0;
+}
+
+.weather__cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.weather__label {
+  font-size: 1rem;
+  color: var(--text-tertiary);
+}
+
+.weather__value {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+/* A reading past its freshness budget keeps its place and says how old it is.
+ * Dropping it would leave a gap that reads as a broken panel; showing it plain
+ * would be a number pretending to be current. */
+.weather__age {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-tertiary);
 }
 
 /* ── the tiles ── */
@@ -129,6 +231,66 @@
 /* The press itself, because a wall panel has no hover to tell you it heard. */
 .control:active {
   transform: scale(0.97);
+}
+
+/* ── a dial ──
+ *
+ * An air conditioner's temperature and a curtain's opening. The whole tile is
+ * not the target here — two targets are — so each one is generous: a third of
+ * a tile each, far past the 44px a phone would use, because this is pressed by
+ * somebody walking past without looking down. */
+
+.control--step {
+  justify-content: center;
+  gap: var(--space-3);
+  /* Not a button, so nothing to press except the two inside it. */
+  cursor: default;
+}
+
+.control__stepper {
+  /* Not mirrored in Arabic. Everything else on this panel follows the reading
+   * direction, but a number line does not: larger is to the right of smaller in
+   * every locale, so "+" stays on the right and "−" on the left. Mirroring them
+   * would put the raise button where the lower button was on the same physical
+   * wall for a household that switches language. */
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.control__step {
+  min-inline-size: 3.5rem;
+  min-block-size: 3.5rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  color: inherit;
+  font-family: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--motion-ease-out);
+}
+
+.control__step:active {
+  transform: scale(0.94);
+}
+
+/* At the end of the range it stops. Dimmed rather than hidden: a stepper that
+ * loses a button as you reach the limit is a stepper that moves under a thumb. */
+.control__step:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.control__reading {
+  font-size: 2.25rem;
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 .control__icon {
@@ -270,11 +432,13 @@
 /* Somebody who set "reduce motion" on a wall panel meant it. */
 @media (prefers-reduced-motion: reduce) {
   .control,
+  .control__step,
   .panel-body[data-night="true"] .panel {
     transition: none;
   }
 
-  .control:active {
+  .control:active,
+  .control__step:active {
     transform: none;
   }
 }

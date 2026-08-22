@@ -211,3 +211,113 @@ def test_the_panel_shares_the_design_system_rather_than_copying_it() -> None:
 @pytest.mark.parametrize("language", ["en", "ar"])
 def test_the_direction_is_declared(language: str) -> None:
     assert I18N[language]["dir"] in ("ltr", "rtl")
+
+
+# ── outside, measured by this house ──
+
+
+def test_the_weather_is_not_a_forecast() -> None:
+    """Nothing in this building can measure tomorrow.
+
+    A forecast needs a network and somebody else's service, and a panel showing
+    one starts lying the moment the line is down — in the same typeface as the
+    true numbers beside it.
+    """
+    code = _without_comments(JS).lower()
+    for absent in ("forecast", "tomorrow", "api.weather", "openweather"):
+        assert absent not in code, absent
+
+
+def test_the_weather_says_where_it_came_from() -> None:
+    """Everybody has been trained by a decade of phones to read a temperature
+    as "somewhere near you, from the internet". This one is neither."""
+    assert "weather_measured_here" in JS
+    assert I18N["en"]["weather_measured_here"]
+    assert ".weather__source" in CSS
+
+
+def test_a_house_with_no_outdoor_sensor_shows_no_weather() -> None:
+    """Rather than an indoor thermometer relabelled as the sky."""
+    code = _without_comments(JS)
+    assert "weather.measured" in code
+    assert "band.hidden = true" in code
+
+
+def test_a_stale_reading_keeps_its_place_and_says_its_age() -> None:
+    """A gap where a humidity used to be reads as a broken panel; a plain
+    number reads as current. Neither is true, so it shows both."""
+    assert "reading.stale" in JS
+    assert "ageLabel" in JS
+    assert ".weather__age" in CSS
+
+
+def test_the_weather_failing_does_not_blank_the_lights() -> None:
+    """A hub that cannot answer for outside should still show the switches."""
+    code = _without_comments(JS)
+    assert ".catch(() => null)" in code
+
+
+def test_every_condition_the_server_can_send_has_wording_in_both_languages() -> None:
+    from syltra_api_gateway.weather import AIR_BANDS, CONDITION_BANDS
+
+    keys = [f"weather_{name.lower()}" for _, name in CONDITION_BANDS]
+    keys += [f"air_{name.lower()}" for _, name in AIR_BANDS]
+    for key in keys:
+        for language in ("en", "ar"):
+            assert key in I18N[language], f"{language}: {key}"
+
+
+# ── a dial, for the things a switch cannot say ──
+
+
+def test_the_panel_is_told_how_to_offer_a_control_rather_than_deciding() -> None:
+    """A range and a step size live in the capability registry. A copy of them
+    in this file is a copy that drifts, so the server describes the control and
+    the panel draws what it is described."""
+    code = _without_comments(JS)
+    assert "reading.control.kind" in code
+    assert "control.minimum" in code and "control.maximum" in code and "control.step" in code
+    # And still no capability named anywhere in it.
+    for capability in ("climate.", "cover.", "light.brightness"):
+        assert capability not in code, capability
+
+
+def test_a_house_in_a_hot_climate_gets_its_air_conditioning_on_the_wall() -> None:
+    """A panel that renders only switches leaves the one control a household
+    reaches for in August on a laptop in another room."""
+    assert "stepTile" in JS
+    assert ".control--step" in CSS
+
+
+def test_a_stepper_is_not_mirrored_in_arabic() -> None:
+    """Everything else on this panel follows the reading direction. A number
+    line does not: larger is right of smaller in every locale, and mirroring
+    would move the raise button to where the lower button was on the same
+    physical wall."""
+    stepper = CSS[CSS.index(".control__stepper {") :]
+    assert "direction: ltr" in stepper[: stepper.index("}")]
+
+
+def test_the_step_buttons_are_pressable_without_looking() -> None:
+    block = CSS[CSS.index(".control__step {") : CSS.index(".control__step:active")]
+    for axis in ("min-inline-size", "min-block-size"):
+        match = re.search(rf"{axis}:\s*([\d.]+)rem", block)
+        assert match, axis
+        assert float(match.group(1)) * 16 >= 44, f"{axis}: {match.group(1)}rem"
+
+
+def test_at_the_end_of_the_range_the_button_stops() -> None:
+    """A press that produces an error message is worse than one that produces
+    nothing, and a button that vanishes at the limit moves the other one under
+    somebody's thumb."""
+    code = _without_comments(JS)
+    assert "button.disabled = target === reading.value" in code
+    assert ".control__step:disabled" in CSS
+
+
+def test_an_enum_is_not_offered_as_something_to_cycle_through() -> None:
+    """Six climate modes behind one tile is how a house ends up heating in
+    August. The server sends no control for them and the panel renders none."""
+    code = _without_comments(JS)
+    assert "if (node) controls.append(node)" in code
+    assert "!reading.control" in code

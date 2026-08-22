@@ -3292,6 +3292,67 @@
         ]
       }
     },
+    "/v1/homes/{home_id}/weather": {
+      "get": {
+        "description": "What it is like outside, measured by this house.\n\nComposed on the server rather than in the panel: which rooms are\noutdoors, when a reading has gone stale, and what illuminance is allowed\nto be called are all rules, and a copy of a rule in a client is a copy\nthat drifts. The panel reflects this; it does not derive it.",
+        "operationId": "get_weather_v1_homes__home_id__weather_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "home_id",
+            "required": true,
+            "schema": {
+              "title": "Home Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Weather V1 Homes  Home Id  Weather Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Weather",
+        "tags": [
+          "home"
+        ]
+      }
+    },
     "/v1/me": {
       "get": {
         "description": "Who the caller is, and the scope their token carries.\n\nThe console needs this to filter navigation and to populate the\nproperty selector. It reports nothing the caller could not already\ndetermine by trying every endpoint \u2014 and guidelines \u00a73 is explicit\nthat hiding a control is not authorization: every endpoint still\nchecks scope and permission on each request.\n\n`homes` is the token's own scope, not a directory: it cannot be used\nto discover a household the caller is not a member of.",

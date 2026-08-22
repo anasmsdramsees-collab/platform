@@ -1311,3 +1311,86 @@ update-and-rollback is designed but not implemented, and the console still polls
 every 15 seconds while `/v1/stream` sits unused.
 
 Full suite: 1000 passed, 28 skipped (the skips need Docker).
+
+## A full house, and weather with no weather service ✅
+
+The wall panel worked and had almost nothing on it. Two faults, neither of them
+in the panel's own code.
+
+**The demo house had nine devices.** Enough to prove a tile renders, not enough
+to see whether a wall of them reads. `devserver.py` now seeds twenty-two: five
+lights, three switched sockets, two air conditioners, a curtain, the sensors that
+were already there, and four outdoors. A panel with eight tiles on it turned out
+to answer a question the one-tile version could not — whether somebody can find
+the light they want without reading every label — which is the whole reason for
+building it before a hub exists.
+
+**A wall panel with no air conditioning.** The panel rendered booleans and
+skipped everything else, on the reasoning that a temperature dial needs a screen
+you are looking at. In a climate where the outdoor sensor reads 41°, that left
+the one control a household actually reaches for on a laptop in another room.
+
+The fix was not a list of dial-shaped capabilities in `panel.js`. The gateway now
+describes each operable reading — `{"kind": "TOGGLE"}` or `{"kind": "STEP",
+"minimum": 16, "maximum": 30, "step": 1, "unit": "C"}` — from the capability
+registry, and the panel draws what it is described. The range and the step size
+stay in one place; the panel still names no capability anywhere in it. A step is
+a presentation decision (half a degree per press is eight presses to feel a
+difference), so the gateway decides it once from the declared unit.
+
+Enums return no control on purpose. Six climate modes behind one tile is how a
+house ends up heating in August; that choice needs a screen with the options
+visible at once, and the console has one.
+
+### The weather band
+
+`GET /v1/homes/{id}/weather`, composed from the household's own outdoor sensors
+and from nothing else. Temperature, humidity, illuminance, air quality — each
+one a reading with an age on it.
+
+Most of the design is refusal:
+
+- **No forecast.** Nothing in this building can measure tomorrow. A forecast
+  needs a network and somebody else's service, and a panel showing one starts
+  lying the moment the line is down — in the same typeface as the true numbers
+  beside it. `"forecast": null` is in the payload as a statement, not an
+  omission.
+- **No invented reading.** A house with no outdoor thermometer gets no
+  temperature, not an indoor one relabelled. Two outdoor sensors do not become
+  an average, because an average is a temperature no sensor measured; the
+  fresher one wins.
+- **No condition that light cannot support.** The condition comes from measured
+  illuminance — sun, cloud, twilight, night. Rain is not among them, and cannot
+  be: a light sensor cannot tell a shower from a cloud, and no capability in the
+  registry senses precipitation.
+- **"Feels like" is withdrawn rather than aged.** The heat index needs both
+  temperature and humidity; if either is stale the figure disappears. It is also
+  absent below 27°, where the honest counterpart is wind chill and there is no
+  wind capability to compute it from. The low-humidity adjustment matters here:
+  without it the panel overstates a 41°/12% afternoon by several degrees.
+- **Stale is shown with its age.** A blank where a humidity used to be reads as
+  a broken panel; a plain number reads as current. Neither is true.
+
+One line of small type under the reading says the numbers were measured at this
+home. It is deliberately the smallest thing in the band and deliberately there —
+a decade of phones has trained everybody to read a temperature block as
+"somewhere near you, from the internet", and this one is neither.
+
+**A bug found by looking at it.** The panel fetched `i18n.json` from cache. A
+wall panel is powered on for years without anybody reloading it, so a hub update
+that adds wording would leave the screen showing the previous dictionary — or,
+for a new key, the key itself, which is exactly what the browser showed:
+`weather_sun` in place of "مشمس". The fetch now revalidates.
+
+The stepper is the one thing on the panel that does not mirror in Arabic. A
+number line is not a reading direction: larger is right of smaller everywhere,
+and mirroring would move the raise button to where the lower button was on the
+same physical wall for a household that switches language.
+
+Demo device names are now Arabic, because a device name is the household's own
+words rather than a string the platform translates. A screen switched to English
+still says مكيّف الصالة.
+
+Verified live: pressing **+** on the living room air conditioner moved 23° to
+24° through policy, orchestrator, gateway and twin; the kitchen light toggled.
+Full suite: 1214 passed, 29 skipped. `make lint` clean over 210 source files.

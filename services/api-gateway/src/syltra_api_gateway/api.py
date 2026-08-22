@@ -37,6 +37,7 @@ from syltra_api_gateway.dependencies import (
 from syltra_api_gateway.energy import Resolution
 from syltra_api_gateway.errors import bad_request, conflict, forbidden, not_found
 from syltra_api_gateway.platform import Platform
+from syltra_api_gateway.weather import outdoor_weather
 from syltra_api_gateway.stream import HEARTBEAT_SECONDS
 from syltra_api_gateway.translations import is_rtl, translate_reasons
 from pydantic import ValidationError
@@ -51,7 +52,7 @@ from syltra_contracts import (
     TriggerKind,
 )
 from syltra_contracts.automations import AUTOMATABLE_SAFETY_CLASSES, MINIMUM_REARM
-from syltra_contracts.capability_definitions import Access, get_definition
+from syltra_contracts.capability_definitions import Access, DataType, get_definition
 from syltra_digital_twin.core import StateStatus
 from syltra_policy_safety.service import PolicyService
 from syltra_security import (
@@ -96,11 +97,7 @@ def _design_system_directory() -> Path | None:
     `/console/*` wholesale; a nested mount there would never be reached.
     """
     candidate = (
-        Path(__file__).resolve().parents[4]
-        / "apps"
-        / "local-console"
-        / "src"
-        / "design-system"
+        Path(__file__).resolve().parents[4] / "apps" / "local-console" / "src" / "design-system"
     )
     return candidate if candidate.is_dir() else None
 
@@ -160,6 +157,7 @@ def create_app(
         reason = (tail[-1] if tail else "UPDATED").upper()
         request.app.state.platform.stream.publish(str(home_id), reason)
         return response
+
     # `is None`, not `or`: TokenStore defines __len__, so an empty store is
     # falsy and `tokens or TokenStore()` would silently discard the caller's
     # store — every token it later issued would then be unknown to this app.
@@ -182,9 +180,7 @@ def create_app(
 
     console_root = _console_directory()
     if console_root is not None:
-        app.mount(
-            "/console", StaticFiles(directory=console_root, html=True), name="console"
-        )
+        app.mount("/console", StaticFiles(directory=console_root, html=True), name="console")
 
     @app.middleware("http")
     async def attach_correlation_id(request: Request, call_next: Any) -> Response:
@@ -283,8 +279,49 @@ def create_app(
         for name, reading in capabilities.items():
             if not may_see_capability(principal, name):
                 continue
-            visible[name] = {**reading, "operable": _operable_by(principal, name)}
+            operable = _operable_by(principal, name)
+            visible[name] = {
+                **reading,
+                "operable": operable,
+                "control": _control_for(name) if operable else None,
+            }
         return {**device, "capabilities": visible}
+
+    #: How far one press of a stepper moves a value, by unit. A step is a
+    #: presentation decision rather than a device fact — a thermostat that moves
+    #: half a degree per press is a thermostat somebody presses eight times —
+    #: so it is decided here, once, rather than in each screen.
+    presentation_steps = {"C": 1.0, "%": 10.0}
+
+    def _control_for(capability: str) -> dict[str, Any] | None:
+        """How a screen should offer this, described by the server.
+
+        A client cannot work this out without a copy of the capability registry,
+        and a second copy is one that drifts. So the panel is told "this is a
+        toggle" or "this is a stepper from 16 to 30 in ones" and renders that,
+        without ever naming a capability.
+
+        An enum returns nothing on purpose. A six-way climate mode or a lock's
+        five states need a screen somebody is looking at, with the choices
+        visible at once; cycling through them by tapping a tile on a wall is how
+        a house ends up heating in August.
+        """
+        definition = get_definition(capability)
+        if definition.data_type is DataType.BOOLEAN:
+            return {"kind": "TOGGLE"}
+        if definition.data_type is DataType.NUMBER:
+            if definition.minimum is None or definition.maximum is None:
+                return None
+            span = definition.maximum - definition.minimum
+            step = presentation_steps.get(definition.unit or "") or max(1.0, round(span / 10))
+            return {
+                "kind": "STEP",
+                "minimum": definition.minimum,
+                "maximum": definition.maximum,
+                "step": step,
+                "unit": definition.unit,
+            }
+        return None
 
     def _operable_by(principal: Any, capability: str) -> bool:
         """Whether *this caller* may switch this, answered by the server.
@@ -320,6 +357,19 @@ def create_app(
         ]
         return {"home_id": home_id, **_paginate(devices, limit, offset)}
 
+    @app.get("/v1/homes/{home_id}/weather", tags=["home"])
+    async def get_weather(home_id: str, principal: PrincipalDep) -> dict[str, Any]:
+        """What it is like outside, measured by this house.
+
+        Composed on the server rather than in the panel: which rooms are
+        outdoors, when a reading has gone stale, and what illuminance is allowed
+        to be called are all rules, and a copy of a rule in a client is a copy
+        that drifts. The panel reflects this; it does not derive it.
+        """
+        check_read(home_id, principal)
+        snapshot = platform.twin.snapshot(home_id, datetime.now(tz=UTC))
+        return outdoor_weather(snapshot.devices.values()).as_view(home_id)
+
     # ── contexts ──
 
     @app.get("/v1/homes/{home_id}/contexts/current", tags=["context"])
@@ -342,9 +392,7 @@ def create_app(
                     "confidence": record.confidence,
                     "started_at": record.started_at.isoformat(),
                     "expires_at": record.expires_at.isoformat(),
-                    "seconds_until_expiry": round(
-                        (record.expires_at - now).total_seconds(), 1
-                    ),
+                    "seconds_until_expiry": round((record.expires_at - now).total_seconds(), 1),
                     "advisory_only": record.is_advisory_only(),
                     "reason_codes": record.reason_codes,
                     "reasons": translate_reasons(record.reason_codes, locale),
@@ -471,9 +519,7 @@ def create_app(
         ]
         return {"home_id": home_id, "locale": locale, **_paginate(views, limit, offset)}
 
-    @app.get(
-        "/v1/homes/{home_id}/recommendations/{recommendation_id}", tags=["recommendations"]
-    )
+    @app.get("/v1/homes/{home_id}/recommendations/{recommendation_id}", tags=["recommendations"])
     async def get_recommendation(
         home_id: str, recommendation_id: UUID, principal: PrincipalDep, locale: LocaleDep
     ) -> dict[str, Any]:
@@ -667,7 +713,8 @@ def create_app(
         get_rate_limiter(request).check(principal.subject, "suspend_model")
         try:
             version = platform.adaptive.registry.suspend(
-                home_id, name,
+                home_id,
+                name,
                 reason=options.get("reason", "suspended by operator"),
                 actor=principal.subject,
             )
@@ -698,8 +745,7 @@ def create_app(
                 for condition in automation.conditions
             ],
             "actions": [
-                action.model_dump(mode="json", exclude_none=True)
-                for action in automation.actions
+                action.model_dump(mode="json", exclude_none=True) for action in automation.actions
             ],
             "rearm_seconds": automation.rearm_seconds,
             "owner": automation.owner,
@@ -868,9 +914,7 @@ def create_app(
     ) -> dict[str, Any]:
         check_automations(home_id, principal)
         try:
-            automation = Automation(
-                **{**payload, "home_id": home_id, "owner": principal.subject}
-            )
+            automation = Automation(**{**payload, "home_id": home_id, "owner": principal.subject})
         except ValidationError as exc:
             # A rejected automation is usually a household trying to do
             # something §2.3 forbids, so the message matters more than usual.

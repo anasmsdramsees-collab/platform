@@ -360,3 +360,61 @@ def test_figures_inside_arabic_text_keep_their_own_direction() -> None:
     # escapes so they are visible to whoever reads this file.
     assert code.count(r"\u2066") == code.count(r"\u2069") >= 3
     assert "function degrees(" in code
+
+
+# ── with the hub not there ──
+
+
+def test_the_panel_keeps_its_own_copy_of_itself() -> None:
+    """The platform never needed the internet. It did need the hub — which is
+    what serves this page, so a hub that is restarting used to leave a browser
+    error page on somebody's wall."""
+    assert (PANEL / "sw.js").exists()
+    assert "serviceWorker" in JS
+
+
+def test_the_offline_copy_is_the_panel_and_nothing_else() -> None:
+    sw = (PANEL / "sw.js").read_text(encoding="utf-8")
+    assert '"/v1/"' in sw, "the API path must be named, to be excluded"
+    body = _without_comments(sw)
+    assert 'url.pathname.startsWith("/v1/")' in body
+    # And the exclusion returns before anything can answer from a cache.
+    guard = body.index('startsWith("/v1/")')
+    respond = body.index("event.respondWith")
+    assert guard < respond
+
+
+def test_an_unreachable_hub_clears_the_wall_rather_than_freezing_it() -> None:
+    """A panel that keeps showing the last state it saw is a stale light switch:
+    somebody presses "off", the tile goes dark, and the light is still on in a
+    room they have left."""
+    code = _without_comments(JS)
+    assert "function showUnreachable" in code
+    unreachable = code[code.index("function showUnreachable") :]
+    unreachable = unreachable[: unreachable.index("\n}\n")]
+    assert "controls.replaceChildren(heading)" in unreachable
+    assert 'weather").hidden = true' in unreachable
+
+
+def test_a_panel_that_cannot_see_the_house_does_not_say_all_is_well() -> None:
+    code = _without_comments(JS)
+    unreachable = code[code.index("function showUnreachable") :]
+    unreachable = unreachable[: unreachable.index("\n}\n")]
+    assert 'allWell.textContent = ""' in unreachable
+
+
+def test_it_says_how_long_it_has_been_in_the_dark() -> None:
+    assert "no_hub_since" in JS
+    for language in ("en", "ar"):
+        assert "{ago}" in I18N[language]["no_hub_since"], language
+
+
+def test_an_update_never_reloads_the_screen_under_a_hand() -> None:
+    """A panel that goes blank while somebody is reaching for it is a panel they
+    stop reaching for."""
+    code = _without_comments(JS)
+    quiet = code[code.index("function reloadIfQuiet") :]
+    quiet = quiet[: quiet.index("\n}\n")]
+    assert "hazard" in quiet
+    assert "lastPress" in quiet
+    assert "state.busy.size" in quiet

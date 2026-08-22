@@ -19,6 +19,13 @@ const state = {
   locale: localStorage.getItem("syltra.panel.locale") || "en",
   dict: {},
   busy: new Set(),
+  /* When the hub last answered, so an unreachable panel can say how long it has
+     been in the dark rather than only that it is. */
+  lastContact: null,
+  /* When somebody last touched the panel, so a pending update never reloads the
+     screen under a hand that is still on it. */
+  lastPress: 0,
+  shellUpdated: false,
 };
 
 /* Where the panel hangs. Shown in the header, and it is also what the audit
@@ -26,6 +33,9 @@ const state = {
 const PLACE = localStorage.getItem("syltra.panel.place") || "";
 
 const REFRESH_MS = 5000;
+/* How long after a press, and how long a hazard must have been clear, before a
+   waiting update is allowed to reload the screen. */
+const QUIET_MS = 60000;
 const NIGHT_FROM = 22;
 const NIGHT_UNTIL = 6;
 
@@ -195,6 +205,7 @@ async function operate(node, deviceId, capability, value) {
   const key = `${deviceId}:${capability}`;
   if (state.busy.has(key)) return;
   state.busy.add(key);
+  state.lastPress = Date.now();
   node.setAttribute("aria-busy", "true");
   setStatus("");
   try {
@@ -361,6 +372,67 @@ function showWeather(weather) {
   band.hidden = false;
 }
 
+/* ── when the hub is not there ── */
+
+function showUnreachable(error) {
+  /* The controls are cleared, not left as they were. A panel that keeps showing
+     the last state it saw is a stale light switch on a wall, and that is worse
+     than a blank one because somebody trusts it: they press "off", the tile
+     goes dark, and the light is still on in a room they have left.
+
+     The clock keeps running and the panel keeps its own face — that part is
+     served from the panel itself (see sw.js), so a hub that is restarting no
+     longer leaves a browser error page at eye level in a hallway. */
+  document.getElementById("weather").hidden = true;
+
+  /* "All well" is a claim about the house, and a panel that cannot see the
+     house is in no position to make it. It goes blank rather than reassuring
+     somebody about rooms it has not heard from. */
+  const allWell = document.getElementById("all-well");
+  allWell.textContent = "";
+  allWell.dataset.attention = "false";
+
+  const controls = document.getElementById("controls");
+  const heading = document.getElementById("controls-heading");
+  controls.replaceChildren(heading);
+
+  if (error.status === 401) {
+    setStatus(t("not_registered"), true);
+    return;
+  }
+  setStatus(
+    state.lastContact
+      ? t("no_hub_since").replace("{ago}", ageLabel((Date.now() - state.lastContact) / 1000))
+      : t("no_hub"),
+    true,
+  );
+}
+
+/* ── keeping the panel current without reloading under a hand ── */
+
+function watchForUpdates() {
+  if (!("serviceWorker" in navigator)) return;
+  /* Silently absent on a plain-HTTP hub: service workers need a secure context,
+     and `http://hub.local/panel/` is not one. The panel then behaves exactly as
+     it did before, and the gateway's cache headers cover the same case less
+     well. A hub with a local certificate is the real fix. */
+  navigator.serviceWorker.register("./sw.js").catch(() => {});
+  navigator.serviceWorker.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "SHELL_UPDATED") state.shellUpdated = true;
+  });
+}
+
+function reloadIfQuiet() {
+  if (!state.shellUpdated) return;
+  if (state.busy.size) return;
+  /* Never while a hazard is on the screen, and never just after a press. A
+     panel that goes blank while somebody is reaching for it is a panel they
+     stop reaching for. */
+  if (!document.getElementById("hazard").hidden) return;
+  if (Date.now() - state.lastPress < QUIET_MS) return;
+  location.reload();
+}
+
 /* ── one pass ── */
 
 async function refresh() {
@@ -377,15 +449,12 @@ async function refresh() {
       api(`/v1/homes/${state.homeId}/weather`).catch(() => null),
     ]);
   } catch (error) {
-    /* A panel that cannot reach the hub says so. It does not keep showing the
-       last state it saw as though it were current — a stale light switch on a
-       wall is worse than a blank one, because somebody trusts it. */
-    setStatus(error.status === 401 ? t("not_registered") : t("no_hub"), true);
+    showUnreachable(error);
     return;
   }
+  state.lastContact = Date.now();
 
   const items = devices.items || [];
-  document.getElementById("place").textContent = PLACE || t("this_home");
 
   const attention = items.filter((d) => d.status && d.status !== "ONLINE").length;
   const allWell = document.getElementById("all-well");
@@ -420,6 +489,8 @@ async function refresh() {
   if (controls.childElementCount === 1) {
     controls.append(el("p", "panel__status", t("nothing_to_control")));
   }
+
+  reloadIfQuiet();
 }
 
 /* ── the clock, and the night ── */
@@ -446,8 +517,15 @@ async function boot() {
   document.documentElement.dir = t("dir") === "rtl" ? "rtl" : "ltr";
   document.title = t("title");
 
+  /* Where this panel hangs, written before anything is fetched. It comes from
+     the panel's own storage, so a hub that is down changes nothing about it —
+     and a screen that cannot even say which hallway it is in looks broken in a
+     way that "cannot reach the hub" does not. */
+  document.getElementById("place").textContent = PLACE || t("this_home");
+
   tick();
   setInterval(tick, 1000);
+  watchForUpdates();
 
   if (!state.token || !state.homeId) {
     setStatus(t("not_registered"), true);

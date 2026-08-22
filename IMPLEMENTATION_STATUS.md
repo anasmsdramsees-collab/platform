@@ -1429,3 +1429,90 @@ Verified live: بالخارج 41° مشمس · يُحَسّ كأنه 38° / با
 **Checked while I was in there:** with no client attached, a freshly started hub
 dispatches zero actions in eighty seconds and every device holds its seeded
 value. Nothing in the platform commands an actuator on its own.
+
+## The panel keeps its own copy of itself ✅
+
+The platform has never needed the internet. What it needed was the hub — and the
+panel is *served by* the hub, so a hub that was restarting (an update, a power
+cut, a router that boots slower) left a browser error page on somebody's wall
+where a control surface used to be. For a device whose whole job is to be there,
+that is the worst failure it has.
+
+`apps/wall-panel/static/sw.js` keeps the shell — page, styles, script, wording,
+fonts — on the panel itself.
+
+### The one rule
+
+**Nothing under `/v1/` is ever cached, and never served from cache.** A cached
+light switch on a wall is worse than a blank one, because somebody trusts it:
+they press "off", the tile goes dark, and the light is still on in a room they
+have already left. The panel may keep its own face offline, never its own idea
+of the house. The gateway now sends `Cache-Control: no-store` on every API
+response — including refusals, so a remembered 401 cannot lock a panel out after
+its token was issued — which also stops a proxy or an extension from holding a
+household's state anywhere the household did not put it.
+
+### Three things the same bug was hiding
+
+Building this surfaced three faults, each one the panel quietly lying:
+
+1. **The tiles were left standing when the hub went away.** `refresh()` set an
+   error line and returned, so the last state it saw stayed on the wall looking
+   current — the exact thing every comment in that file warns against. The
+   controls are now cleared.
+2. **"All well" kept saying all was well.** A claim about the house, made by a
+   panel that could not see the house. It goes blank.
+3. **The panel stopped saying where it is.** The place came from the same pass
+   that failed, though it lives in the panel's own storage. It is written at
+   boot now: a screen that cannot say which hallway it is in looks broken in a
+   way "cannot reach the hub" does not.
+
+### Staying current without reloading under a hand
+
+Shell files are answered from cache and revalidated behind the request, so a
+panel on a wall for two years is not two years out of date. A changed ETag is
+reported to the page, which reloads only at a quiet moment — never while a
+hazard is on screen, never within a minute of a press, never mid-command.
+
+### Where it does not run, and what covers that
+
+Service workers need a secure context. A panel on the hub itself
+(`http://localhost:8088/panel/`) gets all of this; a tablet on the LAN over
+plain HTTP gets none of it, silently, because that is a browser rule. For those,
+the gateway sends `max-age=300, stale-while-revalidate=2592000`, which lets the
+browser's own cache cover a short restart less well. The real fix is a
+certificate for the hub, and that is a decision about what an installer does in
+somebody's house rather than code — written up as GAPS §2.7 with a
+recommendation.
+
+A development hub sends `no-store` for its own front end instead. A developer
+who reloads and sees the previous version spends the next ten minutes debugging
+the browser rather than the panel, which is exactly what happened the first time
+these headers went in.
+
+### A test for the thing that has no browser
+
+`sw.js` is the only front-end file with real logic, and the suite has no browser
+to run it in. `apps/wall-panel/tests/sw_harness.mjs` builds the smallest
+environment a service worker needs — a `self`, a `caches`, a `fetch`, a
+`Response` — and dispatches the browser's own events at it: install precaches
+the shell and survives a missing font rather than failing wholesale, `/v1/` is
+never intercepted, a cached file is served with the network down, an unseen page
+falls back to the panel instead of the browser's error page, and a changed ETag
+tells the page. It skips where `node` is absent, since the toolchain is Python.
+
+### And a test file nobody was running
+
+`testpaths` listed `libs`, `services`, `simulator`, `tests` — not `apps`. Every
+front-end test, for the console and the panel both, was passing when run by hand
+and skipped by every `make test`. **243 tests** were outside the suite. They all
+pass; adding `apps` to `testpaths` cost nothing and would have caught any of
+them the moment it broke. A test nobody runs is documentation with a false badge
+on it — the same failure pattern as §6, one layer up.
+
+**Verified in a real browser**, not only in the harness: with the hub stopped,
+the panel reloaded from its own cache and drew itself — clock, place, and
+"تعذّر الوصول إلى الهَب" — with no tiles and no claim about the house. Twenty
+files cached, none of them under `/v1/`.
+
+Full suite: 1465 passed, 29 skipped. `make lint` clean.

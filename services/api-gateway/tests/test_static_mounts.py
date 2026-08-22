@@ -70,3 +70,45 @@ def test_the_design_system_serves_no_source_of_truth_it_should_not(
     response = client.get("/design-system/tokens/tokens.json")
     assert response.status_code == 200
     assert "syltra" in response.text.lower()
+
+
+# ── what may be kept, and what may never be ──
+
+
+def test_no_one_may_keep_a_copy_of_the_house(client: TestClient) -> None:
+    """`no-store` on the API is not a performance decision.
+
+    A cached reading is a light switch on a wall showing a room that has already
+    changed, and somebody trusts it. It also stops a proxy, a browser extension
+    or a shared machine from holding a household's state anywhere the household
+    did not put it.
+    """
+    response = client.get("/v1/homes/home_1/devices")
+    assert response.headers["Cache-Control"] == "no-store"
+
+
+def test_a_refusal_is_not_cached_either(client: TestClient) -> None:
+    """A 401 that a browser remembers is a panel that stays locked out after the
+    token it needed was issued."""
+    response = client.get("/v1/homes/home_1/devices", headers={"Authorization": "Bearer nope"})
+    assert response.status_code == 401
+    assert response.headers["Cache-Control"] == "no-store"
+
+
+def test_the_panel_may_keep_its_own_face(client: TestClient) -> None:
+    """The shell is what makes a hub restart survivable: a panel that cannot
+    fetch its own HTML shows a browser error page at eye level in a hallway."""
+    response = client.get("/panel/panel.css")
+    assert response.status_code == 200
+    policy = response.headers["Cache-Control"]
+    # Either the production policy or the development one — never nothing, and
+    # never a policy that would let a stale copy live forever unchecked.
+    assert "max-age" in policy or policy == "no-store"
+
+
+def test_the_service_worker_is_always_revalidated(client: TestClient) -> None:
+    """A stale service worker never learns it is stale, and it is the file that
+    decides everything else the panel keeps."""
+    response = client.get("/panel/sw.js")
+    assert response.status_code == 200
+    assert response.headers["Cache-Control"] == "no-cache"

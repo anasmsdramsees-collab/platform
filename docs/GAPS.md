@@ -282,6 +282,40 @@ a cost computed from the wrong one is worse than none.
 
 ---
 
+### 2.7 A certificate for the hub — **open**
+
+The wall panel now keeps its own copy of itself (page, styles, script, wording,
+fonts) so a hub that is restarting no longer leaves a browser error page on a
+wall. That copy is a **service worker**, and a service worker only runs in a
+secure context: `https://`, or `localhost`.
+
+- A panel running **on the hub itself** (`http://localhost:8088/panel/`) gets
+  full offline behaviour today. Verified in Chrome: hub stopped, page reloaded,
+  panel drew itself and said it could not reach the hub.
+- A panel on a **tablet on the LAN** (`http://192.168.1.20:8088/panel/`) is not
+  a secure context. The service worker silently does not register, and the panel
+  falls back to the browser's own HTTP cache — which the gateway now feeds with
+  `max-age=300, stale-while-revalidate=2592000`. That covers a short hub restart
+  and does not survive a browser that has evicted the entry.
+
+The decision is whether the hub gets a **locally issued certificate** so LAN
+panels are secure contexts. Roughly:
+
+| Option | What it costs | What it buys |
+|---|---|---|
+| Leave it | nothing | LAN panels keep the weaker HTTP-cache fallback |
+| Self-signed cert per hub | a trust prompt on every device, or an install step per device | full offline on every panel |
+| A SYLTRA-issued cert per hub, from an internal CA | a CA to run and protect, plus renewal | full offline, no per-device prompt |
+| A real certificate for a `*.hub.syltra…` name | DNS and renewal that need the internet, which the platform refuses to depend on | conflicts with §0 |
+
+My recommendation is the second option for the pilot — a self-signed cert with a
+one-time trust step during installation, which the installer is already doing —
+and the third only if the pilot shows the trust step failing in real homes.
+Neither is code I should write before you choose, because both change what an
+installer does in somebody's house.
+
+---
+
 ## 3. Needs a person, not a decision
 
 - **The pilot itself** — `docs/pilot/PILOT_CHECKLIST.md` and its sign-offs.
@@ -389,7 +423,7 @@ Recorded so nobody re-opens them as oversights.
 | Category | Count | Blocked on |
 |---|---|---|
 | Unverified against reality | 6 | a real home, a real Home Assistant, a person |
-| Awaiting your decision | 1 | you |
+| Awaiting your decision | 2 | you |
 | Needs a person | 3 | scheduling |
 | Known engineering gaps | 0 | — |
 | Structural divergence | 3 groups | explained in place, not resolved |

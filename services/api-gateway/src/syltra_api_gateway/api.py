@@ -11,6 +11,7 @@ response that carries reason codes carries both: `reason_codes` for machines and
 """
 
 import asyncio
+import os
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Annotated, Any
@@ -181,6 +182,43 @@ def create_app(
     console_root = _console_directory()
     if console_root is not None:
         app.mount("/console", StaticFiles(directory=console_root, html=True), name="console")
+
+    #: How long a front-end file may be used without asking, and how long it may
+    #: still be used after that when nobody answers. The second number is what
+    #: makes a panel survive a hub restart on a plain-HTTP LAN, where a service
+    #: worker cannot run (it needs a secure context) and the browser's own cache
+    #: is the only thing left.
+    STATIC_CACHE = "max-age=300, stale-while-revalidate=2592000"
+
+    #: A development hub does not cache its own front end. A developer who
+    #: reloads and sees the previous version spends the next ten minutes
+    #: debugging the browser instead of the panel — which is exactly what
+    #: happened the first time these headers went in.
+    developing = os.environ.get("SYLTRA_ENV", "").lower() in {"dev", "development"}
+
+    @app.middleware("http")
+    async def set_cache_policy(request: Request, call_next: Any) -> Response:
+        """Say what may be kept, and — for device state — that nothing may.
+
+        `no-store` on the API is not a performance decision. A cached reading is
+        a light switch on a wall showing a room that has already changed, and
+        somebody trusts it. It also stops a proxy or a browser extension from
+        holding a household's state anywhere the household did not put it.
+        """
+        response: Response = await call_next(request)
+        path = request.url.path
+        if path.startswith("/v1/"):
+            response.headers["Cache-Control"] = "no-store"
+        elif path == "/panel/sw.js":
+            # A stale service worker never learns it is stale. This one file is
+            # always revalidated, and it is the file that decides everything the
+            # panel keeps.
+            response.headers["Cache-Control"] = "no-cache"
+        elif path.startswith(("/panel/", "/design-system/", "/console/")):
+            response.headers.setdefault(
+                "Cache-Control", "no-store" if developing else STATIC_CACHE
+            )
+        return response
 
     @app.middleware("http")
     async def attach_correlation_id(request: Request, call_next: Any) -> Response:

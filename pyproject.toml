@@ -79,7 +79,11 @@ module = ["sklearn.*", "skl2onnx.*", "onnxruntime.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
-testpaths = ["libs", "services", "simulator", "tests"]
+# `apps` is in this list because it was not: the wall panel's and the console's
+# own test files were being written, passing when run by hand, and skipped by
+# every `make test` and every CI run. A test nobody runs is documentation with a
+# false badge on it.
+testpaths = ["apps", "libs", "services", "simulator", "tests"]
 asyncio_mode = "auto"
 # importlib import mode lets several services each own a `test_api.py` without
 # the module-name collision the default prepend mode would raise.

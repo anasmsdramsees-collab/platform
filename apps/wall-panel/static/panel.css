@@ -38,8 +38,12 @@
 
 .panel {
   block-size: 100dvb;
-  display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  /* A column, not a grid with named rows. The weather band is hidden in a house
+   * with no sensors outside, and a hidden grid item stops being an item — every
+   * row below it shifted up, which put the tiles in the row sized for the
+   * footer and collapsed them to nothing. A flex column simply closes the gap. */
+  display: flex;
+  flex-direction: column;
   gap: var(--space-5);
   padding: var(--space-6);
   box-sizing: border-box;
@@ -207,6 +211,9 @@
 /* ── the tiles ── */
 
 .panel__controls {
+  /* Takes what is left, so the footer stays at the bottom of the wall. */
+  flex: 1;
+  min-block-size: 0;
   display: grid;
   /* Square-ish tiles that reflow from one column on a narrow panel to four on
    * a wide one, without a breakpoint to maintain.

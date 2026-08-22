@@ -112,7 +112,10 @@ export default async function LocaleLayout({
                   { "@type": "Place", name: "GCC" },
                 ],
                 knowsLanguage: ["ar", "en"],
-                sameAs: ["https://www.instagram.com/syltrahome/"],
+                sameAs: [
+                  "https://www.instagram.com/syltrahome/",
+                  "https://www.tiktok.com/@syltra.home",
+                ],
                 contactPoint: {
                   "@type": "ContactPoint",
                   contactType: "sales",

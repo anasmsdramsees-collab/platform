@@ -101,6 +101,14 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               Instagram
             </a>
             <a
+              href="https://www.tiktok.com/@syltra.home"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              TikTok
+            </a>
+            <a
               href={`https://wa.me/966533826009`}
               target="_blank"
               rel="noopener noreferrer"

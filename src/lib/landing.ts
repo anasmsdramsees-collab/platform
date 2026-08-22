@@ -46,7 +46,7 @@ export const landings: Landing[] = [
       title: "Smart Home in Riyadh | Design and Installation | Syltra One",
       h1: "A smart home in Riyadh, from design to operation.",
       description:
-        "A Saudi company designing and installing smart home systems in Riyadh: lighting, curtains, climate and security, fully Arabic, with a free site survey before any commitment.",
+        "Smart home design and installation in Riyadh: lighting, curtains, climate and security, fully Arabic, with a free site survey first.",
       intro:
         "Syltra One is a Riyadh-based technology company that designs and installs smart home systems for apartments, villas and compounds. We survey the site, design the system around the space, then install, program and hand the home over working. Everything runs from one app or by voice in Arabic through our assistant, Syla.",
       benefits: [

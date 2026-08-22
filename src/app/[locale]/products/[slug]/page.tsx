@@ -27,7 +27,11 @@ export async function generateMetadata({
   return pageMetadata({
     locale,
     path: `/products/${slug}`,
-    title: `${found.product.name} | Syltra One`,
+    // Category gives the term people actually search ("smart lock", "قفل ذكي"),
+    // which a bare product name like "Syltra TD" never carries on its own.
+    title: `${found.product.name} — ${
+      locale === "ar" ? found.category.ar.name : found.category.en.name
+    } | Syltra One`,
     description: copy.tagline,
     image: found.product.images?.[0] ?? "/brand/og-default.jpg",
   });

@@ -3,13 +3,13 @@ import type { Dictionary } from "./dictionary";
 const en: Dictionary = {
   meta: {
     titleHome: "Syltra One | Smart Living. Seamlessly Connected.",
-    titleProducts: "Products | Syltra One",
-    titleAbout: "About | Syltra One",
-    titleContact: "Contact | Syltra One",
-    titleApps: "Apps | Syltra One",
-    titleSyntraTv: "Syltra TV | Syltra One",
-    titleHomeAssistant: "Syltra Home | Syltra One",
-    titleFaq: "FAQ | Syltra One",
+    titleProducts: "Smart Home Products | Devices, Locks, Cameras & Sensors | Syltra One",
+    titleAbout: "About Syltra One | Saudi Smart Home Technology Company",
+    titleContact: "Contact Syltra One | Riyadh Smart Home Team",
+    titleApps: "Syltra Home & Syltra TV Apps | Control Your Home in Arabic",
+    titleSyntraTv: "Syltra TV | Entertainment and Home Control on One Screen",
+    titleHomeAssistant: "Syltra Home | One App for Every Device in the House",
+    titleFaq: "Smart Home FAQ | Costs, Installation & Setup | Syltra One",
     description:
       "Syltra One engineers the connected home, building and city of the future, one ecosystem, one intelligence layer, one design language.",
   },

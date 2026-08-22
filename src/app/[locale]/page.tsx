@@ -353,12 +353,20 @@ export default async function HomePage({
             {dict.homeCta.title}
           </h2>
           <p className="mt-4 text-chrome-dim">{dict.homeCta.subtitle}</p>
-          <Link
-            href={`/${locale}/contact`}
-            className="mt-8 inline-block rounded-md bg-platinum px-7 py-3 text-sm font-semibold text-void transition-opacity hover:opacity-90"
-          >
-            {dict.homeCta.button}
-          </Link>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href={`/${locale}/quote`}
+              className="rounded-md bg-platinum px-7 py-3 text-sm font-semibold text-void transition-opacity hover:opacity-90"
+            >
+              {dict.nav.quote}
+            </Link>
+            <Link
+              href={`/${locale}/contact`}
+              className="rounded-md border border-hairline-strong px-7 py-3 text-sm font-semibold text-platinum transition-colors hover:border-ion"
+            >
+              {dict.homeCta.button}
+            </Link>
+          </div>
         </div>
       </section>
     </>

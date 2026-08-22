@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { InfoCard } from "@/components/ui/info-card";
@@ -151,6 +152,25 @@ export default async function SolutionsPage({
           <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-chrome-dim">
             {s.trust.note}
           </p>
+        </div>
+      </section>
+
+      <section className="border-t border-hairline">
+        <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8">
+          <h2 className="font-display text-balance text-3xl font-bold text-platinum sm:text-4xl">
+            {locale === "ar" ? "ابدأ بمعاينة مجانية." : "Start with a free site survey."}
+          </h2>
+          <p className="mt-4 text-chrome-dim">
+            {locale === "ar"
+              ? "نزور الموقع، نقيس الاحتياج، ونرسل لك عرض سعر مفصّلًا بدون أي التزام."
+              : "We visit the site, measure the need, and send you an itemised quote with no commitment."}
+          </p>
+          <Link
+            href={`/${locale}/quote`}
+            className="mt-8 inline-block rounded-md bg-platinum px-7 py-3 text-sm font-semibold text-void transition-opacity hover:opacity-90"
+          >
+            {locale === "ar" ? "احجز معاينة" : "Book a survey"}
+          </Link>
         </div>
       </section>
     </>

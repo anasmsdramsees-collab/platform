@@ -12,8 +12,6 @@ export interface QuoteCopy {
   city: string;
   propertyType: string;
   propertyOptions: string[];
-  budget: string;
-  budgetOptions: string[];
   interests: string;
   interestOptions: string[];
   notes: string;
@@ -33,7 +31,6 @@ export function QuoteForm({ copy, source = "website" }: { copy: QuoteCopy; sourc
     email: "",
     city: "",
     propertyType: "",
-    budget: "",
     notes: "",
     website: "",
   });
@@ -87,7 +84,7 @@ export function QuoteForm({ copy, source = "website" }: { copy: QuoteCopy; sourc
           onClick={() => {
             setDone(null);
             setInterests([]);
-            setForm({ name: "", phone: "", email: "", city: "", propertyType: "", budget: "", notes: "", website: "" });
+            setForm({ name: "", phone: "", email: "", city: "", propertyType: "", notes: "", website: "" });
           }}
           className="mt-7 rounded-lg border border-hairline-strong px-5 py-2.5 text-sm font-semibold text-platinum hover:border-ion"
         >
@@ -137,16 +134,6 @@ export function QuoteForm({ copy, source = "website" }: { copy: QuoteCopy; sourc
         >
           <option value="">{copy.propertyType}</option>
           {copy.propertyOptions.map((o) => (
-            <option key={o} value={o} className="text-platinum">{o}</option>
-          ))}
-        </select>
-        <select
-          value={form.budget}
-          onChange={(e) => setForm({ ...form, budget: e.target.value })}
-          className={cn(input, !form.budget && "text-slate")}
-        >
-          <option value="">{copy.budget}</option>
-          {copy.budgetOptions.map((o) => (
             <option key={o} value={o} className="text-platinum">{o}</option>
           ))}
         </select>

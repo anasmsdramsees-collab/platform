@@ -16,7 +16,7 @@ from syltra_context_engine.service import ContextService
 from syltra_digital_twin.core import TwinProjection
 from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import PolicyService
-from syltra_automation_engine import AutomationEngine
+from syltra_automation_engine import AutomationEngine, SceneActivator, SceneRegistry
 from syltra_risk_engine import RiskEngineService
 from syltra_security import OrganisationRegistry, UserDirectory
 
@@ -40,6 +40,14 @@ class Platform:
     feedback: FeedbackService
     risk: RiskEngineService
     automations: AutomationEngine = field(default_factory=AutomationEngine)
+    #: The household's one-press shortcuts. Stored here rather than inside the
+    #: automation engine because a scene is not an automation: it never fires on
+    #: its own, and it may secure a door that no automation may touch.
+    scenes: SceneRegistry = field(default_factory=SceneRegistry)
+    #: What applies one. Optional so a gateway can list and edit scenes without
+    #: being able to press them — which is what the OpenAPI export and most
+    #: tests want.
+    scene_activator: SceneActivator | None = None
     # The loop that feeds the risk engine. Optional so tests and the OpenAPI
     # export construct a platform without starting one, and reported as
     # degraded when absent rather than assumed fine.

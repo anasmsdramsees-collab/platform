@@ -208,6 +208,40 @@
   color: var(--text-tertiary);
 }
 
+/* ── scenes ──
+ *
+ * Above the switches, because that is the order somebody standing in a hallway
+ * thinks in: what am I about to do, and only then which light. Tinted with the
+ * accent so a verb never reads as a state — a scene tile that looked like a
+ * light would be a light somebody thinks is on. */
+
+.panel__scenes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--space-4);
+  flex: none;
+}
+
+.panel__scenes[hidden] {
+  display: none;
+}
+
+/* Written as two classes rather than one, so it does not depend on sitting
+ * below `.control` in this file: same specificity means whichever comes last
+ * wins, and the first version of this rule was quietly overridden into a plain
+ * white tile by the block underneath it. */
+.control.control--scene {
+  /* Shorter than a device tile. It has nothing to report, only something to
+   * do, so it needs the room for a name and a count and no more. */
+  min-block-size: 96px;
+  /* Tinted *and* outlined. A 14% wash was invisible from across a room on a
+   * light theme, which made a verb look like a state — and a scene tile that
+   * reads as a light is a light somebody believes is on. */
+  background: color-mix(in srgb, var(--accent) 22%, var(--surface));
+  border: 2px solid var(--accent);
+  color: var(--text-primary);
+}
+
 /* ── the tiles ── */
 
 .panel__controls {
@@ -225,7 +259,16 @@
   grid-auto-rows: minmax(128px, auto);
   gap: var(--space-4);
   align-content: start;
-  overflow: hidden;
+  /* The one place on this panel that may scroll, and only when a house has
+   * more controls than a screen.
+   *
+   * The rule elsewhere is that nothing moves: a pull-to-refresh or a rubber
+   * band on a wall is a gesture nobody meant to make, and `.panel-body` still
+   * refuses both. But clipping was the wrong answer to a full house — the
+   * fourteenth control was simply unreachable, which is worse than a list that
+   * moves under a deliberate drag. `contain` keeps the bounce off it. */
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .control {

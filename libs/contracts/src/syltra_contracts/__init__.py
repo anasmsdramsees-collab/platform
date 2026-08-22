@@ -6,6 +6,7 @@ master build specification: the event envelope (§11), the capability registry
 must import these rather than redefining strings locally.
 """
 
+from syltra_contracts.scenes import MAX_STEPS, SECURING_VALUES, Scene, SceneStep
 from syltra_contracts.automations import (
     AUTOMATABLE_SAFETY_CLASSES,
     DEFAULT_ACTION_TTL,
@@ -112,10 +113,14 @@ from syltra_contracts.gateway import (
 
 __all__ = [
     "AUTOMATABLE_SAFETY_CLASSES",
+    "MAX_STEPS",
+    "SECURING_VALUES",
     "Automation",
     "AutomationAction",
     "AutomationCondition",
     "AutomationSource",
+    "Scene",
+    "SceneStep",
     "AutomationTrigger",
     "ConditionKind",
     "DEFAULT_ACTION_TTL",

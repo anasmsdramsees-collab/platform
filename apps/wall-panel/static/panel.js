@@ -372,6 +372,73 @@ function showWeather(weather) {
   band.hidden = false;
 }
 
+/* ── scenes ──
+
+   A scene is a verb, not a state: it has nothing to show and everything to do.
+   So a scene tile has no on/off, and the only honest feedback is what the hub
+   says came back — which is why pressing one reports whether *every* step was
+   confirmed rather than that the press was received. A household that pressed
+   "leaving" is owed a plain answer about the door. */
+
+function sceneTile(scene) {
+  const button = el("button", "control control--scene");
+  button.type = "button";
+  button.dataset.sceneId = scene.scene_id;
+
+  const icon = el("span", "control__icon", "◇");
+  icon.setAttribute("aria-hidden", "true");
+
+  const body = el("span");
+  body.append(
+    el("span", "control__name", scene.name),
+    el("span", "control__state", t("scene_steps").replace("{n}", number(scene.steps.length))),
+  );
+  button.append(icon, body);
+  button.addEventListener("click", () => activateScene(button, scene));
+  return button;
+}
+
+async function activateScene(button, scene) {
+  const key = `scene:${scene.scene_id}`;
+  if (state.busy.has(key)) return;
+  state.busy.add(key);
+  state.lastPress = Date.now();
+  button.setAttribute("aria-busy", "true");
+  setStatus("");
+  try {
+    const result = await api(`/v1/homes/${state.homeId}/scenes/${scene.scene_id}/activate`, {
+      method: "POST",
+    });
+    /* Not "done". A scene that turned off four things and could not close the
+       fifth is not a scene that worked, and the wall is where somebody finds
+       that out before they leave the house. */
+    if (result.fully_carried_out) {
+      setStatus(t("scene_done").replace("{name}", scene.name));
+    } else {
+      const missed = (result.steps || []).filter((s) => !s.verified).length;
+      setStatus(t("scene_partly").replace("{n}", number(missed)), true);
+    }
+    await refresh();
+  } catch (error) {
+    setStatus(error.status === 403 ? t("not_allowed_here") : t("did_not_work"), true);
+  } finally {
+    state.busy.delete(key);
+    button.removeAttribute("aria-busy");
+  }
+}
+
+function showScenes(scenes) {
+  const section = document.getElementById("scenes");
+  /* Only the ones this panel may actually press. The server decides that — a
+     panel showing a "leaving" scene it cannot run is a panel that lies once and
+     is never trusted again. */
+  const usable = ((scenes && scenes.items) || []).filter((s) => s.activatable);
+  section.hidden = usable.length === 0;
+  const heading = document.getElementById("scenes-heading");
+  heading.textContent = t("scenes_heading");
+  section.replaceChildren(heading, ...usable.map(sceneTile));
+}
+
 /* ── when the hub is not there ── */
 
 function showUnreachable(error) {
@@ -384,6 +451,7 @@ function showUnreachable(error) {
      served from the panel itself (see sw.js), so a hub that is restarting no
      longer leaves a browser error page at eye level in a hallway. */
   document.getElementById("weather").hidden = true;
+  document.getElementById("scenes").hidden = true;
 
   /* "All well" is a claim about the house, and a panel that cannot see the
      house is in no position to make it. It goes blank rather than reassuring
@@ -439,14 +507,16 @@ async function refresh() {
   let devices;
   let risks;
   let weather;
+  let scenes;
   try {
-    [devices, risks, weather] = await Promise.all([
+    [devices, risks, weather, scenes] = await Promise.all([
       api(`/v1/homes/${state.homeId}/devices`),
       api(`/v1/homes/${state.homeId}/risks`),
       /* The weather is the one thing here nobody depends on. A hub that cannot
          answer for outside should still show the lights, so this failure is
          swallowed while the other two are not. */
       api(`/v1/homes/${state.homeId}/weather`).catch(() => null),
+      api(`/v1/homes/${state.homeId}/scenes`).catch(() => null),
     ]);
   } catch (error) {
     showUnreachable(error);
@@ -466,6 +536,7 @@ async function refresh() {
   if (showHazard(risks)) return;
 
   showWeather(weather);
+  showScenes(scenes);
 
   const controls = document.getElementById("controls");
   const heading = document.getElementById("controls-heading");

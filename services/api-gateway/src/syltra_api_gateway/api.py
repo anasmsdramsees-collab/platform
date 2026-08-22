@@ -43,8 +43,10 @@ from syltra_api_gateway.stream import HEARTBEAT_SECONDS
 from syltra_api_gateway.translations import is_rtl, translate_reasons
 from pydantic import ValidationError
 from syltra_action_orchestrator import ActionRefused, build_manual_action
+from syltra_automation_engine import SceneRefused
 from syltra_contracts import (
     Automation,
+    Scene,
     ConditionKind,
     ContextType,
     FeedbackKind,
@@ -759,6 +761,118 @@ def create_app(
         except RuntimeError as exc:
             raise conflict("NO_ACTIVE_VERSION", str(exc)) from exc
         return {"name": version.name, "version": version.version, "status": version.status.value}
+
+    # ── scenes (the household's one-press shortcuts) ──
+
+    def _scene_view(scene: Any, principal: Any) -> dict[str, Any]:
+        """A scene, and whether *this* caller may press it.
+
+        `activatable` is answered by the server for the same reason `operable`
+        is on a device reading: working it out needs the capability registry and
+        the caller's permissions, and a second copy of either in a client is a
+        copy that drifts. A wall panel showing a "leaving" scene it cannot
+        actually run is a panel that lies once and is never trusted again.
+        """
+        last = platform.scenes.last_activated(scene.home_id, scene.scene_id)
+        needed = {permission_for_capability(step.capability) for step in scene.steps}
+        return {
+            "scene_id": str(scene.scene_id),
+            "home_id": scene.home_id,
+            "name": scene.name,
+            "enabled": scene.enabled,
+            "secures": scene.secures,
+            "summary": scene.summary(),
+            "steps": [step.model_dump(mode="json", exclude_none=True) for step in scene.steps],
+            "owner": scene.owner,
+            "version": scene.version,
+            "last_activated_at": last.isoformat() if last else None,
+            "activatable": scene.enabled and all(principal.may(p) for p in needed),
+        }
+
+    @app.get("/v1/homes/{home_id}/scenes", tags=["scenes"])
+    async def list_scenes(home_id: str, principal: PrincipalDep) -> dict[str, Any]:
+        check_read(home_id, principal)
+        return {
+            "home_id": home_id,
+            "items": [_scene_view(scene, principal) for scene in platform.scenes.list_for(home_id)],
+        }
+
+    @app.post("/v1/homes/{home_id}/scenes", tags=["scenes"], status_code=201)
+    async def create_scene(
+        home_id: str, principal: PrincipalDep, payload: Annotated[dict[str, Any], Body()]
+    ) -> dict[str, Any]:
+        """Write a scene. Writing one is not the same as being able to press it.
+
+        Authoring is gated on the automations permission, because a scene is a
+        standing thing in the house that other people will press.
+        """
+        check_automations(home_id, principal)
+        try:
+            scene = Scene(**{**payload, "home_id": home_id, "owner": principal.subject})
+        except ValidationError as exc:
+            raise bad_request("INVALID_SCENE", str(exc)) from exc
+        stored = platform.scenes.upsert(scene)
+        platform.stream.publish(home_id, f"SCENE_{stored.scene_id}")
+        return _scene_view(stored, principal)
+
+    @app.delete("/v1/homes/{home_id}/scenes/{scene_id}", tags=["scenes"], status_code=204)
+    async def delete_scene(home_id: str, scene_id: UUID, principal: PrincipalDep) -> Response:
+        check_automations(home_id, principal)
+        if not platform.scenes.remove(home_id, scene_id):
+            raise not_found("NO_SUCH_SCENE", f"no scene {scene_id}")
+        platform.stream.publish(home_id, f"SCENE_{scene_id}")
+        return Response(status_code=204)
+
+    @app.post("/v1/homes/{home_id}/scenes/{scene_id}/activate", tags=["scenes"])
+    async def activate_scene(
+        home_id: str, scene_id: UUID, principal: PrincipalDep, locale: LocaleDep
+    ) -> dict[str, Any]:
+        """Press it.
+
+        Every step is checked against this caller's own authority before any
+        step runs. A "leaving" scene that turns off the switches and fails to
+        lock the door is worse than one that refused: somebody walks away
+        believing the house is shut.
+        """
+        check_read(home_id, principal)
+        scene = platform.scenes.get(home_id, scene_id)
+        if scene is None:
+            raise not_found("NO_SUCH_SCENE", f"no scene {scene_id}")
+        for step in scene.steps:
+            if not principal.may(permission_for_capability(step.capability)):
+                raise forbidden(
+                    "NOT_ALLOWED_HERE",
+                    f"{principal.role.value} may not operate {step.capability}",
+                )
+        if platform.scene_activator is None:
+            raise conflict("DISPATCH_UNAVAILABLE", "this hub cannot apply scenes")
+
+        try:
+            activation = await platform.scene_activator.activate(scene, principal.subject)
+        except SceneRefused as exc:
+            raise conflict(exc.reason_code, exc.detail) from exc
+
+        platform.scenes.record_activation(home_id, scene_id, activation.at)
+        platform.stream.publish(home_id, f"SCENE_{scene_id}")
+        return {
+            "scene_id": str(scene_id),
+            "name": activation.name,
+            # Not "ok". A household that pressed *leaving* is owed a plain
+            # answer about the door, and "most of it worked" is not one.
+            "fully_carried_out": activation.fully_carried_out,
+            "steps": [
+                {
+                    "device_id": outcome.device_id,
+                    "capability": outcome.capability,
+                    "value": outcome.value,
+                    "status": outcome.status,
+                    "verified": outcome.verified,
+                    "reason_codes": list(outcome.reason_codes),
+                    "reasons": translate_reasons(list(outcome.reason_codes), locale),
+                }
+                for outcome in activation.outcomes
+            ],
+        }
 
     # ── automations (spec §2.3, ADR-009) ──
 

@@ -114,11 +114,21 @@ def test_the_glyphs_are_text_rather_than_an_imitated_icon_set() -> None:
     assert "aria-hidden" in JS, "the label already says what it is"
 
 
-def test_nothing_on_the_panel_scrolls() -> None:
+def test_the_page_itself_never_moves() -> None:
     """A pull-to-refresh or a rubber-band bounce on a wall is a gesture nobody
-    meant to make."""
-    assert "overscroll-behavior: none" in CSS
-    assert "overflow: hidden" in CSS
+    meant to make.
+
+    The control list is the one exception, and it earned it: a house with more
+    controls than screen had an unreachable fourteenth tile, which is worse
+    than a list that moves under a deliberate drag. The bounce stays off it.
+    """
+    body = CSS[CSS.index(".panel-body {") : CSS.index(".panel {")]
+    assert "overscroll-behavior: none" in body
+    assert "overflow: hidden" in body
+
+    controls = CSS[CSS.index(".panel__controls {") :]
+    controls = controls[: controls.index("\n}")]
+    assert "overscroll-behavior: contain" in controls
 
 
 def test_the_panel_dims_at_night_rather_than_going_dark() -> None:

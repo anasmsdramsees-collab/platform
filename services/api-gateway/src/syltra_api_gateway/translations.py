@@ -153,6 +153,14 @@ REASON_CODES: Final[dict[str, dict[str, str]]] = {
     "USER_REJECTED": {"en": "You declined this", "ar": "لقد رفضت هذا"},
     # actions
     "VERIFIED": {"en": "Confirmed by the device", "ar": "تم التأكيد من الجهاز"},
+    # A scene step whose device could not be reached at all. Distinct from a
+    # command that was sent and not confirmed: nothing left the hub for this
+    # one, and a household deciding whether to walk back and check needs to
+    # know which of the two happened.
+    "DEVICE_DID_NOT_ANSWER": {
+        "en": "The device did not answer",
+        "ar": "الجهاز لم يستجب",
+    },
     "VERIFICATION_FAILED": {"en": "The device did not confirm the change", "ar": "لم يؤكد الجهاز التغيير"},
     "ALREADY_IN_EXPECTED_STATE": {"en": "The device was already as requested", "ar": "كان الجهاز بالفعل كما هو مطلوب"},
     "ACTION_EXPIRED": {"en": "This action took too long and was abandoned", "ar": "استغرق هذا الإجراء وقتاً طويلاً وتم إلغاؤه"},

@@ -22,7 +22,7 @@ from syltra_contracts import CommandResult, LearningMode
 from syltra_feedback_service import FeedbackService
 from syltra_policy_safety import HomePolicy, PolicyService
 from syltra_risk_engine import IsolationDispatcher, RiskEngineService
-from syltra_automation_engine import AutomationDispatcher
+from syltra_automation_engine import AutomationDispatcher, SceneActivator, SceneRegistry
 from syltra_automation_engine.driver import AutomationDriver
 from syltra_risk_engine.driver import RiskDriver
 from syltra_security import Role, TokenStore
@@ -114,6 +114,8 @@ def build_platform() -> Platform:
     from syltra_automation_engine import AutomationEngine
     from syltra_contracts import (
         Automation,
+        Scene,
+        SceneStep,
         AutomationAction,
         AutomationCondition,
         AutomationTrigger,
@@ -279,6 +281,40 @@ def build_platform() -> Platform:
     risk = RiskEngineService(
         isolation=IsolationDispatcher(policy=policy, orchestrator=orchestrator)
     )
+    scenes = SceneRegistry()
+    for name, steps in (
+        (
+            "وضع النوم",
+            (
+                SceneStep(capability="light.power", value=False),
+                SceneStep(capability="cover.position", value=0, device_id="curtain_living"),
+                SceneStep(
+                    capability="climate.target_temperature", value=21, device_id="ac_bedroom"
+                ),
+            ),
+        ),
+        (
+            "وضع الخروج",
+            (
+                SceneStep(capability="light.power", value=False),
+                SceneStep(capability="switch.power", value=False, device_id="plug_tv"),
+                SceneStep(capability="switch.power", value=False, device_id="plug_coffee"),
+            ),
+        ),
+        (
+            "الوضع الصباحي",
+            (
+                SceneStep(capability="light.power", value=True, device_id="light_kitchen"),
+                SceneStep(capability="cover.position", value=100, device_id="curtain_living"),
+                SceneStep(capability="switch.power", value=True, device_id="plug_coffee"),
+            ),
+        ),
+    ):
+        # Room- and home-wide steps on purpose: "all the lights off" keeps
+        # meaning that after somebody adds a lamp, which is the whole reason
+        # expansion happens at activation rather than at authoring.
+        scenes.upsert(Scene(home_id=HOME, name=name, steps=steps, owner="demo-owner"))
+
     platform = Platform(
         automations=automations,
         twin=context.twin,
@@ -295,6 +331,8 @@ def build_platform() -> Platform:
         # valve is not, and the console shows the refusal rather than a
         # pretended success.
         risk=risk,
+        scenes=scenes,
+        scene_activator=SceneActivator(policy, orchestrator, context.twin),
     )
     platform.automation_driver = AutomationDriver(
         context.twin,

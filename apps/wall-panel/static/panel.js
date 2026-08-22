@@ -92,6 +92,24 @@ function showHazard(risks) {
 
 /* ── the controls ── */
 
+/* A glyph per capability domain, so a tile is recognisable before somebody is
+   close enough to read its label. Text, not artwork: an icon set is a thing to
+   draw, license and maintain, and a wall panel needs six shapes rather than a
+   family. Marked aria-hidden because the label beside it already says what it
+   is — a screen reader announcing "light bulb, Living room light" says it
+   twice. */
+const GLYPHS = {
+  light: "☀",
+  switch: "⏻",
+  climate: "❄",
+  cover: "▤",
+  fan: "✳",
+};
+
+function glyphFor(capability) {
+  return GLYPHS[capability.split(".", 1)[0]] || "◉";
+}
+
 function controlFor(device, capability, reading) {
   const button = el("button", "control");
   button.type = "button";
@@ -102,7 +120,11 @@ function controlFor(device, capability, reading) {
   const on = reading.value === true;
   if (isBoolean) button.dataset.on = String(on);
 
-  button.append(
+  const icon = el("span", "control__icon", glyphFor(capability));
+  icon.setAttribute("aria-hidden", "true");
+
+  const body = el("span");
+  body.append(
     el("span", "control__name", device.name || device.device_id),
     el(
       "span",
@@ -110,6 +132,7 @@ function controlFor(device, capability, reading) {
       isBoolean ? (on ? t("on") : t("off")) : `${reading.value}${reading.unit || ""}`,
     ),
   );
+  button.append(icon, body);
 
   /* Booleans only. A wall panel is a light switch, and a temperature dial with
      no room to drag needs a screen somebody is looking at. */

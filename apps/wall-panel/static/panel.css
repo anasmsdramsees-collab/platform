@@ -1,20 +1,25 @@
 /* SYLTRA wall panel.
  *
- * Every number here comes from one of three facts about where this screen
- * lives, rather than from a phone stylesheet scaled up.
+ * A tile grid rather than a list: the shape a phone taught everybody, applied
+ * to a screen on a wall. Every number still comes from where this thing lives.
  *
- * **It is read from two or three metres.** Type is roughly double the
- * console's, and there are perhaps six things on the screen. A panel that
- * needs to be approached is a panel that gets approached, read, and then
- * left alone.
+ * **Read from two or three metres.** Type roughly double the console's, six or
+ * eight things on the screen, and a tile whose state is legible before you are
+ * close enough to read its label.
  *
- * **It is pressed by a thumb, by somebody not really looking.** Targets are
- * 96px, not the 44px the console uses — that number is for a phone held in
- * your hand with your eyes on it. Somebody passing a hallway gets one attempt.
+ * **Pressed by a thumb, by somebody not really looking.** Whole tiles are the
+ * target, not a control inside one — 128px minimum, against the console's 44.
+ * That number is for a phone held in your hand with your eyes on it; somebody
+ * passing a hallway gets one attempt.
  *
- * **It is on all day and all night.** Nothing animates on a loop, nothing
- * flashes, and the whole surface dims after dark rather than lighting a
- * hallway at three in the morning.
+ * **On all day and all night.** Nothing animates on a loop, nothing flashes,
+ * and the surface dims after dark rather than lighting a hallway at three in
+ * the morning.
+ *
+ * The look borrows a shape that is common to every modern phone — rounded
+ * tiles, soft depth, a press that responds. It borrows nothing that belongs to
+ * anyone: the palette, the type and the spacing are SYLTRA's own tokens, and
+ * there is not an imitated icon anywhere in it.
  */
 
 .panel-body {
@@ -26,8 +31,8 @@
   overscroll-behavior: none;
   -webkit-user-select: none;
   user-select: none;
-  /* A wall panel has no cursor and no hover; a lingering highlight after a
-   * press is a panel that looks stuck. */
+  /* No cursor and no hover on a wall; a lingering highlight after a press is a
+   * panel that looks stuck. */
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -35,12 +40,12 @@
   block-size: 100dvb;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: var(--space-4);
+  gap: var(--space-5);
   padding: var(--space-6);
   box-sizing: border-box;
 }
 
-/* ── the head: the time, the place, and whether anything is wrong ── */
+/* ── the head ── */
 
 .panel__head {
   display: flex;
@@ -52,10 +57,14 @@
 
 .panel__clock {
   margin: 0;
-  font-size: 4rem;
+  font-size: 4.5rem;
   line-height: 1;
   font-weight: var(--weight-semibold);
+  /* Tabular figures, so the minute changing does not shift the hour beside it.
+   * A clock that twitches every sixty seconds is a clock somebody notices, and
+   * this one is meant to be furniture. */
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 .panel__place {
@@ -64,8 +73,7 @@
   color: var(--text-secondary);
 }
 
-/* The one line somebody reads from across the room. It says whether anything
- * needs them, and nothing else. */
+/* The one line read from across the room: whether anything needs somebody. */
 .panel__all-well {
   margin: 0;
   font-size: 1.75rem;
@@ -77,36 +85,74 @@
   color: var(--status-warning);
 }
 
-/* ── the controls ── */
+/* ── the tiles ── */
 
 .panel__controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  /* Square-ish tiles that reflow from one column on a narrow panel to four on
+   * a wide one, without a breakpoint to maintain.
+   *
+   * `auto-fill` rather than `auto-fit`: with one device in the house, auto-fit
+   * collapses the empty tracks and stretches that single tile across a metre
+   * of wall. A tile should stay a tile whether there is one or twelve. */
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  grid-auto-rows: minmax(128px, auto);
   gap: var(--space-4);
   align-content: start;
   overflow: hidden;
 }
 
 .control {
-  /* 96px, not 44. A thumb, in passing, with one attempt. */
-  min-block-size: 96px;
+  /* The whole tile is the target. A button inside a card asks somebody to aim;
+   * a tile asks them to hit a wall. */
+  min-block-size: 128px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: var(--space-1);
+  justify-content: space-between;
+  gap: var(--space-2);
   padding: var(--space-4);
-  border: var(--control-border-width) solid var(--border);
-  border-radius: var(--radius-lg);
+  border: none;
+  border-radius: var(--radius-xl);
   background: var(--surface);
   color: var(--text-primary);
   font-family: inherit;
   text-align: start;
   cursor: pointer;
+  box-shadow: var(--elevation-popover);
+  /* Fast, and only on press. A tile that eases for 300ms feels like a delay,
+   * and a wall panel is competing with a physical switch. */
+  transition:
+    transform var(--motion-fast) var(--motion-ease-out),
+    background-color var(--motion-fast) var(--motion-ease-out);
+}
+
+/* The press itself, because a wall panel has no hover to tell you it heard. */
+.control:active {
+  transform: scale(0.97);
+}
+
+.control__icon {
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+/* The label and state sit together at the bottom of the tile, under the
+ * glyph — so tiles line up whatever the length of a device's name. */
+.control > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
 .control__name {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: var(--weight-medium);
+  /* Two lines at most: "Living room air conditioner" should wrap once and not
+   * push the state off the tile. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .control__state {
@@ -114,12 +160,17 @@
   color: var(--text-secondary);
 }
 
-/* On and off are not carried by colour alone (§8): the border thickens and the
- * word changes with it, so the state survives a glance, a colour-blind reader
- * and a sun-washed screen. */
+/* On is a filled tile, not a coloured outline — legible from further away than
+ * a border is, and it is not colour alone: the label changes with it, so the
+ * state survives a glance, a colour-blind reader and a sun-washed screen (§8). */
 .control[data-on="true"] {
-  border-color: var(--accent);
-  border-width: 3px;
+  background: var(--accent);
+  color: var(--background);
+}
+
+.control[data-on="true"] .control__state {
+  color: var(--background);
+  opacity: 0.85;
 }
 
 .control[aria-busy="true"] {
@@ -173,6 +224,7 @@
   font-size: 4.5rem;
   line-height: 1.05;
   font-weight: var(--weight-semibold);
+  letter-spacing: -0.02em;
 }
 
 .hazard__where {
@@ -193,11 +245,12 @@
  *
  * A hallway panel at three in the morning should not light the hallway. Dimmed
  * rather than switched off: a dark rectangle is indistinguishable from a
- * broken one, and somebody should be able to see at a glance that the house is
- * still being watched. */
+ * broken one, and somebody should see at a glance that the house is still
+ * being watched. */
 
 .panel-body[data-night="true"] .panel {
   opacity: 0.45;
+  transition: opacity var(--motion-slow) var(--motion-ease);
 }
 
 /* The hazard never dims. */
@@ -212,4 +265,16 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Somebody who set "reduce motion" on a wall panel meant it. */
+@media (prefers-reduced-motion: reduce) {
+  .control,
+  .panel-body[data-night="true"] .panel {
+    transition: none;
+  }
+
+  .control:active {
+    transform: none;
+  }
 }

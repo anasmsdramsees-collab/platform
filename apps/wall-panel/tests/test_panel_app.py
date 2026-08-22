@@ -60,10 +60,58 @@ def test_a_refusal_is_shown_rather_than_swallowed() -> None:
 
 def test_touch_targets_are_bigger_than_a_phone_s() -> None:
     """44px is for a phone held in your hand with your eyes on it. Somebody
-    passing a hallway gets one attempt with a thumb."""
+    passing a hallway gets one attempt with a thumb, and the whole tile is the
+    target rather than a control inside it."""
     match = re.search(r"\.control\s*\{[^}]*min-block-size:\s*(\d+)px", CSS, re.S)
     assert match, "the control has no minimum height"
-    assert int(match.group(1)) >= 88, match.group(1)
+    assert int(match.group(1)) >= 120, match.group(1)
+
+
+def test_the_on_state_is_not_carried_by_colour_alone() -> None:
+    """§8. A filled tile reads from further away than a coloured border, and
+    the label changes with it — so the state survives a glance, a colour-blind
+    reader, and a screen with sun on it."""
+    assert 'data-on="true"' in CSS
+    assert 't("on")' in JS and 't("off")' in JS
+
+
+def test_a_press_is_acknowledged_because_a_wall_has_no_hover() -> None:
+    assert ".control:active" in CSS
+    active = CSS[CSS.index(".control:active") :]
+    assert "transform" in active[: active.index("}")]
+
+
+def test_motion_is_fast_and_only_on_press() -> None:
+    """A tile that eases for 300ms feels like a delay, and a wall panel is
+    competing with a physical switch."""
+    control = CSS[CSS.index(".control {") : CSS.index(".control:active")]
+    assert "--motion-fast" in control
+    assert "animation" not in control
+
+
+def test_reduced_motion_is_honoured() -> None:
+    """Somebody who set it on a wall panel meant it."""
+    assert "prefers-reduced-motion" in CSS
+
+
+def test_the_tiles_reflow_without_a_breakpoint_to_maintain() -> None:
+    assert "auto-fill" in CSS or "auto-fit" in CSS
+    assert "@media (min-width" not in CSS, "a wall panel has one size at a time"
+
+
+def test_a_single_tile_stays_a_tile() -> None:
+    """`auto-fit` collapses the empty tracks and stretches one device across a
+    metre of wall. A house with one switchable light should not look like a
+    banner."""
+    assert "auto-fill" in CSS
+
+
+def test_the_glyphs_are_text_rather_than_an_imitated_icon_set() -> None:
+    """An icon set is a thing to draw, license and maintain. A wall panel needs
+    six shapes, and none of them may be somebody else's."""
+    assert "const GLYPHS" in JS
+    assert ".svg" not in JS
+    assert "aria-hidden" in JS, "the label already says what it is"
 
 
 def test_nothing_on_the_panel_scrolls() -> None:

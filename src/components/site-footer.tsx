@@ -86,6 +86,28 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
             >
               {dict.nav.contact}
             </Link>
+            <Link
+              href={`/${locale}/quote`}
+              className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              {dict.nav.quote}
+            </Link>
+            <a
+              href="https://www.instagram.com/syltrahome/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              Instagram
+            </a>
+            <a
+              href={`https://wa.me/966533826009`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              WhatsApp
+            </a>
           </div>
         </div>
       </div>

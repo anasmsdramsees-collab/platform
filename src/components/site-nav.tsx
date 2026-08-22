@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Package, LayoutGrid, Info, Mail, ShoppingBag, Layers, Wrench } from "lucide-react";
+import { Package, LayoutGrid, Info, Mail, ShoppingBag, Layers, Wrench, Boxes } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import Logo from "./logo";
@@ -17,6 +17,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
   const links = [
     { href: `/${locale}/products`, label: dict.nav.products },
     { href: `/${locale}/store`, label: dict.nav.store },
+    { href: `/${locale}/builder`, label: dict.nav.builder },
     { href: `/${locale}/solutions`, label: dict.nav.solutions },
     { href: `/${locale}/services`, label: dict.nav.services },
     { href: `/${locale}/apps`, label: dict.nav.apps },
@@ -27,6 +28,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
   const mobileNavItems: NavItem[] = [
     { id: "products", icon: <Package />, label: dict.nav.products, href: `/${locale}/products` },
     { id: "store", icon: <ShoppingBag />, label: dict.nav.store, href: `/${locale}/store` },
+    { id: "builder", icon: <Boxes />, label: dict.nav.builder, href: `/${locale}/builder` },
     { id: "solutions", icon: <Layers />, label: dict.nav.solutions, href: `/${locale}/solutions` },
     { id: "services", icon: <Wrench />, label: dict.nav.services, href: `/${locale}/services` },
     { id: "apps", icon: <LayoutGrid />, label: dict.nav.apps, href: `/${locale}/apps` },

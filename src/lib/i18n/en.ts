@@ -17,6 +17,7 @@ const en: Dictionary = {
     products: "Products",
     store: "Store",
     solutions: "Solutions",
+    builder: "Build your home",
     quote: "Book a survey",
     services: "Services",
     apps: "Apps",

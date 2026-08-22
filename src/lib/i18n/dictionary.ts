@@ -29,6 +29,7 @@ export interface Dictionary {
     store: string;
     solutions: string;
     services: string;
+    builder: string;
     quote: string;
     apps: string;
     about: string;

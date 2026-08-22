@@ -17,6 +17,7 @@ const ar: Dictionary = {
     products: "المنتجات",
     store: "المتجر",
     solutions: "الحلول",
+    builder: "ابنِ بيتك",
     quote: "احجز معاينة",
     services: "الخدمات",
     apps: "التطبيقات",

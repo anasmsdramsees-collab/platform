@@ -48,6 +48,9 @@ export function pageMetadata({
       description,
       images: [image],
     },
+    verification: {
+      google: "eNLi040aMP52F_djdZ9oVUVoH-JFSGl1oiDVpWZTYWo",
+    },
     robots: {
       index: true,
       follow: true,

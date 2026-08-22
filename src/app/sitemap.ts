@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/site-config";
 import { locales } from "@/lib/i18n/config";
 import { productCatalog } from "@/lib/products";
+import { landings } from "@/lib/landing";
 
 // Static export needs these emitted at build time.
 export const dynamic = "force-static";
@@ -18,6 +19,7 @@ const ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.S
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   { path: "/faq", priority: 0.6, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.6, changeFrequency: "yearly" },
+  { path: "/quote", priority: 0.9, changeFrequency: "monthly" },
 ];
 
 function languagesFor(path: string) {
@@ -36,6 +38,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: route.changeFrequency,
         priority: route.priority,
         alternates: { languages: languagesFor(route.path) },
+      });
+    }
+  }
+
+  for (const landing of landings) {
+    const path = `/l/${landing.slug}`;
+    for (const locale of locales) {
+      entries.push({
+        url: `${siteUrl}/${locale}${path}`,
+        lastModified,
+        changeFrequency: "monthly",
+        priority: 0.9,
+        alternates: { languages: languagesFor(path) },
       });
     }
   }

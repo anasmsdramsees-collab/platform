@@ -20,6 +20,11 @@ Every Syltra device speaks Matter, Z-Wave, Zigbee, Wi-Fi, Bluetooth LE, Thread, 
 - [FAQ](https://syltraone.com/en/faq): Direct answers to the most common questions about the ecosystem.
 - [Contact](https://syltraone.com/en/contact): Email, phone and social channels.
 
+- [Book a survey](https://syltraone.com/en/quote): Request a free site survey and an itemised quote.
+- [Smart home in Riyadh](https://syltraone.com/en/l/smart-home-riyadh): Design and installation of smart home systems in Riyadh, with pricing and timeline answers.
+- [Solar CCTV](https://syltraone.com/en/l/solar-cctv): Solar-powered surveillance for farms and remote sites, including 4G models needing no internet.
+- [Smart locks](https://syltraone.com/en/l/smart-locks): Fingerprint, code, card and phone door locks with temporary guest access.
+
 Arabic versions of every page live at the same paths under /ar.
 
 ## Product categories

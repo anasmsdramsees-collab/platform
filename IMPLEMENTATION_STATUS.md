@@ -1516,3 +1516,56 @@ the panel reloaded from its own cache and drew itself — clock, place, and
 files cached, none of them under `/v1/`.
 
 Full suite: 1465 passed, 29 skipped. `make lint` clean.
+
+## The old platform's layout, ported ✅
+
+You pointed at `smart-admin-eta.vercel.app` — the earlier SYLTRA Admin — and
+asked for its layout. I could not sign in (I do not enter credentials or create
+accounts), so the geometry came from the app's own stylesheet, which states it
+exactly:
+
+```
+.sidebar { width: 232px; background: graphite; border-inline-end: hairline;
+           position: sticky; top: 0; height: 100vh }
+.content { flex: 1; padding: 1.75rem 2.25rem 4rem }
+.card    { border: hairline; border-radius: 16px; background: graphite;
+           padding: 1.25rem }
+--r-sm: 2px  --r-md: 6px  --r-lg: 16px
+.nav-item.active { background: rgba(ion, .14); color: ion }
+```
+
+Ported through `tokens.json` rather than by hand-editing CSS, so the console,
+the catalogue and the wall panel all moved together and the generated files stay
+generated (ADR-008):
+
+- **Radii sharpened** to 2 / 6 / 16 / 20. This is the change you feel: controls
+  at 6px instead of 10px read as an instrument rather than a phone.
+- **Sidebar 232px** (was 264).
+- **Content padding 28 / 36** (was 24 / 32).
+- **The current nav item is now a wash of the accent** rather than a lighter
+  grey. Grey said "hovered"; a tint says "here", which is what a sidebar of
+  thirteen items has to answer from the corner of an eye.
+- **Column headings set as small caps with air between them** — in Latin only,
+  and not by preference: Arabic is a joined script, letter-spacing pulls the
+  joins apart and renders a word as a row of disconnected shapes, and there is
+  no case to raise. The Arabic heading keeps the same size, weight and colour
+  without the treatment. The old platform never had to answer this, because it
+  set its Arabic in a fallback font it never chose.
+
+**Three things I did not copy, each for a reason:**
+
+1. **The accent.** The old platform's is `#4c8dff`, a blue. Ours is Electric
+   Cyan `#2BC4D9`, which the brand guidelines name as the identity colour and
+   which the whole token set is built from. Changing it is a brand decision, not
+   a layout one — say the word and it is one token.
+2. **The top bar.** The old layout has none: sidebar and content, nothing else.
+   Ours carries the property scope, the signed-in role and the language and
+   theme controls. Dropping it would lose the household switcher and the role
+   indicator, which the old single-account product never needed.
+3. **The type.** Unbounded and Manrope, loaded from Google's servers. Both are
+   Latin-only, so the old platform's Arabic — most of its interface — rendered
+   in whatever the device happened to have. Ours is IBM Plex Sans Arabic and
+   Inter, self-hosted, because a hub that fetches fonts from the internet is a
+   hub that renders wrongly the day the line is down.
+
+Full suite: 1465 passed, 29 skipped. `make lint` and `make contrast` clean.

@@ -41,10 +41,10 @@
   --space-16: 64px;
 
   /* Radius (§8.2). */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-round: 999px;
 
   /* Elevation (§8.3) — popovers, dialogs, menus only. */
@@ -61,11 +61,11 @@
   --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
 
   /* Desktop shell geometry (§9.2). */
-  --layout-sidebar-expanded: 264px;
+  --layout-sidebar-expanded: 232px;
   --layout-sidebar-collapsed: 72px;
   --layout-topbar-height: 64px;
-  --layout-content-padding-inline: 32px;
-  --layout-content-padding-block: 24px;
+  --layout-content-padding-inline: 36px;
+  --layout-content-padding-block: 28px;
   --layout-grid-columns: 12;
   --layout-grid-gap: 24px;
   --layout-readable-column: 72ch;

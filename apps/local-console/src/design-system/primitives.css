@@ -428,9 +428,22 @@
   color: var(--text-secondary);
   font-size: var(--type-label-size);
   font-weight: var(--weight-semibold);
+  /* Small caps with air between them — an instrument's column heading rather
+   * than a sentence, which is how this surface has always set them.
+   *
+   * Latin only, and not by preference. Arabic is a joined script: letter
+   * spacing pulls the joins apart and renders a word as a row of disconnected
+   * shapes, and there is no case to raise. So the treatment is scoped, and the
+   * Arabic heading keeps the same size, weight and colour without it. */
+  text-transform: none;
   position: sticky;
   inset-block-start: 0;
   background: var(--surface);
+}
+
+[dir="ltr"] .table th {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 /* A link that is a table cell's whole content is a discrete target, not a link

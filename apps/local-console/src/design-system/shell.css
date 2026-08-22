@@ -112,7 +112,10 @@
 /* The current page is marked by more than colour: a bar on the inline start
  * edge, which survives greyscale and forced colors (§6.5, §22). */
 .nav-item[aria-current="page"] {
-  background: var(--surface-raised);
+  /* A wash of the accent rather than a lighter grey. The grey said "hovered";
+   * this says "here", which is the thing a sidebar of thirteen items has to
+   * answer from the corner of an eye. */
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
   color: var(--accent);
   font-weight: var(--weight-medium);
   box-shadow: inset 3px 0 0 0 var(--accent);

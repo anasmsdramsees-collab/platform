@@ -1,0 +1,47 @@
+# The SYLTRA hub as a service on a mini-PC.
+#
+# Install:  sudo cp syltra-hub.service /etc/systemd/system/
+#           sudo systemctl enable --now syltra-hub
+# Watch:    journalctl -u syltra-hub -f
+#
+# The secrets live in /etc/syltra/hub.env, root-owned and mode 0600. Never in
+# this file, and never in the repository — §0 rule 1.
+
+[Unit]
+Description=SYLTRA hub
+Documentation=https://github.com/anasmsdramsees-collab/platform
+# Home Assistant is what the hub reads the house through. `Wants` rather than
+# `Requires`: if Home Assistant is slow to come up the hub should wait and
+# reconnect, which it does with backoff, rather than fail to start.
+Wants=network-online.target docker.service
+After=network-online.target docker.service
+
+[Service]
+Type=simple
+User=syltra
+Group=syltra
+WorkingDirectory=/opt/syltra
+EnvironmentFile=/etc/syltra/hub.env
+ExecStart=/usr/local/bin/uv run python -m syltra_api_gateway.hub
+
+# A hub that dies at three in the morning must come back by itself. The house
+# is not watching, and neither is anybody else.
+Restart=always
+RestartSec=5
+
+# What a smart-home hub has no business doing. A compromised integration should
+# not be able to write outside its own data directory or gain privileges.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/syltra /var/lib/syltra
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

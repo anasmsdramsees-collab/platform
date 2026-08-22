@@ -1745,3 +1745,71 @@ kept because it is where the decision that mattered most was made, and reversing
 it later should mean reading it first. `SYLTRA_Claude_Code_Master_Build_Spec.md`
 was also moved in: the document governing this whole build had been sitting
 outside it, tracked by nothing.
+
+## A hub that runs on a machine ✅
+
+Asked for a simplified hub on a self-assembled mini-PC, before manufacturing.
+The gap that turned up first is the one worth recording.
+
+**There was no way to run this platform against a real house.** `devserver.py`
+runs it against a synthetic household so a person can look at the console. Four
+services have production entrypoints, each expecting NATS and Postgres beside
+them. Between those two: nothing. The API gateway — which serves the console,
+the wall panel, scenes, goals and every manual control — **had no `main` at
+all**. Everything built over the past week could be demonstrated and could not
+be installed.
+
+### The shape
+
+`syltra_api_gateway/hub.py` is one process holding the whole intelligence layer,
+talking to a Home Assistant on the same box.
+
+The seam that makes it possible was already there: `EdgeAgentService` takes its
+publisher as an argument. In the distributed deployment that publisher writes to
+NATS and the twin reads from it; here it hands each normalized envelope straight
+to the twin and the adaptive engine. **One code path, not a second one for small
+deployments** — the same service, connected differently.
+
+Dropped for a single house: NATS, Postgres, Prometheus scraping. Kept: the
+policy chain on every command, the safety governor on its own timer, and the
+orchestrator's refusal to touch life-safety actuators outside production. A
+prototype may lose yesterday's history. It may not lose the gate.
+
+### Three refusals worth naming
+
+- **No token, no start.** A hub that came up unable to reach Home Assistant
+  would serve a console showing an empty house — which reads as *you have no
+  devices* rather than *I am not connected*. It exits with the instruction
+  instead.
+- **No synthetic seed, asserted in a test.** A real hub showing a demo light
+  beside a real one is worse than one showing nothing.
+- **No broker imports, asserted on the parsed AST.** A comment saying "no NATS
+  here" is not a guarantee; an import list is.
+
+### One number found by running it
+
+`verify_delay_seconds=1.5`. A real device takes a moment to report the state it
+was just put into, and the orchestrator treats unverified as failed — at the
+demo's `0.0` every light on a real panel would look broken.
+
+### The machine, and what it is not
+
+`docs/HUB_ON_A_MINI_PC.md` carries the hardware (8 GB, an SSD and not an SD
+card, wired Ethernet, one Zigbee stick to start — and the USB-3 interference
+that costs people days), the install path, and a section stating what the
+prototype is not: tokens do not survive a restart, history does not survive a
+restart, life-safety actuators stay blocked, it is plain HTTP on a LAN, and
+nothing reaches the internet.
+
+`infrastructure/scripts/install-hub.sh` installs Docker, `uv`, a `syltra` user
+and the systemd unit — then **stops** and asks the operator to create the Home
+Assistant token by hand. A script that creates a credential is a script that has
+put one somewhere.
+
+Verified on this machine: with a deliberately wrong token, the console, the
+panel and the health endpoint all answered 200 while the Edge Agent reported
+`Home Assistant rejected the token; retrying in 60s`. The API comes up even when
+the house cannot be reached, which is the behaviour a person debugging an
+installation needs.
+
+Full suite: 1565 passed, 29 skipped. `make lint` clean over 227 source files.

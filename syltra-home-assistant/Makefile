@@ -5,7 +5,7 @@
 SHELL := /bin/bash
 COMPOSE := docker compose
 
-.PHONY: bootstrap config-check up down reset-demo seed simulate simulate-list contracts tokens contrast console observe migrate migrate-status \
+.PHONY: hub bootstrap config-check up down reset-demo seed simulate simulate-list contracts tokens contrast console observe migrate migrate-status \
         test test-integration test-e2e test-safety lint security coverage demo \
         logs health
 
@@ -43,6 +43,9 @@ contracts: ## Regenerate every contract artifact (schemas, examples, OpenAPI)
 
 console: ## Run the console and component catalogue locally (dev token printed)
 	uv run python -m syltra_api_gateway.devserver
+
+hub: ## Run the hub against a real Home Assistant (see docs/HUB_ON_A_MINI_PC.md)
+	uv run python -m syltra_api_gateway.hub
 
 tokens: ## Regenerate the design-system CSS from tokens.json (guidelines §24)
 	uv run python infrastructure/scripts/build_tokens.py

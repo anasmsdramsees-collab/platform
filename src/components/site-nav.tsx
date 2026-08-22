@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Package, LayoutGrid, Info, HelpCircle, Mail, ShoppingBag } from "lucide-react";
+import { Package, LayoutGrid, Info, Mail, ShoppingBag, Layers, Wrench } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import Logo from "./logo";
@@ -17,18 +17,20 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
   const links = [
     { href: `/${locale}/products`, label: dict.nav.products },
     { href: `/${locale}/store`, label: dict.nav.store },
+    { href: `/${locale}/solutions`, label: dict.nav.solutions },
+    { href: `/${locale}/services`, label: dict.nav.services },
     { href: `/${locale}/apps`, label: dict.nav.apps },
     { href: `/${locale}/about`, label: dict.nav.about },
-    { href: `/${locale}/faq`, label: dict.nav.faq },
     { href: `/${locale}/contact`, label: dict.nav.contact },
   ];
 
   const mobileNavItems: NavItem[] = [
     { id: "products", icon: <Package />, label: dict.nav.products, href: `/${locale}/products` },
     { id: "store", icon: <ShoppingBag />, label: dict.nav.store, href: `/${locale}/store` },
+    { id: "solutions", icon: <Layers />, label: dict.nav.solutions, href: `/${locale}/solutions` },
+    { id: "services", icon: <Wrench />, label: dict.nav.services, href: `/${locale}/services` },
     { id: "apps", icon: <LayoutGrid />, label: dict.nav.apps, href: `/${locale}/apps` },
     { id: "about", icon: <Info />, label: dict.nav.about, href: `/${locale}/about` },
-    { id: "faq", icon: <HelpCircle />, label: dict.nav.faq, href: `/${locale}/faq` },
     { id: "contact", icon: <Mail />, label: dict.nav.contact, href: `/${locale}/contact` },
   ];
   const mobileActiveIndex = mobileNavItems.findIndex((item) => pathname.startsWith(item.href!));
@@ -38,7 +40,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
       <header className="sticky top-0 z-40 border-b border-hairline bg-void/85 backdrop-blur-sm">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-4 sm:px-8">
           <Logo locale={locale} />
-          <nav className="hidden items-center gap-8 sm:flex">
+          <nav className="hidden items-center gap-5 lg:flex lg:gap-7">
             {links.map((link) => (
               <Link
                 key={link.href}

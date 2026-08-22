@@ -23,6 +23,24 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
             >
               {dict.nav.products}
             </Link>
+            <Link
+              href={`/${locale}/store`}
+              className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              {dict.nav.store}
+            </Link>
+            <Link
+              href={`/${locale}/solutions`}
+              className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              {dict.nav.solutions}
+            </Link>
+            <Link
+              href={`/${locale}/services`}
+              className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"
+            >
+              {dict.nav.services}
+            </Link>
           </div>
           <div>
             <p className="font-mono text-[11px] uppercase tracking-widest text-slate">

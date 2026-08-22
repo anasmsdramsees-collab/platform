@@ -27,6 +27,8 @@ export interface Dictionary {
   nav: {
     products: string;
     store: string;
+    solutions: string;
+    services: string;
     apps: string;
     about: string;
     faq: string;
@@ -131,6 +133,52 @@ export interface Dictionary {
     chairman: { eyebrow: string; quote: string; name: string; role: string };
     facts: { value: string; label: string }[];
     roadmap: { eyebrow: string; title: string; items: { year: string; text: string }[] };
+  };
+  solutionsPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    divisions: {
+      code: string;
+      name: string;
+      desc: string;
+      points: { name: string; desc: string }[];
+    }[];
+    healthNote: string;
+    sectors: {
+      eyebrow: string;
+      title: string;
+      note: string;
+      columns: { sector: string; need: string; units: string };
+      rows: { sector: string; need: string; units: string }[];
+    };
+    trust: {
+      eyebrow: string;
+      title: string;
+      items: { name: string; desc: string }[];
+      principles: string[];
+      principlesLabel: string;
+      note: string;
+    };
+  };
+  servicesPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    items: { name: string; desc: string }[];
+    field: {
+      eyebrow: string;
+      title: string;
+      subtitle: string;
+      items: { name: string; desc: string }[];
+    };
+    delivery: {
+      eyebrow: string;
+      title: string;
+      subtitle: string;
+      stages: { code: string; desc: string }[];
+      commitments: { name: string; desc: string }[];
+    };
   };
   contactPage: {
     eyebrow: string;

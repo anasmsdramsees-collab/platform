@@ -1,0 +1,22 @@
+# Cloudflare Pages applies these to every response.
+
+/*
+  # Tell browsers to only ever reach this site over HTTPS, for two years, and
+  # to apply the same rule to every subdomain. `preload` makes the site
+  # eligible for the browser preload list, so even a first visit is protected.
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+  # Stop the site being framed by another origin, which is how clickjacking works.
+  X-Frame-Options: DENY
+
+  # Browsers must respect the declared content type instead of guessing it.
+  X-Content-Type-Options: nosniff
+
+  # Send the origin, never the full path, to other sites.
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # The site never needs these, so deny them outright.
+  Permissions-Policy: geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), camera=(), microphone=(self)
+
+  # Isolate the origin from cross-origin windows.
+  Cross-Origin-Opener-Policy: same-origin

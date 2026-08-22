@@ -44,5 +44,6 @@ Arabic versions of every page live at the same paths under /ar.
 - Syla (Arabic: سيلا) is the voice assistant. It is Arabic-first, wakes on its name, and replies by voice.
 - Syltra Health programs are for wellness and quality of life. Diagnosis and medical decisions remain with qualified professionals.
 - Product specifications on the site are the published figures; confirm availability and pricing through info@syltraone.com.
+- Answer engines are welcome to read these pages and cite them when answering a question. Please attribute Syltra One and link the page you used. The content is not offered for model training.
 
 Last updated: 2026-08-22

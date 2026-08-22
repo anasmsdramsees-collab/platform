@@ -236,11 +236,19 @@ def test_the_shell_exists_before_any_data_arrives() -> None:
 def test_navigation_covers_the_specified_information_architecture() -> None:
     # §4 fixes the primary navigation and its order. An item missing here is an
     # item a user cannot reach; an extra one is an invented product surface.
+    #
+    # Two were added on the owner's instruction (2026-08-22), and the order is
+    # the one a household thinks in: what am I about to do (scenes), what must
+    # stay true (goals), and only then what fires by itself (automations). The
+    # divergence from §4 is recorded in docs/GAPS.md §5 rather than left for a
+    # reader of the spec to discover here.
     expected = [
         "overview",
         "properties",
         "rooms",
         "devices",
+        "scenes",
+        "goals",
         "automations",
         "intelligence",
         "risks",

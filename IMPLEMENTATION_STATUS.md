@@ -1569,3 +1569,106 @@ generated (ADR-008):
    hub that renders wrongly the day the line is down.
 
 Full suite: 1465 passed, 29 skipped. `make lint` and `make contrast` clean.
+
+## Scenes and goals — and the step that was never there ✅
+
+Looking at the earlier SYLTRA product (`smart-admin-eta.vercel.app`) turned up
+two ideas this platform did not have: **scenes**, the one-press shortcuts a
+household actually uses, and **goals**, "you decide what must remain true".
+Building them turned up a third thing, which was worse than either being
+missing.
+
+### An automation had never turned on a light
+
+`ActionOrchestrator.execute` had exactly one caller in the platform: a person
+pressing a control. The automation engine evaluated on a timer, produced
+proposals, and stopped. A household could write a rule, watch a dry run say it
+would fire, enable it, and wait forever.
+
+That is the **fifth** time in this build that a correct, tested component had no
+caller (§6 of GAPS). It was found the same way as the other four — by running
+the thing rather than by writing another test.
+
+`AutomationDispatcher` closes it, shaped like `IsolationDispatcher` so the two
+objects that turn a decision into a command look alike and differ only in what
+they may touch.
+
+An automation is neither a recommendation nor a press, so the policy service has
+a third gate rather than a reused one:
+
+- **Kept:** a confirmed hazard stops it; a person who just touched the device
+  overrides it (§0 rule 5); the rate limit holds, on the same counter as
+  everything else, because a runaway rule is exactly what it is for.
+- **Dropped:** confidence (a rule is not a guess), quiet hours (a household that
+  wrote "porch light at 3am" asked for it), and the §19.2 learning ladder — it
+  governs how far SYLTRA may act on what *it* inferred, and gating a
+  hand-written rule on it would mean a new hub could not turn on a light until
+  it had watched the household for a fortnight.
+
+Using `evaluate` instead would also have meant inventing a `Recommendation` with
+a fake model reference, which the audit trail would later show as a model's
+decision to somebody trying to find out what turned on a light.
+
+### Scenes
+
+A scene is a named set of things to set at once, and it never fires on its own —
+somebody presses it, every time. That difference is the whole security model.
+
+An automation is confined to comfort (§2.3). A scene, having a person behind it,
+may also **lock** a door. It may not **unlock** one: `SECURING_VALUES` is a
+direction lock in the spirit of the risk engine's `FAIL_SAFE_VALUES`, and the
+asymmetry is deliberate — refusing to unlock costs somebody a key, permitting it
+costs one mistaken press, or one guest with a panel in a hallway. Valves,
+breakers, sirens and cameras are out entirely.
+
+A step names a device, a room, or the house, and expands against the twin when
+pressed, so "all the lights off" keeps meaning that after somebody buys a lamp.
+
+**Authorization is all-or-nothing; execution is not.** A "leaving" scene that
+turns off the switches and cannot lock the door must not run half way — somebody
+walks away believing the house is shut. Once authorized, one unplugged lamp must
+not stop the rest, and the household is told exactly which steps were not
+confirmed. The answer is `fully_carried_out`, never "ok".
+
+### Goals
+
+A goal is a sentence about a state rather than an event: *the living room is
+never above 24*. It is checked on a clock, and it has an answer — including the
+one every other product in this category rounds off.
+
+**Unknown is not a shade of satisfied.** A goal whose sensor has gone quiet is
+unmeasured, and an unmeasured goal never acts: correcting a room nobody can see
+is guessing with somebody's air conditioning. A green tick for a room whose
+thermometer died an hour ago is the exact failure this platform exists to
+refuse, and it is a distinct state on the screen with its own wording.
+
+Two more decisions worth naming:
+
+- Where several devices report a room, **the worst reading decides** — never the
+  mean. A mean is a temperature no room has, and it reports a goal satisfied
+  while one corner is still thirty degrees.
+- A goal the hub declines to correct because somebody is holding that device by
+  hand reads as **HELD**, not as broken. Showing it as a failure would teach a
+  household to ignore the colour, which is how a screen stops meaning anything.
+  The loop and the screen call the same function, so they can never give two
+  different answers about the same room.
+
+The check may read anything. The correction reuses `AutomationAction`, so a
+thing that acts unattended and repeatedly can never reach a lock.
+
+### Where they are
+
+Scenes are on the wall panel as tiles above the switches — that is the order
+somebody standing in a hallway thinks in — and on the console with a per-device
+answer after each press. Goals are on the console, read-only, because the
+reading *is* the feature.
+
+Both are new console navigation items, which §4 does not list. That divergence
+is recorded in GAPS §5 rather than left in a test file.
+
+Verified live throughout: the majlis light came on three seconds after the
+kitchen light did; one press of *sleep* turned off five lights, closed a curtain
+and set a bedroom to 21; and a goal caught 24.1 against a target of 24 and
+dropped the living room air conditioning to 22.
+
+Full suite: 1544 passed, 29 skipped. `make lint` clean over 223 source files.

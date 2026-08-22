@@ -370,6 +370,23 @@ would think to look.
 
 ---
 
+
+### The console navigation has two items §4 does not list
+
+`§4` fixes the primary navigation and its order, and the console's own test
+asserts it exactly — "an item missing here is an item a user cannot reach; an
+extra one is an invented product surface."
+
+**Scenes** and **Goals** were added on 2026-08-22 at the owner's instruction,
+after looking at the earlier SYLTRA product where both were first-class
+sections. They sit between Devices and Automations, in the order a household
+thinks in: what am I about to do, what must stay true, and only then what fires
+by itself.
+
+This is a change to the specified information architecture, not an oversight,
+and it is recorded here rather than left for a reader of §4 to discover in a
+test file. If the UI spec is revised, this is the paragraph it should absorb.
+
 ## 6. The failure pattern worth remembering
 
 Not a gap. The thing most likely to produce the next one.

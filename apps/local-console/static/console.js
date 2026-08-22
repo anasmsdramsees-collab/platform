@@ -58,6 +58,8 @@ const NAV = [
     detail: renderRoomDetail },
   { id: "devices", icon: "⌂", permission: "READ_HOME", render: renderDevices,
     detail: renderDeviceDetail },
+  { id: "scenes", icon: "◇", permission: "READ_HOME", render: renderScenes },
+  { id: "goals", icon: "◎", permission: "READ_HOME", render: renderGoals },
   { id: "automations", icon: "⟳", permission: "READ_HOME", render: renderAutomations },
   { id: "intelligence", icon: "✷", permission: "READ_HOME", render: renderIntelligence },
   { id: "risks", icon: "△", permission: "READ_HOME", render: renderRisks,
@@ -1874,6 +1876,150 @@ function selectField(id, label, options) {
   }
   node.append(element, select);
   return { node, select };
+}
+
+/* ── scenes ──
+
+   A list somebody presses, so the button is the point and everything else is
+   context for it. The answer after a press is per-device rather than "done":
+   a household that pressed *leaving* is owed a plain answer about the door. */
+
+async function renderScenes(host) {
+  const home = state.homeId;
+  const { data, failed } = await loadHomeView({ scenes: api(`/v1/homes/${home}/scenes`) });
+  if (!data.scenes) {
+    host.append(failureNotice(errorFor(failed, "scenes"), t("nav_scenes")));
+    return;
+  }
+  const items = data.scenes.items || [];
+  const outcome = el("div");
+  host.append(outcome);
+
+  if (!items.length) {
+    host.append(notice("partial", t("no_scenes"), t("no_scenes_detail")));
+    return;
+  }
+
+  host.append(
+    scrollableTable(
+      ["name", "what_it_does", "scene_last_pressed", "control"],
+      items.map((scene) => {
+        /* Held as a node rather than a string so the row can be corrected in
+           place after a press. The alternative is re-reading the whole screen,
+           which would wipe the answer the press just produced. */
+        const pressed = el(
+          "span",
+          null,
+          scene.last_activated_at ? when(scene.last_activated_at) : t("scene_never_pressed"),
+        );
+        return [scene.name, scene.summary, pressed, activateControl(home, scene, outcome, pressed)];
+      }),
+    ),
+  );
+}
+
+function activateControl(home, scene, outcome, pressed) {
+  const button = el("button", "btn btn--secondary", t("scene_activate"));
+  button.type = "button";
+  /* Disabled rather than hidden, with the reason beside it: a household should
+     be able to see that a scene exists and that this account cannot press it. */
+  if (!scene.activatable) {
+    button.disabled = true;
+    button.title = t("scene_not_yours");
+    return button;
+  }
+  button.addEventListener("click", async () => {
+    button.setAttribute("aria-busy", "true");
+    outcome.replaceChildren();
+    /* Held *before* the request, not after: applying a scene changes the house,
+       the change arrives back on the stream within milliseconds, and a re-read
+       triggered by it would wipe the per-device answer this press produced. */
+    state.holdRefresh = true;
+    try {
+      const result = await api(`/v1/homes/${home}/scenes/${scene.scene_id}/activate`, {
+        method: "POST",
+      });
+      pressed.textContent = when(new Date().toISOString());
+      const missed = (result.steps || []).filter((step) => !step.verified);
+      outcome.append(
+        missed.length
+          ? notice(
+              "partial",
+              t("scene_partly_title").replace("{name}", scene.name),
+              missed
+                .map((step) => `${step.device_id}: ${(step.reasons || []).join(", ")}`)
+                .join(" · "),
+            )
+          : notice("partial", t("scene_done_title").replace("{name}", scene.name), scene.summary),
+      );
+    } catch (error) {
+      outcome.append(failureNotice(error, t("nav_scenes")));
+    } finally {
+      button.removeAttribute("aria-busy");
+    }
+  });
+  return button;
+}
+
+/* ── goals ──
+
+   Read-only here, and the reading is the whole feature: a goal's worth is that
+   somebody can look at it and be told plainly whether it holds — including
+   "nothing is measuring this", which is the answer every other product in this
+   category rounds off to a green tick. */
+
+const GOAL_BADGES = {
+  SATISFIED: "online",
+  VIOLATED: "error",
+  UNKNOWN: "unknown",
+  HELD: "stale",
+  OFF: "disabled",
+};
+
+async function renderGoals(host) {
+  const home = state.homeId;
+  const { data, failed } = await loadHomeView({ goals: api(`/v1/homes/${home}/goals`) });
+  if (!data.goals) {
+    host.append(failureNotice(errorFor(failed, "goals"), t("nav_goals")));
+    return;
+  }
+  const items = data.goals.items || [];
+  if (!items.length) {
+    host.append(notice("partial", t("no_goals"), t("no_goals_detail")));
+    return;
+  }
+
+  host.append(
+    scrollableTable(
+      ["name", "goal_statement", "goal_state", "goal_measured", "goal_last_corrected"],
+      items.map((goal) => [
+        goal.name,
+        goal.summary,
+        goalState(goal),
+        goal.measured === null || goal.measured === undefined
+          ? t("goal_nothing_measured")
+          : `${goal.measured}${goal.measured_by ? ` · ${goal.measured_by}` : ""}`,
+        goal.last_corrected_at ? when(goal.last_corrected_at) : t("goal_never_corrected"),
+      ]),
+    ),
+  );
+  host.append(notice("partial", t("goals_explained_title"), t("goals_explained_detail")));
+}
+
+function goalState(goal) {
+  /* The state and its reason together, because "not holding" and "nothing is
+     measuring this" are different facts and a colour cannot carry the
+     difference (§8). */
+  const wrapper = el("div", "row");
+  wrapper.append(badge(GOAL_BADGES[goal.state] || "unknown", t(`goal_state_${goal.state}`)));
+  /* Only where the reason says something the badge does not. "Holding ·
+     Holding" is noise, and noise beside a status is how a reader learns to
+     skip the whole column — but "unmeasured" and "paused by hand" carry a fact
+     the word alone does not, and those are exactly the two a household needs. */
+  if (["UNKNOWN", "HELD", "OFF"].includes(goal.state)) {
+    wrapper.append(el("span", "muted", goal.reason));
+  }
+  return wrapper;
 }
 
 async function renderAutomations(host) {

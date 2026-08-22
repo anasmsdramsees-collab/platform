@@ -34,11 +34,12 @@ export function Builder({ locale }: { locale: Locale }) {
   const [chosen, setChosen] = useState<SystemKey[]>(["lighting"]);
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
   const [state, setState] = useState<HomeState>({
-    lights: true,
+    brightness: 70,
     curtains: true,
     locked: true,
     temperature: 22,
     camera: null,
+    intercom: false,
   });
 
   const property = kind ? PROPERTIES[kind] : null;
@@ -129,7 +130,10 @@ export function Builder({ locale }: { locale: Locale }) {
             property={property}
             locale={locale}
             chosen={chosen}
-            lightsOn={state.lights}
+            brightness={state.brightness / 100}
+            curtainsOpen={state.curtains}
+            locked={state.locked}
+            acOn={chosen.includes("climate")}
             selectedRoom={selectedRoom}
             onSelectRoom={setSelectedRoom}
           />
@@ -193,7 +197,13 @@ export function Builder({ locale }: { locale: Locale }) {
             </div>
           </div>
 
-          <ControlPanel locale={locale} chosen={chosen} state={state} setState={setState} />
+          <ControlPanel
+            locale={locale}
+            chosen={chosen}
+            climate={property.climate}
+            state={state}
+            setState={setState}
+          />
         </div>
       </div>
 

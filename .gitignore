@@ -75,18 +75,18 @@ htmlcov/
 coverage.xml
 
 # local runtime data (never commit household or broker data)
-/data/
-/config/home-assistant/.storage/
-/config/home-assistant/home-assistant_v2.db*
-/config/home-assistant/*.log*
-/config/home-assistant/secrets.yaml
-/config/home-assistant/.HA_VERSION
-/config/home-assistant/blueprints/
-/config/home-assistant/deps/
-/config/home-assistant/tts/
+/platform/data/
+/platform/config/home-assistant/.storage/
+/platform/config/home-assistant/home-assistant_v2.db*
+/platform/config/home-assistant/*.log*
+/platform/config/home-assistant/secrets.yaml
+/platform/config/home-assistant/.HA_VERSION
+/platform/config/home-assistant/blueprints/
+/platform/config/home-assistant/deps/
+/platform/config/home-assistant/tts/
 
 # model artifacts built locally (exported models are promoted deliberately)
-/models/training/**/output/
+/platform/models/training/**/output/
 *.joblib
 
 # secrets and certificates — defense in depth on top of the .env* rule above

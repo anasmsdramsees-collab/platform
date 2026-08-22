@@ -4,29 +4,29 @@ on:
   push:
     branches: [main]
     paths:
-      - "libs/**"
-      - "services/**"
-      - "simulator/**"
-      - "tests/**"
-      - "contracts/**"
-      - "infrastructure/**"
-      - "pyproject.toml"
-      - "uv.lock"
-      - "Makefile"
-      - "docker-compose.yml"
+      - "platform/libs/**"
+      - "platform/services/**"
+      - "platform/simulator/**"
+      - "platform/tests/**"
+      - "platform/contracts/**"
+      - "platform/infrastructure/**"
+      - "platform/pyproject.toml"
+      - "platform/uv.lock"
+      - "platform/Makefile"
+      - "platform/docker-compose.yml"
       - ".github/workflows/platform-ci.yml"
   pull_request:
     paths:
-      - "libs/**"
-      - "services/**"
-      - "simulator/**"
-      - "tests/**"
-      - "contracts/**"
-      - "infrastructure/**"
-      - "pyproject.toml"
-      - "uv.lock"
-      - "Makefile"
-      - "docker-compose.yml"
+      - "platform/libs/**"
+      - "platform/services/**"
+      - "platform/simulator/**"
+      - "platform/tests/**"
+      - "platform/contracts/**"
+      - "platform/infrastructure/**"
+      - "platform/pyproject.toml"
+      - "platform/uv.lock"
+      - "platform/Makefile"
+      - "platform/docker-compose.yml"
       - ".github/workflows/platform-ci.yml"
   workflow_dispatch:
 
@@ -37,6 +37,12 @@ jobs:
   quality:
     name: Lint, types, tests, security
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        # The platform lives in its own directory beside the website. Declared
+        # once here rather than on each step, so a step added later cannot
+        # forget it and quietly run against the repository root.
+        working-directory: platform
     steps:
       - uses: actions/checkout@v4
 

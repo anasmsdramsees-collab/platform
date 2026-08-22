@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { InfoCard } from "@/components/ui/info-card";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -11,7 +12,7 @@ export async function generateMetadata({
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const dict = getDictionary(locale);
-  return { title: dict.meta.titleAbout, description: dict.meta.description };
+  return pageMetadata({ locale, path: "/about", title: dict.meta.titleAbout, description: dict.meta.description });
 }
 
 export default async function AboutPage({

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { InfoCard } from "@/components/ui/info-card";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -11,7 +12,7 @@ export async function generateMetadata({
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const s = getDictionary(locale).servicesPage;
-  return { title: `${s.eyebrow} | Syltra One`, description: s.subtitle };
+  return pageMetadata({ locale, path: "/services", title: `${s.eyebrow} | Syltra One`, description: s.subtitle });
 }
 
 export default async function ServicesPage({

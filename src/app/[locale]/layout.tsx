@@ -82,17 +82,53 @@ export default async function LocaleLayout({
         <JsonLd
           data={{
             "@context": "https://schema.org",
-            "@type": "Organization",
-            name: siteName,
-            url: siteUrl,
-            logo: `${siteUrl}/brand/logo.png`,
-            description: dict.meta.description,
-            email: contactEmail,
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: "Riyadh",
-              addressCountry: "SA",
-            },
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": `${siteUrl}/#organization`,
+                name: siteName,
+                alternateName: "سيلترا وان",
+                url: siteUrl,
+                logo: { "@type": "ImageObject", url: `${siteUrl}/brand/logo.png` },
+                image: `${siteUrl}/brand/og-default.jpg`,
+                description: dict.meta.description,
+                email: contactEmail,
+                telephone: "+966533826009",
+                foundingDate: "2026",
+                founder: {
+                  "@type": "Person",
+                  name: locale === "ar" ? "أنس الإمام" : "Anas Elimam",
+                  jobTitle: locale === "ar" ? "المؤسس والرئيس التنفيذي" : "Founder & CEO",
+                },
+                address: {
+                  "@type": "PostalAddress",
+                  addressLocality: "Riyadh",
+                  addressRegion: "Riyadh Province",
+                  addressCountry: "SA",
+                },
+                areaServed: [
+                  { "@type": "Country", name: "Saudi Arabia" },
+                  { "@type": "Place", name: "GCC" },
+                ],
+                knowsLanguage: ["ar", "en"],
+                sameAs: ["https://www.instagram.com/syltrahome/"],
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  contactType: "sales",
+                  email: contactEmail,
+                  telephone: "+966533826009",
+                  availableLanguage: ["Arabic", "English"],
+                },
+              },
+              {
+                "@type": "WebSite",
+                "@id": `${siteUrl}/#website`,
+                url: siteUrl,
+                name: siteName,
+                inLanguage: locale === "ar" ? "ar-SA" : "en",
+                publisher: { "@id": `${siteUrl}/#organization` },
+              },
+            ],
           }}
         />
         <HomeControlsProvider>

@@ -6,6 +6,7 @@ import { findProductBySlug, allProductSlugs } from "@/lib/products";
 import ProductImagePlaceholder from "@/components/product-image-placeholder";
 import JsonLd from "@/components/json-ld";
 import { siteUrl, siteName } from "@/lib/site-config";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -23,10 +24,13 @@ export async function generateMetadata({
   const found = findProductBySlug(slug);
   if (!found) return {};
   const copy = locale === "ar" ? found.product.ar : found.product.en;
-  return {
-    title: `${found.product.name} — Syltra One`,
+  return pageMetadata({
+    locale,
+    path: `/products/${slug}`,
+    title: `${found.product.name} | Syltra One`,
     description: copy.tagline,
-  };
+    image: found.product.images?.[0] ?? "/brand/og-default.jpg",
+  });
 }
 
 export default async function ProductDetailPage({

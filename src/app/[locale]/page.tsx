@@ -14,6 +14,7 @@ import { Testimonials } from "@/components/ui/testimonials";
 import { InfoCard } from "@/components/ui/info-card";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -23,7 +24,7 @@ export async function generateMetadata({
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const dict = getDictionary(locale);
-  return { title: dict.meta.titleHome, description: dict.meta.description };
+  return pageMetadata({ locale, path: "", title: dict.meta.titleHome, description: dict.meta.description });
 }
 
 export default async function HomePage({

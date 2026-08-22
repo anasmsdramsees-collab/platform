@@ -3,6 +3,7 @@ import Link from "next/link";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { productCatalog } from "@/lib/products";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,7 +13,7 @@ export async function generateMetadata({
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const dict = getDictionary(locale);
-  return { title: dict.meta.titleProducts, description: dict.meta.description };
+  return pageMetadata({ locale, path: "/products", title: dict.meta.titleProducts, description: dict.meta.description });
 }
 
 export default async function ProductsPage({

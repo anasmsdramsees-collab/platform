@@ -4,6 +4,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import JsonLd from "@/components/json-ld";
 import { siteUrl } from "@/lib/site-config";
 import { FaqCards } from "@/components/ui/faq-cards";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -13,7 +14,7 @@ export async function generateMetadata({
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const dict = getDictionary(locale);
-  return { title: dict.meta.titleFaq, description: dict.faqPage.subtitle };
+  return pageMetadata({ locale, path: "/faq", title: dict.meta.titleFaq, description: dict.faqPage.subtitle });
 }
 
 export default async function FaqPage({

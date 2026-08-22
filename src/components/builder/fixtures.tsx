@@ -67,7 +67,10 @@ export function CeilingLight({
   );
 }
 
-/** Fabric curtain panels on a rail; they part when open and meet when closed. */
+/**
+ * Fabric curtain panels on a rail. `open` is 0 (drawn shut) to 1 (fully drawn
+ * back), so quarter and half positions look right rather than snapping.
+ */
 export function Curtains({
   position,
   rotation,
@@ -77,7 +80,7 @@ export function Curtains({
   position: [number, number, number];
   rotation: [number, number, number];
   width: number;
-  open: boolean;
+  open: number;
 }) {
   const left = useRef<THREE.Group>(null);
   const right = useRef<THREE.Group>(null);
@@ -85,10 +88,10 @@ export function Curtains({
 
   useFrame((_, delta) => {
     const k = Math.min(1, delta * 5);
-    // Open pulls each panel out to the jamb; closed brings them together.
-    const target = open ? panel * 0.32 : panel * 0.98;
-    if (left.current) left.current.scale.x = lerp(left.current.scale.x, target / panel, k);
-    if (right.current) right.current.scale.x = lerp(right.current.scale.x, target / panel, k);
+    // Fully shut covers the window; fully open bunches the fabric at the jamb.
+    const ratio = 1 - open * 0.72;
+    if (left.current) left.current.scale.x = lerp(left.current.scale.x, ratio, k);
+    if (right.current) right.current.scale.x = lerp(right.current.scale.x, ratio, k);
   });
 
   return (
@@ -352,6 +355,51 @@ export function CeilingSpeaker({ position }: { position: [number, number, number
         <cylinderGeometry args={[0.115, 0.115, 0.01, 24]} />
         <meshStandardMaterial color="#8f98a8" roughness={0.9} />
       </mesh>
+    </group>
+  );
+}
+
+/** A hinged door leaf that swings open when the lock is released. */
+export function Door({
+  position,
+  rotation,
+  width,
+  open,
+}: {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  width: number;
+  open: boolean;
+}) {
+  const leaf = useRef<THREE.Group>(null);
+
+  useFrame((_, delta) => {
+    if (!leaf.current) return;
+    // Swing inwards about the hinge edge.
+    const target = open ? -Math.PI / 2.4 : 0;
+    leaf.current.rotation.y = lerp(leaf.current.rotation.y, target, Math.min(1, delta * 4));
+  });
+
+  return (
+    <group position={position} rotation={rotation}>
+      {/* Frame */}
+      <mesh position={[0, 0.62, 0]}>
+        <boxGeometry args={[width + 0.1, 1.28, 0.09]} />
+        <meshStandardMaterial color="#2f3542" roughness={0.8} />
+      </mesh>
+
+      {/* Leaf, hinged at its left edge */}
+      <group ref={leaf} position={[-width / 2, 0, 0.05]}>
+        <mesh position={[width / 2, 0.6, 0]}>
+          <boxGeometry args={[width, 1.2, 0.055]} />
+          <meshStandardMaterial color="#6b5844" roughness={0.75} />
+        </mesh>
+        {/* Handle */}
+        <mesh position={[width - 0.14, 0.6, 0.05]}>
+          <cylinderGeometry args={[0.02, 0.02, 0.16, 8]} />
+          <meshStandardMaterial color="#c9ad74" metalness={0.9} roughness={0.25} />
+        </mesh>
+      </group>
     </group>
   );
 }

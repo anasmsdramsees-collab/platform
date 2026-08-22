@@ -4,11 +4,13 @@ import { cn } from "@/lib/utils";
 import { assetPath } from "@/lib/base-path";
 import type { Locale } from "@/lib/i18n/config";
 import type { ClimateKind, SystemKey } from "@/lib/builder-data";
+import { playCurtain, playLock, playUnlock } from "@/lib/sound";
 
 export interface HomeState {
   /** 0 to 100; the dimmer drives the pendant glow in the 3D scene. */
   brightness: number;
-  curtains: boolean;
+  /** 0 = shut, 25, 50, or 100 = fully drawn back. */
+  curtains: number;
   locked: boolean;
   temperature: number;
   camera: number | null;
@@ -139,21 +141,59 @@ export function ControlPanel({
       </div>
 
       <div className="mt-2.5 grid grid-cols-2 gap-2.5">
-        <Tile
-          label={ar ? "الستائر" : "Curtains"}
-          value={state.curtains ? (ar ? "مفتوحة" : "Open") : ar ? "مغلقة" : "Closed"}
-          active={state.curtains}
-          color="#8ab4ff"
-          disabled={!has("curtains")}
-          onClick={() => setState((s) => ({ ...s, curtains: !s.curtains }))}
-        />
+        <div
+          className={cn(
+            "rounded-xl border p-3",
+            has("curtains") ? "border-hairline bg-void-2" : "border-hairline bg-void-2 opacity-35"
+          )}
+        >
+          <span className="flex items-center gap-2">
+            <span
+              className="size-2 rounded-full bg-[#8ab4ff] transition-opacity"
+              style={{ opacity: 0.25 + (state.curtains / 100) * 0.75 }}
+            />
+            <span className="text-[11px] text-slate">{ar ? "الستائر" : "Curtains"}</span>
+          </span>
+          <div className="mt-1.5 flex gap-1">
+            {[
+              { v: 0, ar: "مغلقة", en: "Shut" },
+              { v: 25, ar: "ربع", en: "¼" },
+              { v: 50, ar: "نص", en: "½" },
+              { v: 100, ar: "كاملة", en: "Full" },
+            ].map((o) => (
+              <button
+                key={o.v}
+                disabled={!has("curtains")}
+                onClick={() => {
+                  playCurtain();
+                  setState((s) => ({ ...s, curtains: o.v }));
+                }}
+                className={cn(
+                  "flex-1 rounded-md py-1 text-[10px] transition-colors disabled:cursor-not-allowed",
+                  state.curtains === o.v
+                    ? "bg-white/15 text-platinum"
+                    : "bg-white/5 text-slate hover:text-platinum"
+                )}
+              >
+                {ar ? o.ar : o.en}
+              </button>
+            ))}
+          </div>
+        </div>
         <Tile
           label={ar ? "الباب" : "Door"}
           value={state.locked ? (ar ? "مقفل" : "Locked") : ar ? "مفتوح" : "Unlocked"}
           active={!state.locked}
           color="#ff6b6b"
           disabled={!has("security")}
-          onClick={() => setState((s) => ({ ...s, locked: !s.locked }))}
+          onClick={() =>
+            setState((s) => {
+              // The bolt sound should match the direction it is about to move.
+              if (s.locked) playUnlock();
+              else playLock();
+              return { ...s, locked: !s.locked };
+            })
+          }
         />
         <div
           className={cn(
@@ -204,7 +244,13 @@ export function ControlPanel({
             {ar ? "كاميرا الباب" : "Door camera"}
           </span>
           <div className="absolute bottom-2 start-2 end-2 flex gap-2">
-            <button className="flex-1 rounded-md bg-[#7ee08a] py-1.5 text-[11px] font-bold text-void">
+            <button
+              onClick={() => {
+                playUnlock();
+                setState((s) => ({ ...s, locked: false, intercom: false }));
+              }}
+              className="flex-1 rounded-md bg-[#7ee08a] py-1.5 text-[11px] font-bold text-void"
+            >
               {ar ? "افتح" : "Unlock"}
             </button>
             <button

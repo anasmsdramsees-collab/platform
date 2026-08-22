@@ -18,6 +18,7 @@ import {
   CentralVent,
   Curtains,
   DomeCamera,
+  Door,
   DoorLock,
   GasSensor,
   HealthPuck,
@@ -35,7 +36,7 @@ interface RoomProps {
   chosen: SystemKey[];
   climate: ClimateKind;
   brightness: number;
-  curtainsOpen: boolean;
+  curtainsOpen: number;
   locked: boolean;
   acOn: boolean;
   onSelect: () => void;
@@ -154,6 +155,14 @@ function Room({
           <CeilingSpeaker position={[w / 4, 1.66, d / 4]} />
         </>
       )}
+      {/* Every room has a door; the one on a secured room obeys the lock. */}
+      <Door
+        position={[0, 0, d / 2 - 0.06]}
+        rotation={[0, 0, 0]}
+        width={Math.min(0.95, w * 0.28)}
+        open={has("security") ? !locked : false}
+      />
+
       {has("security") && (
         <DoorLock position={[w / 2 - 0.1, 0.85, 0]} rotation={[0, -Math.PI / 2, 0]} locked={locked} />
       )}
@@ -184,7 +193,7 @@ export function BuilderScene({
   locale: Locale;
   chosen: SystemKey[];
   brightness: number;
-  curtainsOpen: boolean;
+  curtainsOpen: number;
   locked: boolean;
   acOn: boolean;
   selectedRoom: string | null;

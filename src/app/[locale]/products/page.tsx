@@ -4,6 +4,8 @@ import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { productCatalog } from "@/lib/products";
 import { pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/json-ld";
+import { siteUrl } from "@/lib/site-config";
 
 export async function generateMetadata({
   params,
@@ -25,8 +27,24 @@ export default async function ProductsPage({
   const locale: Locale = isLocale(raw) ? raw : "en";
   const dict = getDictionary(locale);
 
+  const allProducts = productCatalog.flatMap((c) => c.items);
+
   return (
     <div>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: dict.productsPage.title,
+          numberOfItems: allProducts.length,
+          itemListElement: allProducts.map((p, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: p.name,
+            url: `${siteUrl}/${locale}/products/${p.slug}`,
+          })),
+        }}
+      />
       <section className="border-b border-hairline">
         <div className="mx-auto max-w-4xl px-5 py-20 text-center sm:px-8">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">

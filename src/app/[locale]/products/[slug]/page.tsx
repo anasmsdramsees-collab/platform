@@ -60,17 +60,53 @@ export default async function ProductDetailPage({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "Product",
-          name: product.name,
-          description: copy.description,
-          brand: { "@type": "Brand", name: siteName },
-          category: categoryCopy.name,
-          url: `${siteUrl}/${locale}/products/${product.slug}`,
-          additionalProperty: copy.specs.map((spec) => ({
-            "@type": "PropertyValue",
-            name: spec.label,
-            value: spec.value,
-          })),
+          "@graph": [
+            {
+              "@type": "Product",
+              name: product.name,
+              description: copy.description,
+              brand: { "@type": "Brand", name: siteName },
+              manufacturer: { "@id": `${siteUrl}/#organization` },
+              category: categoryCopy.name,
+              url: `${siteUrl}/${locale}/products/${product.slug}`,
+              ...(product.images?.length
+                ? { image: product.images.map((img) => `${siteUrl}${img}`) }
+                : {}),
+              additionalProperty: copy.specs.map((spec) => ({
+                "@type": "PropertyValue",
+                name: spec.label,
+                value: spec.value,
+              })),
+            },
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: siteName,
+                  item: `${siteUrl}/${locale}`,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: t.back,
+                  item: `${siteUrl}/${locale}/products`,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: categoryCopy.name,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 4,
+                  name: product.name,
+                  item: `${siteUrl}/${locale}/products/${product.slug}`,
+                },
+              ],
+            },
+          ],
         }}
       />
       <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8">

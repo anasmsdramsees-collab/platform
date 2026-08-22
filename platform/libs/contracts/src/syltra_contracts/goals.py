@@ -73,6 +73,14 @@ class GoalState(StrEnum):
     HELD = "HELD"
     """Violated, and deliberately not acted on — a person has just set this
     device by hand, and §0 rule 5 says they win."""
+    STALLED = "STALLED"
+    """Violated, corrected more than once, and not moving.
+
+    The concept document's §08 case: the air conditioning is on, the room sits
+    at 27°, and repeating the command is not going to change that. The platform
+    stops re-issuing a plan that is not working and says what it can see —
+    a window open, a curtain open, 43° outside.
+    """
     OFF = "OFF"
 
 

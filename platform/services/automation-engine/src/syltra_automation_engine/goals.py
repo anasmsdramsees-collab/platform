@@ -63,6 +63,11 @@ class GoalStatus:
     device_id: str | None
     reason_code: str
     checked_at: datetime
+    attempts: int = 0
+    """How many corrections have been issued for this violation."""
+    obstacles: tuple[tuple[str, str], ...] = ()
+    """`(reason_code, device_id)` for anything the house can see standing in the
+    way. Observed, never inferred — see `reconciliation.py`."""
 
     @property
     def needs_correcting(self) -> bool:
@@ -77,6 +82,8 @@ class GoalRegistry:
         self._goals: dict[str, dict[UUID, Goal]] = {}
         self._last_reviewed: dict[tuple[str, UUID], datetime] = {}
         self._last_corrected: dict[tuple[str, UUID], datetime] = {}
+        self._attempts: dict[tuple[str, UUID], list[Any]] = {}
+        self._status: dict[tuple[str, UUID], GoalStatus] = {}
 
     def upsert(self, goal: Goal) -> Goal:
         existing = self._goals.get(goal.home_id, {}).get(goal.goal_id)
@@ -116,8 +123,40 @@ class GoalRegistry:
         last = self._last_corrected.get((goal.home_id, goal.goal_id))
         return last is None or (now - last).total_seconds() >= goal.rearm_seconds
 
-    def mark_corrected(self, goal: Goal, now: datetime) -> None:
+    def mark_corrected(self, goal: Goal, now: datetime, measured: Any = None) -> None:
+        """Record a correction, and what the house read when it was issued.
+
+        The reading is the point: without it the next review can only ask "is
+        this goal still violated?", which is true of a plan that is working and
+        a plan that is not.
+        """
+        from syltra_automation_engine.reconciliation import Attempt
+
         self._last_corrected[(goal.home_id, goal.goal_id)] = now
+        self._attempts.setdefault((goal.home_id, goal.goal_id), []).append(
+            Attempt(at=now, measured=measured)
+        )
+
+    def record_status(self, goal: Goal, status: GoalStatus) -> None:
+        """Keep what the loop last concluded.
+
+        The API works out a goal's state live from the twin, which is right for
+        "is it holding". It cannot work out "this has been corrected twice and
+        has not moved" — that is a history, and this is where it lives.
+        """
+        self._status[(goal.home_id, goal.goal_id)] = status
+
+    def status_for(self, home_id: str, goal_id: UUID) -> GoalStatus | None:
+        return self._status.get((home_id, goal_id))
+
+    def attempts(self, goal: Goal) -> list[Any]:
+        return self._attempts.get((goal.home_id, goal.goal_id), [])
+
+    def clear_attempts(self, goal: Goal) -> None:
+        """Forget the run of corrections. Called when a goal holds again — the
+        plan worked, and the next violation deserves a fresh hearing rather
+        than inheriting a verdict from last week."""
+        self._attempts.pop((goal.home_id, goal.goal_id), None)
 
     def last_corrected(self, home_id: str, goal_id: UUID) -> datetime | None:
         return self._last_corrected.get((home_id, goal_id))

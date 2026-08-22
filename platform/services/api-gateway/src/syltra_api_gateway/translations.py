@@ -170,6 +170,18 @@ REASON_CODES: Final[dict[str, dict[str, str]]] = {
         "ar": "موقوف مؤقتاً — أحدهم يتحكم بهذا يدوياً",
     },
     "GOAL_SWITCHED_OFF": {"en": "Switched off", "ar": "موقوف"},
+    # A goal corrected twice that has not moved. Worded as a plain report rather
+    # than an error: nothing is broken, the plan is simply not working.
+    "GOAL_PLAN_NOT_WORKING": {
+        "en": "Tried twice and nothing changed",
+        "ar": "جُرّب مرتين وما تغيّر شيء",
+    },
+    "OBSTACLE_OPENING_OPEN": {"en": "A door or window is open", "ar": "باب أو نافذة مفتوحة"},
+    "OBSTACLE_COVER_OPEN": {"en": "The curtains are open", "ar": "الستائر مفتوحة"},
+    "OBSTACLE_OUTDOOR_EXTREME": {
+        "en": "It is far past the target outside",
+        "ar": "الجو بالخارج أبعد بكثير عن الهدف",
+    },
     "DEVICE_DID_NOT_ANSWER": {
         "en": "The device did not answer",
         "ar": "الجهاز لم يستجب",

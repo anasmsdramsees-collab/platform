@@ -52,10 +52,13 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Any, Protocol
 
+from syltra_contracts import GoalState
+
 from syltra_automation_engine import metrics
 from syltra_automation_engine.dispatcher import AutomationDispatcher
 from syltra_automation_engine.engine import AutomationProposal
 from syltra_automation_engine.goals import GoalRegistry, assess, with_manual_hold
+from syltra_automation_engine.reconciliation import reconcile
 from syltra_automation_engine.scheduler import Scheduler
 
 logger = logging.getLogger(__name__)
@@ -228,11 +231,22 @@ class AutomationDriver:
                         self._manual_override(home_id, device_id, capability)  # type: ignore[misc]
                     ),
                 )
+            if status.state is GoalState.SATISFIED:
+                # The plan worked. The next violation gets a fresh hearing
+                # rather than inheriting a verdict from last week.
+                self._goals.clear_attempts(goal)
+
+            # Layer 12: is the correction getting anywhere? A goal that has been
+            # corrected twice without moving is not corrected a third time — it
+            # is reported as stalled, with whatever the house can see standing
+            # in the way (concept §08).
+            status, should_correct = reconcile(
+                goal, status, self._goals.attempts(goal), state
+            )
+            self._goals.record_status(goal, status)
             changed.append(f"GOAL_{goal.goal_id}")
 
-            if not status.needs_correcting or not goal.actions:
-                # Nothing to do, or nothing this goal is allowed to do about it.
-                # A goal that only reports is a perfectly good goal.
+            if not should_correct:
                 continue
             if not self._goals.may_correct(goal, now) or self._dispatcher is None:
                 continue
@@ -253,8 +267,9 @@ class AutomationDriver:
             if any(outcome.carried_out for outcome in outcomes):
                 # Marked only when something actually happened. A correction
                 # policy refused is not a correction, and must not start the
-                # clock that stops the next attempt.
-                self._goals.mark_corrected(goal, now)
+                # clock that stops the next attempt — nor count as an attempt
+                # that failed to move the room.
+                self._goals.mark_corrected(goal, now, measured=status.measured)
             logger.info(
                 "goal %s not holding (%s vs %s) — corrected %d/%d",
                 goal.name,

@@ -233,3 +233,61 @@ async def test_the_driver_never_corrects_a_goal_it_cannot_measure() -> None:
     await driver.run_once(NOW)
 
     assert dispatched == []
+
+
+async def test_the_driver_stops_repeating_a_correction_that_is_not_working() -> None:
+    """Concept §08. Before this the loop issued the same command into the same
+    room every rearm window, forever, and called it adaptive."""
+    from syltra_automation_engine import GoalRegistry
+    from syltra_contracts import Goal, GoalComparison, GoalState
+
+    goals = GoalRegistry()
+    goal = goals.upsert(
+        Goal(
+            home_id=HOME,
+            name="الصالة لا تتجاوز ٢٤",
+            capability="environment.temperature",
+            comparison=GoalComparison.AT_MOST,
+            value=24,
+            room_id="living_room",
+            review_seconds=30,
+            rearm_seconds=0,
+            actions=(
+                AutomationAction(
+                    capability="climate.target_temperature", value=21, device_id="ac_living"
+                ),
+            ),
+        )
+    )
+
+    dispatched: list[Any] = []
+
+    class Dispatcher:
+        async def dispatch_all(self, proposals: Any, now: Any = None) -> tuple[Any, ...]:
+            dispatched.extend(proposals)
+            return tuple(type("O", (), {"carried_out": True, "name": p.name})() for p in proposals)
+
+    # A room that does not move, with a window open in it.
+    hot = home(
+        device("temp_living", "living_room", a=reading("environment.temperature", 29.0, NOW)),
+        device("window_living", "living_room", a=reading("contact.open", True, NOW)),
+        home_id=HOME,
+    )
+    driver = AutomationDriver(
+        Twin({HOME: hot}),
+        AutomationEngine(),
+        dispatcher=Dispatcher(),  # type: ignore[arg-type]
+        goals=goals,
+    )
+
+    for minute in range(4):
+        await driver.run_once(NOW + timedelta(minutes=minute))
+
+    # Twice, and then it stops — rather than once a minute for as long as the
+    # window stays open.
+    assert len(dispatched) == 2
+
+    status = goals.status_for(HOME, goal.goal_id)
+    assert status is not None
+    assert status.state is GoalState.STALLED
+    assert [code for code, _device in status.obstacles] == ["OBSTACLE_OPENING_OPEN"]

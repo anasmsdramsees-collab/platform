@@ -1672,3 +1672,76 @@ and set a bedroom to 21; and a goal caught 24.1 against a target of 24 and
 dropped the living room air conditioning to 22.
 
 Full suite: 1544 passed, 29 skipped. `make lint` clean over 223 source files.
+
+## Layer 12 — the platform stops repeating a plan that is not working ✅
+
+Clearing out `syltra concept/` turned up the product's founding document, and
+one page of it described something this build got wrong. It is now
+`docs/concept/SYLTRA_Adaptive_Concept.md`, §08:
+
+> The air conditioning is on. The room reaches 27° and stops. The goal is not
+> met. **The system does not repeat the same command.** It examines the
+> difference, finds the window open, the curtains open and 43° outside, and
+> changes the plan.
+
+Goals had shipped the day before without that. A violated goal issued its
+corrective actions, waited out its rearm, and issued exactly the same actions
+again — forever, into a room with a window open. Every part was individually
+right: the goal was right that the room was warm, the correction was right that
+the air conditioning should be colder, the policy gate was right to allow it.
+The loop as a whole was a machine for repeating a plan that was not working, and
+calling it adaptive.
+
+### What it decides
+
+One question: **is the correction getting anywhere?** Answered by comparing the
+reading now against the reading when the correction was issued, not by asking
+again whether the goal is violated — which is equally true of a plan that is
+working and a plan that is not.
+
+- Moving toward the target by more than sensor noise → the plan is working.
+  Leave it. Slow is not stalled, and re-issuing a command into a room that is
+  already cooling is noise in an audit trail.
+- Not moving, twice → **STALLED**. Stop re-issuing, and say so. Two attempts
+  rather than one, because the first correction may have gone into a room
+  somebody had just opened a door to, and one attempt is not evidence.
+
+### What it refuses to decide
+
+It does not invent a new plan. There is no Adaptive Planning Engine here
+(concept Layer 08), and improvising one — closing a window on a household's
+behalf because a room is warm — is exactly what §0 keeps away from a model.
+
+What a stalled goal produces is a sentence a person can act on: *the living room
+is still 24.1°, the air conditioning has been asked twice, and there is a window
+open, a curtain open and 41° outside.*
+
+### Obstacles are observed, never guessed
+
+Everything in the obstacle list is read from the twin — a contact reporting
+open, a cover reporting open, an outdoor thermometer — and each one carries the
+device that reported it. "A window is open" is advice; "the living room window
+is open" is something somebody can go and shut. Nothing infers an open window
+from a temperature curve: a household told that, which then finds every window
+shut, stops believing the next thing the panel says.
+
+Two guards worth naming: a curtain at 10% is not what is keeping a room at 29°,
+so a cover counts as open only past 40%; and 25° outside does not explain a room
+that will not reach 24, so the weather is named only when it is more than eight
+degrees past the target.
+
+**Verified live**, not only in tests: the demo house holds a goal it cannot
+reach. At t+40s it had been corrected twice; at t+60s it read *الخطة لا تنفع ·
+جُرّب مرتين وما تغيّر شيء* with three obstacles — `window_living`,
+`curtain_living`, `outdoor_temp` — and issued nothing further.
+
+Full suite: 1556 passed, 29 skipped. `make lint` clean over 225 source files.
+
+### What else came out of that folder
+
+`docs/concept/` now holds six rescued documents with a README saying which are
+live and which are superseded — including the earlier cloud-routing build prompt,
+kept because it is where the decision that mattered most was made, and reversing
+it later should mean reading it first. `SYLTRA_Claude_Code_Master_Build_Spec.md`
+was also moved in: the document governing this whole build had been sitting
+outside it, tracked by nothing.

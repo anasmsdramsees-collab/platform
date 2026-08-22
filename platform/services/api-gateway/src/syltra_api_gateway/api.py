@@ -47,6 +47,7 @@ from syltra_automation_engine import SceneRefused, assess, with_manual_hold
 from syltra_contracts import (
     Automation,
     Goal,
+    GoalState,
     Scene,
     ConditionKind,
     ContextType,
@@ -893,6 +894,19 @@ def create_app(
                 goal.home_id, device_id, capability
             ),
         )
+        # A stall is a history, not a reading: "this has been corrected twice and
+        # has not moved" cannot be worked out from the twin at this instant, so
+        # it comes from what the loop last concluded. Only ever *upgrades* a
+        # live violation — a goal that is holding now is holding, whatever the
+        # loop thought a minute ago.
+        remembered = platform.goals.status_for(goal.home_id, goal.goal_id)
+        if (
+            remembered is not None
+            and remembered.state is GoalState.STALLED
+            and status.state is GoalState.VIOLATED
+        ):
+            status = remembered
+
         corrected = platform.goals.last_corrected(goal.home_id, goal.goal_id)
         return {
             "goal_id": str(goal.goal_id),
@@ -916,6 +930,18 @@ def create_app(
             "measured_by": status.device_id,
             "reason_code": status.reason_code,
             "reason": translate_reasons([status.reason_code], locale)[0],
+            "attempts": status.attempts,
+            # Observed, never inferred. Each carries the device that reported
+            # it, because "a window is open" is advice and "the living room
+            # window is open" is something somebody can go and shut.
+            "obstacles": [
+                {
+                    "reason_code": code,
+                    "device_id": device_id,
+                    "reason": translate_reasons([code], locale)[0],
+                }
+                for code, device_id in status.obstacles
+            ],
             "checked_at": status.checked_at.isoformat(),
             "last_corrected_at": corrected.isoformat() if corrected else None,
         }

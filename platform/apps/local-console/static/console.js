@@ -1973,6 +1973,7 @@ const GOAL_BADGES = {
   VIOLATED: "error",
   UNKNOWN: "unknown",
   HELD: "stale",
+  STALLED: "degraded",
   OFF: "disabled",
 };
 
@@ -2010,14 +2011,26 @@ function goalState(goal) {
   /* The state and its reason together, because "not holding" and "nothing is
      measuring this" are different facts and a colour cannot carry the
      difference (§8). */
-  const wrapper = el("div", "row");
-  wrapper.append(badge(GOAL_BADGES[goal.state] || "unknown", t(`goal_state_${goal.state}`)));
+  const wrapper = el("div", "goal-state");
+  const heading = el("div", "row");
+  heading.append(badge(GOAL_BADGES[goal.state] || "unknown", t(`goal_state_${goal.state}`)));
+  wrapper.append(heading);
   /* Only where the reason says something the badge does not. "Holding ·
      Holding" is noise, and noise beside a status is how a reader learns to
      skip the whole column — but "unmeasured" and "paused by hand" carry a fact
      the word alone does not, and those are exactly the two a household needs. */
-  if (["UNKNOWN", "HELD", "OFF"].includes(goal.state)) {
-    wrapper.append(el("span", "muted", goal.reason));
+  if (["UNKNOWN", "HELD", "OFF", "STALLED"].includes(goal.state)) {
+    heading.append(el("span", "muted", goal.reason));
+  }
+  /* What the house can see standing in the way — each with the device that
+     reported it, because "a window is open" is advice and "the living room
+     window is open" is something somebody can go and shut. */
+  if ((goal.obstacles || []).length) {
+    const seen = el("div", "goal-state__obstacles");
+    for (const obstacle of goal.obstacles) {
+      seen.append(badge("stale", `${obstacle.reason} · ${obstacle.device_id}`));
+    }
+    wrapper.append(seen);
   }
   return wrapper;
 }

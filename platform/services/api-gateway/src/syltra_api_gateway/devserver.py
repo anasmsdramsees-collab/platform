@@ -150,6 +150,7 @@ def build_platform() -> Platform:
     # "مكيّف الصالة", exactly as it would in the house this demo stands for.
     named = {
         "motion_living": "حركة الصالة",
+        "window_living": "نافذة الصالة",
         "temp_living": "حرارة الصالة",
         "humidity_living": "رطوبة الصالة",
         "light_living": "إضاءة الصالة",
@@ -204,6 +205,7 @@ def build_platform() -> Platform:
         ("curtain_living", "living_room", "cover.position", 60.0, "%"),
         # Things it reads.
         ("motion_living", "living_room", "occupancy.motion", True, None),
+        ("window_living", "living_room", "contact.open", True, None),
         ("temp_living", "living_room", "environment.temperature", 24.1, "C"),
         ("humidity_living", "living_room", "environment.humidity", 38.0, "%"),
         ("meter_home", "utility", "energy.power", 1420.0, "W"),
@@ -326,11 +328,16 @@ def build_platform() -> Platform:
     goals.upsert(
         Goal(
             home_id=HOME,
-            name="غرفة النوم لا تتجاوز ٢٤°",
+            # A goal this house cannot reach: the living room reads 24.1, the
+            # window is open and it is 41° outside. It is here so the demo shows
+            # the platform stopping rather than repeating itself (concept §08).
+            name="الصالة لا تتجاوز ٢٣°",
             capability="environment.temperature",
             comparison=GoalComparison.AT_MOST,
-            value=24,
+            value=23,
             room_id="living_room",
+            review_seconds=30,
+            rearm_seconds=30,
             actions=(
                 AutomationAction(
                     capability="climate.target_temperature", value=22, device_id="ac_living"

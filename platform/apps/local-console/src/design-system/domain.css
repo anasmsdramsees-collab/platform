@@ -601,3 +601,24 @@
   block-size: 2px;
   background: var(--text-tertiary);
 }
+
+/* ── a goal's standing ──
+ *
+ * A state word, and under it whatever the house can see standing in the way.
+ * Stacked rather than in a row: three obstacles on one line pushed the table's
+ * other columns off the screen, and a household reading "not working" needs
+ * the reasons more than it needs them beside each other.
+ */
+
+.goal-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.goal-state__obstacles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

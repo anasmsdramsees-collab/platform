@@ -6,6 +6,7 @@ import { OrbitControls, Html, RoundedBox } from "@react-three/drei";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import * as THREE from "three";
 import type { Locale } from "@/lib/i18n/config";
+import type { RoomCtl } from "./builder";
 import {
   type ClimateKind,
   type PropertyDef,
@@ -36,9 +37,7 @@ interface RoomProps {
   selected: boolean;
   chosen: SystemKey[];
   climate: ClimateKind;
-  brightness: number;
-  curtainsOpen: number;
-  locked: boolean;
+  ctl: RoomCtl;
   acOn: boolean;
   onSelect: () => void;
 }
@@ -65,12 +64,13 @@ function Room({
   selected,
   chosen,
   climate,
-  brightness,
-  curtainsOpen,
-  locked,
+  ctl,
   acOn,
   onSelect,
 }: RoomProps) {
+  const brightness = ctl.brightness / 100;
+  const curtainsOpen = ctl.curtains / 100;
+  const locked = ctl.locked;
   const [cx, cz] = room.centre;
   const [w, d] = room.size;
   const y = room.level * LEVEL_HEIGHT;
@@ -183,9 +183,8 @@ export function BuilderScene({
   property,
   locale,
   chosen,
-  brightness,
-  curtainsOpen,
-  locked,
+  rooms,
+  defaultCtl,
   acOn,
   selectedRoom,
   onSelectRoom,
@@ -193,20 +192,26 @@ export function BuilderScene({
   property: PropertyDef;
   locale: Locale;
   chosen: SystemKey[];
-  brightness: number;
-  curtainsOpen: number;
-  locked: boolean;
+  rooms: Record<string, RoomCtl>;
+  defaultCtl: RoomCtl;
   acOn: boolean;
   selectedRoom: string | null;
   onSelectRoom: (id: string | null) => void;
 }) {
-  const lightsOn = brightness > 0.02;
   // Frame the camera around the building's footprint.
   const radius = useMemo(() => {
     const maxX = Math.max(...property.rooms.map((r) => Math.abs(r.centre[0]) + r.size[0] / 2));
     const maxZ = Math.max(...property.rooms.map((r) => Math.abs(r.centre[1]) + r.size[1] / 2));
     return Math.max(maxX, maxZ) * 2.8;
   }, [property]);
+
+  // Ambient scene light tracks the average room brightness.
+  const avgBrightness = useMemo(() => {
+    const list = property.rooms.map(
+      (r) => (rooms[`${r.level}-${r.id}`] ?? defaultCtl).brightness / 100
+    );
+    return list.length ? list.reduce((n, b) => n + b, 0) / list.length : 0;
+  }, [property, rooms, defaultCtl]);
 
   const controls = useRef<OrbitControlsImpl>(null);
   const [touched, setTouched] = useState(false);
@@ -257,8 +262,8 @@ export function BuilderScene({
       <color attach="background" args={["#0e1016"]} />
       <fog attach="fog" args={["#0b0c0e", radius * 1.6, radius * 3.4]} />
 
-      <ambientLight intensity={0.62 + brightness * 0.35} />
-      <directionalLight position={[6, 14, 8]} intensity={1.35 + brightness * 0.5} color="#dce6ff" />
+      <ambientLight intensity={0.62 + avgBrightness * 0.35} />
+      <directionalLight position={[6, 14, 8]} intensity={1.35 + avgBrightness * 0.5} color="#dce6ff" />
       <directionalLight position={[-9, 7, -6]} intensity={0.8} color="#4c8dff" />
       <hemisphereLight args={["#7f9dd6", "#0d1016", 0.7]} />
 
@@ -275,9 +280,7 @@ export function BuilderScene({
           selected={selectedRoom === `${room.level}-${room.id}`}
           chosen={chosen}
           climate={property.climate}
-          brightness={brightness}
-          curtainsOpen={curtainsOpen}
-          locked={locked}
+          ctl={rooms[`${room.level}-${room.id}`] ?? defaultCtl}
           acOn={acOn}
           onSelect={() => onSelectRoom(`${room.level}-${room.id}`)}
         />

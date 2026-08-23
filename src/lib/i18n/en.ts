@@ -269,17 +269,16 @@ const en: Dictionary = {
       { value: "2023", label: "Founded" },
       { value: "Riyadh, KSA", label: "Global Headquarters" },
       { value: "14+", label: "Product Categories" },
-      { value: "2027", label: "Global Launch" },
+      { value: "Now", label: "Available in Saudi Arabia" },
     ],
     roadmap: {
       eyebrow: "Global Expansion",
       title: "From Riyadh to the world.",
       items: [
-        { year: "2027", text: "Global launch, Saudi Arabia & GCC, Syltra OS 1.0." },
-        { year: "2028", text: "Wider MENA expansion, Syltra AI 2.0." },
-        { year: "2029", text: "Europe entry, industrial & enterprise product line." },
-        { year: "2030", text: "North America market entry." },
-        { year: "2031", text: "Global network, 1M+ connected spaces worldwide." },
+        { year: "2025", text: "Syltra launches." },
+        { year: "2026", text: "Saudi market — available now." },
+        { year: "2027", text: "Regional expansion across the GCC." },
+        { year: "2030", text: "Global expansion." },
       ],
     },
   },
@@ -441,7 +440,7 @@ const en: Dictionary = {
       },
       {
         q: "When is Syltra One launching?",
-        a: "Global launch is targeted for 2027 alongside SYLTRA OS 1.0, starting in Saudi Arabia and the GCC, with wider MENA and international expansion to follow.",
+        a: "Syltra launched in 2025 and is available in Saudi Arabia now. Regional expansion across the GCC follows in 2027, and global expansion in 2030.",
       },
       {
         q: "Where is Syltra One based?",

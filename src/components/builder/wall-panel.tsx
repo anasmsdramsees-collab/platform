@@ -45,12 +45,18 @@ export function WallPanel({
   climate,
   state,
   setState,
+  scopeLabel,
+  scoped,
 }: {
   locale: Locale;
   chosen: SystemKey[];
   climate: ClimateKind;
   state: HomeState;
   setState: (updater: (prev: HomeState) => HomeState) => void;
+  /** Room name when a room is in focus, otherwise the whole-home label. */
+  scopeLabel: string;
+  /** True when a single room is selected. */
+  scoped: boolean;
 }) {
   const ar = locale === "ar";
   const has = (k: SystemKey) => chosen.includes(k);
@@ -84,6 +90,17 @@ export function WallPanel({
             <img src={assetPath("/brand/logo.png")} alt="" className="h-3 w-auto opacity-70" />
             <span className="font-mono text-[9px] tracking-widest text-slate">
               {ar ? "شاشة سيلترا 11″" : "SYLTRA PANEL 11″"}
+            </span>
+            {/* Which space the controls below are acting on. */}
+            <span
+              className={cn(
+                "rounded-full px-2 py-0.5 text-[9.5px] font-medium",
+                scoped ? "bg-ion/20 text-ion" : "bg-white/10 text-slate"
+              )}
+            >
+              {scoped ? "◉ " : ""}
+              {ar ? "تحكّم: " : "Controlling: "}
+              {scopeLabel}
             </span>
           </span>
           <span className="flex items-center gap-2 font-mono text-[9.5px] text-slate">

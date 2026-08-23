@@ -16,6 +16,16 @@ import {
 } from "@/lib/builder-data";
 import { WallPanel, type HomeState } from "./wall-panel";
 
+/** What a single room's controllable devices are set to. */
+export interface RoomCtl {
+  brightness: number;
+  curtains: number;
+  locked: boolean;
+  temperature: number;
+}
+
+const ROOM_DEFAULT: RoomCtl = { brightness: 70, curtains: 100, locked: true, temperature: 22 };
+
 // The 3D canvas is heavy and browser-only; keep it out of the first payload.
 const BuilderScene = dynamic(() => import("./scene").then((m) => m.BuilderScene), {
   ssr: false,
@@ -33,16 +43,54 @@ export function Builder({ locale }: { locale: Locale }) {
   const [kind, setKind] = useState<PropertyKind | null>(null);
   const [chosen, setChosen] = useState<SystemKey[]>(["lighting"]);
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
-  const [state, setState] = useState<HomeState>({
-    brightness: 70,
-    curtains: 100,
-    locked: true,
-    temperature: 22,
+  // Per-room device state, keyed by `${level}-${id}`. Cameras and the intercom
+  // stay whole-home, so they live apart from the rooms.
+  const [rooms, setRooms] = useState<Record<string, RoomCtl>>({});
+  const [shared, setShared] = useState<{ camera: number | null; intercom: boolean }>({
     camera: null,
     intercom: false,
   });
 
   const property = kind ? PROPERTIES[kind] : null;
+  const ctlOf = (key: string): RoomCtl => rooms[key] ?? ROOM_DEFAULT;
+
+  // The value the wall panel shows: the selected room, or a whole-home average.
+  const panelState: HomeState = useMemo(() => {
+    if (selectedRoom) return { ...ctlOf(selectedRoom), ...shared };
+    const keys = property?.rooms.map((r) => `${r.level}-${r.id}`) ?? [];
+    if (keys.length === 0) return { ...ROOM_DEFAULT, ...shared };
+    const list = keys.map(ctlOf);
+    const avg = (pick: (c: RoomCtl) => number) =>
+      Math.round(list.reduce((n, c) => n + pick(c), 0) / list.length);
+    return {
+      brightness: avg((c) => c.brightness),
+      curtains: avg((c) => c.curtains),
+      temperature: avg((c) => c.temperature),
+      locked: list.every((c) => c.locked),
+      ...shared,
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedRoom, rooms, shared, property]);
+
+  // The panel writes back here: to the one selected room, or to every room.
+  function applyPanel(updater: (prev: HomeState) => HomeState) {
+    const next = updater(panelState);
+    setShared({ camera: next.camera, intercom: next.intercom });
+    const patch: RoomCtl = {
+      brightness: next.brightness,
+      curtains: next.curtains,
+      locked: next.locked,
+      temperature: next.temperature,
+    };
+    setRooms((prev) => {
+      const out = { ...prev };
+      const targets = selectedRoom
+        ? [selectedRoom]
+        : property?.rooms.map((r) => `${r.level}-${r.id}`) ?? [];
+      for (const k of targets) out[k] = patch;
+      return out;
+    });
+  }
 
   // A rough device count so the visitor sees their choices add up to something real.
   const summary = useMemo(() => {
@@ -103,6 +151,17 @@ export function Builder({ locale }: { locale: Locale }) {
   const copy = propertyCopy(property, locale);
   const activeRoom = property.rooms.find((r) => `${r.level}-${r.id}` === selectedRoom);
   const sensors = (["motion", "gas", "health"] as SystemKey[]).filter((k) => chosen.includes(k));
+
+  // What the panel is allowed to touch: only the selected room's systems, or
+  // everything the home has when no single room is in focus.
+  const panelChosen = activeRoom
+    ? chosen.filter((k) => activeRoom.systems.includes(k))
+    : chosen;
+  const scopeLabel = activeRoom
+    ? roomName(activeRoom, locale)
+    : ar
+      ? "البيت كامل"
+      : "Whole home";
 
   return (
     // One screen: header, then systems + model, then the wall panel strip.
@@ -189,7 +248,7 @@ export function Builder({ locale }: { locale: Locale }) {
                   <div className="rounded-lg bg-void-2 px-2 py-1.5">
                     <p className="text-[10px] text-slate">{ar ? "سيلترا هيلث" : "Syltra Health"}</p>
                     <p className="mt-0.5 font-mono text-[10.5px] text-chrome-dim">
-                      {ar ? `هواء 32 · ${state.temperature}° · 38dB` : `AQI 32 · ${state.temperature}° · 38dB`}
+                      {ar ? `هواء 32 · ${panelState.temperature}° · 38dB` : `AQI 32 · ${panelState.temperature}° · 38dB`}
                     </p>
                   </div>
                 )}
@@ -203,9 +262,8 @@ export function Builder({ locale }: { locale: Locale }) {
             property={property}
             locale={locale}
             chosen={chosen}
-            brightness={state.brightness / 100}
-            curtainsOpen={state.curtains / 100}
-            locked={state.locked}
+            rooms={rooms}
+            defaultCtl={ROOM_DEFAULT}
             acOn={chosen.includes("climate")}
             selectedRoom={selectedRoom}
             onSelectRoom={setSelectedRoom}
@@ -242,10 +300,12 @@ export function Builder({ locale }: { locale: Locale }) {
       <div className="shrink-0">
         <WallPanel
           locale={locale}
-          chosen={chosen}
+          chosen={panelChosen}
           climate={property.climate}
-          state={state}
-          setState={setState}
+          state={panelState}
+          setState={applyPanel}
+          scopeLabel={scopeLabel}
+          scoped={Boolean(activeRoom)}
         />
       </div>
     </div>

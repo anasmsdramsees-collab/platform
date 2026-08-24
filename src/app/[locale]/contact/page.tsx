@@ -16,7 +16,7 @@ export async function generateMetadata({
 }
 
 const EMAIL = "info@syltraone.com";
-const WHATSAPP = "966533826009";
+const WHATSAPP = "966550098550";
 const WEB = "www.syltraone.com";
 
 export default async function ContactPage({

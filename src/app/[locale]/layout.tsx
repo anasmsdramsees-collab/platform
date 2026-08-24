@@ -95,7 +95,7 @@ export default async function LocaleLayout({
                 image: `${siteUrl}/brand/og-default.jpg`,
                 description: dict.meta.description,
                 email: contactEmail,
-                telephone: "+966533826009",
+                telephone: "+966550098550",
                 foundingDate: "2026",
                 founder: {
                   "@type": "Person",
@@ -121,7 +121,7 @@ export default async function LocaleLayout({
                   "@type": "ContactPoint",
                   contactType: "sales",
                   email: contactEmail,
-                  telephone: "+966533826009",
+                  telephone: "+966550098550",
                   availableLanguage: ["Arabic", "English"],
                 },
               },

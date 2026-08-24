@@ -11,7 +11,7 @@ const en: Dictionary = {
     titleHomeAssistant: "Syltra Home | One App for Every Device in the House",
     titleFaq: "Smart Home FAQ | Costs, Installation & Setup | Syltra One",
     description:
-      "Syltra One engineers the connected home, building and city of the future, one ecosystem, one intelligence layer, one design language.",
+      "Syltra One designs a unified smart-home ecosystem — hubs, switches, sensors, cameras and security — with native Matter, Thread and Z-Wave. Available in Saudi Arabia now.",
   },
   nav: {
     products: "Products",
@@ -42,7 +42,7 @@ const en: Dictionary = {
   },
   hero: {
     eyebrow: "Smart Home · IoT · AI",
-    title: "Smart Living. Seamlessly Connected.",
+    title: "Syltra One — Smart Living. Seamlessly Connected.",
     subtitle:
       "One ecosystem for the connected home, devices, AI and cloud infrastructure, unified under a single premium standard.",
     ctaProducts: "Explore the ecosystem",
@@ -411,7 +411,7 @@ const en: Dictionary = {
     emailLabel: "Email",
     webLabel: "Web",
     corporateLabel: "Corporate",
-    corporateValue: "00966533826009",
+    corporateValue: "00966550098550",
   },
   faqPage: {
     eyebrow: "FAQ",

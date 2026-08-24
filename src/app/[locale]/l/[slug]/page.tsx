@@ -90,7 +90,7 @@ export default async function LandingPage({
               {ar ? "احجز معاينة مجانية" : "Book a free survey"}
             </Link>
             <a
-              href={`https://wa.me/966533826009?text=${encodeURIComponent(
+              href={`https://wa.me/966550098550?text=${encodeURIComponent(
                 ar ? `مرحبًا، أستفسر عن: ${c.h1}` : `Hello, I'd like to ask about: ${c.h1}`
               )}`}
               target="_blank"

@@ -109,7 +109,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               TikTok
             </a>
             <a
-              href={`https://wa.me/966533826009`}
+              href={`https://wa.me/966550098550`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum"

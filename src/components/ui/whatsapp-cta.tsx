@@ -3,7 +3,7 @@
 import * as React from "react";
 import type { Locale } from "@/lib/i18n/config";
 
-const PHONE = "966533826009";
+const PHONE = "966550098550";
 
 /**
  * Floating WhatsApp button. Sits in the opposite corner from the Syla launcher

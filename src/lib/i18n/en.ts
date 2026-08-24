@@ -11,7 +11,7 @@ const en: Dictionary = {
     titleHomeAssistant: "Syltra Home | One App for Every Device in the House",
     titleFaq: "Smart Home FAQ | Costs, Installation & Setup | Syltra One",
     description:
-      "Syltra One designs a unified smart-home ecosystem — hubs, switches, sensors, cameras and security — with native Matter, Thread and Z-Wave. Available in Saudi Arabia now.",
+      "Syltra One designs a unified smart-home ecosystem — hubs, switches, sensors, cameras and security — with native Matter, Thread, Z-Wave and KNX. Available in Saudi Arabia now.",
   },
   nav: {
     products: "Products",

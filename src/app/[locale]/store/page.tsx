@@ -14,11 +14,11 @@ export async function generateMetadata({
   return pageMetadata({
     locale,
     path: "/store",
-    title: locale === "ar" ? "متجر سيلترا | سيلترا وان" : "Syltra Store | Syltra One",
+    title: locale === "ar" ? "متجر سيلترا | سيلترا لايف" : "Syltra Store | Syltra Life",
     description:
       locale === "ar"
-        ? "اطلب أجهزة المنزل الذكي والأمان والأقفال وكاميرات المراقبة وأنظمة الصوت من سيلترا وان، مع التوصيل والتركيب داخل الرياض."
-        : "Order smart home, security, lock, CCTV and audio devices from Syltra One, with delivery and installation in Riyadh.",
+        ? "اطلب أجهزة المنزل الذكي والأمان والأقفال وكاميرات المراقبة وأنظمة الصوت من سيلترا لايف، مع التوصيل والتركيب داخل الرياض."
+        : "Order smart home, security, lock, CCTV and audio devices from Syltra Life, with delivery and installation in Riyadh.",
   });
 }
 

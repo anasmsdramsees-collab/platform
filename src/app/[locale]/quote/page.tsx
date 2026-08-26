@@ -17,7 +17,7 @@ export async function generateMetadata({
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const c = quoteCopy[locale];
-  return pageMetadata({ locale, path: "/quote", title: `${c.title} | Syltra One`, description: c.subtitle });
+  return pageMetadata({ locale, path: "/quote", title: `${c.title} | Syltra Life`, description: c.subtitle });
 }
 
 export default async function QuotePage({

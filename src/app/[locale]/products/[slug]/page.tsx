@@ -31,7 +31,7 @@ export async function generateMetadata({
     // which a bare product name like "Syltra TD" never carries on its own.
     title: `${found.product.name} — ${
       locale === "ar" ? found.category.ar.name : found.category.en.name
-    } | Syltra One`,
+    } | Syltra Life`,
     description: copy.tagline,
     image: found.product.images?.[0] ?? "/brand/og-default.jpg",
   });

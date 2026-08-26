@@ -2,16 +2,16 @@ import type { Dictionary } from "./dictionary";
 
 const en: Dictionary = {
   meta: {
-    titleHome: "Syltra One | Smart Living. Seamlessly Connected.",
-    titleProducts: "Smart Home Products | Devices, Locks, Cameras & Sensors | Syltra One",
+    titleHome: "Syltra Life | Smart Living. Seamlessly Connected.",
+    titleProducts: "Smart Home Products | Devices, Locks, Cameras & Sensors | Syltra Life",
     titleAbout: "About Syltra One | Saudi Smart Home Technology Company",
     titleContact: "Contact Syltra One | Riyadh Smart Home Team",
     titleApps: "Syltra Home & Syltra TV Apps | Control Your Home in Arabic",
     titleSyntraTv: "Syltra TV | Entertainment and Home Control on One Screen",
     titleHomeAssistant: "Syltra Home | One App for Every Device in the House",
-    titleFaq: "Smart Home FAQ | Costs, Installation & Setup | Syltra One",
+    titleFaq: "Smart Home FAQ | Costs, Installation & Setup | Syltra Life",
     description:
-      "Syltra One designs a unified smart-home ecosystem — hubs, switches, sensors, cameras and security — with native Matter, Thread, Z-Wave and KNX. Available in Saudi Arabia now.",
+      "Syltra Life designs a unified smart-home ecosystem — hubs, switches, sensors, cameras and security — with native Matter, Thread, Z-Wave and KNX. Available in Saudi Arabia now.",
   },
   nav: {
     products: "Products",
@@ -42,7 +42,7 @@ const en: Dictionary = {
   },
   hero: {
     eyebrow: "Smart Home · IoT · AI",
-    title: "Syltra One — Smart Living. Seamlessly Connected.",
+    title: "Syltra Life — Smart Living. Seamlessly Connected.",
     subtitle:
       "One ecosystem for the connected home, devices, AI and cloud infrastructure, unified under a single premium standard.",
     ctaProducts: "Explore the ecosystem",
@@ -262,7 +262,7 @@ const en: Dictionary = {
       eyebrow: "CEO's Message",
       quote:
         "Every industry reaches a point where convenience is no longer enough, where intelligence becomes the standard. Syltra One was built for that moment. We did not set out to make another smart plug or another app. We set out to build the operating layer for how homes, businesses and cities will run for the next fifty years, quietly, securely and beautifully. From Riyadh to the world, our mission is simple: give every space the intelligence to take care of itself, and give every person back the time technology was always meant to create.",
-      name: "Anas Elimam",
+      name: "",
       role: "Founder & CEO, Syltra One",
     },
     facts: [

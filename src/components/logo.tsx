@@ -7,7 +7,7 @@ export default function Logo({ locale, className = "" }: { locale: Locale; class
   return (
     <Link
       href={`/${locale}`}
-      aria-label="Syltra One"
+      aria-label="Syltra Life"
       className={`block ${className}`}
     >
       <Image

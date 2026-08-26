@@ -61,6 +61,7 @@ export function normalizeForSpeech(text: string, lang: string): string {
   if (lang.toLowerCase().startsWith("ar")) {
     return text
       .replace(/سيلترا وان/g, "سِلْترا وان")
+      .replace(/سيلترا لايف/g, "سِلْترا لايف")
       .replace(/سيلترا/g, "سِلْترا")
       .replace(/\bسيلا\b/g, "سِيلا")
       .replace(/\bSyla\b/gi, "سِيلا");

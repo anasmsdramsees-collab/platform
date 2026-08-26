@@ -23,12 +23,12 @@ export const landings: Landing[] = [
     slug: "smart-home-riyadh",
     products: ["hub-pro", "panel-11", "t3", "dim", "curtain", "thermostat"],
     ar: {
-      title: "منزل ذكي في الرياض | تركيب وبرمجة | سيلترا وان",
+      title: "منزل ذكي في الرياض | تركيب وبرمجة | سيلترا لايف",
       h1: "منزل ذكي في الرياض، من التصميم إلى التشغيل.",
       description:
         "شركة سعودية تصمم وتركّب أنظمة المنزل الذكي في الرياض: إضاءة وستائر وتكييف وأمان، بتحكم عربي بالكامل ومعاينة مجانية قبل أي التزام.",
       intro:
-        "سيلترا وان شركة تقنية مقرها الرياض تصمم وتركّب أنظمة المنزل الذكي للشقق والفلل والمجمعات. نعاين الموقع، ونصمم المنظومة على مقاس المكان، ثم نركّب ونبرمج ونسلّم البيت وهو يعمل. كل شيء يُدار من تطبيق واحد أو بصوتك بالعربية عبر مساعدتنا سيلا.",
+        "سيلترا لايف شركة تقنية مقرها الرياض تصمم وتركّب أنظمة المنزل الذكي للشقق والفلل والمجمعات. نعاين الموقع، ونصمم المنظومة على مقاس المكان، ثم نركّب ونبرمج ونسلّم البيت وهو يعمل. كل شيء يُدار من تطبيق واحد أو بصوتك بالعربية عبر مساعدتنا سيلا.",
       benefits: [
         { name: "فريق سعودي في الرياض", desc: "معاينة على الموقع وتركيب وصيانة من فريق محلي، لا وكيل ولا وسيط." },
         { name: "تحكم عربي بالكامل", desc: "التطبيق والشاشات والمساعد الصوتي كلها بالعربية، يستخدمها كل أفراد البيت من أول يوم." },
@@ -43,12 +43,12 @@ export const landings: Landing[] = [
       ],
     },
     en: {
-      title: "Smart Home in Riyadh | Design and Installation | Syltra One",
+      title: "Smart Home in Riyadh | Design and Installation | Syltra Life",
       h1: "A smart home in Riyadh, from design to operation.",
       description:
         "Smart home design and installation in Riyadh: lighting, curtains, climate and security, fully Arabic, with a free site survey first.",
       intro:
-        "Syltra One is a Riyadh-based technology company that designs and installs smart home systems for apartments, villas and compounds. We survey the site, design the system around the space, then install, program and hand the home over working. Everything runs from one app or by voice in Arabic through our assistant, Syla.",
+        "Syltra Life is a Riyadh-based technology company that designs and installs smart home systems for apartments, villas and compounds. We survey the site, design the system around the space, then install, program and hand the home over working. Everything runs from one app or by voice in Arabic through our assistant, Syla.",
       benefits: [
         { name: "A local team in Riyadh", desc: "Survey, installation and maintenance from a Saudi team, with no agent and no middleman." },
         { name: "Arabic throughout", desc: "The app, the wall panels and the voice assistant are all Arabic, so the whole household uses them from day one." },
@@ -67,7 +67,7 @@ export const landings: Landing[] = [
     slug: "solar-cctv",
     products: ["cctv-solar", "cctv-solar-4g", "cctv-solar-ptz", "cctv-nvr"],
     ar: {
-      title: "كاميرات مراقبة بالطاقة الشمسية | بدون كهرباء أو إنترنت | سيلترا وان",
+      title: "كاميرات مراقبة بالطاقة الشمسية | بدون كهرباء أو إنترنت | سيلترا لايف",
       h1: "كاميرات مراقبة بالطاقة الشمسية، بلا كهرباء ولا تمديدات.",
       description:
         "كاميرات مراقبة تعمل بالطاقة الشمسية للمزارع والاستراحات والمواقع البعيدة، بعضها بشريحة 4G يعمل بدون إنترنت، مع تركيب في الرياض.",
@@ -87,7 +87,7 @@ export const landings: Landing[] = [
       ],
     },
     en: {
-      title: "Solar CCTV Cameras | No Power, No Internet | Syltra One",
+      title: "Solar CCTV Cameras | No Power, No Internet | Syltra Life",
       h1: "Solar-powered CCTV, with no wiring and no bills.",
       description:
         "Solar surveillance cameras for farms, rest houses and remote sites, including 4G models that work with no internet, installed in Riyadh.",
@@ -111,7 +111,7 @@ export const landings: Landing[] = [
     slug: "smart-locks",
     products: ["lock-elite", "lock-pro", "lock", "lock-bolt", "doorbell"],
     ar: {
-      title: "أقفال ذكية للأبواب | بصمة ورمز وجوال | سيلترا وان",
+      title: "أقفال ذكية للأبواب | بصمة ورمز وجوال | سيلترا لايف",
       h1: "أقفال ذكية تفتح ببصمتك، بلا مفاتيح.",
       description:
         "أقفال أبواب ذكية تعمل بالبصمة والرمز والبطاقة والجوال، مع رموز مؤقتة للضيوف والعمالة وسجل دخول كامل، وتركيب في الرياض.",
@@ -131,7 +131,7 @@ export const landings: Landing[] = [
       ],
     },
     en: {
-      title: "Smart Door Locks | Fingerprint, Code and Phone | Syltra One",
+      title: "Smart Door Locks | Fingerprint, Code and Phone | Syltra Life",
       h1: "Smart locks that open with your fingerprint, no keys.",
       description:
         "Smart door locks with fingerprint, code, card and phone access, temporary guest and staff codes, a full entry log, and installation in Riyadh.",

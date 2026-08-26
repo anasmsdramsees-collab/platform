@@ -125,8 +125,7 @@ export default async function AboutPage({
               “{a.chairman.quote}”
             </blockquote>
             <div className="mt-8">
-              <p className="font-semibold text-platinum">{a.chairman.name}</p>
-              <p className="mt-1 text-sm text-chrome-dim">{a.chairman.role}</p>
+              <p className="text-sm text-chrome-dim">{a.chairman.role}</p>
             </div>
           </InfoCard>
         </div>

@@ -19,8 +19,8 @@ export async function generateMetadata({
     locale,
     path: "/builder",
     title: ar
-      ? "ابنِ بيتك الذكي | تجربة تفاعلية ثلاثية الأبعاد | سيلترا وان"
-      : "Build Your Smart Home | Interactive 3D Experience | Syltra One",
+      ? "ابنِ بيتك الذكي | تجربة تفاعلية ثلاثية الأبعاد | سيلترا لايف"
+      : "Build Your Smart Home | Interactive 3D Experience | Syltra Life",
     description: ar
       ? "اختر فيلا أو شقة أو مكتب، ركّب الإضاءة والستائر والتكييف والأقفال والكاميرات، وشغّلها من لوحة تحكم حية في تجربة ثلاثية الأبعاد."
       : "Pick a villa, apartment or office, add lighting, curtains, climate, locks and cameras, then run them from a live control panel in 3D.",

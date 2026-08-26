@@ -13,7 +13,7 @@ export async function generateMetadata({
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const s = getDictionary(locale).solutionsPage;
-  return pageMetadata({ locale, path: "/solutions", title: `${s.eyebrow} | Syltra One`, description: s.subtitle });
+  return pageMetadata({ locale, path: "/solutions", title: `${s.eyebrow} | Syltra Life`, description: s.subtitle });
 }
 
 export default async function SolutionsPage({

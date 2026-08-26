@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import Logo from "./logo";
+import { assetPath } from "@/lib/base-path";
 
 export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const year = new Date().getFullYear();
@@ -119,10 +120,21 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
           </div>
         </div>
       </div>
-      <div className="mx-auto max-w-6xl px-5 pb-10 sm:px-8">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 pb-10 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p className="font-mono text-[11px] text-slate">
           © {year} Syltra One®. {dict.footer.rights}
         </p>
+        <div className="flex items-center gap-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={assetPath("/brand/vision-2030.png")}
+            alt={locale === "ar" ? "رؤية 2030 · المملكة العربية السعودية" : "Saudi Vision 2030"}
+            className="h-9 w-auto opacity-90"
+          />
+          <span className="text-[11px] text-slate">
+            {locale === "ar" ? "داعمون لرؤية المملكة 2030" : "Aligned with Saudi Vision 2030"}
+          </span>
+        </div>
       </div>
     </footer>
   );

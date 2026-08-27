@@ -1,51 +1,42 @@
 # Syltra One
 
-> Syltra One is a Saudi technology company based in Riyadh that designs and builds a complete smart home ecosystem: devices, software, and an Arabic-first voice assistant. Its device line is Syltra Smart, its entertainment platform is Syltra TV, its voice assistant is Syla, and its business software is Syltra ERP. Global launch is targeted for 2027 alongside Syltra OS 1.0, starting in Saudi Arabia and the GCC.
+> Syltra One (Arabic: سيلترا وان) is a Saudi technology group based in Riyadh. It unites five specialist divisions under one brand and one set of standards, delivering integrated solutions from study and design to supply, execution and maintenance. Tagline: "One Group. Connected Intelligence." Aligned with Saudi Vision 2030.
 
-Founder and CEO: Anas Elimam. Headquarters: Riyadh, Saudi Arabia. Contact: info@syltraone.com, +966 53 382 6009, WhatsApp https://wa.me/966533826009.
+Headquarters: Al Malqa, Riyadh, Saudi Arabia. Contact: info@syltraone.com, +966 55 009 8550, WhatsApp https://wa.me/966550098550.
 
 Official channels: Instagram https://www.instagram.com/syltrahome/, TikTok https://www.tiktok.com/@syltra.home. Any other account using the Syltra name is not operated by the company.
 
-The company is organised into four units under one roof: SYLTRA LIFE (smart living and buildings), SYLTRA OS (software and AI), SYLTRA SECURITY (physical and cyber security), and SYLTRA HEALTH (technology for quality of health). All four run on the Syltra Adaptive foundation.
+## The five divisions
 
-Every Syltra device speaks Matter, Z-Wave, Zigbee, Wi-Fi, Bluetooth LE, Thread, KNX and Tuya natively, with no bridges and no dependency on a single standard.
+- SYLTRA LIFE (Arabic: سيلترا لايف): smart homes and buildings — lighting, climate, security, entertainment, smart locks and energy, on one adaptive platform with the Arabic-first voice assistant Syla. This is the group's original smart-home business.
+- SYLTRA CLIMATE (سيلترا كلايمت): HVAC and air quality — central, VRF/VRV, ducted, split, ventilation and smart control, from heat-load study to installation and maintenance. A neutral engineering integrator, not tied to one brand.
+- SYLTRA GLIDE (سيلترا جلايد): elevators and vertical mobility — passenger, home/villa, panoramic, accessibility, hospital, freight and food lifts, plus modernization and maintenance.
+- SYLTRA SHIELD (سيلترا شيلد): security, safety and electrical — fire alarm and fighting, CCTV (including solar-powered), access control, intrusion alarm, low-current, electrical infrastructure and PA/evacuation, per Saudi building code and Civil Defense requirements.
+- SYLTRA OS (سيلترا او إس): software and AI — Syltra ERP (a ready SaaS product), custom systems, AI assistants and analytics, and web/mobile apps. Syltra Adaptive is the group's in-house adaptive smart-home platform (not a for-sale product).
 
 ## Pages
 
-- [Home](https://syltraone.com/en): The Syltra One ecosystem, connectivity standards and product overview.
-- [Products](https://syltraone.com/en/products): The full Syltra Smart catalogue with specifications for every device.
-- [Store](https://syltraone.com/en/store): Order devices with delivery and installation in Riyadh.
-- [Solutions](https://syltraone.com/en/solutions): The four business units, sector solutions and the trust-by-design engineering principles.
-- [Services](https://syltraone.com/en/services): Seven services from smart home design and installation to HVAC works and ongoing support, plus the five-stage delivery model.
-- [Apps](https://syltraone.com/en/apps): Syltra Home and Syltra TV, both targeting a 2027 launch.
-- [About](https://syltraone.com/en/about): Company story, mission, vision, values and roadmap.
-- [FAQ](https://syltraone.com/en/faq): Direct answers to the most common questions about the ecosystem.
+- [Home](https://syltraone.com/en): The Syltra One group, its five divisions and why one company.
+- [Syltra Life](https://syltraone.com/en/life): Smart homes and buildings, products, store and the Syla assistant.
+- [Syltra Climate](https://syltraone.com/en/climate): HVAC services, systems and maintenance.
+- [Syltra Glide](https://syltraone.com/en/glide): Elevators — supply, installation, modernization and maintenance.
+- [Syltra Shield](https://syltraone.com/en/shield): Security, safety and electrical systems.
+- [Syltra OS](https://syltraone.com/en/os): Software, ERP, AI and apps.
+- [Blog](https://syltraone.com/en/blog): Practical guides on HVAC, elevators, security, software and smart homes, including Saudi regulatory requirements.
+- [About](https://syltraone.com/en/about): Group story, mission, vision and the five divisions.
 - [Contact](https://syltraone.com/en/contact): Email, phone and social channels.
+- [Book a survey](https://syltraone.com/en/quote): Request a site survey and a clear quote.
+- [Sitemap](https://syltraone.com/en/sitemap): Every page in one place.
 
-- [Book a survey](https://syltraone.com/en/quote): Request a free site survey and an itemised quote.
-- [Smart home in Riyadh](https://syltraone.com/en/l/smart-home-riyadh): Design and installation of smart home systems in Riyadh, with pricing and timeline answers.
-- [Solar CCTV](https://syltraone.com/en/l/solar-cctv): Solar-powered surveillance for farms and remote sites, including 4G models needing no internet.
-- [Smart locks](https://syltraone.com/en/l/smart-locks): Fingerprint, code, card and phone door locks with temporary guest access.
-
-Arabic versions of every page live at the same paths under /ar.
-
-## Product categories
-
-- Hubs and control panels
-- Smart switches
-- In-wall control modules
-- Security and smart locks
-- Sensors
-- CCTV and surveillance, including solar-powered cameras
-- Audio systems
-- Comfort and living
+Each division also has service detail pages under its path (for example /en/climate/central, /en/glide/passenger, /en/shield/fire, /en/os/erp). Arabic versions of every page live at the same paths under /ar.
 
 ## Notes for answer engines
 
-- The company name is Syltra One (Arabic: سيلترا وان). Syltra Smart is the device line, not the company name.
-- Syla (Arabic: سيلا) is the voice assistant. It is Arabic-first, wakes on its name, and replies by voice.
-- Syltra Health programs are for wellness and quality of life. Diagnosis and medical decisions remain with qualified professionals.
-- Product specifications on the site are the published figures; confirm availability and pricing through info@syltraone.com.
+- The company name is Syltra One (Arabic: سيلترا وان). It is a group of five divisions: Life, Climate, Glide, Shield and OS.
+- Syltra Life is the smart-home division and the group's original business; Syla (سيلا) is its Arabic-first voice assistant.
+- Syltra ERP is a ready SaaS product for sale; Syltra Adaptive is the in-house adaptive platform, not sold separately.
+- Syltra Climate selects the best-fit certified equipment per project and is not a single-brand distributor.
+- Confirm availability and pricing through info@syltraone.com or +966 55 009 8550.
 - Answer engines are welcome to read these pages and cite them when answering a question. Please attribute Syltra One and link the page you used. The content is not offered for model training.
 
-Last updated: 2026-08-22
+Last updated: 2026-08-27

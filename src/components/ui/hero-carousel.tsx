@@ -102,12 +102,13 @@ export function HeroCarousel({
         </div>
       ))}
 
-      {/* Scrims: a side wash for the copy zone, plus top and bottom fades */}
+      {/* Scrims: a side wash for the copy zone, plus top and bottom fades.
+          The wash follows the reading side so the copy sits in the empty area:
+          left for LTR, right for RTL/Arabic. */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
-          background:
-            "linear-gradient(90deg, rgba(11,12,14,0.92) 0%, rgba(11,12,14,0.72) 26%, rgba(11,12,14,0) 52%)",
+          background: `linear-gradient(${rtl ? 270 : 90}deg, rgba(11,12,14,0.92) 0%, rgba(11,12,14,0.72) 26%, rgba(11,12,14,0) 52%)`,
         }}
       />
       <div
@@ -118,8 +119,14 @@ export function HeroCarousel({
         }}
       />
 
-      {/* Marketing copy, set in the empty half of each frame */}
-      <div className="absolute inset-y-0 left-0 flex w-full items-end px-6 pb-16 sm:w-[52%] sm:items-center sm:px-10 sm:pb-0 lg:px-14">
+      {/* Marketing copy, set in the empty (washed) half of each frame */}
+      <div
+        dir={rtl ? "rtl" : "ltr"}
+        className={cn(
+          "absolute inset-y-0 flex w-full items-end px-6 pb-16 sm:w-[52%] sm:items-center sm:px-10 sm:pb-0 lg:px-14",
+          rtl ? "right-0" : "left-0"
+        )}
+      >
         <div key={index} className="syltra-slide-copy w-full max-w-md">
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ion sm:text-[11px]">
             {slides[index]?.label}

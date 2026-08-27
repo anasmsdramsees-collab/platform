@@ -53,8 +53,8 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
   climate: {
     h1: { ar: "مناخ ذكي. راحة محسوبة.", en: "Smart climate. Measured comfort." },
     intro: {
-      ar: "قسم هندسة التكييف ضمن سيلترا وان، التوريد والتنفيذ الميداني والصيانة الوقائية والتحكّم الذكي، من دراسة الموقع حتى التشغيل والدعم.",
-      en: "The HVAC engineering division of Syltra One, supply, field execution, preventive maintenance and smart control, from site study to operation and support.",
+      ar: "في سيلترا كلايمت نتولّى تكييف مشروعك من أوّله لآخره: ندرس المكان، نختار النظام الأنسب، ننفّذه بأيدٍ هندسية، ونبقى معك بالصيانة — راحة تدوم وفاتورة أخفّ.",
+      en: "At Syltra Climate we handle your cooling end to end: we study the space, pick the right system, install it with real engineering, and stay with you for maintenance — comfort that lasts and a lighter bill.",
     },
     heroSlides: [
       { title: { ar: "أنظمة مركزية وVRF", en: "Central & VRF systems" }, caption: { ar: "توزيع متّزن للهواء عبر دكت مصمّم بعناية أو حلول VRF متعددة المناطق.", en: "Balanced air distribution through engineered ducting or multi-zone VRF." }, image: "/divisions/climate-2.jpg" },
@@ -244,8 +244,8 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
   glide: {
     h1: { ar: "حركة آمنة ترفع قيمة المبنى.", en: "Safe movement that lifts a building's value." },
     intro: {
-      ar: "قسم المصاعد وأنظمة الحركة الرأسية ضمن سيلترا وان، نغطّي دورة حياة المصعد بالكامل، من الدراسة الفنية واختيار النظام إلى التوريد والتركيب والتشغيل والصيانة.",
-      en: "The elevators and vertical-mobility division of Syltra One, covering the full lift lifecycle, from technical study and system selection to supply, installation, operation and maintenance.",
+      ar: "المصعد يرفع قيمة مبناك كل يوم. في سيلترا جلايد نرافقك من أول فكرة حتى آخر زيارة صيانة: دراسة، اختيار، تركيب، وتشغيل آمن يدوم.",
+      en: "An elevator adds value to your building every day. At Syltra Glide we walk with you from the first idea to the last service visit: study, selection, installation, and safe operation that lasts.",
     },
     heroSlides: [
       { title: { ar: "مصاعد الركاب والفلل", en: "Passenger & villa lifts" }, caption: { ar: "حلول رأسية سلسة للسكني والتجاري بمعايير أمان عالية.", en: "Smooth vertical solutions for residential and commercial with high safety standards." }, image: "/divisions/glide.jpg" },
@@ -461,8 +461,8 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
   shield: {
     h1: { ar: "حماية متكاملة. أنظمة تعمل وقت الحاجة.", en: "Integrated protection. Systems that work when it matters." },
     intro: {
-      ar: "قسم الأمن والسلامة والأنظمة الكهربائية ضمن سيلترا وان، الحريق والمراقبة والتحكّم بالدخول والتيار المنخفض والبنية الكهربائية، من التصميم حتى التشغيل والصيانة.",
-      en: "The security, safety and electrical division of Syltra One, fire, surveillance, access control, low-current and electrical infrastructure, from design to operation and maintenance.",
+      ar: "الأمان لا يحتمل التأجيل. في سيلترا شيلد نحمي مبناك وناسه بأنظمة حريق ومراقبة وتحكّم دخول وكهرباء، مصمّمة لتعمل في اللحظة التي تحتاجها فيها.",
+      en: "Safety can't wait. At Syltra Shield we protect your building and its people with fire, surveillance, access-control and electrical systems — built to work the moment you need them.",
     },
     heroSlides: [
       { title: { ar: "الحريق والإنذار", en: "Fire & alarm" }, caption: { ar: "كشف وإنذار ومكافحة وفق كود البناء واشتراطات الدفاع المدني.", en: "Detection, alarm and suppression per building code and civil-defense requirements." }, image: "/divisions/shield-1.jpg" },
@@ -678,8 +678,8 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
   os: {
     h1: { ar: "برمجيات تُبنى للتشغيل الحقيقي.", en: "Software built for real operation." },
     intro: {
-      ar: "ذراع البرمجيات والذكاء الاصطناعي في سيلترا وان، منتجات جاهزة وأنظمة مخصّصة وحلول ذكاء اصطناعي، من الفكرة حتى التشغيل والدعم المستمر.",
-      en: "The software and AI arm of Syltra One, ready products, custom systems and AI solutions, from idea to operation and ongoing support.",
+      ar: "البرمجيات الجيدة تختفي خلف عمل يسير بسلاسة. في سيلترا او-إس نبني لك ما تحتاجه فعلًا — منتج جاهز أو نظام على مقاسك أو ذكاء اصطناعي — ونبقى معك بعد الإطلاق.",
+      en: "Good software disappears behind a business that just runs. At Syltra OS we build what you actually need — a ready product, a tailored system, or AI — and stay with you after launch.",
     },
     heroSlides: [
       { title: { ar: "منتجات SaaS جاهزة", en: "Ready SaaS products" }, caption: { ar: "أنظمة تشغيل تبدأ بها سريعًا باشتراك، مثل سيلترا ERP.", en: "Operating systems you start with fast on a subscription, like Syltra ERP." }, image: "/divisions/os.jpg" },

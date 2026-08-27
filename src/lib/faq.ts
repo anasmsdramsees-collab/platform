@@ -121,6 +121,13 @@ export const DIVISION_FAQ: Record<string, QA[]> = {
       },
     },
     {
+      q: { ar: "هل تلتزمون بماركة واحدة أم تختارون الأنسب؟", en: "Are you tied to one brand, or do you pick the best fit?" },
+      a: {
+        ar: "لسنا وكلاء لماركة واحدة؛ نرشّح المعدات المعتمدة الأنسب لمشروعك حسب الأداء والحمل والميزانية — قرار هندسي محايد لمصلحتك.",
+        en: "We're not a single-brand agency; we recommend the certified equipment that best fits your project by performance, load and budget — a neutral engineering decision in your interest.",
+      },
+    },
+    {
       q: { ar: "كيف أحصل على عرض سعر؟", en: "How do I get a quote?" },
       a: {
         ar: "نبدأ بمعاينة الموقع ودراسة الحمل، ثم نجهّز عرضًا واضحًا للتوريد والتنفيذ والصيانة.",

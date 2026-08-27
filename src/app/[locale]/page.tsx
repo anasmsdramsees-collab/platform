@@ -9,6 +9,7 @@ import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 import { pageMetadata } from "@/lib/seo";
 import { DIVISIONS, divisionName } from "@/lib/divisions";
+import VisionBand from "@/components/vision-band";
 
 /** Syltra One umbrella accent — silver. */
 const ONE = "#BFC6D0";
@@ -219,6 +220,9 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+
+      {/* Vision 2030 */}
+      <VisionBand locale={locale} />
 
       {/* CTA */}
       <section>

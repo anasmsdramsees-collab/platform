@@ -7,6 +7,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { pageMetadata } from "@/lib/seo";
 import { DIVISIONS, divisionName } from "@/lib/divisions";
 import { assetPath } from "@/lib/base-path";
+import VisionBand from "@/components/vision-band";
 
 /** Syltra One umbrella accent — silver. */
 const ONE = "#BFC6D0";
@@ -177,6 +178,9 @@ export default async function AboutPage({
           </InfoCard>
         </div>
       </section>
+
+      {/* Vision 2030 */}
+      <VisionBand locale={locale} />
 
       {/* Roadmap */}
       <section>

@@ -20,7 +20,7 @@ export default function DivisionPage({
   const name = divisionName(division, locale);
 
   const heroSlides = c.heroSlides.map((s) => ({
-    src: division.image,
+    src: s.image ?? division.image,
     label: name,
     title: pick(s.title, locale),
     caption: pick(s.caption, locale),

@@ -17,6 +17,7 @@ interface SysItem {
 interface HeroSlide {
   title: Bi;
   caption: Bi;
+  image?: string; // optional per-slide hero image; falls back to division.image
 }
 
 export interface DivisionContent {
@@ -51,9 +52,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       en: "The HVAC engineering division of Syltra One, supply, field execution, preventive maintenance and smart control, from site study to operation and support.",
     },
     heroSlides: [
-      { title: { ar: "أنظمة مركزية وVRF", en: "Central & VRF systems" }, caption: { ar: "توزيع متّزن للهواء عبر دكت مصمّم بعناية أو حلول VRF متعددة المناطق.", en: "Balanced air distribution through engineered ducting or multi-zone VRF." } },
-      { title: { ar: "جودة هواء وتهوية", en: "Air quality & ventilation" }, caption: { ar: "فلترة وتهوية وتحكّم بالرطوبة لهواء أنظف داخل كل غرفة.", en: "Filtration, ventilation and humidity control for cleaner air in every room." } },
-      { title: { ar: "صيانة وتحكّم ذكي", en: "Maintenance & smart control" }, caption: { ar: "عقود صيانة وربط بالتطبيق يحافظ على الأداء ويخفّض الاستهلاك.", en: "Service contracts and app control that sustain performance and cut consumption." } },
+      { title: { ar: "أنظمة مركزية وVRF", en: "Central & VRF systems" }, caption: { ar: "توزيع متّزن للهواء عبر دكت مصمّم بعناية أو حلول VRF متعددة المناطق.", en: "Balanced air distribution through engineered ducting or multi-zone VRF." }, image: "/divisions/climate-2.jpg" },
+      { title: { ar: "جودة هواء وتهوية", en: "Air quality & ventilation" }, caption: { ar: "فلترة وتهوية وتحكّم بالرطوبة لهواء أنظف داخل كل غرفة.", en: "Filtration, ventilation and humidity control for cleaner air in every room." }, image: "/divisions/climate.jpg" },
+      { title: { ar: "صيانة وتحكّم ذكي", en: "Maintenance & smart control" }, caption: { ar: "عقود صيانة وربط بالتطبيق يحافظ على الأداء ويخفّض الاستهلاك.", en: "Service contracts and app control that sustain performance and cut consumption." }, image: "/divisions/climate-2.jpg" },
     ],
     servicesEyebrow: { ar: "الخدمات", en: "Services" },
     servicesTitle: { ar: "من التصميم إلى التشغيل، منظومة واحدة منسّقة.", en: "From design to operation, one coordinated system." },

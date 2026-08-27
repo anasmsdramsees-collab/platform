@@ -119,14 +119,32 @@ export default function DivisionPage({
             {c.systems.map((s, i) => (
               <div
                 key={i}
-                className="relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-xl border border-hairline p-4"
-                style={{ background: `linear-gradient(150deg, ${hexA(accent, 0.14)}, rgba(23,24,28,0.6))` }}
+                className="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-xl border border-hairline p-4"
+                style={s.img ? undefined : { background: `linear-gradient(150deg, ${hexA(accent, 0.14)}, rgba(23,24,28,0.6))` }}
               >
-                <span className="font-mono text-[11px]" style={{ color: accent }}>
+                {s.img ? (
+                  <>
+                    <Image
+                      src={assetPath(s.img)}
+                      alt={pick(s.title, locale)}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `linear-gradient(to top, rgba(11,12,14,0.92) 6%, rgba(11,12,14,0.35) 46%, rgba(11,12,14,0.05) 82%)`,
+                      }}
+                    />
+                    <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: accent }} aria-hidden />
+                  </>
+                ) : null}
+                <span className="relative font-mono text-[11px]" style={{ color: accent }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <p className="mt-1 font-semibold leading-snug text-platinum">{pick(s.title, locale)}</p>
-                {s.en ? <p className="mt-0.5 font-mono text-[10.5px] uppercase tracking-widest text-slate">{s.en}</p> : null}
+                <p className="relative mt-1 font-semibold leading-snug text-platinum">{pick(s.title, locale)}</p>
+                {s.en ? <p className="relative mt-0.5 font-mono text-[10.5px] uppercase tracking-widest text-slate">{s.en}</p> : null}
               </div>
             ))}
           </div>

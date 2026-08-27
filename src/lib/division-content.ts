@@ -12,6 +12,7 @@ interface Item {
 interface SysItem {
   title: Bi;
   en: string; // small latin sublabel (same in both locales)
+  img?: string; // optional illustrative image under /public
 }
 interface HeroSlide {
   title: Bi;
@@ -67,12 +68,12 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
     systemsEyebrow: { ar: "الأنظمة", en: "Systems" },
     systemsTitle: { ar: "حلول التكييف التي نغطّيها.", en: "The HVAC solutions we cover." },
     systems: [
-      { title: { ar: "التكييف المركزي", en: "" }, en: "Central AC" },
-      { title: { ar: "أنظمة VRF/VRV", en: "" }, en: "VRF / VRV" },
-      { title: { ar: "دكت وتوزيع الهواء", en: "" }, en: "Ducted air" },
-      { title: { ar: "سبليت وملتي سبليت", en: "" }, en: "Split systems" },
-      { title: { ar: "تهوية وتجديد الهواء", en: "" }, en: "Ventilation" },
-      { title: { ar: "التحكّم والأتمتة", en: "" }, en: "Controls" },
+      { title: { ar: "التكييف المركزي", en: "" }, en: "Central AC", img: "/divisions/climate-systems/central.jpg" },
+      { title: { ar: "أنظمة VRF/VRV", en: "" }, en: "VRF / VRV", img: "/divisions/climate-systems/vrf.jpg" },
+      { title: { ar: "دكت وتوزيع الهواء", en: "" }, en: "Ducted air", img: "/divisions/climate-systems/ducted.jpg" },
+      { title: { ar: "سبليت وملتي سبليت", en: "" }, en: "Split systems", img: "/divisions/climate-systems/split.jpg" },
+      { title: { ar: "تهوية وتجديد الهواء", en: "" }, en: "Ventilation", img: "/divisions/climate-systems/ventilation.jpg" },
+      { title: { ar: "التحكّم والأتمتة", en: "" }, en: "Controls", img: "/divisions/climate-systems/controls.jpg" },
     ],
     systemsNote: { ar: "الاختيار يعتمد على المساحة والاستخدام والحمل الحراري وعدد المناطق ومستوى التحكّم المطلوب.", en: "Selection depends on space, usage, heat load, number of zones and the control level required." },
     statementTitle: { ar: "الراحة أكثر من درجة حرارة.", en: "Comfort is more than a temperature." },

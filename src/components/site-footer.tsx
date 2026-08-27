@@ -78,12 +78,14 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
             <div>
               <p className={headCls}>{locale === "ar" ? "الأقسام" : "Divisions"}</p>
-              {DIVISIONS.map((d, i) => (
-                <Link
-                  key={d.key}
-                  href={`/${locale}${d.href}`}
-                  className={i === 0 ? "mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum" : linkCls}
-                >
+              <Link
+                href={`/${locale}`}
+                className="mt-3 block text-sm font-semibold text-chrome-dim transition-colors hover:text-platinum"
+              >
+                {locale === "ar" ? "سيلترا وان — الرئيسية" : "Syltra One — Home"}
+              </Link>
+              {DIVISIONS.map((d) => (
+                <Link key={d.key} href={`/${locale}${d.href}`} className={linkCls}>
                   {divisionName(d, locale)}
                 </Link>
               ))}

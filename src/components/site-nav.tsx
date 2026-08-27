@@ -62,6 +62,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
   } else if (mode === "division" && activeDivision) {
     const base = `/${locale}${activeDivision.href}`;
     links = [
+      { href: `/${locale}`, label: locale === "ar" ? "سيلترا وان" : "Syltra One" },
       { href: `${base}#services`, label: t.services },
       { href: `${base}#solutions`, label: t.solutions },
       { href: `${base}#flow`, label: t.flow },
@@ -90,6 +91,16 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
       {divOpen && (
         <div className="absolute end-0 top-full min-w-[240px] pt-3">
           <div className="overflow-hidden rounded-xl border border-hairline bg-void/95 p-1.5 shadow-2xl shadow-black/40 backdrop-blur-md">
+            <Link
+              href={`/${locale}`}
+              onClick={() => setDivOpen(false)}
+              className="mb-1 flex items-center gap-3 rounded-lg border-b border-hairline px-3 py-2.5 transition-colors hover:bg-graphite"
+            >
+              <span className="h-2.5 w-2.5 flex-none rounded-full" style={{ background: "#BFC6D0" }} aria-hidden />
+              <span className="text-[13px] font-semibold text-platinum">
+                {locale === "ar" ? "سيلترا وان — الرئيسية" : "Syltra One — Home"}
+              </span>
+            </Link>
             {DIVISIONS.map((d) => (
               <Link
                 key={d.key}

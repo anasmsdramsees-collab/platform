@@ -12,12 +12,14 @@ export function pageMetadata({
   title,
   description,
   image = "/brand/og-default.jpg",
+  keywords,
 }: {
   locale: Locale;
   path: string;
   title: string;
   description: string;
   image?: string;
+  keywords?: string[];
 }): Metadata {
   const url = `${siteUrl}/${locale}${path}`;
   const languages = Object.fromEntries(
@@ -28,6 +30,7 @@ export function pageMetadata({
     metadataBase: new URL(siteUrl),
     title,
     description,
+    ...(keywords && keywords.length ? { keywords } : {}),
     alternates: {
       canonical: url,
       languages: { ...languages, "x-default": `${siteUrl}/en${path}` },

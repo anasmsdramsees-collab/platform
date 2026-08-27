@@ -16,11 +16,20 @@ export async function generateMetadata({
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const c = DIVISION_CONTENT[KEY];
+  const geo = locale === "ar" ? ["السعودية", "الرياض"] : ["Saudi Arabia", "Riyadh"];
+  const keywords = [
+    divisionName(division, locale),
+    locale === "ar" ? division.label.ar : division.label.en,
+    ...c.systems.map((s) => (locale === "ar" ? s.title.ar : s.title.ar)),
+    ...c.systems.map((s) => s.en).filter(Boolean),
+    ...geo,
+  ].filter(Boolean) as string[];
   return pageMetadata({
     locale,
     path: division.href,
     title: `${divisionName(division, locale)} | ${pick(c.h1, locale)}`,
     description: pick(c.intro, locale),
+    keywords,
   });
 }
 

@@ -3,6 +3,8 @@ import { siteUrl } from "@/lib/site-config";
 import { locales } from "@/lib/i18n/config";
 import { productCatalog } from "@/lib/products";
 import { landings } from "@/lib/landing";
+import { DIVISIONS } from "@/lib/divisions";
+import { DIVISION_CONTENT } from "@/lib/division-content";
 
 // Static export needs these emitted at build time.
 export const dynamic = "force-static";
@@ -40,6 +42,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: route.priority,
         alternates: { languages: languagesFor(route.path) },
       });
+    }
+  }
+
+  // Division pages + their service detail pages.
+  for (const division of DIVISIONS) {
+    for (const locale of locales) {
+      entries.push({
+        url: `${siteUrl}/${locale}${division.href}`,
+        lastModified,
+        changeFrequency: "weekly",
+        priority: 0.9,
+        alternates: { languages: languagesFor(division.href) },
+      });
+    }
+    const content = DIVISION_CONTENT[division.key as keyof typeof DIVISION_CONTENT];
+    if (content) {
+      for (const s of content.systems) {
+        if (!s.slug) continue;
+        const path = `${division.href}/${s.slug}`;
+        for (const locale of locales) {
+          entries.push({
+            url: `${siteUrl}/${locale}${path}`,
+            lastModified,
+            changeFrequency: "monthly",
+            priority: 0.8,
+            alternates: { languages: languagesFor(path) },
+          });
+        }
+      }
     }
   }
 

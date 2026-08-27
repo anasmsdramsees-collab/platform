@@ -26,7 +26,16 @@ export async function generateMetadata({
   const name = divisionName(division, locale);
   const title = `${pick(found.service.title, locale)} | ${name}`;
   const description = found.service.lead ? pick(found.service.lead, locale) : title;
-  return pageMetadata({ locale, path: `${division.href}/${service}`, title, description });
+  const geo = locale === "ar" ? ["السعودية", "الرياض"] : ["Saudi Arabia", "Riyadh"];
+  const keywords = [
+    found.service.title.ar,
+    found.service.title.en,
+    found.service.en,
+    name,
+    locale === "ar" ? division.label.ar : division.label.en,
+    ...geo,
+  ].filter(Boolean) as string[];
+  return pageMetadata({ locale, path: `${division.href}/${service}`, title, description, keywords });
 }
 
 export default async function Page({

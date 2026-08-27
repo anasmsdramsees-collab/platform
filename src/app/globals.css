@@ -144,3 +144,9 @@ html[dir="rtl"] {
   overflow-wrap: normal;
   hyphens: none;
 }
+/* Arabic script is cursive: letter-spacing / tracking splits the letter joins,
+   so words look chopped apart. Disable tracking under RTL. */
+html[dir="rtl"] [class*="tracking-"],
+html[dir="rtl"] .font-mono {
+  letter-spacing: normal;
+}

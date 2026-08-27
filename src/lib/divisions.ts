@@ -63,7 +63,7 @@ export const DIVISIONS: DivisionMeta[] = [
     label: { ar: "المصاعد والحركة الرأسية", en: "Elevators & vertical mobility" },
     tagline: {
       ar: "توريد وتركيب وتشغيل وصيانة، وتحديث للمصاعد القائمة بمعايير أمان عالية.",
-      en: "Supply, installation, operation and maintenance — plus modernization of existing lifts.",
+      en: "Supply, installation, operation and maintenance, plus modernization of existing lifts.",
     },
   },
   {
@@ -90,8 +90,8 @@ export const DIVISIONS: DivisionMeta[] = [
     name: { ar: "سيلترا او إس", en: "Syltra OS" },
     label: { ar: "البرمجيات والذكاء الاصطناعي", en: "Software & AI" },
     tagline: {
-      ar: "منتجات جاهزة وأنظمة مخصّصة وحلول ذكاء اصطناعي — من الفكرة حتى التشغيل.",
-      en: "Ready products, custom systems and AI solutions — from idea to operation.",
+      ar: "منتجات جاهزة وأنظمة مخصّصة وحلول ذكاء اصطناعي، من الفكرة حتى التشغيل.",
+      en: "Ready products, custom systems and AI solutions, from idea to operation.",
     },
   },
 ];

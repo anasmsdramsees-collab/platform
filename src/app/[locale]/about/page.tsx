@@ -9,7 +9,7 @@ import { DIVISIONS, divisionName } from "@/lib/divisions";
 import { assetPath } from "@/lib/base-path";
 import VisionBand from "@/components/vision-band";
 
-/** Syltra One umbrella accent — silver. */
+/** Syltra One umbrella accent, silver. */
 const ONE = "#BFC6D0";
 
 export async function generateMetadata({

@@ -11,7 +11,7 @@ import { pageMetadata } from "@/lib/seo";
 import { DIVISIONS, divisionName } from "@/lib/divisions";
 import VisionBand from "@/components/vision-band";
 
-/** Syltra One umbrella accent — silver. */
+/** Syltra One umbrella accent, silver. */
 const ONE = "#BFC6D0";
 
 const T = {
@@ -34,7 +34,7 @@ const T = {
       { n: "03", t: "أنظمة تتحدّث مع بعضها", d: "المنزل والتكييف والأمن والمصاعد في منظومة واحدة متكاملة." },
     ],
     ctaTitle: "عندك مشروع يشمل أكثر من قسم؟",
-    ctaSub: "نجمع أقسام سيلترا وان في خطة واحدة واضحة — من الدراسة حتى التشغيل والصيانة.",
+    ctaSub: "نجمع أقسام سيلترا وان في خطة واحدة واضحة، من الدراسة حتى التشغيل والصيانة.",
     ctaBtn: "تواصل معنا",
   },
   en: {
@@ -56,7 +56,7 @@ const T = {
       { n: "03", t: "Systems that talk", d: "Home, climate, security and elevators in one integrated ecosystem." },
     ],
     ctaTitle: "A project that spans more than one division?",
-    ctaSub: "We bring Syltra One's divisions into one clear plan — from study to operation and maintenance.",
+    ctaSub: "We bring Syltra One's divisions into one clear plan, from study to operation and maintenance.",
     ctaBtn: "Contact us",
   },
 } as const;
@@ -133,7 +133,7 @@ export default async function HomePage({
           </div>
         </div>
 
-        {/* Hero carousel — divisions */}
+        {/* Hero carousel, divisions */}
         <div className="relative z-0 mt-4 w-full sm:mt-10">
           <HeroCarousel slides={heroSlides} rtl={locale === "ar"} />
         </div>

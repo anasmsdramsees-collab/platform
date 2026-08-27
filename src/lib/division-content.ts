@@ -46,8 +46,8 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
   climate: {
     h1: { ar: "مناخ ذكي. راحة محسوبة.", en: "Smart climate. Measured comfort." },
     intro: {
-      ar: "قسم هندسة التكييف ضمن سيلترا وان — التوريد والتنفيذ الميداني والصيانة الوقائية والتحكّم الذكي، من دراسة الموقع حتى التشغيل والدعم.",
-      en: "The HVAC engineering division of Syltra One — supply, field execution, preventive maintenance and smart control, from site study to operation and support.",
+      ar: "قسم هندسة التكييف ضمن سيلترا وان، التوريد والتنفيذ الميداني والصيانة الوقائية والتحكّم الذكي، من دراسة الموقع حتى التشغيل والدعم.",
+      en: "The HVAC engineering division of Syltra One, supply, field execution, preventive maintenance and smart control, from site study to operation and support.",
     },
     heroSlides: [
       { title: { ar: "أنظمة مركزية وVRF", en: "Central & VRF systems" }, caption: { ar: "توزيع متّزن للهواء عبر دكت مصمّم بعناية أو حلول VRF متعددة المناطق.", en: "Balanced air distribution through engineered ducting or multi-zone VRF." } },
@@ -55,7 +55,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       { title: { ar: "صيانة وتحكّم ذكي", en: "Maintenance & smart control" }, caption: { ar: "عقود صيانة وربط بالتطبيق يحافظ على الأداء ويخفّض الاستهلاك.", en: "Service contracts and app control that sustain performance and cut consumption." } },
     ],
     servicesEyebrow: { ar: "الخدمات", en: "Services" },
-    servicesTitle: { ar: "من التصميم إلى التشغيل — منظومة واحدة منسّقة.", en: "From design to operation — one coordinated system." },
+    servicesTitle: { ar: "من التصميم إلى التشغيل، منظومة واحدة منسّقة.", en: "From design to operation, one coordinated system." },
     services: [
       { title: { ar: "دراسة الحمل الحراري", en: "Heat-load study" }, desc: { ar: "حساب دقيق للأحمال يحدّد النظام والسعة الأنسب لكل مساحة.", en: "Accurate load calculation that sizes the right system for each space." } },
       { title: { ar: "التوريد والتركيب", en: "Supply & installation" }, desc: { ar: "معدات معتمدة وتنفيذ ميداني منضبط من المصدر حتى التشغيل.", en: "Certified equipment and disciplined field execution end to end." } },
@@ -76,7 +76,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
     ],
     systemsNote: { ar: "الاختيار يعتمد على المساحة والاستخدام والحمل الحراري وعدد المناطق ومستوى التحكّم المطلوب.", en: "Selection depends on space, usage, heat load, number of zones and the control level required." },
     statementTitle: { ar: "الراحة أكثر من درجة حرارة.", en: "Comfort is more than a temperature." },
-    statementBody: { ar: "نوازن الحرارة والرطوبة وتجديد الهواء والصوت — لتشعر بالفرق دون أن تراه.", en: "We balance heat, humidity, fresh air and sound — so you feel the difference without seeing it." },
+    statementBody: { ar: "نوازن الحرارة والرطوبة وتجديد الهواء والصوت، لتشعر بالفرق دون أن تراه.", en: "We balance heat, humidity, fresh air and sound, so you feel the difference without seeing it." },
     flowEyebrow: { ar: "مسار العمل", en: "How we work" },
     flowTitle: { ar: "مسار واحد من المعاينة حتى الصيانة.", en: "One path from survey to maintenance." },
     flow: [
@@ -93,8 +93,8 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
   glide: {
     h1: { ar: "حركة آمنة ترفع قيمة المبنى.", en: "Safe movement that lifts a building's value." },
     intro: {
-      ar: "قسم المصاعد وأنظمة الحركة الرأسية ضمن سيلترا وان — نغطّي دورة حياة المصعد بالكامل، من الدراسة الفنية واختيار النظام إلى التوريد والتركيب والتشغيل والصيانة.",
-      en: "The elevators and vertical-mobility division of Syltra One — covering the full lift lifecycle, from technical study and system selection to supply, installation, operation and maintenance.",
+      ar: "قسم المصاعد وأنظمة الحركة الرأسية ضمن سيلترا وان، نغطّي دورة حياة المصعد بالكامل، من الدراسة الفنية واختيار النظام إلى التوريد والتركيب والتشغيل والصيانة.",
+      en: "The elevators and vertical-mobility division of Syltra One, covering the full lift lifecycle, from technical study and system selection to supply, installation, operation and maintenance.",
     },
     heroSlides: [
       { title: { ar: "مصاعد الركاب والفلل", en: "Passenger & villa lifts" }, caption: { ar: "حلول رأسية سلسة للسكني والتجاري بمعايير أمان عالية.", en: "Smooth vertical solutions for residential and commercial with high safety standards." } },
@@ -112,7 +112,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       { title: { ar: "العقود السنوية والفحص", en: "Annual contracts & inspection" }, desc: { ar: "عقود سنوية وفحص وتقارير حالة دورية.", en: "Annual contracts, inspection and periodic condition reports." } },
     ],
     systemsEyebrow: { ar: "الحلول", en: "Solutions" },
-    systemsTitle: { ar: "مصاعد لكل استخدام — سكني وتجاري وضيافة.", en: "Lifts for every use — residential, commercial and hospitality." },
+    systemsTitle: { ar: "مصاعد لكل استخدام، سكني وتجاري وضيافة.", en: "Lifts for every use, residential, commercial and hospitality." },
     systems: [
       { title: { ar: "مصاعد الركاب", en: "" }, en: "Passenger" },
       { title: { ar: "الفلل والمنازل", en: "" }, en: "Home & villa" },
@@ -123,9 +123,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       { title: { ar: "مصاعد الطعام", en: "" }, en: "Food lifts" },
       { title: { ar: "المولات والمباني", en: "" }, en: "Malls & public" },
     ],
-    systemsNote: { ar: "خيارات هندسية بغرفة ماكينة (MR) أو بدونها (MRL) — يعتمد الاختيار على الارتفاع والحمولة والسرعة والبئر وعدد الرحلات.", en: "Machine-room (MR) or machine-room-less (MRL) options — selection depends on rise, load, speed, shaft and traffic." },
+    systemsNote: { ar: "خيارات هندسية بغرفة ماكينة (MR) أو بدونها (MRL), يعتمد الاختيار على الارتفاع والحمولة والسرعة والبئر وعدد الرحلات.", en: "Machine-room (MR) or machine-room-less (MRL) options, selection depends on rise, load, speed, shaft and traffic." },
     statementTitle: { ar: "الكابينة جزء من هوية المكان.", en: "The cabin is part of the space's identity." },
-    statementBody: { ar: "ننسّق المواد والإضاءة والأرضيات والمرايا والدرابزين لتناسب هوية المشروع — ستانلس ستيل، جرافيت ومرايا، نحاسي وذهبي.", en: "We coordinate materials, lighting, floors, mirrors and handrails to fit the project — stainless, graphite and mirror, brass and gold." },
+    statementBody: { ar: "ننسّق المواد والإضاءة والأرضيات والمرايا والدرابزين لتناسب هوية المشروع، ستانلس ستيل، جرافيت ومرايا، نحاسي وذهبي.", en: "We coordinate materials, lighting, floors, mirrors and handrails to fit the project, stainless, graphite and mirror, brass and gold." },
     flowEyebrow: { ar: "مسار العمل", en: "How we work" },
     flowTitle: { ar: "مسار واحد من الدراسة حتى التشغيل.", en: "One path from study to operation." },
     flow: [
@@ -136,14 +136,14 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       { title: { ar: "التسليم والصيانة", en: "Handover & service" }, desc: { ar: "تشغيل ورعاية.", en: "Operate & care." } },
     ],
     ctaTitle: { ar: "ارفع تجربة المبنى مع سيلترا جلايد.", en: "Elevate the building experience with Syltra Glide." },
-    ctaBody: { ar: "ابدأ بدراسة مشروعك — نحدّد النظام المناسب ونجهّز عرضًا واضحًا للتوريد والتنفيذ والصيانة.", en: "Start with a project study — we select the right system and prepare a clear proposal for supply, execution and maintenance." },
+    ctaBody: { ar: "ابدأ بدراسة مشروعك، نحدّد النظام المناسب ونجهّز عرضًا واضحًا للتوريد والتنفيذ والصيانة.", en: "Start with a project study, we select the right system and prepare a clear proposal for supply, execution and maintenance." },
   },
 
   shield: {
     h1: { ar: "حماية متكاملة. أنظمة تعمل وقت الحاجة.", en: "Integrated protection. Systems that work when it matters." },
     intro: {
-      ar: "قسم الأمن والسلامة والأنظمة الكهربائية ضمن سيلترا وان — الحريق والمراقبة والتحكّم بالدخول والتيار المنخفض والبنية الكهربائية، من التصميم حتى التشغيل والصيانة.",
-      en: "The security, safety and electrical division of Syltra One — fire, surveillance, access control, low-current and electrical infrastructure, from design to operation and maintenance.",
+      ar: "قسم الأمن والسلامة والأنظمة الكهربائية ضمن سيلترا وان، الحريق والمراقبة والتحكّم بالدخول والتيار المنخفض والبنية الكهربائية، من التصميم حتى التشغيل والصيانة.",
+      en: "The security, safety and electrical division of Syltra One, fire, surveillance, access control, low-current and electrical infrastructure, from design to operation and maintenance.",
     },
     heroSlides: [
       { title: { ar: "الحريق والإنذار", en: "Fire & alarm" }, caption: { ar: "كشف وإنذار ومكافحة وفق كود البناء واشتراطات الدفاع المدني.", en: "Detection, alarm and suppression per building code and civil-defense requirements." } },
@@ -151,7 +151,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       { title: { ar: "الكهرباء والتيار المنخفض", en: "Electrical & low-current" }, caption: { ar: "بنية كهربائية وشبكات منظّمة وموثوقة.", en: "Organized, reliable electrical and network infrastructure." } },
     ],
     servicesEyebrow: { ar: "الخدمات", en: "Services" },
-    servicesTitle: { ar: "تصميم وتوريد وتنفيذ وصيانة — تحت مظلة واحدة.", en: "Design, supply, execution and maintenance — under one roof." },
+    servicesTitle: { ar: "تصميم وتوريد وتنفيذ وصيانة، تحت مظلة واحدة.", en: "Design, supply, execution and maintenance, under one roof." },
     services: [
       { title: { ar: "التصميم والدراسة الفنية", en: "Design & study" }, desc: { ar: "مخططات تلبّي الكود والاشتراطات الدفاعية.", en: "Drawings that meet code and civil-defense requirements." } },
       { title: { ar: "التوريد والتركيب", en: "Supply & installation" }, desc: { ar: "معدات معتمدة وتنفيذ ميداني منضبط.", en: "Certified equipment and disciplined field execution." } },
@@ -172,9 +172,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       { title: { ar: "النداء الصوتي والإخلاء", en: "" }, en: "PA & evacuation" },
       { title: { ar: "الأتمتة والتحكّم", en: "" }, en: "Automation" },
     ],
-    systemsNote: { ar: "تصميم وتنفيذ وفق كود البناء السعودي واشتراطات الدفاع المدني — مع توثيق ومطابقة لكل نظام.", en: "Designed and executed per the Saudi building code and civil-defense requirements — with documentation and compliance for every system." },
+    systemsNote: { ar: "تصميم وتنفيذ وفق كود البناء السعودي واشتراطات الدفاع المدني، مع توثيق ومطابقة لكل نظام.", en: "Designed and executed per the Saudi building code and civil-defense requirements, with documentation and compliance for every system." },
     statementTitle: { ar: "السلامة لا تُختبر وقت الحريق.", en: "Safety isn't tested during the fire." },
-    statementBody: { ar: "نبني الأنظمة لتعمل في اللحظة الحرجة — اختبار دوري وصيانة موثّقة تُبقيها جاهزة قبل الحاجة إليها.", en: "We build systems to work at the critical moment — periodic testing and documented maintenance keep them ready before they're needed." },
+    statementBody: { ar: "نبني الأنظمة لتعمل في اللحظة الحرجة، اختبار دوري وصيانة موثّقة تُبقيها جاهزة قبل الحاجة إليها.", en: "We build systems to work at the critical moment, periodic testing and documented maintenance keep them ready before they're needed." },
     flowEyebrow: { ar: "مسار العمل", en: "How we work" },
     flowTitle: { ar: "من التصميم حتى الجاهزية الدائمة.", en: "From design to permanent readiness." },
     flow: [
@@ -191,11 +191,11 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
   os: {
     h1: { ar: "برمجيات تُبنى للتشغيل الحقيقي.", en: "Software built for real operation." },
     intro: {
-      ar: "ذراع البرمجيات والذكاء الاصطناعي في سيلترا وان — منتجات جاهزة وأنظمة مخصّصة وحلول ذكاء اصطناعي، من الفكرة حتى التشغيل والدعم المستمر.",
-      en: "The software and AI arm of Syltra One — ready products, custom systems and AI solutions, from idea to operation and ongoing support.",
+      ar: "ذراع البرمجيات والذكاء الاصطناعي في سيلترا وان، منتجات جاهزة وأنظمة مخصّصة وحلول ذكاء اصطناعي، من الفكرة حتى التشغيل والدعم المستمر.",
+      en: "The software and AI arm of Syltra One, ready products, custom systems and AI solutions, from idea to operation and ongoing support.",
     },
     heroSlides: [
-      { title: { ar: "منتجات SaaS جاهزة", en: "Ready SaaS products" }, caption: { ar: "أنظمة تشغيل تبدأ بها سريعًا باشتراك — مثل سيلترا ERP.", en: "Operating systems you start with fast on a subscription — like Syltra ERP." } },
+      { title: { ar: "منتجات SaaS جاهزة", en: "Ready SaaS products" }, caption: { ar: "أنظمة تشغيل تبدأ بها سريعًا باشتراك، مثل سيلترا ERP.", en: "Operating systems you start with fast on a subscription, like Syltra ERP." } },
       { title: { ar: "أنظمة وتطبيقات مخصّصة", en: "Custom systems & apps" }, caption: { ar: "برمجيات وتطبيقات تُبنى حول إجراءات عملك.", en: "Software and apps built around your business processes." } },
       { title: { ar: "ذكاء اصطناعي وتحليلات", en: "AI & analytics" }, caption: { ar: "مساعدون ونماذج ولوحات تخدم قرارك اليومي.", en: "Assistants, models and dashboards that serve your daily decisions." } },
     ],
@@ -212,16 +212,16 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
     systemsEyebrow: { ar: "منتجاتنا", en: "Our products" },
     systemsTitle: { ar: "أنظمة نبنيها ونشغّلها.", en: "Systems we build and run." },
     systems: [
-      { title: { ar: "سيلترا ERP", en: "" }, en: "ERP — SaaS product" },
+      { title: { ar: "سيلترا ERP", en: "" }, en: "ERP, SaaS product" },
       { title: { ar: "سيلترا أدابتيف", en: "" }, en: "Adaptive smart-home" },
       { title: { ar: "مساعدون بالذكاء الاصطناعي", en: "" }, en: "AI assistants" },
       { title: { ar: "لوحات التحليلات", en: "" }, en: "Analytics & BI" },
       { title: { ar: "أنظمة مخصّصة", en: "" }, en: "Custom platforms" },
       { title: { ar: "التطبيقات", en: "" }, en: "Web & mobile apps" },
     ],
-    systemsNote: { ar: "ERP منتج جاهز بالاشتراك — وأدابتيف مشروعنا الداخلي للمنزل الذكي التكيّفي؛ وما بينهما نبني أنظمة على مقاس كل عميل.", en: "ERP is a ready subscription product — Adaptive is our in-house adaptive smart-home project; between them we build systems tailored to each client." },
+    systemsNote: { ar: "ERP منتج جاهز بالاشتراك، وأدابتيف مشروعنا الداخلي للمنزل الذكي التكيّفي؛ وما بينهما نبني أنظمة على مقاس كل عميل.", en: "ERP is a ready subscription product, Adaptive is our in-house adaptive smart-home project; between them we build systems tailored to each client." },
     statementTitle: { ar: "البرمجيات تُقاس بالتشغيل، لا بالعرض.", en: "Software is measured by operation, not by the demo." },
-    statementBody: { ar: "نبني أنظمة تصمد في الاستخدام اليومي — واضحة، موثوقة، ومبنية لتتطوّر مع عملك.", en: "We build systems that hold up in daily use — clear, reliable and built to evolve with your business." },
+    statementBody: { ar: "نبني أنظمة تصمد في الاستخدام اليومي، واضحة، موثوقة، ومبنية لتتطوّر مع عملك.", en: "We build systems that hold up in daily use, clear, reliable and built to evolve with your business." },
     flowEyebrow: { ar: "مسار العمل", en: "How we work" },
     flowTitle: { ar: "من الفكرة حتى التشغيل.", en: "From idea to operation." },
     flow: [

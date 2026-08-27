@@ -11,7 +11,7 @@ const en: Dictionary = {
     titleHomeAssistant: "Syltra Home | One App for Every Device in the House",
     titleFaq: "Smart Home FAQ | Costs, Installation & Setup | Syltra Life",
     description:
-      "Syltra Life designs a unified smart-home ecosystem — hubs, switches, sensors, cameras and security — with native Matter, Thread, Z-Wave and KNX. Available in Saudi Arabia now.",
+      "Syltra Life designs a unified smart-home ecosystem, hubs, switches, sensors, cameras and security, with native Matter, Thread, Z-Wave and KNX. Available in Saudi Arabia now.",
   },
   nav: {
     products: "Products",
@@ -42,7 +42,7 @@ const en: Dictionary = {
   },
   hero: {
     eyebrow: "Smart Home · IoT · AI",
-    title: "Syltra Life — Smart Living. Seamlessly Connected.",
+    title: "Syltra Life, Smart Living. Seamlessly Connected.",
     subtitle:
       "One ecosystem for the connected home, devices, AI and cloud infrastructure, unified under a single premium standard.",
     ctaProducts: "Explore the ecosystem",
@@ -227,24 +227,24 @@ const en: Dictionary = {
       eyebrow: "About Syltra One",
       title: "One technology group. Five specialisms.",
       subtitle:
-        "Syltra One is a Saudi technology group of five divisions — smart living, software & AI, HVAC, security & safety, and elevators — under one identity and one set of standards.",
+        "Syltra One is a Saudi technology group of five divisions, smart living, software & AI, HVAC, security & safety, and elevators, under one identity and one set of standards.",
     },
     story: {
       eyebrow: "Our Story",
       title: "Built to unify what's fragmented.",
       paragraphs: [
-        "Syltra One began with one conviction: large projects don't need scattered vendors — they need one party accountable for every system, from design to operation and maintenance.",
-        "We built the group as five specialist divisions — Life for the smart home, OS for software & AI, Climate for HVAC, Shield for security & safety, and Glide for elevators — operating under one identity, standards and quality.",
+        "Syltra One began with one conviction: large projects don't need scattered vendors, they need one party accountable for every system, from design to operation and maintenance.",
+        "We built the group as five specialist divisions, Life for the smart home, OS for software & AI, Climate for HVAC, Shield for security & safety, and Glide for elevators, operating under one identity, standards and quality.",
         "From Riyadh, we build an ecosystem that connects living and business with clear standards and unified support, expanding across the Gulf and beyond.",
       ],
     },
     mission: {
       label: "Mission",
-      text: "To unite the technologies of living and business under one group — with single accountability, clear standards and real integration between systems.",
+      text: "To unite the technologies of living and business under one group, with single accountability, clear standards and real integration between systems.",
     },
     vision: {
       label: "Vision",
-      text: "To be the technology group that builds the smart infrastructure of the Kingdom and the region — aligned with Saudi Vision 2030, where systems work together seamlessly and securely.",
+      text: "To be the technology group that builds the smart infrastructure of the Kingdom and the region, aligned with Saudi Vision 2030, where systems work together seamlessly and securely.",
     },
     values: {
       eyebrow: "Core Values",
@@ -261,7 +261,7 @@ const en: Dictionary = {
     chairman: {
       eyebrow: "CEO's Message",
       quote:
-        "Great companies are built when the client stops chasing scattered vendors and finds one party that understands the whole project. Syltra One was built for that: five specialist divisions, one identity and one standard, integrating to run a home, a building or an enterprise as one system. From Riyadh to the region, our aim is to make technology work together — quietly, securely and beautifully.",
+        "Great companies are built when the client stops chasing scattered vendors and finds one party that understands the whole project. Syltra One was built for that: five specialist divisions, one identity and one standard, integrating to run a home, a building or an enterprise as one system. From Riyadh to the region, our aim is to make technology work together, quietly, securely and beautifully.",
       name: "",
       role: "Founder & CEO, Syltra One",
     },
@@ -276,7 +276,7 @@ const en: Dictionary = {
       title: "From Riyadh to the region.",
       items: [
         { year: "2025", text: "Syltra launches." },
-        { year: "2026", text: "Saudi market — operating now." },
+        { year: "2026", text: "Saudi market, operating now." },
         { year: "2027", text: "Regional expansion across the GCC." },
         { year: "2030", text: "Global expansion." },
       ],

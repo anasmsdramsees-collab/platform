@@ -11,13 +11,13 @@ export default function Logo({ locale, className = "" }: { locale: Locale; class
       className={`block ${className}`}
     >
       <Image
-        src={assetPath("/brand/syltra-one-logo.png")}
-        alt="Syltra One — One Group. Connected Intelligence."
-        width={667}
-        height={63}
+        src={assetPath("/brand/logo.png")}
+        alt="Syltra One"
+        width={1349}
+        height={503}
         priority
-        sizes="200px"
-        className="h-7 w-auto sm:h-8"
+        sizes="160px"
+        className="h-8 w-auto"
       />
     </Link>
   );

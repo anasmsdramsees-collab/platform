@@ -81,13 +81,13 @@ export default function DivisionPage({
           </div>
         </div>
 
-        {/* Hero carousel — division facets */}
+        {/* Hero carousel, division facets */}
         <div className="relative z-0 mt-4 w-full sm:mt-8">
           <HeroCarousel slides={heroSlides} rtl={locale === "ar"} />
         </div>
       </section>
 
-      {/* Services — matrix grid */}
+      {/* Services, matrix grid */}
       <section id="services" className="scroll-mt-20 border-b border-hairline">
         <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{pick(c.servicesEyebrow, locale)}</p>
@@ -108,7 +108,7 @@ export default function DivisionPage({
         </div>
       </section>
 
-      {/* Systems / solutions — gallery */}
+      {/* Systems / solutions, gallery */}
       <section id="solutions" className="scroll-mt-20 border-b border-hairline">
         <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{pick(c.systemsEyebrow, locale)}</p>
@@ -146,7 +146,7 @@ export default function DivisionPage({
         </div>
       </section>
 
-      {/* Flow — editorial timeline */}
+      {/* Flow, editorial timeline */}
       <section id="flow" className="scroll-mt-20 border-b border-hairline">
         <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{pick(c.flowEyebrow, locale)}</p>

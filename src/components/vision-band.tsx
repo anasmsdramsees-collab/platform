@@ -47,7 +47,7 @@ export default function VisionBand({ locale }: { locale: Locale }) {
           <Portrait
             src="/brand/king.jpg"
             name={ar ? "الملك سلمان بن عبدالعزيز آل سعود" : "King Salman bin Abdulaziz Al Saud"}
-            title={ar ? "خادم الحرمين الشريفين — حفظه الله" : "Custodian of the Two Holy Mosques"}
+            title={ar ? "خادم الحرمين الشريفين، حفظه الله" : "Custodian of the Two Holy Mosques"}
           />
         </div>
 
@@ -75,7 +75,7 @@ export default function VisionBand({ locale }: { locale: Locale }) {
           <Portrait
             src="/brand/crown-prince.jpg"
             name={ar ? "الأمير محمد بن سلمان بن عبدالعزيز" : "Prince Mohammed bin Salman"}
-            title={ar ? "ولي العهد رئيس مجلس الوزراء — حفظه الله" : "Crown Prince & Prime Minister"}
+            title={ar ? "ولي العهد رئيس مجلس الوزراء، حفظه الله" : "Crown Prince & Prime Minister"}
           />
         </div>
       </div>

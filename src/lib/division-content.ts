@@ -148,9 +148,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       en: "The security, safety and electrical division of Syltra One, fire, surveillance, access control, low-current and electrical infrastructure, from design to operation and maintenance.",
     },
     heroSlides: [
-      { title: { ar: "الحريق والإنذار", en: "Fire & alarm" }, caption: { ar: "كشف وإنذار ومكافحة وفق كود البناء واشتراطات الدفاع المدني.", en: "Detection, alarm and suppression per building code and civil-defense requirements." } },
-      { title: { ar: "المراقبة والتحكّم بالدخول", en: "Surveillance & access" }, caption: { ar: "كاميرات وتحكّم دخول في منصّة مراقبة واحدة.", en: "Cameras and access control in one monitoring platform." } },
-      { title: { ar: "الكهرباء والتيار المنخفض", en: "Electrical & low-current" }, caption: { ar: "بنية كهربائية وشبكات منظّمة وموثوقة.", en: "Organized, reliable electrical and network infrastructure." } },
+      { title: { ar: "الحريق والإنذار", en: "Fire & alarm" }, caption: { ar: "كشف وإنذار ومكافحة وفق كود البناء واشتراطات الدفاع المدني.", en: "Detection, alarm and suppression per building code and civil-defense requirements." }, image: "/divisions/shield-1.jpg" },
+      { title: { ar: "المراقبة والتحكّم بالدخول", en: "Surveillance & access" }, caption: { ar: "كاميرات وتحكّم دخول في منصّة مراقبة واحدة.", en: "Cameras and access control in one monitoring platform." }, image: "/divisions/shield-2.jpg" },
+      { title: { ar: "الكهرباء والتيار المنخفض", en: "Electrical & low-current" }, caption: { ar: "بنية كهربائية وشبكات منظّمة وموثوقة.", en: "Organized, reliable electrical and network infrastructure." }, image: "/divisions/shield.jpg" },
     ],
     servicesEyebrow: { ar: "الخدمات", en: "Services" },
     servicesTitle: { ar: "تصميم وتوريد وتنفيذ وصيانة، تحت مظلة واحدة.", en: "Design, supply, execution and maintenance, under one roof." },

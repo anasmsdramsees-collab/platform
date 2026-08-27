@@ -10,6 +10,8 @@ import { assetPath } from "@/lib/base-path";
 import { pageMetadata } from "@/lib/seo";
 import { DIVISIONS, divisionName } from "@/lib/divisions";
 import VisionBand from "@/components/vision-band";
+import FaqSection from "@/components/faq-section";
+import { GENERAL_FAQ } from "@/lib/faq";
 
 /** Syltra One umbrella accent, silver. */
 const ONE = "#BFC6D0";
@@ -236,6 +238,9 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+
+      {/* FAQ */}
+      <FaqSection items={GENERAL_FAQ} locale={locale} accent={ONE} />
 
       {/* Vision 2030 */}
       <VisionBand locale={locale} />

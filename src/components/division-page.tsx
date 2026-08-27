@@ -4,8 +4,10 @@ import type { Locale } from "@/lib/i18n/config";
 import type { DivisionMeta } from "@/lib/divisions";
 import { divisionName } from "@/lib/divisions";
 import { DIVISION_CONTENT, pick } from "@/lib/division-content";
+import { DIVISION_FAQ } from "@/lib/faq";
 import ParticlesBg from "@/components/ui/particles-bg";
 import { HeroCarousel } from "@/components/ui/hero-carousel";
+import FaqSection from "@/components/faq-section";
 import { assetPath } from "@/lib/base-path";
 
 export default function DivisionPage({
@@ -183,6 +185,11 @@ export default function DivisionPage({
           </div>
         </div>
       </section>
+
+      {/* FAQ */}
+      {DIVISION_FAQ[division.key] ? (
+        <FaqSection items={DIVISION_FAQ[division.key]} locale={locale} accent={accent} />
+      ) : null}
 
       {/* CTA */}
       <section id="contact" className="scroll-mt-20">

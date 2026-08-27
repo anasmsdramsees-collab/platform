@@ -13,6 +13,9 @@ interface SysItem {
   title: Bi;
   en: string; // small latin sublabel (same in both locales)
   img?: string; // optional illustrative image under /public
+  slug?: string; // when set, the tile links to /[locale]/[division]/[slug]
+  lead?: Bi; // longer marketing intro for the service detail page
+  points?: Bi[]; // key points / what we offer on the detail page
 }
 interface HeroSlide {
   title: Bi;
@@ -69,12 +72,96 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
     systemsEyebrow: { ar: "الأنظمة", en: "Systems" },
     systemsTitle: { ar: "حلول التكييف التي نغطّيها.", en: "The HVAC solutions we cover." },
     systems: [
-      { title: { ar: "التكييف المركزي", en: "" }, en: "Central AC", img: "/divisions/climate-systems/central.jpg" },
-      { title: { ar: "أنظمة VRF/VRV", en: "" }, en: "VRF / VRV", img: "/divisions/climate-systems/vrf.jpg" },
-      { title: { ar: "دكت وتوزيع الهواء", en: "" }, en: "Ducted air", img: "/divisions/climate-systems/ducted.jpg" },
-      { title: { ar: "سبليت وملتي سبليت", en: "" }, en: "Split systems", img: "/divisions/climate-systems/split.jpg" },
-      { title: { ar: "تهوية وتجديد الهواء", en: "" }, en: "Ventilation", img: "/divisions/climate-systems/ventilation.jpg" },
-      { title: { ar: "التحكّم والأتمتة", en: "" }, en: "Controls", img: "/divisions/climate-systems/controls.jpg" },
+      {
+        title: { ar: "التكييف المركزي", en: "" }, en: "Central AC",
+        img: "/divisions/climate-systems/central.jpg", slug: "central",
+        lead: {
+          ar: "أنظمة التكييف المركزي والشيلر هي الخيار الأمثل للمباني الكبيرة والمجمّعات — تبريد موحّد وموثوق بكفاءة عالية وتحكّم مركزي. نصمّم النظام بعد دراسة حمل حراري دقيقة، ثم نوّرد وننفّذ ونشغّل ونصون.",
+          en: "Central and chiller systems are the right fit for large buildings and complexes — unified, reliable cooling with high efficiency and central control. We design the system after an accurate load study, then supply, install, commission and maintain.",
+        },
+        points: [
+          { ar: "دراسة حمل حراري وتحديد السعة الأنسب", en: "Heat-load study and correct capacity sizing" },
+          { ar: "شيلر هوائي أو مائي حسب طبيعة المشروع", en: "Air- or water-cooled chillers to suit the project" },
+          { ar: "توزيع هواء عبر دكت مصمّم بعناية", en: "Air distribution through carefully engineered ducting" },
+          { ar: "تحكّم مركزي ومناطق متعددة", en: "Central control with multiple zones" },
+          { ar: "عقود صيانة تحافظ على الكفاءة والعمر", en: "Maintenance contracts that protect efficiency and lifespan" },
+        ],
+      },
+      {
+        title: { ar: "أنظمة VRF/VRV", en: "" }, en: "VRF / VRV",
+        img: "/divisions/climate-systems/vrf.jpg", slug: "vrf",
+        lead: {
+          ar: "أنظمة VRF/VRV تمنحك تبريدًا مرنًا لمناطق متعددة بتحكّم مستقل لكل غرفة وكفاءة عالية في الطاقة — مثالية للمكاتب والفلل والمباني ذات الاستخدامات المتنوّعة.",
+          en: "VRF/VRV systems give flexible cooling across many zones with independent per-room control and high energy efficiency — ideal for offices, villas and mixed-use buildings.",
+        },
+        points: [
+          { ar: "تحكّم مستقل في درجة حرارة كل منطقة", en: "Independent temperature control per zone" },
+          { ar: "كفاءة عالية وتوفير في استهلاك الطاقة", en: "High efficiency and lower energy consumption" },
+          { ar: "مرونة في التمديد للمساحات الواسعة", en: "Flexible piping for large layouts" },
+          { ar: "تشغيل هادئ وتوزيع متّزن", en: "Quiet operation and balanced distribution" },
+          { ar: "ربط بالتطبيق وجداول تشغيل ذكية", en: "App control and smart schedules" },
+        ],
+      },
+      {
+        title: { ar: "دكت وتوزيع الهواء", en: "" }, en: "Ducted air",
+        img: "/divisions/climate-systems/ducted.jpg", slug: "ducted",
+        lead: {
+          ar: "أنظمة الدكت المخفية توزّع الهواء بانسيابية وهدوء مع مظهر داخلي نظيف — نصمّم مسارات الدكت والمخارج بعناية لأداء متّزن في كل غرفة.",
+          en: "Concealed ducted systems distribute air smoothly and quietly with a clean interior look — we engineer duct runs and grilles for even performance in every room.",
+        },
+        points: [
+          { ar: "تصميم مسارات دكت يقلّل الفاقد والضوضاء", en: "Duct routing that cuts loss and noise" },
+          { ar: "مخارج هواء موزّعة بعناية لكل غرفة", en: "Grilles placed carefully per room" },
+          { ar: "مظهر داخلي نظيف بلا وحدات ظاهرة", en: "Clean interiors with no visible units" },
+          { ar: "عزل حراري وصوتي للدكت", en: "Thermal and acoustic duct insulation" },
+          { ar: "اختبار وموازنة (TAB) قبل التسليم", en: "Testing and balancing (TAB) before handover" },
+        ],
+      },
+      {
+        title: { ar: "سبليت وملتي سبليت", en: "" }, en: "Split systems",
+        img: "/divisions/climate-systems/split.jpg", slug: "split",
+        lead: {
+          ar: "أنظمة السبليت والملتي سبليت حل عملي واقتصادي للغرف والوحدات الصغيرة — تركيب سريع وكفاءة جيدة وصيانة سهلة.",
+          en: "Split and multi-split systems are a practical, economical solution for rooms and smaller units — quick installation, good efficiency and easy maintenance.",
+        },
+        points: [
+          { ar: "اختيار السعة المناسبة لكل غرفة", en: "Right capacity for each room" },
+          { ar: "وحدة خارجية واحدة لعدة داخلية (ملتي)", en: "One outdoor unit for several indoor (multi)" },
+          { ar: "تركيب نظيف وسريع", en: "Clean, fast installation" },
+          { ar: "موديلات موفّرة للطاقة (إنفرتر)", en: "Energy-saving inverter models" },
+          { ar: "صيانة دورية وقطع معتمدة", en: "Routine maintenance and certified parts" },
+        ],
+      },
+      {
+        title: { ar: "تهوية وتجديد الهواء", en: "" }, en: "Ventilation",
+        img: "/divisions/climate-systems/ventilation.jpg", slug: "ventilation",
+        lead: {
+          ar: "التهوية الجيدة لا تقل أهمية عن التبريد — نصمّم أنظمة تجديد هواء وفلترة تُدخل هواءً نقيًا وتطرد الملوّثات والرطوبة الزائدة لهواء داخلي صحي.",
+          en: "Good ventilation matters as much as cooling — we design fresh-air and filtration systems that bring in clean air and remove pollutants and excess humidity for healthy indoor air.",
+        },
+        points: [
+          { ar: "وحدات مناولة هواء (AHU) وتجديد الهواء", en: "Air-handling units (AHU) and fresh air" },
+          { ar: "فلترة متعددة المراحل لهواء أنظف", en: "Multi-stage filtration for cleaner air" },
+          { ar: "استرجاع حراري لتقليل الاستهلاك (HRV/ERV)", en: "Heat recovery to cut consumption (HRV/ERV)" },
+          { ar: "تحكّم بالرطوبة والضغط", en: "Humidity and pressure control" },
+          { ar: "مناسبة للمطاعم والعيادات والمساحات المزدحمة", en: "Suited to restaurants, clinics and busy spaces" },
+        ],
+      },
+      {
+        title: { ar: "التحكّم والأتمتة", en: "" }, en: "Controls",
+        img: "/divisions/climate-systems/controls.jpg", slug: "controls",
+        lead: {
+          ar: "التحكّم الذكي يحوّل التكييف من جهاز إلى نظام — جداول ومناطق وحساسات وربط بالتطبيق تحافظ على الراحة وتخفّض الفاتورة.",
+          en: "Smart control turns AC from a device into a system — schedules, zones, sensors and app control that keep comfort while cutting the bill.",
+        },
+        points: [
+          { ar: "ثيرموستات ذكي وجداول تشغيل", en: "Smart thermostats and schedules" },
+          { ar: "مناطق متعددة بتحكّم مستقل", en: "Multiple zones with independent control" },
+          { ar: "حساسات إشغال وجودة هواء", en: "Occupancy and air-quality sensors" },
+          { ar: "ربط بمنصّة سيلترا لايف والتطبيق", en: "Integration with the Syltra Life platform and app" },
+          { ar: "تقارير استهلاك تساعدك على التوفير", en: "Consumption reports that help you save" },
+        ],
+      },
     ],
     systemsNote: { ar: "الاختيار يعتمد على المساحة والاستخدام والحمل الحراري وعدد المناطق ومستوى التحكّم المطلوب.", en: "Selection depends on space, usage, heat load, number of zones and the control level required." },
     statementTitle: { ar: "الراحة أكثر من درجة حرارة.", en: "Comfort is more than a temperature." },

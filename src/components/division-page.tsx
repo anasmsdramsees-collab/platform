@@ -118,38 +118,56 @@ export default function DivisionPage({
             {pick(c.systemsTitle, locale)}
           </h2>
           <div className="mt-12 grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 lg:grid-cols-4">
-            {c.systems.map((s, i) => (
-              <figure key={i} className="group">
-                {s.img ? (
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <Image
-                      src={assetPath(s.img)}
-                      alt={pick(s.title, locale)}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
-                    />
-                  </div>
-                ) : (
-                  <div className="flex aspect-[4/3] items-center justify-center border border-hairline">
-                    <span className="px-3 text-center font-mono text-[11px] uppercase tracking-widest text-slate">
-                      {s.en || pick(s.title, locale)}
-                    </span>
-                  </div>
-                )}
+            {c.systems.map((s, i) => {
+              const media = s.img ? (
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={assetPath(s.img)}
+                    alt={pick(s.title, locale)}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
+                  />
+                </div>
+              ) : (
+                <div className="flex aspect-[4/3] items-center justify-center border border-hairline">
+                  <span className="px-3 text-center font-mono text-[11px] uppercase tracking-widest text-slate">
+                    {s.en || pick(s.title, locale)}
+                  </span>
+                </div>
+              );
+              const caption = (
                 <figcaption className="mt-3.5">
                   <span
                     className="block h-px w-8 transition-[width] duration-500 group-hover:w-14"
                     style={{ background: accent }}
                     aria-hidden
                   />
-                  <p className="mt-3 font-semibold leading-snug text-platinum">{pick(s.title, locale)}</p>
+                  <p className="mt-3 flex items-center gap-1.5 font-semibold leading-snug text-platinum">
+                    {pick(s.title, locale)}
+                    {s.slug ? (
+                      <span className="opacity-0 transition-opacity group-hover:opacity-100" style={{ color: accent }} aria-hidden>
+                        {locale === "ar" ? "←" : "→"}
+                      </span>
+                    ) : null}
+                  </p>
                   {s.en ? (
                     <p className="mt-0.5 font-mono text-[10.5px] uppercase tracking-widest text-slate">{s.en}</p>
                   ) : null}
                 </figcaption>
-              </figure>
-            ))}
+              );
+              return s.slug ? (
+                <Link key={i} href={`/${locale}${division.href}/${s.slug}`} className="group block">
+                  {media}
+                  {caption}
+                </Link>
+              ) : (
+                <figure key={i} className="group">
+                  {media}
+                  {caption}
+                </figure>
+              );
+            })}
           </div>
           <p className="mt-6 max-w-3xl text-sm leading-relaxed text-chrome-dim">{pick(c.systemsNote, locale)}</p>
         </div>

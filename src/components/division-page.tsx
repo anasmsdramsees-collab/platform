@@ -88,7 +88,7 @@ export default function DivisionPage({
       </section>
 
       {/* Services — matrix grid */}
-      <section className="border-b border-hairline">
+      <section id="services" className="scroll-mt-20 border-b border-hairline">
         <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{pick(c.servicesEyebrow, locale)}</p>
           <h2 className="font-display mt-3 max-w-3xl text-balance text-3xl font-bold text-platinum sm:text-4xl">
@@ -108,8 +108,8 @@ export default function DivisionPage({
         </div>
       </section>
 
-      {/* Systems — gallery */}
-      <section className="border-b border-hairline">
+      {/* Systems / solutions — gallery */}
+      <section id="solutions" className="scroll-mt-20 border-b border-hairline">
         <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{pick(c.systemsEyebrow, locale)}</p>
           <h2 className="font-display mt-3 max-w-3xl text-balance text-3xl font-bold text-platinum sm:text-4xl">
@@ -147,7 +147,7 @@ export default function DivisionPage({
       </section>
 
       {/* Flow — editorial timeline */}
-      <section className="border-b border-hairline">
+      <section id="flow" className="scroll-mt-20 border-b border-hairline">
         <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{pick(c.flowEyebrow, locale)}</p>
           <h2 className="font-display mt-3 max-w-3xl text-balance text-3xl font-bold text-platinum sm:text-4xl">
@@ -166,7 +166,7 @@ export default function DivisionPage({
       </section>
 
       {/* CTA */}
-      <section>
+      <section id="contact" className="scroll-mt-20">
         <div className="mx-auto max-w-3xl px-5 py-24 text-center sm:px-8">
           <h2 className="font-display text-balance text-3xl font-bold text-platinum sm:text-4xl">{pick(c.ctaTitle, locale)}</h2>
           <p className="mt-4 text-chrome-dim">{pick(c.ctaBody, locale)}</p>

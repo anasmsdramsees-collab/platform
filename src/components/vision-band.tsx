@@ -2,40 +2,76 @@ import type { Locale } from "@/lib/i18n/config";
 import { assetPath } from "@/lib/base-path";
 
 /**
- * Prominent "Aligned with Saudi Vision 2030" band. Large official emblem +
- * headline. Uses the Syltra One silver accent.
+ * Prominent "Aligned with Saudi Vision 2030" band, flanked by the official
+ * portraits of the King and the Crown Prince. Center band + side portraits.
  */
 export default function VisionBand({ locale }: { locale: Locale }) {
+  const ar = locale === "ar";
+
+  const Portrait = ({
+    src,
+    name,
+    title,
+  }: {
+    src: string;
+    name: string;
+    title: string;
+  }) => (
+    <figure className="w-[42%] max-w-[210px] lg:w-[210px]">
+      <div className="overflow-hidden rounded-2xl border border-hairline shadow-xl shadow-black/40 ring-1 ring-[#BFC6D0]/20">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={assetPath(src)} alt={name} className="aspect-[3/4] w-full object-cover object-top" />
+      </div>
+      <figcaption className="mt-3 text-center">
+        <p className="text-[13px] font-semibold text-platinum sm:text-sm">{name}</p>
+        <p className="mt-0.5 font-mono text-[10.5px] text-slate">{title}</p>
+      </figcaption>
+    </figure>
+  );
+
   return (
     <section className="relative overflow-hidden border-b border-hairline">
       <div
         className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(70% 120% at 50% 0%, rgba(191,198,208,0.10), transparent 62%)",
-        }}
+        style={{ background: "radial-gradient(70% 120% at 50% 0%, rgba(191,198,208,0.10), transparent 62%)" }}
         aria-hidden
       />
-      <div className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-28">
-        <p className="font-mono text-[12px] uppercase tracking-[0.14em]" style={{ color: "#BFC6D0" }}>
-          {locale === "ar" ? "التزام وطني" : "National commitment"}
-        </p>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={assetPath("/brand/vision-2030.png")}
-          alt={locale === "ar" ? "رؤية المملكة العربية السعودية 2030" : "Saudi Vision 2030"}
-          className="mx-auto mt-8 h-24 w-auto sm:h-36"
-        />
-        <h2 className="font-display mt-10 text-balance text-3xl font-bold leading-tight text-platinum sm:text-5xl">
-          {locale === "ar"
-            ? "داعمون لرؤية المملكة العربية السعودية 2030"
-            : "Proud supporters of Saudi Vision 2030"}
-        </h2>
-        <p className="mx-auto mt-5 max-w-2xl text-balance text-base text-chrome-dim sm:text-lg">
-          {locale === "ar"
-            ? "نبني تقنية وطنية تخدم أهداف التحوّل الرقمي وجودة الحياة والاقتصاد المتنوّع في المملكة."
-            : "Building national technology that serves the Kingdom's digital-transformation, quality-of-life and diversified-economy goals."}
-        </p>
+      <div className="relative mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-8 px-5 py-20 sm:py-24 lg:flex-nowrap lg:gap-10 lg:px-8">
+        <div className="order-2 flex w-[42%] justify-center lg:order-1 lg:w-auto">
+          <Portrait
+            src="/brand/king.jpg"
+            name={ar ? "الملك سلمان بن عبدالعزيز آل سعود" : "King Salman bin Abdulaziz Al Saud"}
+            title={ar ? "خادم الحرمين الشريفين — حفظه الله" : "Custodian of the Two Holy Mosques"}
+          />
+        </div>
+
+        <div className="order-1 w-full max-w-xl text-center lg:order-2 lg:w-auto">
+          <p className="font-mono text-[12px] uppercase tracking-[0.14em]" style={{ color: "#BFC6D0" }}>
+            {ar ? "التزام وطني" : "National commitment"}
+          </p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={assetPath("/brand/vision-2030.png")}
+            alt={ar ? "رؤية المملكة العربية السعودية 2030" : "Saudi Vision 2030"}
+            className="mx-auto mt-6 h-20 w-auto sm:h-28"
+          />
+          <h2 className="font-display mt-8 text-balance text-2xl font-bold leading-tight text-platinum sm:text-4xl">
+            {ar ? "داعمون لرؤية المملكة العربية السعودية 2030" : "Proud supporters of Saudi Vision 2030"}
+          </h2>
+          <p className="mx-auto mt-4 max-w-md text-balance text-sm text-chrome-dim sm:text-base">
+            {ar
+              ? "نبني تقنية وطنية تخدم أهداف التحوّل الرقمي وجودة الحياة والاقتصاد المتنوّع في المملكة."
+              : "Building national technology that serves the Kingdom's digital-transformation, quality-of-life and diversified-economy goals."}
+          </p>
+        </div>
+
+        <div className="order-3 flex w-[42%] justify-center lg:w-auto">
+          <Portrait
+            src="/brand/crown-prince.jpg"
+            name={ar ? "الأمير محمد بن سلمان بن عبدالعزيز" : "Prince Mohammed bin Salman"}
+            title={ar ? "ولي العهد رئيس مجلس الوزراء — حفظه الله" : "Crown Prince & Prime Minister"}
+          />
+        </div>
       </div>
     </section>
   );

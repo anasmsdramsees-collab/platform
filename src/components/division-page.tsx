@@ -115,37 +115,38 @@ export default function DivisionPage({
           <h2 className="font-display mt-3 max-w-3xl text-balance text-3xl font-bold text-platinum sm:text-4xl">
             {pick(c.systemsTitle, locale)}
           </h2>
-          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="mt-12 grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 lg:grid-cols-4">
             {c.systems.map((s, i) => (
-              <div
-                key={i}
-                className="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-xl border border-hairline p-4"
-                style={s.img ? undefined : { background: `linear-gradient(150deg, ${hexA(accent, 0.14)}, rgba(23,24,28,0.6))` }}
-              >
+              <figure key={i} className="group">
                 {s.img ? (
-                  <>
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
                       src={assetPath(s.img)}
                       alt={pick(s.title, locale)}
                       fill
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
                     />
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background: `linear-gradient(to top, rgba(11,12,14,0.92) 6%, rgba(11,12,14,0.35) 46%, rgba(11,12,14,0.05) 82%)`,
-                      }}
-                    />
-                    <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: accent }} aria-hidden />
-                  </>
-                ) : null}
-                <span className="relative font-mono text-[11px]" style={{ color: accent }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <p className="relative mt-1 font-semibold leading-snug text-platinum">{pick(s.title, locale)}</p>
-                {s.en ? <p className="relative mt-0.5 font-mono text-[10.5px] uppercase tracking-widest text-slate">{s.en}</p> : null}
-              </div>
+                  </div>
+                ) : (
+                  <div className="flex aspect-[4/3] items-center justify-center border border-hairline">
+                    <span className="px-3 text-center font-mono text-[11px] uppercase tracking-widest text-slate">
+                      {s.en || pick(s.title, locale)}
+                    </span>
+                  </div>
+                )}
+                <figcaption className="mt-3.5">
+                  <span
+                    className="block h-px w-8 transition-[width] duration-500 group-hover:w-14"
+                    style={{ background: accent }}
+                    aria-hidden
+                  />
+                  <p className="mt-3 font-semibold leading-snug text-platinum">{pick(s.title, locale)}</p>
+                  {s.en ? (
+                    <p className="mt-0.5 font-mono text-[10.5px] uppercase tracking-widest text-slate">{s.en}</p>
+                  ) : null}
+                </figcaption>
+              </figure>
             ))}
           </div>
           <p className="mt-6 max-w-3xl text-sm leading-relaxed text-chrome-dim">{pick(c.systemsNote, locale)}</p>

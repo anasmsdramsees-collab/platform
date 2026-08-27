@@ -104,6 +104,10 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 pb-10 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p className="font-mono text-[11px] text-slate">
           © {year} Syltra One®. {dict.footer.rights}
+          {" · "}
+          <Link href={`/${locale}/sitemap`} className="transition-colors hover:text-platinum">
+            {locale === "ar" ? "خريطة الموقع" : "Sitemap"}
+          </Link>
         </p>
         <div className="flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}

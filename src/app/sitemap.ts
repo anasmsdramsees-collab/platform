@@ -23,6 +23,7 @@ const ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.S
   { path: "/contact", priority: 0.6, changeFrequency: "yearly" },
   { path: "/quote", priority: 0.9, changeFrequency: "monthly" },
   { path: "/builder", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/sitemap", priority: 0.4, changeFrequency: "weekly" },
 ];
 
 function languagesFor(path: string) {

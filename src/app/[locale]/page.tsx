@@ -12,6 +12,7 @@ import { DIVISIONS, divisionName } from "@/lib/divisions";
 import VisionBand from "@/components/vision-band";
 import FaqSection from "@/components/faq-section";
 import { GENERAL_FAQ } from "@/lib/faq";
+import { POSTS, bt } from "@/lib/blog";
 
 /** Syltra One umbrella accent, silver. */
 const ONE = "#BFC6D0";
@@ -235,6 +236,43 @@ export default async function HomePage({
                 <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{w.d}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Latest from the blog */}
+      <section className="border-b border-hairline">
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
+                {locale === "ar" ? "من المدونة" : "From the blog"}
+              </p>
+              <h2 className="font-display mt-3 text-3xl font-bold text-platinum sm:text-4xl">
+                {locale === "ar" ? "أحدث الأدلّة والمقالات." : "Latest guides and articles."}
+              </h2>
+            </div>
+            <Link href={`/${locale}/blog`} className="font-mono text-sm transition-opacity hover:opacity-80" style={{ color: ONE }}>
+              {locale === "ar" ? "كل المقالات ←" : "All articles →"}
+            </Link>
+          </div>
+          <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {[...POSTS].sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 3).map((post) => {
+              const d = DIVISIONS.find((x) => x.key === post.division);
+              const accent = d?.color ?? ONE;
+              return (
+                <Link key={post.slug} href={`/${locale}/blog/${post.slug}`} className="group block">
+                  <span className="block h-px w-8 transition-[width] duration-500 group-hover:w-14" style={{ background: accent }} aria-hidden />
+                  {d ? (
+                    <p className="mt-4 font-mono text-[11px] text-slate">{divisionName(d, locale)}</p>
+                  ) : null}
+                  <h3 className="font-display mt-2 text-balance text-lg font-bold leading-snug text-platinum transition-opacity group-hover:opacity-80">
+                    {bt(post.title, locale)}
+                  </h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{bt(post.excerpt, locale)}</p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

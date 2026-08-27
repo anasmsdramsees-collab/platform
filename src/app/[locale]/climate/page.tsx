@@ -30,6 +30,7 @@ export async function generateMetadata({
     title: `${divisionName(division, locale)} | ${pick(c.h1, locale)}`,
     description: pick(c.intro, locale),
     keywords,
+    image: division.image,
   });
 }
 

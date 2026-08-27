@@ -20,12 +20,14 @@ export async function generateMetadata({
   const locale: Locale = isLocale(raw) ? raw : "en";
   const post = POSTS.find((p) => p.slug === slug);
   if (!post) return {};
+  const div = DIVISIONS.find((d) => d.key === post.division);
   return pageMetadata({
     locale,
     path: `/blog/${slug}`,
     title: `${bt(post.title, locale)} | ${locale === "ar" ? "مدونة سيلترا وان" : "Syltra One Blog"}`,
     description: bt(post.excerpt, locale),
     keywords: post.keywords,
+    image: div?.image,
   });
 }
 

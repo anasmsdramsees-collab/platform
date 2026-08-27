@@ -35,7 +35,14 @@ export async function generateMetadata({
     locale === "ar" ? division.label.ar : division.label.en,
     ...geo,
   ].filter(Boolean) as string[];
-  return pageMetadata({ locale, path: `${division.href}/${service}`, title, description, keywords });
+  return pageMetadata({
+    locale,
+    path: `${division.href}/${service}`,
+    title,
+    description,
+    keywords,
+    image: found.service.img ?? division.image,
+  });
 }
 
 export default async function Page({

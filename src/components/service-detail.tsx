@@ -136,12 +136,10 @@ export default function ServiceDetail({
             <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
               {locale === "ar" ? "أين يناسب" : "Where it fits"}
             </p>
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid grid-cols-1 border-s border-t border-hairline sm:grid-cols-2">
               {service.useCases.map((u, i) => (
-                <div key={i} className="flex items-center gap-4 rounded-lg border border-hairline p-5">
-                  <span className="font-display text-lg font-bold tabular-nums" style={{ color: accent }}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                <div key={i} className="flex items-center gap-3 border-b border-e border-hairline p-5">
+                  <span className="h-1.5 w-1.5 flex-none rounded-full" style={{ background: accent }} aria-hidden />
                   <p className="font-medium text-platinum">{pick(u, locale)}</p>
                 </div>
               ))}

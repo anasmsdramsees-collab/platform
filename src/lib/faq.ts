@@ -62,6 +62,20 @@ export const DIVISION_FAQ: Record<string, QA[]> = {
       },
     },
     {
+      q: { ar: "ما الأجهزة والأنظمة التي يمكن أتمتتها؟", en: "What devices and systems can be automated?" },
+      a: {
+        ar: "الإضاءة والستائر والتكييف والصوت والكاميرات والإنتركم والأقفال وحتى شحن السيارات الكهربائية — في منظومة واحدة قابلة للتوسّع.",
+        en: "Lighting, curtains, climate, audio, cameras, intercom, locks and even EV charging — in one expandable ecosystem.",
+      },
+    },
+    {
+      q: { ar: "كم تدوم بطارية القفل الذكي وماذا لو انقطعت الكهرباء؟", en: "How long does the smart-lock battery last, and what if the power goes out?" },
+      a: {
+        ar: "تدوم البطارية عادة عدة أشهر مع تنبيه قبل نفادها، والقفل يعمل أثناء انقطاع الكهرباء مع مفتاح أو منفذ طوارئ احتياطي.",
+        en: "The battery typically lasts several months with a low-battery alert, and the lock keeps working during outages with a backup key or emergency port.",
+      },
+    },
+    {
       q: { ar: "هل تقدّمون التركيب والدعم والضمان؟", en: "Do you provide installation, support and warranty?" },
       a: {
         ar: "نعم، معاينة وتصميم وتركيب وإعداد كامل، مع دعم وضمان بعد التشغيل.",

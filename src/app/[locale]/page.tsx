@@ -81,12 +81,28 @@ export default async function HomePage({
   const locale: Locale = isLocale(raw) ? raw : "en";
   const t = T[locale];
 
-  const heroSlides = DIVISIONS.map((d) => ({
-    src: d.image,
-    label: divisionName(d, locale),
-    title: locale === "ar" ? d.label.ar : d.label.en,
-    caption: locale === "ar" ? d.tagline.ar : d.tagline.en,
-  }));
+  // A showcase hero slider for Syltra One: a few cinematic frames pulled from
+  // each division, ordered to alternate scene and colour.
+  const heroPicks: { div: string; img: string }[] = [
+    { div: "life", img: "/divisions/life.jpg" },
+    { div: "climate", img: "/divisions/climate.jpg" },
+    { div: "glide", img: "/divisions/glide.jpg" },
+    { div: "shield", img: "/divisions/shield.jpg" },
+    { div: "os", img: "/divisions/os-1.jpg" },
+    { div: "climate", img: "/divisions/climate-2.jpg" },
+    { div: "glide", img: "/divisions/glide-2.jpg" },
+    { div: "shield", img: "/divisions/shield-1.jpg" },
+    { div: "os", img: "/divisions/os-2.jpg" },
+  ];
+  const heroSlides = heroPicks.map(({ div, img }) => {
+    const d = DIVISIONS.find((x) => x.key === div)!;
+    return {
+      src: img,
+      label: divisionName(d, locale),
+      title: locale === "ar" ? d.label.ar : d.label.en,
+      caption: locale === "ar" ? d.tagline.ar : d.tagline.en,
+    };
+  });
 
   return (
     <>

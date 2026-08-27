@@ -197,9 +197,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       en: "The software and AI arm of Syltra One, ready products, custom systems and AI solutions, from idea to operation and ongoing support.",
     },
     heroSlides: [
-      { title: { ar: "منتجات SaaS جاهزة", en: "Ready SaaS products" }, caption: { ar: "أنظمة تشغيل تبدأ بها سريعًا باشتراك، مثل سيلترا ERP.", en: "Operating systems you start with fast on a subscription, like Syltra ERP." } },
-      { title: { ar: "أنظمة وتطبيقات مخصّصة", en: "Custom systems & apps" }, caption: { ar: "برمجيات وتطبيقات تُبنى حول إجراءات عملك.", en: "Software and apps built around your business processes." } },
-      { title: { ar: "ذكاء اصطناعي وتحليلات", en: "AI & analytics" }, caption: { ar: "مساعدون ونماذج ولوحات تخدم قرارك اليومي.", en: "Assistants, models and dashboards that serve your daily decisions." } },
+      { title: { ar: "منتجات SaaS جاهزة", en: "Ready SaaS products" }, caption: { ar: "أنظمة تشغيل تبدأ بها سريعًا باشتراك، مثل سيلترا ERP.", en: "Operating systems you start with fast on a subscription, like Syltra ERP." }, image: "/divisions/os.jpg" },
+      { title: { ar: "أنظمة وتطبيقات مخصّصة", en: "Custom systems & apps" }, caption: { ar: "برمجيات وتطبيقات تُبنى حول إجراءات عملك.", en: "Software and apps built around your business processes." }, image: "/divisions/os-1.jpg" },
+      { title: { ar: "ذكاء اصطناعي وتحليلات", en: "AI & analytics" }, caption: { ar: "مساعدون ونماذج ولوحات تخدم قرارك اليومي.", en: "Assistants, models and dashboards that serve your daily decisions." }, image: "/divisions/os-2.jpg" },
     ],
     servicesEyebrow: { ar: "ما نقدّمه", en: "What we offer" },
     servicesTitle: { ar: "من منتج جاهز إلى نظام مبني على مقاسك.", en: "From a ready product to a system built to fit." },

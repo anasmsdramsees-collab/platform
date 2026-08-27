@@ -171,7 +171,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       { title: { ar: "التيار المنخفض والشبكات", en: "" }, en: "Low current & networks", img: "/divisions/shield-systems/lowcurrent.jpg" },
       { title: { ar: "البنية الكهربائية", en: "" }, en: "Electrical & MEP", img: "/divisions/shield-systems/electrical.jpg" },
       { title: { ar: "النداء الصوتي والإخلاء", en: "" }, en: "PA & evacuation", img: "/divisions/shield-systems/pa.jpg" },
-      { title: { ar: "الأتمتة والتحكّم", en: "" }, en: "Automation" },
+      { title: { ar: "كاميرات المراقبة بالطاقة الشمسية", en: "" }, en: "Solar-powered CCTV" },
     ],
     systemsNote: { ar: "تصميم وتنفيذ وفق كود البناء السعودي واشتراطات الدفاع المدني، مع توثيق ومطابقة لكل نظام.", en: "Designed and executed per the Saudi building code and civil-defense requirements, with documentation and compliance for every system." },
     statementTitle: { ar: "السلامة لا تُختبر وقت الحريق.", en: "Safety isn't tested during the fire." },

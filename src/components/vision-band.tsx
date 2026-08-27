@@ -8,6 +8,9 @@ import { assetPath } from "@/lib/base-path";
 export default function VisionBand({ locale }: { locale: Locale }) {
   const ar = locale === "ar";
 
+  const fade =
+    "linear-gradient(to bottom, transparent 0%, #000 14%, #000 68%, transparent 100%)";
+
   const Portrait = ({
     src,
     name,
@@ -17,12 +20,15 @@ export default function VisionBand({ locale }: { locale: Locale }) {
     name: string;
     title: string;
   }) => (
-    <figure className="w-[42%] max-w-[210px] lg:w-[210px]">
-      <div className="overflow-hidden rounded-2xl border border-hairline shadow-xl shadow-black/40 ring-1 ring-[#BFC6D0]/20">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={assetPath(src)} alt={name} className="aspect-[3/4] w-full object-cover object-top" />
-      </div>
-      <figcaption className="mt-3 text-center">
+    <figure className="w-[46%] max-w-[300px] lg:w-[300px]">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={assetPath(src)}
+        alt={name}
+        className="mx-auto aspect-[3/4] w-full object-cover object-top"
+        style={{ maskImage: fade, WebkitMaskImage: fade }}
+      />
+      <figcaption className="-mt-6 text-center">
         <p className="text-[13px] font-semibold text-platinum sm:text-sm">{name}</p>
         <p className="mt-0.5 font-mono text-[10.5px] text-slate">{title}</p>
       </figcaption>

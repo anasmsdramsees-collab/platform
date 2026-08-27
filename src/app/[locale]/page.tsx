@@ -10,6 +10,9 @@ import { assetPath } from "@/lib/base-path";
 import { pageMetadata } from "@/lib/seo";
 import { DIVISIONS, divisionName } from "@/lib/divisions";
 
+/** Syltra One umbrella accent — silver. */
+const ONE = "#BFC6D0";
+
 const T = {
   ar: {
     eyebrow: "منظومة واحدة · ذكاء متصل",
@@ -105,7 +108,14 @@ export default async function HomePage({
           }}
         />
         <div className="relative z-20 mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
-          <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{t.eyebrow}</p>
+          <div dir="ltr" className="mx-auto mb-6 flex items-center justify-center gap-2.5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={assetPath("/brand/divisions/word.png")} alt="SYLTRA" className="h-6 w-auto sm:h-7" />
+            <span className="h-5 w-px" style={{ background: ONE }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={assetPath("/brand/divisions/one.png")} alt="ONE" className="h-6 w-auto sm:h-7" />
+          </div>
+          <p className="font-mono text-[12px] tracking-[0.14em] uppercase" style={{ color: ONE }}>{t.eyebrow}</p>
           <h1 className="font-display mt-5 text-balance text-4xl font-bold leading-[1.1] text-platinum sm:text-6xl">
             {t.title}
           </h1>
@@ -113,7 +123,7 @@ export default async function HomePage({
             {t.subtitle}
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <HoverBorderGradientLink href={`/${locale}#divisions`} className="bg-platinum text-void" containerClassName="gap-0">
+            <HoverBorderGradientLink href={`/${locale}#divisions`} className="bg-[#BFC6D0] text-void" containerClassName="gap-0">
               {t.ctaExplore}
             </HoverBorderGradientLink>
             <HoverBorderGradientLink href={`/${locale}/about`} className="bg-void text-platinum" containerClassName="gap-0">
@@ -201,7 +211,7 @@ export default async function HomePage({
           <div className="mt-12 grid gap-4 sm:grid-cols-3">
             {t.why.map((w) => (
               <div key={w.n} className="rounded-lg border border-hairline p-6">
-                <span className="font-mono text-xs text-ion">{w.n}</span>
+                <span className="font-mono text-xs" style={{ color: ONE }}>{w.n}</span>
                 <p className="mt-3 font-semibold leading-snug text-platinum">{w.t}</p>
                 <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{w.d}</p>
               </div>
@@ -218,7 +228,8 @@ export default async function HomePage({
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               href={`/${locale}/contact`}
-              className="rounded-md bg-platinum px-7 py-3 text-sm font-semibold text-void transition-opacity hover:opacity-90"
+              className="rounded-md px-7 py-3 text-sm font-semibold text-void transition-opacity hover:opacity-90"
+              style={{ backgroundColor: ONE }}
             >
               {t.ctaBtn}
             </Link>

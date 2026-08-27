@@ -178,15 +178,17 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <Link
-              href={`/${locale}/quote`}
-              className={`hidden rounded-md px-4 py-2 font-mono text-[12px] font-semibold text-void transition-opacity hover:opacity-90 sm:block ${
-                activeDivision ? "" : "bg-ion"
-              }`}
-              style={activeDivision ? { backgroundColor: activeDivision.color } : undefined}
-            >
-              {dict.nav.quote}
-            </Link>
+            {mode !== "umbrella" && (
+              <Link
+                href={`/${locale}/quote`}
+                className={`hidden rounded-md px-4 py-2 font-mono text-[12px] font-semibold text-void transition-opacity hover:opacity-90 sm:block ${
+                  activeDivision ? "" : "bg-ion"
+                }`}
+                style={activeDivision ? { backgroundColor: activeDivision.color } : undefined}
+              >
+                {dict.nav.quote}
+              </Link>
+            )}
             <Link
               href={otherHref}
               className="font-mono text-[12px] tracking-wide text-slate transition-colors hover:text-platinum"

@@ -5,6 +5,7 @@ import { productCatalog } from "@/lib/products";
 import { landings } from "@/lib/landing";
 import { DIVISIONS } from "@/lib/divisions";
 import { DIVISION_CONTENT } from "@/lib/division-content";
+import { POSTS } from "@/lib/blog";
 
 // Static export needs these emitted at build time.
 export const dynamic = "force-static";
@@ -24,6 +25,7 @@ const ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.S
   { path: "/quote", priority: 0.9, changeFrequency: "monthly" },
   { path: "/builder", priority: 0.9, changeFrequency: "monthly" },
   { path: "/sitemap", priority: 0.4, changeFrequency: "weekly" },
+  { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
 ];
 
 function languagesFor(path: string) {
@@ -72,6 +74,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
           });
         }
       }
+    }
+  }
+
+  for (const post of POSTS) {
+    const path = `/blog/${post.slug}`;
+    for (const locale of locales) {
+      entries.push({
+        url: `${siteUrl}/${locale}${path}`,
+        lastModified: new Date(post.date),
+        changeFrequency: "monthly",
+        priority: 0.7,
+        alternates: { languages: languagesFor(path) },
+      });
     }
   }
 

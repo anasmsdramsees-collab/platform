@@ -61,6 +61,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
             <div>
               <p className={headCls}>{dict.footer.company}</p>
               <Link href={`/${locale}/about`} className={`mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum`}>{dict.nav.about}</Link>
+              <Link href={`/${locale}/blog`} className={linkCls}>{locale === "ar" ? "المدونة" : "Blog"}</Link>
               <Link href={`/${locale}/faq`} className={linkCls}>{dict.nav.faq}</Link>
             </div>
             <div>
@@ -90,6 +91,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
             <div>
               <p className={headCls}>{dict.footer.company}</p>
               <Link href={`/${locale}/about`} className={`mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum`}>{dict.nav.about}</Link>
+              <Link href={`/${locale}/blog`} className={linkCls}>{locale === "ar" ? "المدونة" : "Blog"}</Link>
               <Link href={`/${locale}/contact`} className={linkCls}>{dict.nav.contact}</Link>
             </div>
             <div>

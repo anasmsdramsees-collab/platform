@@ -70,6 +70,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
   } else {
     links = [
       { href: `/${locale}/about`, label: dict.nav.about },
+      { href: `/${locale}/blog`, label: locale === "ar" ? "المدونة" : "Blog" },
       { href: `/${locale}/contact`, label: dict.nav.contact },
     ];
   }

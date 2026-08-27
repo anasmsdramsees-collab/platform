@@ -11,7 +11,7 @@ export default function Logo({ locale, className = "" }: { locale: Locale; class
       className={`block ${className}`}
     >
       <Image
-        src={assetPath("/brand/syltra-one-logo.png")}
+        src={assetPath("/brand/syltra-one-logo-hq.png")}
         alt="Syltra One — One Group. Connected Intelligence."
         width={3000}
         height={438}

@@ -11,6 +11,65 @@ export function faqText(v: { ar: string; en: string }, locale: Locale) {
 
 /** Per-division FAQ, informed by the questions Saudi buyers actually ask. */
 export const DIVISION_FAQ: Record<string, QA[]> = {
+  life: [
+    {
+      q: { ar: "ما هو نظام المنزل الذكي وماذا يشمل؟", en: "What is a smart-home system and what does it include?" },
+      a: {
+        ar: "منظومة تجمع الإضاءة والتكييف والأمن والترفيه والستائر في تحكّم واحد عبر التطبيق أو شاشة أو الأوامر الصوتية، مع مشاهد جاهزة تعمل بلمسة واحدة.",
+        en: "One system that brings lighting, climate, security, entertainment and curtains into a single control — app, screen or voice — with ready scenes that run at a tap.",
+      },
+    },
+    {
+      q: { ar: "هل يمكن تركيب النظام في منزل قائم دون تكسير؟", en: "Can it be installed in an existing home without major work?" },
+      a: {
+        ar: "نعم، نوفّر حلولًا لاسلكية مرنة تُركّب في المنازل القائمة دون تعديلات هيكلية كبيرة، ويمكن البدء بجزء والتوسّع لاحقًا.",
+        en: "Yes, flexible wireless solutions retrofit into existing homes without major structural changes — start with part of it and expand later.",
+      },
+    },
+    {
+      q: { ar: "هل أتحكّم في بيتي وأنا خارجه؟", en: "Can I control my home while I'm away?" },
+      a: {
+        ar: "نعم، تحكّم كامل من أي مكان عبر التطبيق مع اطمئنان على البيت وتنبيهات فورية.",
+        en: "Yes, full control from anywhere through the app, with peace of mind and instant alerts.",
+      },
+    },
+    {
+      q: { ar: "ما طرق فتح القفل الذكي؟", en: "How does a smart lock open?" },
+      a: {
+        ar: "عدة طرق: البصمة، الرمز السري، البطاقة، التطبيق، والمفتاح التقليدي — وتعمل حتى بدون واي فاي أو بلوتوث.",
+        en: "Several ways: fingerprint, PIN, card, app and a traditional key — and it works even without Wi-Fi or Bluetooth.",
+      },
+    },
+    {
+      q: { ar: "هل الأقفال الذكية آمنة؟", en: "Are smart locks secure?" },
+      a: {
+        ar: "نعم، تشفير وتنبيهات فورية عند كل فتح وإغلاق، وصلاحيات مؤقتة للضيوف، وسجل دخول كامل.",
+        en: "Yes, encryption, instant open/close alerts, temporary guest access and a full entry log.",
+      },
+    },
+    {
+      q: { ar: "هل النظام قابل للتوسّع والتكامل مع أجهزة أخرى؟", en: "Is the system expandable and compatible with other devices?" },
+      a: {
+        ar: "نعم، منصّة سيلترا لايف مبنية على الانفتاح وتتكامل مع المعايير الحديثة (Matter وThread وZigbee) وتنمو مع احتياجك.",
+        en: "Yes, the Syltra Life platform is built open and works with modern standards (Matter, Thread, Zigbee), growing with your needs.",
+      },
+    },
+    {
+      q: { ar: "هل يوفّر النظام في استهلاك الطاقة؟", en: "Does the system save energy?" },
+      a: {
+        ar: "نعم، جداول ومشاهد وحساسات تقلّل استهلاك الإضاءة والتكييف وتُظهر لك استهلاكك بوضوح.",
+        en: "Yes, schedules, scenes and sensors cut lighting and cooling use and show your consumption clearly.",
+      },
+    },
+    {
+      q: { ar: "هل تقدّمون التركيب والدعم والضمان؟", en: "Do you provide installation, support and warranty?" },
+      a: {
+        ar: "نعم، معاينة وتصميم وتركيب وإعداد كامل، مع دعم وضمان بعد التشغيل.",
+        en: "Yes, survey, design, installation and full setup, with support and warranty after go-live.",
+      },
+    },
+  ],
+
   climate: [
     {
       q: { ar: "كيف أختار بين التكييف المركزي وأنظمة VRF والسبليت؟", en: "How do I choose between central, VRF and split AC?" },

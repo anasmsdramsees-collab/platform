@@ -15,6 +15,8 @@ import { InfoCard } from "@/components/ui/info-card";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 import { pageMetadata } from "@/lib/seo";
+import FaqSection from "@/components/faq-section";
+import { DIVISION_FAQ } from "@/lib/faq";
 
 export async function generateMetadata({
   params,
@@ -345,6 +347,9 @@ export default async function LifePage({
         subtitle={dict.testimonials.subtitle}
         testimonials={dict.testimonials.items}
       />
+
+      {/* FAQ */}
+      <FaqSection items={DIVISION_FAQ.life} locale={locale} accent="#4d73ff" />
 
       {/* CTA */}
       <section>

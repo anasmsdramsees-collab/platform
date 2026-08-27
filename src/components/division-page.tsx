@@ -5,6 +5,7 @@ import type { DivisionMeta } from "@/lib/divisions";
 import { divisionName } from "@/lib/divisions";
 import { DIVISION_CONTENT, pick } from "@/lib/division-content";
 import { DIVISION_FAQ } from "@/lib/faq";
+import { postsForDivision, bt } from "@/lib/blog";
 import ParticlesBg from "@/components/ui/particles-bg";
 import { HeroCarousel } from "@/components/ui/hero-carousel";
 import FaqSection from "@/components/faq-section";
@@ -20,6 +21,7 @@ export default function DivisionPage({
   const c = DIVISION_CONTENT[division.key as keyof typeof DIVISION_CONTENT];
   const accent = division.color;
   const name = divisionName(division, locale);
+  const articles = postsForDivision(division.key).slice(0, 3);
 
   const heroSlides = c.heroSlides.map((s) => ({
     src: s.image ?? division.image,
@@ -203,6 +205,38 @@ export default function DivisionPage({
           </div>
         </div>
       </section>
+
+      {/* Articles from the blog */}
+      {articles.length ? (
+        <section className="border-b border-hairline">
+          <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
+                  {locale === "ar" ? "من المدونة" : "From the blog"}
+                </p>
+                <h2 className="font-display mt-3 text-3xl font-bold text-platinum sm:text-4xl">
+                  {locale === "ar" ? `أدلّة ${name}` : `${name} guides`}
+                </h2>
+              </div>
+              <Link href={`/${locale}/blog`} className="font-mono text-sm transition-opacity hover:opacity-80" style={{ color: accent }}>
+                {locale === "ar" ? "كل المقالات ←" : "All articles →"}
+              </Link>
+            </div>
+            <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {articles.map((post) => (
+                <Link key={post.slug} href={`/${locale}/blog/${post.slug}`} className="group block">
+                  <span className="block h-px w-8 transition-[width] duration-500 group-hover:w-14" style={{ background: accent }} aria-hidden />
+                  <h3 className="font-display mt-4 text-balance text-lg font-bold leading-snug text-platinum transition-opacity group-hover:opacity-80">
+                    {bt(post.title, locale)}
+                  </h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{bt(post.excerpt, locale)}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* FAQ */}
       {DIVISION_FAQ[division.key] ? (

@@ -99,9 +99,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       en: "The elevators and vertical-mobility division of Syltra One, covering the full lift lifecycle, from technical study and system selection to supply, installation, operation and maintenance.",
     },
     heroSlides: [
-      { title: { ar: "مصاعد الركاب والفلل", en: "Passenger & villa lifts" }, caption: { ar: "حلول رأسية سلسة للسكني والتجاري بمعايير أمان عالية.", en: "Smooth vertical solutions for residential and commercial with high safety standards." } },
-      { title: { ar: "البانورامية والزجاجية", en: "Panoramic & glass" }, caption: { ar: "كابينة تصبح جزءًا من هوية المكان وواجهته.", en: "A cabin that becomes part of the space's identity and facade." } },
-      { title: { ar: "تحديث وصيانة", en: "Modernization & service" }, caption: { ar: "رفع كفاءة المصاعد القائمة وعقود صيانة تضمن الجاهزية.", en: "Upgrading existing lifts and service contracts that keep them ready." } },
+      { title: { ar: "مصاعد الركاب والفلل", en: "Passenger & villa lifts" }, caption: { ar: "حلول رأسية سلسة للسكني والتجاري بمعايير أمان عالية.", en: "Smooth vertical solutions for residential and commercial with high safety standards." }, image: "/divisions/glide.jpg" },
+      { title: { ar: "التركيب والتنفيذ الميداني", en: "Installation & field execution" }, caption: { ar: "تركيب دقيق في بئر المصعد يراعي المعدات وواجهات المبنى.", en: "Precise in-shaft installation that respects equipment and building facades." }, image: "/divisions/glide-2.jpg" },
+      { title: { ar: "تحديث وصيانة", en: "Modernization & service" }, caption: { ar: "رفع كفاءة المصاعد القائمة وعقود صيانة تضمن الجاهزية.", en: "Upgrading existing lifts and service contracts that keep them ready." }, image: "/divisions/glide-1.jpg" },
     ],
     servicesEyebrow: { ar: "النطاق", en: "Scope" },
     servicesTitle: { ar: "نغطّي دورة حياة المصعد بالكامل.", en: "We cover the full lift lifecycle." },

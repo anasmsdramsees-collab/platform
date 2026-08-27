@@ -34,7 +34,13 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-5 py-14 sm:px-8 md:flex-row md:items-start md:justify-between">
         <div className="max-w-xs">
           <Logo locale={locale} />
-          <p className="mt-4 font-mono text-[12.5px] text-slate">{dict.footer.tagline}</p>
+          <p className="mt-4 font-mono text-[12.5px] text-slate">
+            {isLife
+              ? dict.footer.tagline
+              : locale === "ar"
+                ? "مجموعة واحدة. ذكاء متصل."
+                : "One Group. Connected Intelligence."}
+          </p>
         </div>
 
         {isLife ? (

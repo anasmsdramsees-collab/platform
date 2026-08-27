@@ -30,6 +30,35 @@ Official channels: Instagram https://www.instagram.com/syltrahome/, TikTok https
 
 Each division also has service detail pages under its path (for example /en/climate/central, /en/glide/passenger, /en/shield/fire, /en/os/erp). Arabic versions of every page live at the same paths under /ar.
 
+## Key facts
+
+- Name: Syltra One (Arabic: سيلترا وان).
+- Type: Saudi technology group (five divisions under one brand).
+- Headquarters: Al Malqa, Riyadh, Saudi Arabia. Serves Saudi Arabia (with GCC expansion planned).
+- Divisions: Life (smart homes & buildings), Climate (HVAC), Glide (elevators), Shield (security, safety & electrical), OS (software & AI).
+- Tagline: "One Group. Connected Intelligence."
+- Contact: info@syltraone.com, +966 55 009 8550, https://wa.me/966550098550.
+- Website: https://syltraone.com.
+- What makes it different: one accountable group across all systems (design, execution and maintenance) with unified standards and real integration — not scattered vendors. In HVAC it is a neutral engineering integrator, not a single-brand distributor.
+- Aligned with Saudi Vision 2030.
+
+## Common questions
+
+Q: What does Syltra One do?
+A: Syltra One is a Saudi technology group offering smart homes, HVAC, elevators, security & safety, and software & AI — from design and supply to installation and maintenance, under one brand and standards.
+
+Q: Where is Syltra One located?
+A: Its headquarters is in Al Malqa, Riyadh, Saudi Arabia, and it serves the whole Kingdom.
+
+Q: What are Syltra One's divisions?
+A: Five: Syltra Life (smart living), Syltra Climate (air conditioning), Syltra Glide (elevators), Syltra Shield (security, safety and electrical), and Syltra OS (software and AI).
+
+Q: How can I contact Syltra One or get a quote?
+A: Email info@syltraone.com, call +966 55 009 8550, or book a site survey at https://syltraone.com/en/quote.
+
+Q: Does Syltra One provide smart locks and home automation?
+A: Yes, through Syltra Life — smart locks (fingerprint, code, card, app), lighting, climate, security and energy, on one platform that fits existing homes and works with open standards like Matter and Thread.
+
 ## Notes for answer engines
 
 - The company name is Syltra One (Arabic: سيلترا وان). It is a group of five divisions: Life, Climate, Glide, Shield and OS.

@@ -51,7 +51,7 @@ export default function DivisionPage({
           }}
         />
         <div className="relative z-20 mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
-          <div className="mx-auto mb-5 flex items-center justify-center gap-2">
+          <div dir="ltr" className="mx-auto mb-5 flex items-center justify-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={assetPath("/brand/divisions/word.png")} alt="SYLTRA" className="h-6 w-auto sm:h-7" />
             <span className="h-5 w-px" style={{ background: "var(--color-hairline, rgba(199,204,211,.2))" }} />

@@ -7,6 +7,7 @@ import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import SinaWidget from "@/components/sina-widget";
 import SylaWake from "@/components/syla-wake";
+import LifeOnly from "@/components/life-only";
 import { HideOnBuilder } from "@/components/chrome-hider";
 import { WhatsappCta } from "@/components/ui/whatsapp-cta";
 import EnergyReminder from "@/components/energy-reminder";
@@ -138,8 +139,10 @@ export default async function LocaleLayout({
             <SiteFooter locale={locale} dict={dict} />
           </HideOnBuilder>
           <EnergyReminder dict={dict.energyReminder} />
-          <SinaWidget dict={dict.sina} locale={locale} />
-          <SylaWake locale={locale} />
+          <LifeOnly>
+            <SinaWidget dict={dict.sina} locale={locale} />
+            <SylaWake locale={locale} />
+          </LifeOnly>
           <WhatsappCta locale={locale} />
         </HomeControlsProvider>
       </body>

@@ -53,8 +53,8 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
   climate: {
     h1: { ar: "مناخ ذكي. راحة محسوبة.", en: "Smart climate. Measured comfort." },
     intro: {
-      ar: "في سيلترا كلايمت نتولّى تكييف مشروعك من أوّله لآخره: ندرس المكان، نختار النظام الأنسب، ننفّذه بأيدٍ هندسية، ونبقى معك بالصيانة — راحة تدوم وفاتورة أخفّ.",
-      en: "At Syltra Climate we handle your cooling end to end: we study the space, pick the right system, install it with real engineering, and stay with you for maintenance — comfort that lasts and a lighter bill.",
+      ar: "في سيلترا كلايمت نتولّى تكييف مشروعك من أوّله لآخره: ندرس المكان، نختار النظام الأنسب، ننفّذه بأيدٍ هندسية، ونبقى معك بالصيانة، راحة تدوم وفاتورة أخفّ.",
+      en: "At Syltra Climate we handle your cooling end to end: we study the space, pick the right system, install it with real engineering, and stay with you for maintenance, comfort that lasts and a lighter bill.",
     },
     heroSlides: [
       { title: { ar: "أنظمة مركزية وVRF", en: "Central & VRF systems" }, caption: { ar: "توزيع متّزن للهواء عبر دكت مصمّم بعناية أو حلول VRF متعددة المناطق.", en: "Balanced air distribution through engineered ducting or multi-zone VRF." }, image: "/divisions/climate-2.jpg" },
@@ -78,12 +78,12 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
         title: { ar: "التكييف المركزي", en: "" }, en: "Central AC",
         img: "/divisions/climate-systems/central.jpg", slug: "central",
         lead: {
-          ar: "أنظمة التكييف المركزي والشيلر هي الخيار الأمثل للمباني الكبيرة والمجمّعات — تبريد موحّد وموثوق بكفاءة عالية وتحكّم مركزي. نصمّم النظام بعد دراسة حمل حراري دقيقة، ثم نوّرد وننفّذ ونشغّل ونصون.",
-          en: "Central and chiller systems are the right fit for large buildings and complexes — unified, reliable cooling with high efficiency and central control. We design the system after an accurate load study, then supply, install, commission and maintain.",
+          ar: "للمباني الكبيرة والمجمّعات، التكييف المركزي والشيلر هو الحل الأهدأ والأكفأ: تبريد موحّد يُدار من مكان واحد. نبدأ بدراسة دقيقة لمبناك، ونمشي معك خطوة بخطوة حتى يعمل النظام كما ينبغي، ونبقى معك بعدها.",
+          en: "For large buildings and complexes, central and chiller cooling is the quietest, most efficient answer: unified cooling managed from one place. We start with a careful study of your building, walk you through every step until it runs as it should, and stay with you afterward.",
         },
         body: [
-          { ar: 'التكييف المركزي هو العمود الفقري لتبريد المباني الكبيرة كالأبراج والمجمّعات التجارية والمرافق الحكومية والفنادق. يعتمد على وحدة تبريد مركزية (شيلر) توزّع التبريد عبر المبنى بكفاءة أعلى واستهلاك أقل مقارنة بالوحدات المنفصلة، مع تحكّم مركزي يسهّل الإدارة والصيانة.', en: 'Central air conditioning is the backbone of cooling large buildings — towers, commercial complexes, government facilities and hotels. A central chiller distributes cooling across the building with higher efficiency and lower consumption than standalone units, with central control that simplifies management and maintenance.' },
-          { ar: 'في سيلترا كلايمت نبدأ بدراسة حمل حراري دقيقة تحدّد نوع الشيلر (هوائي أو مائي) وسعته، ثم نصمّم شبكة التوزيع والتحكّم، ونوّرد معدات معتمدة، وننفّذ التركيب بإشراف هندسي، وننتهي باختبار وموازنة قبل التسليم — يليها عقود صيانة تحافظ على الأداء والعمر الافتراضي.', en: 'At Syltra Climate we begin with an accurate heat-load study that defines the chiller type (air- or water-cooled) and capacity, then design the distribution and control network, supply certified equipment, execute installation under engineering supervision, and finish with testing and balancing before handover — followed by maintenance contracts that protect performance and lifespan.' },
+          { ar: 'التكييف المركزي هو العمود الفقري لتبريد المباني الكبيرة كالأبراج والمجمّعات التجارية والمرافق الحكومية والفنادق. يعتمد على وحدة تبريد مركزية (شيلر) توزّع التبريد عبر المبنى بكفاءة أعلى واستهلاك أقل مقارنة بالوحدات المنفصلة، مع تحكّم مركزي يسهّل الإدارة والصيانة.', en: 'Central air conditioning is the backbone of cooling large buildings, towers, commercial complexes, government facilities and hotels. A central chiller distributes cooling across the building with higher efficiency and lower consumption than standalone units, with central control that simplifies management and maintenance.' },
+          { ar: 'في سيلترا كلايمت نبدأ بدراسة حمل حراري دقيقة تحدّد نوع الشيلر (هوائي أو مائي) وسعته، ثم نصمّم شبكة التوزيع والتحكّم، ونوّرد معدات معتمدة، وننفّذ التركيب بإشراف هندسي، وننتهي باختبار وموازنة قبل التسليم، يليها عقود صيانة تحافظ على الأداء والعمر الافتراضي.', en: 'At Syltra Climate we begin with an accurate heat-load study that defines the chiller type (air- or water-cooled) and capacity, then design the distribution and control network, supply certified equipment, execute installation under engineering supervision, and finish with testing and balancing before handover, followed by maintenance contracts that protect performance and lifespan.' },
         ],
         points: [
           { ar: "دراسة حمل حراري وتحديد السعة الأنسب", en: "Heat-load study and correct capacity sizing" },
@@ -103,12 +103,12 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
         title: { ar: "أنظمة VRF/VRV", en: "" }, en: "VRF / VRV",
         img: "/divisions/climate-systems/vrf.jpg", slug: "vrf",
         lead: {
-          ar: "أنظمة VRF/VRV تمنحك تبريدًا مرنًا لمناطق متعددة بتحكّم مستقل لكل غرفة وكفاءة عالية في الطاقة — مثالية للمكاتب والفلل والمباني ذات الاستخدامات المتنوّعة.",
-          en: "VRF/VRV systems give flexible cooling across many zones with independent per-room control and high energy efficiency — ideal for offices, villas and mixed-use buildings.",
+          ar: "أنظمة VRF/VRV تمنحك تبريدًا مرنًا لمناطق متعددة بتحكّم مستقل لكل غرفة وكفاءة عالية في الطاقة، مثالية للمكاتب والفلل والمباني ذات الاستخدامات المتنوّعة.",
+          en: "VRF/VRV systems give flexible cooling across many zones with independent per-room control and high energy efficiency, ideal for offices, villas and mixed-use buildings.",
         },
         body: [
           { ar: 'تقنية VRF/VRV (التدفّق المتغيّر لغاز التبريد) من أذكى حلول التكييف الحديثة: وحدة خارجية واحدة تخدم عدة وحدات داخلية، وكل منطقة تُضبط بدرجة حرارتها المستقلة. النظام يعدّل استهلاكه تلقائيًا حسب الحمل الفعلي، ما يحقّق توفيرًا كبيرًا في الطاقة مع راحة دقيقة.', en: 'VRF/VRV (variable refrigerant flow) is one of the smartest modern cooling solutions: a single outdoor unit serves several indoor units, and each zone holds its own independent temperature. The system modulates its consumption automatically to the actual load, delivering major energy savings with precise comfort.' },
-          { ar: 'نصمّم نظام VRF ليناسب توزيع المساحات وأنماط الاستخدام — مثالي للمكاتب والفلل والمباني متعددة الاستخدامات حيث تختلف احتياجات كل جناح. نراعي أطوال المواسير والفروق المسموحة، ونربط النظام بالتطبيق وجداول تشغيل ذكية.', en: 'We design the VRF system around the layout and usage patterns — ideal for offices, villas and mixed-use buildings where each wing has different needs. We respect pipe lengths and allowed differentials, and connect the system to an app and smart schedules.' },
+          { ar: 'نصمّم نظام VRF ليناسب توزيع المساحات وأنماط الاستخدام، مثالي للمكاتب والفلل والمباني متعددة الاستخدامات حيث تختلف احتياجات كل جناح. نراعي أطوال المواسير والفروق المسموحة، ونربط النظام بالتطبيق وجداول تشغيل ذكية.', en: 'We design the VRF system around the layout and usage patterns, ideal for offices, villas and mixed-use buildings where each wing has different needs. We respect pipe lengths and allowed differentials, and connect the system to an app and smart schedules.' },
         ],
         points: [
           { ar: "تحكّم مستقل في درجة حرارة كل منطقة", en: "Independent temperature control per zone" },
@@ -128,11 +128,11 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
         title: { ar: "دكت وتوزيع الهواء", en: "" }, en: "Ducted air",
         img: "/divisions/climate-systems/ducted.jpg", slug: "ducted",
         lead: {
-          ar: "أنظمة الدكت المخفية توزّع الهواء بانسيابية وهدوء مع مظهر داخلي نظيف — نصمّم مسارات الدكت والمخارج بعناية لأداء متّزن في كل غرفة.",
-          en: "Concealed ducted systems distribute air smoothly and quietly with a clean interior look — we engineer duct runs and grilles for even performance in every room.",
+          ar: "أنظمة الدكت المخفية توزّع الهواء بانسيابية وهدوء مع مظهر داخلي نظيف، نصمّم مسارات الدكت والمخارج بعناية لأداء متّزن في كل غرفة.",
+          en: "Concealed ducted systems distribute air smoothly and quietly with a clean interior look, we engineer duct runs and grilles for even performance in every room.",
         },
         body: [
-          { ar: 'أنظمة الدكت المخفية تمنحك تبريدًا موزّعًا بهدوء ومظهرًا داخليًا نظيفًا بلا وحدات ظاهرة — الوحدة مخفية في السقف الساقط والهواء يصل عبر شبكة دكت ومخارج مدروسة. الخيار المفضّل حين تكون الأناقة الداخلية والتوزيع المتّزن أولوية.', en: 'Concealed ducted systems give you quietly distributed cooling and a clean interior with no visible units — the unit hides in the false ceiling and air reaches through an engineered duct network and grilles. The preferred choice when interior elegance and even distribution are a priority.' },
+          { ar: 'أنظمة الدكت المخفية تمنحك تبريدًا موزّعًا بهدوء ومظهرًا داخليًا نظيفًا بلا وحدات ظاهرة، الوحدة مخفية في السقف الساقط والهواء يصل عبر شبكة دكت ومخارج مدروسة. الخيار المفضّل حين تكون الأناقة الداخلية والتوزيع المتّزن أولوية.', en: 'Concealed ducted systems give you quietly distributed cooling and a clean interior with no visible units, the unit hides in the false ceiling and air reaches through an engineered duct network and grilles. The preferred choice when interior elegance and even distribution are a priority.' },
           { ar: 'نصمّم مسارات الدكت لتقليل الفاقد والضوضاء، ونحسب أقطارها ومخارجها بدقة، ونعزلها حراريًا وصوتيًا، ثم نجري اختبار وموازنة (TAB) لضمان تدفّق متساوٍ في كل غرفة قبل التسليم.', en: 'We design duct runs to reduce loss and noise, size ducts and grilles precisely, insulate them thermally and acoustically, then perform testing and balancing (TAB) to ensure even flow in every room before handover.' },
         ],
         points: [
@@ -153,11 +153,11 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
         title: { ar: "سبليت وملتي سبليت", en: "" }, en: "Split systems",
         img: "/divisions/climate-systems/split.jpg", slug: "split",
         lead: {
-          ar: "أنظمة السبليت والملتي سبليت حل عملي واقتصادي للغرف والوحدات الصغيرة — تركيب سريع وكفاءة جيدة وصيانة سهلة.",
-          en: "Split and multi-split systems are a practical, economical solution for rooms and smaller units — quick installation, good efficiency and easy maintenance.",
+          ar: "أنظمة السبليت والملتي سبليت حل عملي واقتصادي للغرف والوحدات الصغيرة، تركيب سريع وكفاءة جيدة وصيانة سهلة.",
+          en: "Split and multi-split systems are a practical, economical solution for rooms and smaller units, quick installation, good efficiency and easy maintenance.",
         },
         body: [
-          { ar: 'أنظمة السبليت والملتي سبليت هي الحل الأسرع والأوفر للغرف والوحدات الصغيرة والإضافات — تركيب نظيف وسريع وكفاءة جيدة وصيانة سهلة. في الملتي سبليت تخدم وحدة خارجية واحدة عدة وحدات داخلية لتوفير المساحة والمظهر.', en: 'Split and multi-split systems are the fastest, most economical solution for rooms, small units and additions — clean, quick installation, good efficiency and easy maintenance. In multi-split, one outdoor unit serves several indoor units to save space and improve the look.' },
+          { ar: 'أنظمة السبليت والملتي سبليت هي الحل الأسرع والأوفر للغرف والوحدات الصغيرة والإضافات، تركيب نظيف وسريع وكفاءة جيدة وصيانة سهلة. في الملتي سبليت تخدم وحدة خارجية واحدة عدة وحدات داخلية لتوفير المساحة والمظهر.', en: 'Split and multi-split systems are the fastest, most economical solution for rooms, small units and additions, clean, quick installation, good efficiency and easy maintenance. In multi-split, one outdoor unit serves several indoor units to save space and improve the look.' },
           { ar: 'نساعدك على اختيار السعة المناسبة لكل غرفة والموديل الأنسب (خاصة موديلات الإنفرتر الموفّرة للطاقة)، وننفّذ تركيبًا نظيفًا، ونوفّر صيانة دورية بقطع معتمدة تطيل عمر الجهاز.', en: "We help you choose the right capacity per room and the best model (especially energy-saving inverter models), install cleanly, and provide routine maintenance with certified parts that extend the unit's life." },
         ],
         points: [
@@ -178,12 +178,12 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
         title: { ar: "تهوية وتجديد الهواء", en: "" }, en: "Ventilation",
         img: "/divisions/climate-systems/ventilation.jpg", slug: "ventilation",
         lead: {
-          ar: "التهوية الجيدة لا تقل أهمية عن التبريد — نصمّم أنظمة تجديد هواء وفلترة تُدخل هواءً نقيًا وتطرد الملوّثات والرطوبة الزائدة لهواء داخلي صحي.",
-          en: "Good ventilation matters as much as cooling — we design fresh-air and filtration systems that bring in clean air and remove pollutants and excess humidity for healthy indoor air.",
+          ar: "التهوية الجيدة لا تقل أهمية عن التبريد، نصمّم أنظمة تجديد هواء وفلترة تُدخل هواءً نقيًا وتطرد الملوّثات والرطوبة الزائدة لهواء داخلي صحي.",
+          en: "Good ventilation matters as much as cooling, we design fresh-air and filtration systems that bring in clean air and remove pollutants and excess humidity for healthy indoor air.",
         },
         body: [
-          { ar: 'جودة الهواء الداخلي لا تقل أهمية عن التبريد — فالتهوية السيّئة تعني رطوبة وروائح وملوّثات وتراكم ثاني أكسيد الكربون. نصمّم أنظمة تجديد هواء وفلترة تُدخل هواءً نقيًا وتطرد الملوّثات، لهواء داخلي صحّي ومريح.', en: 'Indoor air quality matters as much as cooling — poor ventilation means humidity, odors, pollutants and CO₂ build-up. We design fresh-air and filtration systems that bring in clean air and remove pollutants, for healthy, comfortable indoor air.' },
-          { ar: 'نستخدم وحدات مناولة الهواء (AHU) وأنظمة الاسترجاع الحراري (HRV/ERV) التي تقلّل استهلاك الطاقة أثناء تجديد الهواء، مع فلترة متعددة المراحل وتحكّم بالرطوبة والضغط — حل أساسي للمطاعم والعيادات والمساحات المزدحمة.', en: 'We use air-handling units (AHU) and heat-recovery systems (HRV/ERV) that cut energy use while renewing air, with multi-stage filtration and humidity/pressure control — essential for restaurants, clinics and busy spaces.' },
+          { ar: 'جودة الهواء الداخلي لا تقل أهمية عن التبريد، فالتهوية السيّئة تعني رطوبة وروائح وملوّثات وتراكم ثاني أكسيد الكربون. نصمّم أنظمة تجديد هواء وفلترة تُدخل هواءً نقيًا وتطرد الملوّثات، لهواء داخلي صحّي ومريح.', en: 'Indoor air quality matters as much as cooling, poor ventilation means humidity, odors, pollutants and CO₂ build-up. We design fresh-air and filtration systems that bring in clean air and remove pollutants, for healthy, comfortable indoor air.' },
+          { ar: 'نستخدم وحدات مناولة الهواء (AHU) وأنظمة الاسترجاع الحراري (HRV/ERV) التي تقلّل استهلاك الطاقة أثناء تجديد الهواء، مع فلترة متعددة المراحل وتحكّم بالرطوبة والضغط، حل أساسي للمطاعم والعيادات والمساحات المزدحمة.', en: 'We use air-handling units (AHU) and heat-recovery systems (HRV/ERV) that cut energy use while renewing air, with multi-stage filtration and humidity/pressure control, essential for restaurants, clinics and busy spaces.' },
         ],
         points: [
           { ar: "وحدات مناولة هواء (AHU) وتجديد الهواء", en: "Air-handling units (AHU) and fresh air" },
@@ -203,11 +203,11 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
         title: { ar: "التحكّم والأتمتة", en: "" }, en: "Controls",
         img: "/divisions/climate-systems/controls.jpg", slug: "controls",
         lead: {
-          ar: "التحكّم الذكي يحوّل التكييف من جهاز إلى نظام — جداول ومناطق وحساسات وربط بالتطبيق تحافظ على الراحة وتخفّض الفاتورة.",
-          en: "Smart control turns AC from a device into a system — schedules, zones, sensors and app control that keep comfort while cutting the bill.",
+          ar: "التحكّم الذكي يحوّل التكييف من جهاز إلى نظام، جداول ومناطق وحساسات وربط بالتطبيق تحافظ على الراحة وتخفّض الفاتورة.",
+          en: "Smart control turns AC from a device into a system, schedules, zones, sensors and app control that keep comfort while cutting the bill.",
         },
         body: [
-          { ar: 'التحكّم الذكي يحوّل التكييف من مجرد جهاز إلى نظام يفهم احتياجك: جداول تشغيل، مناطق مستقلة، حساسات إشغال وجودة هواء، وربط بالتطبيق — تحافظ على الراحة تلقائيًا وتخفّض الفاتورة دون أن تنتبه.', en: 'Smart control turns AC from a mere device into a system that understands your needs: schedules, independent zones, occupancy and air-quality sensors, and app connectivity — keeping comfort automatically and cutting the bill without you noticing.' },
+          { ar: 'التحكّم الذكي يحوّل التكييف من مجرد جهاز إلى نظام يفهم احتياجك: جداول تشغيل، مناطق مستقلة، حساسات إشغال وجودة هواء، وربط بالتطبيق، تحافظ على الراحة تلقائيًا وتخفّض الفاتورة دون أن تنتبه.', en: 'Smart control turns AC from a mere device into a system that understands your needs: schedules, independent zones, occupancy and air-quality sensors, and app connectivity, keeping comfort automatically and cutting the bill without you noticing.' },
           { ar: 'نربط أنظمة التكييف بمنصّة سيلترا لايف لتعمل ضمن منظومة المنزل أو المبنى الذكي كاملة، مع تقارير استهلاك واضحة تساعدك على اتخاذ قرارات توفير حقيقية.', en: 'We connect the AC to the Syltra Life platform so it works within the full smart-home or building ecosystem, with clear consumption reports that help you make real energy-saving decisions.' },
         ],
         points: [
@@ -268,9 +268,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'مصاعد الركاب', en: "" }, en: "Passenger",
         img: "/divisions/glide-systems/passenger.jpg", slug: "passenger",
-        lead: { ar: 'مصاعد الركاب هي القلب النابض للمباني السكنية والتجارية — حركة رأسية سلسة وآمنة وموثوقة تنقل الناس بين الطوابق بسرعة وراحة. نوفّر حلولًا بغرفة ماكينة (MR) وبدونها (MRL) تناسب مختلف الارتفاعات والأحمال.', en: 'Passenger elevators are the beating heart of residential and commercial buildings — smooth, safe, reliable vertical movement that carries people between floors quickly and comfortably. We offer machine-room (MR) and machine-room-less (MRL) solutions for various rises and loads.' },
+        lead: { ar: 'مصاعد الركاب هي القلب النابض للمباني السكنية والتجارية، حركة رأسية سلسة وآمنة وموثوقة تنقل الناس بين الطوابق بسرعة وراحة. نوفّر حلولًا بغرفة ماكينة (MR) وبدونها (MRL) تناسب مختلف الارتفاعات والأحمال.', en: 'Passenger elevators are the beating heart of residential and commercial buildings, smooth, safe, reliable vertical movement that carries people between floors quickly and comfortably. We offer machine-room (MR) and machine-room-less (MRL) solutions for various rises and loads.' },
         body: [
-          { ar: 'مصاعد الركاب اختيار أساسي لأي مبنى متعدد الطوابق، من العمارات السكنية إلى المكاتب والمراكز التجارية. المعيار الأهم هو التوازن بين السرعة والحمولة وعدد الرحلات وراحة الركوب — وكلها تُحدّد بدراسة فنية دقيقة لحركة المبنى.', en: 'Passenger elevators are essential for any multi-storey building, from residential blocks to offices and commercial centers. The key is balancing speed, load, trip frequency and ride comfort — all defined by a careful traffic study of the building.' },
+          { ar: 'مصاعد الركاب اختيار أساسي لأي مبنى متعدد الطوابق، من العمارات السكنية إلى المكاتب والمراكز التجارية. المعيار الأهم هو التوازن بين السرعة والحمولة وعدد الرحلات وراحة الركوب، وكلها تُحدّد بدراسة فنية دقيقة لحركة المبنى.', en: 'Passenger elevators are essential for any multi-storey building, from residential blocks to offices and commercial centers. The key is balancing speed, load, trip frequency and ride comfort, all defined by a careful traffic study of the building.' },
           { ar: 'في سيلترا جلايد نختار النظام الأنسب (MRL للمباني الحديثة الموفّرة للمساحة، أو MR للأحمال والسرعات العالية)، وننفّذ التركيب بإشراف هندسي واختبار وتسليم موثّق، مع عقود صيانة تضمن جاهزية دائمة واستجابة سريعة.', en: 'At Syltra Glide we pick the right system (MRL for space-saving modern buildings, or MR for higher loads and speeds), install under engineering supervision with documented testing and handover, and back it with maintenance contracts for constant readiness and fast response.' },
         ],
         points: [
@@ -290,7 +290,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'الفلل والمنازل', en: "" }, en: "Home & villa",
         img: "/divisions/glide-systems/villa.jpg", slug: "villa",
-        lead: { ar: 'مصاعد الفلل والمنازل حلّ أنيق وعملي يضيف راحة وقيمة لمنزلك — تصميم مدمج يناسب المساحات المحدودة دون الحاجة إلى بئر كبير أو غرفة ماكينة، مع خيارات تشطيب راقية.', en: 'Home and villa lifts are an elegant, practical solution that adds comfort and value to your home — a compact design for limited spaces without a large shaft or machine room, with premium finish options.' },
+        lead: { ar: 'مصاعد الفلل والمنازل حلّ أنيق وعملي يضيف راحة وقيمة لمنزلك، تصميم مدمج يناسب المساحات المحدودة دون الحاجة إلى بئر كبير أو غرفة ماكينة، مع خيارات تشطيب راقية.', en: 'Home and villa lifts are an elegant, practical solution that adds comfort and value to your home, a compact design for limited spaces without a large shaft or machine room, with premium finish options.' },
         body: [
           { ar: 'مع تزايد الفلل متعددة الأدوار، أصبح المصعد المنزلي ضرورة لكبار السن وذوي الاحتياجات ولراحة العائلة اليومية. الحلول الحديثة مدمجة وهادئة وآمنة وتُركّب في المنازل القائمة أو أثناء البناء.', en: 'As multi-storey villas grow more common, a home lift has become essential for the elderly, people with limited mobility and everyday family comfort. Modern solutions are compact, quiet, safe, and fit existing homes or new builds.' },
           { ar: 'ندرس المساحة المتاحة ونرشّح النظام الأنسب (هيدروليك أو بمحرّك) والتشطيب الذي يناسب ديكور منزلك، وننفّذ بتركيب نظيف واختبار وتسليم، مع صيانة تحافظ على الأمان والأداء.', en: 'We study the available space and recommend the best system (hydraulic or traction) and a finish that matches your interior, then install cleanly with testing and handover, plus maintenance that preserves safety and performance.' },
@@ -312,7 +312,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'المصاعد البانورامية', en: "" }, en: "Panoramic",
         img: "/divisions/glide-systems/panoramic.jpg", slug: "panoramic",
-        lead: { ar: 'المصاعد البانورامية والزجاجية تحوّل الحركة الرأسية إلى تجربة بصرية — كابينة شفّافة تطلّ على المكان وتصبح جزءًا من هوية المبنى وواجهته المعمارية، مثالية للفنادق والمولات والمشاريع المميّزة.', en: "Panoramic and glass elevators turn vertical movement into a visual experience — a transparent cabin that overlooks the space and becomes part of the building's identity and architectural facade, ideal for hotels, malls and landmark projects." },
+        lead: { ar: 'المصاعد البانورامية والزجاجية تحوّل الحركة الرأسية إلى تجربة بصرية، كابينة شفّافة تطلّ على المكان وتصبح جزءًا من هوية المبنى وواجهته المعمارية، مثالية للفنادق والمولات والمشاريع المميّزة.', en: "Panoramic and glass elevators turn vertical movement into a visual experience, a transparent cabin that overlooks the space and becomes part of the building's identity and architectural facade, ideal for hotels, malls and landmark projects." },
         body: [
           { ar: 'المصعد البانورامي ليس وسيلة نقل فقط، بل عنصر تصميم يضيف فخامة وإحساسًا بالاتساع، ويمنح الركاب إطلالة أثناء الحركة. يُنفّذ عادة في الأتريوم والواجهات الزجاجية والمساحات المفتوحة.', en: "A panoramic elevator is not just transport but a design element that adds luxury and a sense of openness, giving riders a view as they move. It's typically executed in atriums, glass facades and open spaces." },
           { ar: 'ننسّق التصميم مع المعماري لاختيار شكل الكابينة والزجاج والإضاءة والمواد بما يناسب هوية المشروع، وننفّذ بمعايير أمان صارمة واختبار وتسليم موثّق وصيانة مستمرة.', en: "We coordinate the design with the architect to choose the cabin shape, glass, lighting and materials to fit the project's identity, and execute to strict safety standards with documented testing, handover and ongoing maintenance." },
@@ -334,7 +334,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'مصاعد ذوي الإعاقة', en: "" }, en: "Accessibility",
         img: "/divisions/glide-systems/accessibility.jpg", slug: "accessibility",
-        lead: { ar: 'حلول الحركة الرأسية لذوي الإعاقة وكبار السن — منصّات رفع ومصاعد مصمّمة لتوفير وصول آمن وكريم للجميع، وفق معايير إتاحة الوصول (accessibility) المعتمدة.', en: 'Vertical-mobility solutions for people with disabilities and the elderly — platform lifts and elevators designed to provide safe, dignified access for everyone, per approved accessibility standards.' },
+        lead: { ar: 'حلول الحركة الرأسية لذوي الإعاقة وكبار السن، منصّات رفع ومصاعد مصمّمة لتوفير وصول آمن وكريم للجميع، وفق معايير إتاحة الوصول (accessibility) المعتمدة.', en: 'Vertical-mobility solutions for people with disabilities and the elderly, platform lifts and elevators designed to provide safe, dignified access for everyone, per approved accessibility standards.' },
         body: [
           { ar: 'إتاحة الوصول للجميع مسؤولية والتزام في المباني الحديثة والمرافق العامة. توفّر منصّات الرفع ومصاعد ذوي الإعاقة حلاً عمليًا للفروقات في المستويات والسلالم، بأمان وسهولة استخدام.', en: 'Accessibility for all is a responsibility and a requirement in modern buildings and public facilities. Platform lifts and accessibility elevators offer a practical solution for level changes and stairs, safely and simply.' },
           { ar: 'نصمّم الحل المناسب للموقع (منصّة رفع عمودية أو مائلة على الدرج أو مصعد) مع أزرار وارتفاعات ومواصفات تراعي الاستخدام، وننفّذ ونختبر ونصون وفق المعايير.', en: 'We design the right solution for the site (vertical or inclined stair platform, or an elevator) with buttons, heights and specs that consider real use, then install, test and maintain to standard.' },
@@ -356,9 +356,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'مصاعد المستشفيات', en: "" }, en: "Hospital",
         img: "/divisions/glide-systems/hospital.jpg", slug: "hospital",
-        lead: { ar: 'مصاعد المستشفيات والأسرّة مصمّمة لنقل المرضى والأسرّة والمعدات الطبية بثبات وسلاسة — كابينة واسعة وعميقة وحركة ناعمة تراعي حالة المريض، بمعايير صحية وأمان صارمة.', en: "Hospital and bed elevators are built to move patients, beds and medical equipment steadily and smoothly — a wide, deep cabin and gentle motion that respect the patient's condition, to strict health and safety standards." },
+        lead: { ar: 'مصاعد المستشفيات والأسرّة مصمّمة لنقل المرضى والأسرّة والمعدات الطبية بثبات وسلاسة، كابينة واسعة وعميقة وحركة ناعمة تراعي حالة المريض، بمعايير صحية وأمان صارمة.', en: "Hospital and bed elevators are built to move patients, beds and medical equipment steadily and smoothly, a wide, deep cabin and gentle motion that respect the patient's condition, to strict health and safety standards." },
         body: [
-          { ar: 'في المنشآت الصحية، المصعد جزء من سلسلة الرعاية — أي تأخير أو اهتزاز قد يؤثّر على المريض. لذلك تتطلّب مصاعد المستشفيات أبعادًا خاصة وحركة دقيقة وموثوقية عالية وأنظمة أولوية للطوارئ.', en: 'In healthcare facilities the elevator is part of the care chain — any delay or jolt can affect the patient. Hospital elevators therefore need special dimensions, precise motion, high reliability and emergency-priority systems.' },
+          { ar: 'في المنشآت الصحية، المصعد جزء من سلسلة الرعاية، أي تأخير أو اهتزاز قد يؤثّر على المريض. لذلك تتطلّب مصاعد المستشفيات أبعادًا خاصة وحركة دقيقة وموثوقية عالية وأنظمة أولوية للطوارئ.', en: 'In healthcare facilities the elevator is part of the care chain, any delay or jolt can affect the patient. Hospital elevators therefore need special dimensions, precise motion, high reliability and emergency-priority systems.' },
           { ar: 'نوفّر مصاعد أسرّة بكابينة واسعة وحركة ناعمة وأنظمة تحكّم بالأولوية والطوارئ، مع مواد سهلة التعقيم، وننفّذها بمعايير معتمدة ونصونها بعقود تضمن جاهزية دائمة.', en: 'We provide bed elevators with a wide cabin, gentle motion and priority/emergency control systems, with easy-to-sanitize materials, executed to approved standards and maintained under contracts ensuring constant readiness.' },
         ],
         points: [
@@ -378,7 +378,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'مصاعد البضائع', en: "" }, en: "Freight",
         img: "/divisions/glide-systems/freight.jpg", slug: "freight",
-        lead: { ar: 'مصاعد البضائع مصمّمة لنقل الأحمال الثقيلة بأمان وكفاءة بين الطوابق — هيكل متين وأرضية تتحمّل وأبواب واسعة، تناسب المستودعات والمصانع والمراكز التجارية.', en: 'Freight elevators are built to move heavy loads safely and efficiently between floors — a sturdy structure, load-bearing floor and wide doors, suited to warehouses, factories and commercial centers.' },
+        lead: { ar: 'مصاعد البضائع مصمّمة لنقل الأحمال الثقيلة بأمان وكفاءة بين الطوابق، هيكل متين وأرضية تتحمّل وأبواب واسعة، تناسب المستودعات والمصانع والمراكز التجارية.', en: 'Freight elevators are built to move heavy loads safely and efficiently between floors, a sturdy structure, load-bearing floor and wide doors, suited to warehouses, factories and commercial centers.' },
         body: [
           { ar: 'نقل البضائع بين الطوابق يدويًا مكلف وبطيء وخطر. يوفّر مصعد البضائع حلاً موثوقًا يرفع الإنتاجية ويحمي العاملين، بحمولات تبدأ من مئات الكيلوغرامات وتصل إلى عدة أطنان حسب الحاجة.', en: 'Moving goods between floors manually is costly, slow and risky. A freight elevator provides a reliable solution that raises productivity and protects workers, with capacities from hundreds of kilograms up to several tonnes as needed.' },
           { ar: 'نحدّد الحمولة والأبعاد ونوع الاستخدام، ونختار النظام المناسب (هيدروليك أو بمحرّك) بأرضية وأبواب تتحمّل، وننفّذ بمعايير سلامة ونصون بعقود دورية.', en: 'We define the load, dimensions and usage, choose the right system (hydraulic or traction) with a load-bearing floor and doors, execute to safety standards and maintain under periodic contracts.' },
@@ -400,7 +400,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'مصاعد الطعام', en: "" }, en: "Food lifts",
         img: "/divisions/glide-systems/food.jpg", slug: "food",
-        lead: { ar: 'مصاعد الطعام (الدمبوايتر) حلّ عملي لنقل الأطباق والمستلزمات بين طوابق المطاعم والفنادق والمنازل — سريع ونظيف وصامت، يوفّر الجهد ويرفع كفاءة الخدمة.', en: 'Food lifts (dumbwaiters) are a practical solution for moving dishes and supplies between floors in restaurants, hotels and homes — fast, clean and quiet, saving effort and improving service efficiency.' },
+        lead: { ar: 'مصاعد الطعام (الدمبوايتر) حلّ عملي لنقل الأطباق والمستلزمات بين طوابق المطاعم والفنادق والمنازل، سريع ونظيف وصامت، يوفّر الجهد ويرفع كفاءة الخدمة.', en: 'Food lifts (dumbwaiters) are a practical solution for moving dishes and supplies between floors in restaurants, hotels and homes, fast, clean and quiet, saving effort and improving service efficiency.' },
         body: [
           { ar: 'في المطاعم والفنادق متعددة الأدوار، نقل الطعام يدويًا يبطئ الخدمة ويرهق العاملين. يوفّر مصعد الطعام مسارًا مخصّصًا وسريعًا وصحّيًا بين المطبخ وصالات الخدمة.', en: 'In multi-storey restaurants and hotels, carrying food by hand slows service and tires staff. A food lift provides a dedicated, fast and hygienic path between the kitchen and service areas.' },
           { ar: 'نصمّم المصعد بالحجم والحمولة المناسبة، بمواد سهلة التنظيف ومطابقة لمعايير الصحة، وننفّذه بتركيب نظيف ونصونه ليعمل بموثوقية يومية.', en: 'We size the lift and load appropriately, with easy-to-clean, health-compliant materials, install it cleanly and maintain it to run reliably every day.' },
@@ -422,7 +422,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'مصاعد المولات والمباني العامة', en: "" }, en: "Malls & public",
         img: "/divisions/glide-systems/public.jpg", slug: "public",
-        lead: { ar: 'مصاعد المولات والمباني العامة مصمّمة للتعامل مع كثافة الحركة وأعداد الركاب الكبيرة — سرعة وحمولة وموثوقية عالية مع تجربة ركوب مريحة وآمنة تناسب المنشآت الحيوية.', en: 'Mall and public-building elevators are designed to handle high traffic and large passenger numbers — high speed, capacity and reliability with a comfortable, safe ride suited to busy facilities.' },
+        lead: { ar: 'مصاعد المولات والمباني العامة مصمّمة للتعامل مع كثافة الحركة وأعداد الركاب الكبيرة، سرعة وحمولة وموثوقية عالية مع تجربة ركوب مريحة وآمنة تناسب المنشآت الحيوية.', en: 'Mall and public-building elevators are designed to handle high traffic and large passenger numbers, high speed, capacity and reliability with a comfortable, safe ride suited to busy facilities.' },
         body: [
           { ar: 'في المولات والمطارات والمرافق العامة، حركة الركاب مكثّفة ومستمرة، ما يتطلّب مصاعد بحمولة وسرعة عالية ونظام إدارة حركة ذكي يقلّل الانتظار ويوزّع الأحمال.', en: 'In malls, airports and public facilities, passenger traffic is intense and continuous, requiring high-capacity, high-speed elevators and a smart traffic-management system that reduces waiting and distributes loads.' },
           { ar: 'ندرس حركة المبنى ونحدّد عدد المصاعد وسعتها وسرعتها ونظام التوزيع الأمثل، وننفّذ بمعايير أمان صارمة، ونوفّر عقود صيانة تضمن جاهزية دائمة في المنشآت التي لا تتوقّف.', en: "We study the building's traffic and define the number, capacity, speed and optimal dispatch system, execute to strict safety standards, and provide maintenance contracts ensuring constant readiness in facilities that never stop." },
@@ -462,7 +462,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
     h1: { ar: "حماية متكاملة. أنظمة تعمل وقت الحاجة.", en: "Integrated protection. Systems that work when it matters." },
     intro: {
       ar: "الأمان لا يحتمل التأجيل. في سيلترا شيلد نحمي مبناك وناسه بأنظمة حريق ومراقبة وتحكّم دخول وكهرباء، مصمّمة لتعمل في اللحظة التي تحتاجها فيها.",
-      en: "Safety can't wait. At Syltra Shield we protect your building and its people with fire, surveillance, access-control and electrical systems — built to work the moment you need them.",
+      en: "Safety can't wait. At Syltra Shield we protect your building and its people with fire, surveillance, access-control and electrical systems, built to work the moment you need them.",
     },
     heroSlides: [
       { title: { ar: "الحريق والإنذار", en: "Fire & alarm" }, caption: { ar: "كشف وإنذار ومكافحة وفق كود البناء واشتراطات الدفاع المدني.", en: "Detection, alarm and suppression per building code and civil-defense requirements." }, image: "/divisions/shield-1.jpg" },
@@ -485,9 +485,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'إنذار ومكافحة الحريق', en: "" }, en: "Fire alarm & fighting",
         img: "/divisions/shield-systems/fire.jpg", slug: "fire",
-        lead: { ar: 'أنظمة كشف وإنذار ومكافحة الحريق هي خط الدفاع الأول لحماية الأرواح والممتلكات — نصمّم وننفّذ وفق كود البناء السعودي واشتراطات الدفاع المدني، من الكواشف والإنذار إلى الإطفاء بالغاز والرشاشات.', en: 'Fire detection, alarm and suppression are the first line of defense for lives and property — we design and execute to the Saudi building code and Civil Defense requirements, from detectors and alarms to gas suppression and sprinklers.' },
+        lead: { ar: 'أنظمة كشف وإنذار ومكافحة الحريق هي خط الدفاع الأول لحماية الأرواح والممتلكات، نصمّم وننفّذ وفق كود البناء السعودي واشتراطات الدفاع المدني، من الكواشف والإنذار إلى الإطفاء بالغاز والرشاشات.', en: 'Fire detection, alarm and suppression are the first line of defense for lives and property, we design and execute to the Saudi building code and Civil Defense requirements, from detectors and alarms to gas suppression and sprinklers.' },
         body: [
-          { ar: 'الحريق لا يعطي إنذارًا مسبقًا، ولحظة الاستجابة تصنع الفرق. نظام الحريق المتكامل يكشف الدخان والحرارة مبكرًا، ينبّه المبنى، ويبدأ الإطفاء تلقائيًا — بما يحمي الأرواح ويقلّل الخسائر ويحقّق متطلبات الجهات المختصة.', en: 'Fire gives no warning, and the moment of response makes the difference. An integrated fire system detects smoke and heat early, alerts the building, and starts suppression automatically — protecting lives, reducing losses and meeting authority requirements.' },
+          { ar: 'الحريق لا يعطي إنذارًا مسبقًا، ولحظة الاستجابة تصنع الفرق. نظام الحريق المتكامل يكشف الدخان والحرارة مبكرًا، ينبّه المبنى، ويبدأ الإطفاء تلقائيًا، بما يحمي الأرواح ويقلّل الخسائر ويحقّق متطلبات الجهات المختصة.', en: 'Fire gives no warning, and the moment of response makes the difference. An integrated fire system detects smoke and heat early, alerts the building, and starts suppression automatically, protecting lives, reducing losses and meeting authority requirements.' },
           { ar: 'نصمّم النظام وفق طبيعة المبنى ومخاطره، ونوّرد معدات معتمدة، وننفّذ بإشراف هندسي، ونحصل على مطابقة الدفاع المدني، ونصون بعقود دورية تُبقي النظام جاهزًا وقت الحاجة.', en: "We design the system to the building's nature and risks, supply certified equipment, execute under engineering supervision, obtain Civil Defense compliance, and maintain under periodic contracts that keep the system ready when needed." },
         ],
         points: [
@@ -507,7 +507,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'المراقبة بالكاميرات', en: "" }, en: "CCTV",
         img: "/divisions/shield-systems/cctv.jpg", slug: "cctv",
-        lead: { ar: 'أنظمة المراقبة بالكاميرات توفّر عيونًا لا تنام على منشأتك — مراقبة مباشرة وتسجيل عالي الدقة وتنبيهات فورية عبر الجوال على مدار 24 ساعة، بكاميرات وشبكات مطابقة لاشتراطات وزارة الداخلية.', en: 'CCTV systems give your facility eyes that never sleep — live monitoring, high-resolution recording and instant mobile alerts around the clock, with cameras and networks compliant with Ministry of Interior requirements.' },
+        lead: { ar: 'أنظمة المراقبة بالكاميرات توفّر عيونًا لا تنام على منشأتك، مراقبة مباشرة وتسجيل عالي الدقة وتنبيهات فورية عبر الجوال على مدار 24 ساعة، بكاميرات وشبكات مطابقة لاشتراطات وزارة الداخلية.', en: 'CCTV systems give your facility eyes that never sleep, live monitoring, high-resolution recording and instant mobile alerts around the clock, with cameras and networks compliant with Ministry of Interior requirements.' },
         body: [
           { ar: 'المراقبة الفعّالة ليست مجرد كاميرات، بل نظام متكامل: تغطية مدروسة بلا نقاط عمياء، تخزين آمن، ووصول سريع للّقطات عند الحاجة. الكاميرات الحديثة تدعم التعرّف والتنبيه الذكي عند الحركة أو التسلّل.', en: 'Effective surveillance is not just cameras but an integrated system: engineered coverage with no blind spots, secure storage, and quick footage access when needed. Modern cameras support recognition and smart alerts on motion or intrusion.' },
           { ar: 'نصمّم مخطّط التغطية ونختار الكاميرات المناسبة (داخلية/خارجية/ليلية) ونظام التخزين، ونربطها بالجوال، ونطابقها مع اشتراطات وزارة الداخلية، ونصونها لضمان تشغيل دائم.', en: 'We design the coverage plan, select the right cameras (indoor/outdoor/night) and storage, connect them to mobile, ensure Ministry of Interior compliance, and maintain them for continuous operation.' },
@@ -529,9 +529,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'التحكّم بالدخول', en: "" }, en: "Access control",
         img: "/divisions/shield-systems/access.jpg", slug: "access",
-        lead: { ar: 'أنظمة التحكّم بالدخول تنظّم من يدخل وأين ومتى — أبواب إلكترونية وبطاقات وبصمة وتطبيق، مع سجل دخول كامل وصلاحيات دقيقة تحمي المناطق الحسّاسة.', en: 'Access control systems govern who enters, where and when — electronic doors, cards, fingerprint and app, with a full entry log and precise permissions that protect sensitive areas.' },
+        lead: { ar: 'أنظمة التحكّم بالدخول تنظّم من يدخل وأين ومتى، أبواب إلكترونية وبطاقات وبصمة وتطبيق، مع سجل دخول كامل وصلاحيات دقيقة تحمي المناطق الحسّاسة.', en: 'Access control systems govern who enters, where and when, electronic doors, cards, fingerprint and app, with a full entry log and precise permissions that protect sensitive areas.' },
         body: [
-          { ar: 'في المنشآت الحديثة، لم يعد المفتاح كافيًا. نظام التحكّم بالدخول يمنح كل شخص صلاحية محدّدة، يسجّل كل حركة، ويُلغى فورًا عند الحاجة — ما يرفع الأمان ويسهّل الإدارة ويوفّر تقارير دقيقة.', en: 'In modern facilities a key is no longer enough. Access control gives each person a defined permission, logs every movement, and can be revoked instantly — raising security, easing management and providing accurate reports.' },
+          { ar: 'في المنشآت الحديثة، لم يعد المفتاح كافيًا. نظام التحكّم بالدخول يمنح كل شخص صلاحية محدّدة، يسجّل كل حركة، ويُلغى فورًا عند الحاجة، ما يرفع الأمان ويسهّل الإدارة ويوفّر تقارير دقيقة.', en: 'In modern facilities a key is no longer enough. Access control gives each person a defined permission, logs every movement, and can be revoked instantly, raising security, easing management and providing accurate reports.' },
           { ar: 'نصمّم النظام حسب المناطق ومستويات الصلاحية، ونختار وسائل التعريف (بطاقة/بصمة/وجه/تطبيق)، وندمجه مع المراقبة والحريق، وننفّذ ونصون بمعايير معتمدة.', en: 'We design the system by zones and permission levels, choose identification methods (card/fingerprint/face/app), integrate it with surveillance and fire, then execute and maintain to certified standards.' },
         ],
         points: [
@@ -551,9 +551,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'الإنذار ضد السرقة', en: "" }, en: "Intrusion alarm",
         img: "/divisions/shield-systems/intrusion.jpg", slug: "intrusion",
-        lead: { ar: 'أنظمة الإنذار ضد السرقة تكشف أي تسلّل أو اقتحام وتنبّهك فورًا — حساسات حركة وأبواب ونوافذ وصفّارات، مع ربط بالجوال ومركز مراقبة لحماية منشأتك على مدار الساعة.', en: 'Intrusion alarm systems detect any break-in and alert you instantly — motion, door and window sensors and sirens, with mobile and monitoring-center connectivity to protect your facility around the clock.' },
+        lead: { ar: 'أنظمة الإنذار ضد السرقة تكشف أي تسلّل أو اقتحام وتنبّهك فورًا، حساسات حركة وأبواب ونوافذ وصفّارات، مع ربط بالجوال ومركز مراقبة لحماية منشأتك على مدار الساعة.', en: 'Intrusion alarm systems detect any break-in and alert you instantly, motion, door and window sensors and sirens, with mobile and monitoring-center connectivity to protect your facility around the clock.' },
         body: [
-          { ar: 'الوقاية خير من الخسارة. نظام الإنذار ضد السرقة يشكّل طبقة حماية استباقية: يكشف محاولات الاقتحام مبكرًا، يطلق الإنذار، ويرسل تنبيهًا فوريًا — ما يردع المتسلّل ويقلّل المخاطر.', en: 'Prevention beats loss. An intrusion alarm forms a proactive protection layer: it detects break-in attempts early, sounds the alarm, and sends an instant alert — deterring intruders and reducing risk.' },
+          { ar: 'الوقاية خير من الخسارة. نظام الإنذار ضد السرقة يشكّل طبقة حماية استباقية: يكشف محاولات الاقتحام مبكرًا، يطلق الإنذار، ويرسل تنبيهًا فوريًا، ما يردع المتسلّل ويقلّل المخاطر.', en: 'Prevention beats loss. An intrusion alarm forms a proactive protection layer: it detects break-in attempts early, sounds the alarm, and sends an instant alert, deterring intruders and reducing risk.' },
           { ar: 'نحدّد نقاط الضعف والمداخل، ونوزّع الحساسات المناسبة، ونربط النظام بالجوال ومركز المراقبة، وندمجه مع المراقبة والدخول، ونصونه لضمان جاهزية دائمة.', en: 'We identify weak points and entries, place the right sensors, connect the system to mobile and a monitoring center, integrate it with surveillance and access, and maintain it for constant readiness.' },
         ],
         points: [
@@ -573,10 +573,10 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'التيار المنخفض والشبكات', en: "" }, en: "Low current & networks",
         img: "/divisions/shield-systems/lowcurrent.jpg", slug: "lowcurrent",
-        lead: { ar: 'أنظمة التيار المنخفض والشبكات هي العمود الفقري الرقمي للمبنى — كابلات منظّمة وشبكات موثوقة تربط المراقبة والدخول والصوت والبيانات والإنترنت في بنية تحتية واحدة نظيفة.', en: "Low-current and network systems are the building's digital backbone — organized cabling and reliable networks linking surveillance, access, audio, data and internet in one clean infrastructure." },
+        lead: { ar: 'أنظمة التيار المنخفض والشبكات هي العمود الفقري الرقمي للمبنى، كابلات منظّمة وشبكات موثوقة تربط المراقبة والدخول والصوت والبيانات والإنترنت في بنية تحتية واحدة نظيفة.', en: "Low-current and network systems are the building's digital backbone, organized cabling and reliable networks linking surveillance, access, audio, data and internet in one clean infrastructure." },
         body: [
-          { ar: 'خلف كل نظام ذكي بنية تحتية من التيار المنخفض. التنظيم الجيد للكابلات والشبكات يعني موثوقية أعلى وصيانة أسهل وقابلية للتوسّع — بينما الفوضى تعني أعطالًا وتكاليف مستقبلية.', en: 'Behind every smart system is a low-current infrastructure. Well-organized cabling and networks mean higher reliability, easier maintenance and scalability — while a mess means faults and future costs.' },
-          { ar: 'نصمّم البنية وفق المعايير (هيكلة الكابلات، غرف الاتصالات، الشبكات)، وننفّذها بترتيب واحترافية، ونوثّقها، ونصونها — لتكون أساسًا موثوقًا لكل الأنظمة.', en: 'We design the infrastructure to standard (structured cabling, comms rooms, networks), execute it neatly and professionally, document it, and maintain it — a reliable foundation for every system.' },
+          { ar: 'خلف كل نظام ذكي بنية تحتية من التيار المنخفض. التنظيم الجيد للكابلات والشبكات يعني موثوقية أعلى وصيانة أسهل وقابلية للتوسّع، بينما الفوضى تعني أعطالًا وتكاليف مستقبلية.', en: 'Behind every smart system is a low-current infrastructure. Well-organized cabling and networks mean higher reliability, easier maintenance and scalability, while a mess means faults and future costs.' },
+          { ar: 'نصمّم البنية وفق المعايير (هيكلة الكابلات، غرف الاتصالات، الشبكات)، وننفّذها بترتيب واحترافية، ونوثّقها، ونصونها، لتكون أساسًا موثوقًا لكل الأنظمة.', en: 'We design the infrastructure to standard (structured cabling, comms rooms, networks), execute it neatly and professionally, document it, and maintain it, a reliable foundation for every system.' },
         ],
         points: [
           { ar: 'هيكلة كابلات منظّمة', en: 'Structured, organized cabling' },
@@ -595,7 +595,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'البنية الكهربائية', en: "" }, en: "Electrical & MEP",
         img: "/divisions/shield-systems/electrical.jpg", slug: "electrical",
-        lead: { ar: 'البنية الكهربائية الموثوقة أساس تشغيل أي منشأة — لوحات وتمديدات وأنظمة توزيع منفّذة بمعايير سلامة، تضمن طاقة مستقرّة وآمنة لكل الأنظمة.', en: 'Reliable electrical infrastructure is the foundation for running any facility — panels, wiring and distribution systems executed to safety standards, ensuring stable, safe power for every system.' },
+        lead: { ar: 'البنية الكهربائية الموثوقة أساس تشغيل أي منشأة، لوحات وتمديدات وأنظمة توزيع منفّذة بمعايير سلامة، تضمن طاقة مستقرّة وآمنة لكل الأنظمة.', en: 'Reliable electrical infrastructure is the foundation for running any facility, panels, wiring and distribution systems executed to safety standards, ensuring stable, safe power for every system.' },
         body: [
           { ar: 'الكهرباء ليست مجرد تمديدات، بل نظام سلامة. البنية المصمّمة جيدًا توزّع الأحمال بأمان، تحمي من الأعطال والحرائق، وتوفّر استقرارًا يحمي أجهزتك وأنظمتك الحسّاسة.', en: 'Electrical work is not just wiring but a safety system. A well-designed infrastructure distributes loads safely, protects against faults and fires, and provides stability that safeguards your equipment and sensitive systems.' },
           { ar: 'نصمّم ونحسب الأحمال، ونوّرد لوحات ومكوّنات معتمدة، وننفّذ التمديدات وأنظمة التوزيع والحماية بمعايير السلامة، ونختبر ونسلّم ونصون.', en: 'We design and calculate loads, supply certified panels and components, execute wiring, distribution and protection to safety standards, then test, hand over and maintain.' },
@@ -617,9 +617,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'النداء الصوتي والإخلاء', en: "" }, en: "PA & evacuation",
         img: "/divisions/shield-systems/pa.jpg", slug: "pa",
-        lead: { ar: 'أنظمة النداء الصوتي والإخلاء توصّل الصوت والتعليمات بوضوح في كل أنحاء المبنى — بثّ عام وإعلانات وتوجيه إخلاء آمن وقت الطوارئ، بجودة صوت عالية وتغطية شاملة.', en: 'Public-address and evacuation systems deliver clear sound and instructions throughout the building — general broadcast, announcements and safe evacuation guidance in emergencies, with high audio quality and full coverage.' },
+        lead: { ar: 'أنظمة النداء الصوتي والإخلاء توصّل الصوت والتعليمات بوضوح في كل أنحاء المبنى، بثّ عام وإعلانات وتوجيه إخلاء آمن وقت الطوارئ، بجودة صوت عالية وتغطية شاملة.', en: 'Public-address and evacuation systems deliver clear sound and instructions throughout the building, general broadcast, announcements and safe evacuation guidance in emergencies, with high audio quality and full coverage.' },
         body: [
-          { ar: 'وقت الطوارئ، التواصل الواضح ينقذ الأرواح. نظام النداء والإخلاء يبثّ تعليمات مسموعة ومفهومة في كل منطقة، ويوجّه الإخلاء بهدوء ونظام — وهو متطلّب أساسي في المنشآت الكبيرة والعامة.', en: 'In an emergency, clear communication saves lives. A PA/evacuation system broadcasts audible, understandable instructions in every area and guides evacuation calmly and orderly — an essential requirement in large and public facilities.' },
+          { ar: 'وقت الطوارئ، التواصل الواضح ينقذ الأرواح. نظام النداء والإخلاء يبثّ تعليمات مسموعة ومفهومة في كل منطقة، ويوجّه الإخلاء بهدوء ونظام، وهو متطلّب أساسي في المنشآت الكبيرة والعامة.', en: 'In an emergency, clear communication saves lives. A PA/evacuation system broadcasts audible, understandable instructions in every area and guides evacuation calmly and orderly, an essential requirement in large and public facilities.' },
           { ar: 'نصمّم مناطق الصوت والتغطية، ونختار السمّاعات والمكبّرات المناسبة، وندمج النظام مع الحريق للإخلاء التلقائي، وننفّذ ونختبر ونصون.', en: 'We design sound zones and coverage, select the right speakers and amplifiers, integrate the system with fire for automatic evacuation, then execute, test and maintain.' },
         ],
         points: [
@@ -639,9 +639,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'كاميرات المراقبة بالطاقة الشمسية', en: "" }, en: "Solar-powered CCTV",
         slug: "solar",
-        lead: { ar: 'كاميرات المراقبة بالطاقة الشمسية حلّ مثالي للمواقع البعيدة أو بدون بنية كهربائية — تعمل باستقلالية تام بالطاقة الشمسية مع بطارية تخزين واتصال لاسلكي، ومراقبة عبر الجوال على مدار الساعة.', en: 'Solar-powered surveillance cameras are ideal for remote sites or locations without electrical infrastructure — fully autonomous on solar power with battery storage and wireless connectivity, plus 24/7 mobile monitoring.' },
+        lead: { ar: 'كاميرات المراقبة بالطاقة الشمسية حلّ مثالي للمواقع البعيدة أو بدون بنية كهربائية، تعمل باستقلالية تام بالطاقة الشمسية مع بطارية تخزين واتصال لاسلكي، ومراقبة عبر الجوال على مدار الساعة.', en: 'Solar-powered surveillance cameras are ideal for remote sites or locations without electrical infrastructure, fully autonomous on solar power with battery storage and wireless connectivity, plus 24/7 mobile monitoring.' },
         body: [
-          { ar: 'ليست كل المواقع مزوّدة بالكهرباء والكابلات — المزارع والمشاريع تحت الإنشاء والمواقع النائية تحتاج حماية أيضًا. الكاميرا الشمسية تعمل باستقلالية دون بنية تحتية، ما يوفّر التمديدات ويسرّع التركيب.', en: 'Not every site has power and cabling — farms, projects under construction and remote sites need protection too. A solar camera runs autonomously without infrastructure, saving wiring and speeding installation.' },
+          { ar: 'ليست كل المواقع مزوّدة بالكهرباء والكابلات، المزارع والمشاريع تحت الإنشاء والمواقع النائية تحتاج حماية أيضًا. الكاميرا الشمسية تعمل باستقلالية دون بنية تحتية، ما يوفّر التمديدات ويسرّع التركيب.', en: 'Not every site has power and cabling, farms, projects under construction and remote sites need protection too. A solar camera runs autonomously without infrastructure, saving wiring and speeding installation.' },
           { ar: 'نختار الكاميرا واللوح الشمسي والبطارية بما يناسب ساعات التشغيل، ونؤمّن الاتصال اللاسلكي والتخزين، ونربطها بالجوال، ونصونها لضمان تشغيل دائم في أصعب المواقع.', en: 'We size the camera, solar panel and battery to the required operating hours, secure wireless connectivity and storage, connect to mobile, and maintain them for continuous operation in the toughest sites.' },
         ],
         points: [
@@ -678,8 +678,8 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
   os: {
     h1: { ar: "برمجيات تُبنى للتشغيل الحقيقي.", en: "Software built for real operation." },
     intro: {
-      ar: "البرمجيات الجيدة تختفي خلف عمل يسير بسلاسة. في سيلترا او-إس نبني لك ما تحتاجه فعلًا — منتج جاهز أو نظام على مقاسك أو ذكاء اصطناعي — ونبقى معك بعد الإطلاق.",
-      en: "Good software disappears behind a business that just runs. At Syltra OS we build what you actually need — a ready product, a tailored system, or AI — and stay with you after launch.",
+      ar: "البرمجيات الجيدة تختفي خلف عمل يسير بسلاسة. في سيلترا او-إس نبني لك ما تحتاجه فعلًا، منتج جاهز أو نظام على مقاسك أو ذكاء اصطناعي، ونبقى معك بعد الإطلاق.",
+      en: "Good software disappears behind a business that just runs. At Syltra OS we build what you actually need, a ready product, a tailored system, or AI, and stay with you after launch.",
     },
     heroSlides: [
       { title: { ar: "منتجات SaaS جاهزة", en: "Ready SaaS products" }, caption: { ar: "أنظمة تشغيل تبدأ بها سريعًا باشتراك، مثل سيلترا ERP.", en: "Operating systems you start with fast on a subscription, like Syltra ERP." }, image: "/divisions/os.jpg" },
@@ -702,7 +702,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'سيلترا ERP', en: "" }, en: "ERP, SaaS product",
         img: "/divisions/os-systems/erp.jpg", slug: "erp",
-        lead: { ar: 'سيلترا ERP نظام تخطيط موارد مؤسسات جاهز بالاشتراك (SaaS) — يجمع المحاسبة والمخزون والمبيعات والموارد البشرية في منصّة واحدة تبدأ العمل بها سريعًا دون بناء من الصفر.', en: 'Syltra ERP is a ready subscription (SaaS) enterprise resource planning system — uniting accounting, inventory, sales and HR in one platform you start using quickly without building from scratch.' },
+        lead: { ar: 'سيلترا ERP نظام تخطيط موارد مؤسسات جاهز بالاشتراك (SaaS), يجمع المحاسبة والمخزون والمبيعات والموارد البشرية في منصّة واحدة تبدأ العمل بها سريعًا دون بناء من الصفر.', en: 'Syltra ERP is a ready subscription (SaaS) enterprise resource planning system, uniting accounting, inventory, sales and HR in one platform you start using quickly without building from scratch.' },
         body: [
           { ar: 'إدارة الأعمال بجداول متفرّقة وأنظمة لا تتحدّث مع بعضها تكلّف الوقت والدقّة. نظام ERP موحّد يمنحك صورة واحدة لكل أقسامك، ويؤتمت الإجراءات، ويوفّر تقارير لحظية تساعدك على اتخاذ قرار أسرع وأدقّ.', en: "Running a business on scattered spreadsheets and systems that don't talk costs time and accuracy. A unified ERP gives you one view across departments, automates procedures, and provides real-time reports for faster, sharper decisions." },
           { ar: 'سيلترا ERP منتج جاهز يبدأ سريعًا باشتراك، ويناسب الاحتياجات القياسية مع إمكانية التخصيص. نساعدك في الإعداد والترحيل والتدريب والتكامل مع أنظمتك، مع دعم مستمر بعد الإطلاق.', en: 'Syltra ERP is a ready product that starts fast on a subscription, fitting standard needs with room to customize. We help with setup, migration, training and integration with your systems, plus ongoing post-launch support.' },
@@ -724,10 +724,10 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'سيلترا أدابتيف', en: "" }, en: "Adaptive smart-home",
         img: "/divisions/os-systems/adaptive.jpg", slug: "adaptive",
-        lead: { ar: 'سيلترا أدابتيف هو مشروعنا الداخلي ومنصّة الذكاء التي تشغّل منظومة المنزل الذكي التكيّفية — طبقة ذكاء محلية تتعلّم عادات السكّان وتتصرّف تلقائيًا مع أولوية للأمان والتحكّم اليدوي.', en: "Syltra Adaptive is our in-house project and the intelligence platform powering the adaptive smart-home ecosystem — a local intelligence layer that learns residents' habits and acts automatically, with safety and manual override first." },
+        lead: { ar: 'سيلترا أدابتيف هو مشروعنا الداخلي ومنصّة الذكاء التي تشغّل منظومة المنزل الذكي التكيّفية، طبقة ذكاء محلية تتعلّم عادات السكّان وتتصرّف تلقائيًا مع أولوية للأمان والتحكّم اليدوي.', en: "Syltra Adaptive is our in-house project and the intelligence platform powering the adaptive smart-home ecosystem, a local intelligence layer that learns residents' habits and acts automatically, with safety and manual override first." },
         body: [
           { ar: 'أغلب أنظمة المنزل الذكي تنفّذ أوامر فقط. أدابتيف يذهب أبعد: يفهم السياق والعادات ويقترح ويؤتمت بذكاء، مع بقاء التحكّم اليدوي أولوية والسلامة قرارًا حتميًا لا يتجاوزه الذكاء الاصطناعي.', en: 'Most smart-home systems only execute commands. Adaptive goes further: it understands context and habits, recommends and automates intelligently, while manual control stays a priority and safety remains a deterministic decision the AI never overrides.' },
-          { ar: 'أدابتيف مشروع بحث وتطوير خاص بسيلترا — الدماغ الذي يقوّي منظومة سيلترا لايف. يعمل محليًا دون اعتماد كامل على السحابة، ويتكامل مع الأجهزة عبر معايير مفتوحة.', en: "Adaptive is Syltra's own R&D project — the brain that strengthens the Syltra Life ecosystem. It runs locally without full cloud dependency and integrates with devices through open standards." },
+          { ar: 'أدابتيف مشروع بحث وتطوير خاص بسيلترا، الدماغ الذي يقوّي منظومة سيلترا لايف. يعمل محليًا دون اعتماد كامل على السحابة، ويتكامل مع الأجهزة عبر معايير مفتوحة.', en: "Adaptive is Syltra's own R&D project, the brain that strengthens the Syltra Life ecosystem. It runs locally without full cloud dependency and integrates with devices through open standards." },
         ],
         points: [
           { ar: 'طبقة ذكاء محلية تتعلّم العادات', en: 'A local intelligence layer that learns habits' },
@@ -746,9 +746,9 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'مساعدون بالذكاء الاصطناعي', en: "" }, en: "AI assistants",
         img: "/divisions/os-systems/ai.jpg", slug: "ai",
-        lead: { ar: 'مساعدو الذكاء الاصطناعي يحوّلون بياناتك إلى قرارات — مساعدون ونماذج تفهم العربية، تجيب وتلخّص وتتنبّأ وتؤتمت المهام المتكرّرة، مبنية حول احتياج عملك.', en: 'AI assistants turn your data into decisions — assistants and models that understand Arabic, answer, summarize, predict and automate repetitive tasks, built around your business needs.' },
+        lead: { ar: 'مساعدو الذكاء الاصطناعي يحوّلون بياناتك إلى قرارات، مساعدون ونماذج تفهم العربية، تجيب وتلخّص وتتنبّأ وتؤتمت المهام المتكرّرة، مبنية حول احتياج عملك.', en: 'AI assistants turn your data into decisions, assistants and models that understand Arabic, answer, summarize, predict and automate repetitive tasks, built around your business needs.' },
         body: [
-          { ar: 'الذكاء الاصطناعي لم يعد رفاهية. المساعد الذكي المدمج في عملك يجيب العملاء، يلخّص المستندات، يحلّل الأنماط ويتنبّأ بالطلب — ما يوفّر وقتًا ويرفع جودة القرار.', en: 'AI is no longer a luxury. A smart assistant embedded in your business answers customers, summarizes documents, analyzes patterns and forecasts demand — saving time and raising decision quality.' },
+          { ar: 'الذكاء الاصطناعي لم يعد رفاهية. المساعد الذكي المدمج في عملك يجيب العملاء، يلخّص المستندات، يحلّل الأنماط ويتنبّأ بالطلب، ما يوفّر وقتًا ويرفع جودة القرار.', en: 'AI is no longer a luxury. A smart assistant embedded in your business answers customers, summarizes documents, analyzes patterns and forecasts demand, saving time and raising decision quality.' },
           { ar: 'نبني مساعدين ونماذج تدعم اللغة العربية ونربطها ببياناتك وأنظمتك بأمان، مع مراعاة الخصوصية وملكيتك لبياناتك، ودعم وتطوير مستمر.', en: 'We build assistants and models that support Arabic and connect them to your data and systems securely, respecting privacy and your data ownership, with ongoing support and iteration.' },
         ],
         points: [
@@ -768,7 +768,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'لوحات التحليلات', en: "" }, en: "Analytics & BI",
         img: "/divisions/os-systems/analytics.jpg", slug: "analytics",
-        lead: { ar: 'لوحات التحليلات وذكاء الأعمال تحوّل أرقامك المتناثرة إلى صورة واضحة — لوحات حيّة ومؤشّرات أداء وتقارير تفاعلية تساعدك على متابعة عملك واتخاذ قرار مبني على بيانات.', en: 'Analytics and business-intelligence dashboards turn scattered numbers into a clear picture — live dashboards, KPIs and interactive reports that help you track your business and decide from data.' },
+        lead: { ar: 'لوحات التحليلات وذكاء الأعمال تحوّل أرقامك المتناثرة إلى صورة واضحة، لوحات حيّة ومؤشّرات أداء وتقارير تفاعلية تساعدك على متابعة عملك واتخاذ قرار مبني على بيانات.', en: 'Analytics and business-intelligence dashboards turn scattered numbers into a clear picture, live dashboards, KPIs and interactive reports that help you track your business and decide from data.' },
         body: [
           { ar: 'البيانات بلا تحليل مجرّد أرقام. لوحة تحليلات جيدة تجمع مصادرك في مكان واحد، تُظهر المؤشّرات المهمّة لحظيًا، وتكشف الأنماط والفرص والمخاطر قبل أن تكبر.', en: 'Data without analysis is just numbers. A good analytics dashboard unifies your sources in one place, shows key metrics in real time, and reveals patterns, opportunities and risks before they grow.' },
           { ar: 'نربط مصادر بياناتك (ERP، مبيعات، تشغيل)، ونصمّم لوحات ومؤشّرات تناسب قراراتك، ونؤتمت التحديث والتقارير، مع تصميم واضح يسهل قراءته.', en: 'We connect your data sources (ERP, sales, operations), design dashboards and KPIs that fit your decisions, automate refresh and reporting, with a clear, readable design.' },
@@ -790,10 +790,10 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'أنظمة مخصّصة', en: "" }, en: "Custom platforms",
         img: "/divisions/os-systems/custom.jpg", slug: "custom",
-        lead: { ar: 'الأنظمة المخصّصة تُبنى حول إجراءات عملك بالضبط — حين لا يكفي المنتج الجاهز، نصمّم ونطوّر نظامًا يناسب طريقة عملك ويتكامل مع أدواتك الحالية.', en: "Custom systems are built exactly around your processes — when a ready product isn't enough, we design and develop a system that fits how you work and integrates with your existing tools." },
+        lead: { ar: 'الأنظمة المخصّصة تُبنى حول إجراءات عملك بالضبط، حين لا يكفي المنتج الجاهز، نصمّم ونطوّر نظامًا يناسب طريقة عملك ويتكامل مع أدواتك الحالية.', en: "Custom systems are built exactly around your processes, when a ready product isn't enough, we design and develop a system that fits how you work and integrates with your existing tools." },
         body: [
           { ar: 'كل عمل له طريقته. أحيانًا يفرض المنتج الجاهز عليك إجراءاته بدل أن يخدم إجراءاتك. النظام المخصّص يعكس سير عملك الحقيقي، يزيل الخطوات اليدوية، ويمنحك ميزة تنافسية يصعب نسخها.', en: "Every business has its own way. Sometimes a ready product imposes its process instead of serving yours. A custom system reflects your real workflow, removes manual steps, and gives you a competitive edge that's hard to copy." },
-          { ar: 'نبدأ بجلسة اكتشاف نفهم فيها احتياجك، ثم نصمّم ونطوّر بمنهجية رشيقة نطلق فيها نسخة أولى سريعًا، ونتكامل مع أنظمتك، ونطوّر ونصون باستمرار — وبياناتك ملكك.', en: 'We start with a discovery session to understand your needs, then design and develop in an agile way that ships a first version quickly, integrate with your systems, and iterate and maintain — and your data is yours.' },
+          { ar: 'نبدأ بجلسة اكتشاف نفهم فيها احتياجك، ثم نصمّم ونطوّر بمنهجية رشيقة نطلق فيها نسخة أولى سريعًا، ونتكامل مع أنظمتك، ونطوّر ونصون باستمرار، وبياناتك ملكك.', en: 'We start with a discovery session to understand your needs, then design and develop in an agile way that ships a first version quickly, integrate with your systems, and iterate and maintain, and your data is yours.' },
         ],
         points: [
           { ar: 'مبني حول إجراءات عملك', en: 'Built around your processes' },
@@ -812,7 +812,7 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
       {
         title: { ar: 'التطبيقات', en: "" }, en: "Web & mobile apps",
         img: "/divisions/os-systems/apps.jpg", slug: "apps",
-        lead: { ar: 'تطبيقات الويب والموبايل تصل بك إلى عملائك وفريقك في أي مكان — واجهات نظيفة وسريعة وسهلة الاستخدام، مبنية بأحدث التقنيات ومصمّمة لتجربة استخدام ممتازة.', en: 'Web and mobile apps reach your customers and team anywhere — clean, fast, easy-to-use interfaces, built with the latest technologies and designed for an excellent user experience.' },
+        lead: { ar: 'تطبيقات الويب والموبايل تصل بك إلى عملائك وفريقك في أي مكان، واجهات نظيفة وسريعة وسهلة الاستخدام، مبنية بأحدث التقنيات ومصمّمة لتجربة استخدام ممتازة.', en: 'Web and mobile apps reach your customers and team anywhere, clean, fast, easy-to-use interfaces, built with the latest technologies and designed for an excellent user experience.' },
         body: [
           { ar: 'التطبيق الجيد ليس مجرد شاشات، بل تجربة. الواجهة النظيفة السريعة تبني ثقة المستخدم وتزيد التفاعل، بينما التطبيق البطيء المعقّد يطرد العملاء مهما كانت الفكرة جيدة.', en: 'A good app is not just screens but an experience. A clean, fast interface builds user trust and boosts engagement, while a slow, complex app drives customers away no matter how good the idea.' },
           { ar: 'نصمّم تجربة الاستخدام والمعمار، ونطوّر تطبيقات ويب وموبايل بأداء عالٍ، ونربطها بأنظمتك، ونطلقها ونطوّرها بعد الإطلاق مع دعم مستمر.', en: 'We design the UX and architecture, develop high-performance web and mobile apps, connect them to your systems, and launch and iterate after go-live with ongoing support.' },

@@ -94,6 +94,22 @@ export default function ServiceDetail({
         </div>
       </section>
 
+      {/* Overview */}
+      {service.body?.length ? (
+        <section className="border-b border-hairline">
+          <div className="mx-auto max-w-3xl px-5 py-20 sm:px-8">
+            <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
+              {locale === "ar" ? "نظرة عامة" : "Overview"}
+            </p>
+            <div className="mt-6 space-y-5 text-[15px] leading-[1.9] text-chrome-dim sm:text-base">
+              {service.body.map((para, i) => (
+                <p key={i}>{pick(para, locale)}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* Points */}
       {service.points?.length ? (
         <section className="border-b border-hairline">
@@ -106,6 +122,27 @@ export default function ServiceDetail({
                 <div key={i} className="flex gap-4 border-b border-hairline py-6 pe-6">
                   <span className="mt-1 h-2 w-2 flex-none rounded-full" style={{ background: accent }} aria-hidden />
                   <p className="leading-relaxed text-chrome-dim">{pick(p, locale)}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Applications */}
+      {service.useCases?.length ? (
+        <section className="border-b border-hairline">
+          <div className="mx-auto max-w-5xl px-5 py-20 sm:px-8">
+            <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
+              {locale === "ar" ? "أين يناسب" : "Where it fits"}
+            </p>
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {service.useCases.map((u, i) => (
+                <div key={i} className="flex items-center gap-4 rounded-lg border border-hairline p-5">
+                  <span className="font-display text-lg font-bold tabular-nums" style={{ color: accent }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p className="font-medium text-platinum">{pick(u, locale)}</p>
                 </div>
               ))}
             </div>

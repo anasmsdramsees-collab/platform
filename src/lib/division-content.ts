@@ -14,8 +14,10 @@ interface SysItem {
   en: string; // small latin sublabel (same in both locales)
   img?: string; // optional illustrative image under /public
   slug?: string; // when set, the tile links to /[locale]/[division]/[slug]
-  lead?: Bi; // longer marketing intro for the service detail page
+  lead?: Bi; // short intro shown in the detail hero
+  body?: Bi[]; // longer overview paragraphs on the detail page
   points?: Bi[]; // key points / what we offer on the detail page
+  useCases?: Bi[]; // where it fits / applications
 }
 interface HeroSlide {
   title: Bi;
@@ -79,12 +81,22 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
           ar: "أنظمة التكييف المركزي والشيلر هي الخيار الأمثل للمباني الكبيرة والمجمّعات — تبريد موحّد وموثوق بكفاءة عالية وتحكّم مركزي. نصمّم النظام بعد دراسة حمل حراري دقيقة، ثم نوّرد وننفّذ ونشغّل ونصون.",
           en: "Central and chiller systems are the right fit for large buildings and complexes — unified, reliable cooling with high efficiency and central control. We design the system after an accurate load study, then supply, install, commission and maintain.",
         },
+        body: [
+          { ar: 'التكييف المركزي هو العمود الفقري لتبريد المباني الكبيرة كالأبراج والمجمّعات التجارية والمرافق الحكومية والفنادق. يعتمد على وحدة تبريد مركزية (شيلر) توزّع التبريد عبر المبنى بكفاءة أعلى واستهلاك أقل مقارنة بالوحدات المنفصلة، مع تحكّم مركزي يسهّل الإدارة والصيانة.', en: 'Central air conditioning is the backbone of cooling large buildings — towers, commercial complexes, government facilities and hotels. A central chiller distributes cooling across the building with higher efficiency and lower consumption than standalone units, with central control that simplifies management and maintenance.' },
+          { ar: 'في سيلترا كلايمت نبدأ بدراسة حمل حراري دقيقة تحدّد نوع الشيلر (هوائي أو مائي) وسعته، ثم نصمّم شبكة التوزيع والتحكّم، ونوّرد معدات معتمدة، وننفّذ التركيب بإشراف هندسي، وننتهي باختبار وموازنة قبل التسليم — يليها عقود صيانة تحافظ على الأداء والعمر الافتراضي.', en: 'At Syltra Climate we begin with an accurate heat-load study that defines the chiller type (air- or water-cooled) and capacity, then design the distribution and control network, supply certified equipment, execute installation under engineering supervision, and finish with testing and balancing before handover — followed by maintenance contracts that protect performance and lifespan.' },
+        ],
         points: [
           { ar: "دراسة حمل حراري وتحديد السعة الأنسب", en: "Heat-load study and correct capacity sizing" },
           { ar: "شيلر هوائي أو مائي حسب طبيعة المشروع", en: "Air- or water-cooled chillers to suit the project" },
           { ar: "توزيع هواء عبر دكت مصمّم بعناية", en: "Air distribution through carefully engineered ducting" },
           { ar: "تحكّم مركزي ومناطق متعددة", en: "Central control with multiple zones" },
           { ar: "عقود صيانة تحافظ على الكفاءة والعمر", en: "Maintenance contracts that protect efficiency and lifespan" },
+        ],
+        useCases: [
+          { ar: 'الأبراج والمباني السكنية الكبيرة', en: 'Towers and large residential buildings' },
+          { ar: 'المجمّعات التجارية والمولات', en: 'Commercial complexes and malls' },
+          { ar: 'الفنادق والمنشآت الضيافية', en: 'Hotels and hospitality facilities' },
+          { ar: 'المرافق الحكومية والمستشفيات', en: 'Government facilities and hospitals' },
         ],
       },
       {
@@ -94,12 +106,22 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
           ar: "أنظمة VRF/VRV تمنحك تبريدًا مرنًا لمناطق متعددة بتحكّم مستقل لكل غرفة وكفاءة عالية في الطاقة — مثالية للمكاتب والفلل والمباني ذات الاستخدامات المتنوّعة.",
           en: "VRF/VRV systems give flexible cooling across many zones with independent per-room control and high energy efficiency — ideal for offices, villas and mixed-use buildings.",
         },
+        body: [
+          { ar: 'تقنية VRF/VRV (التدفّق المتغيّر لغاز التبريد) من أذكى حلول التكييف الحديثة: وحدة خارجية واحدة تخدم عدة وحدات داخلية، وكل منطقة تُضبط بدرجة حرارتها المستقلة. النظام يعدّل استهلاكه تلقائيًا حسب الحمل الفعلي، ما يحقّق توفيرًا كبيرًا في الطاقة مع راحة دقيقة.', en: 'VRF/VRV (variable refrigerant flow) is one of the smartest modern cooling solutions: a single outdoor unit serves several indoor units, and each zone holds its own independent temperature. The system modulates its consumption automatically to the actual load, delivering major energy savings with precise comfort.' },
+          { ar: 'نصمّم نظام VRF ليناسب توزيع المساحات وأنماط الاستخدام — مثالي للمكاتب والفلل والمباني متعددة الاستخدامات حيث تختلف احتياجات كل جناح. نراعي أطوال المواسير والفروق المسموحة، ونربط النظام بالتطبيق وجداول تشغيل ذكية.', en: 'We design the VRF system around the layout and usage patterns — ideal for offices, villas and mixed-use buildings where each wing has different needs. We respect pipe lengths and allowed differentials, and connect the system to an app and smart schedules.' },
+        ],
         points: [
           { ar: "تحكّم مستقل في درجة حرارة كل منطقة", en: "Independent temperature control per zone" },
           { ar: "كفاءة عالية وتوفير في استهلاك الطاقة", en: "High efficiency and lower energy consumption" },
           { ar: "مرونة في التمديد للمساحات الواسعة", en: "Flexible piping for large layouts" },
           { ar: "تشغيل هادئ وتوزيع متّزن", en: "Quiet operation and balanced distribution" },
           { ar: "ربط بالتطبيق وجداول تشغيل ذكية", en: "App control and smart schedules" },
+        ],
+        useCases: [
+          { ar: 'المكاتب والمساحات الإدارية', en: 'Offices and administrative spaces' },
+          { ar: 'الفلل والمنازل الكبيرة', en: 'Villas and large homes' },
+          { ar: 'المباني متعددة الاستخدامات', en: 'Mixed-use buildings' },
+          { ar: 'العيادات والمراكز التجارية الصغيرة', en: 'Clinics and small commercial centers' },
         ],
       },
       {
@@ -109,12 +131,22 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
           ar: "أنظمة الدكت المخفية توزّع الهواء بانسيابية وهدوء مع مظهر داخلي نظيف — نصمّم مسارات الدكت والمخارج بعناية لأداء متّزن في كل غرفة.",
           en: "Concealed ducted systems distribute air smoothly and quietly with a clean interior look — we engineer duct runs and grilles for even performance in every room.",
         },
+        body: [
+          { ar: 'أنظمة الدكت المخفية تمنحك تبريدًا موزّعًا بهدوء ومظهرًا داخليًا نظيفًا بلا وحدات ظاهرة — الوحدة مخفية في السقف الساقط والهواء يصل عبر شبكة دكت ومخارج مدروسة. الخيار المفضّل حين تكون الأناقة الداخلية والتوزيع المتّزن أولوية.', en: 'Concealed ducted systems give you quietly distributed cooling and a clean interior with no visible units — the unit hides in the false ceiling and air reaches through an engineered duct network and grilles. The preferred choice when interior elegance and even distribution are a priority.' },
+          { ar: 'نصمّم مسارات الدكت لتقليل الفاقد والضوضاء، ونحسب أقطارها ومخارجها بدقة، ونعزلها حراريًا وصوتيًا، ثم نجري اختبار وموازنة (TAB) لضمان تدفّق متساوٍ في كل غرفة قبل التسليم.', en: 'We design duct runs to reduce loss and noise, size ducts and grilles precisely, insulate them thermally and acoustically, then perform testing and balancing (TAB) to ensure even flow in every room before handover.' },
+        ],
         points: [
           { ar: "تصميم مسارات دكت يقلّل الفاقد والضوضاء", en: "Duct routing that cuts loss and noise" },
           { ar: "مخارج هواء موزّعة بعناية لكل غرفة", en: "Grilles placed carefully per room" },
           { ar: "مظهر داخلي نظيف بلا وحدات ظاهرة", en: "Clean interiors with no visible units" },
           { ar: "عزل حراري وصوتي للدكت", en: "Thermal and acoustic duct insulation" },
           { ar: "اختبار وموازنة (TAB) قبل التسليم", en: "Testing and balancing (TAB) before handover" },
+        ],
+        useCases: [
+          { ar: 'الفلل والمنازل الراقية', en: 'Upscale villas and homes' },
+          { ar: 'المكاتب والمساحات المفتوحة', en: 'Offices and open spaces' },
+          { ar: 'المطاعم والمقاهي', en: 'Restaurants and cafés' },
+          { ar: 'المشاريع ذات التصميم الداخلي المميّز', en: 'Projects with distinctive interior design' },
         ],
       },
       {
@@ -124,12 +156,22 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
           ar: "أنظمة السبليت والملتي سبليت حل عملي واقتصادي للغرف والوحدات الصغيرة — تركيب سريع وكفاءة جيدة وصيانة سهلة.",
           en: "Split and multi-split systems are a practical, economical solution for rooms and smaller units — quick installation, good efficiency and easy maintenance.",
         },
+        body: [
+          { ar: 'أنظمة السبليت والملتي سبليت هي الحل الأسرع والأوفر للغرف والوحدات الصغيرة والإضافات — تركيب نظيف وسريع وكفاءة جيدة وصيانة سهلة. في الملتي سبليت تخدم وحدة خارجية واحدة عدة وحدات داخلية لتوفير المساحة والمظهر.', en: 'Split and multi-split systems are the fastest, most economical solution for rooms, small units and additions — clean, quick installation, good efficiency and easy maintenance. In multi-split, one outdoor unit serves several indoor units to save space and improve the look.' },
+          { ar: 'نساعدك على اختيار السعة المناسبة لكل غرفة والموديل الأنسب (خاصة موديلات الإنفرتر الموفّرة للطاقة)، وننفّذ تركيبًا نظيفًا، ونوفّر صيانة دورية بقطع معتمدة تطيل عمر الجهاز.', en: "We help you choose the right capacity per room and the best model (especially energy-saving inverter models), install cleanly, and provide routine maintenance with certified parts that extend the unit's life." },
+        ],
         points: [
           { ar: "اختيار السعة المناسبة لكل غرفة", en: "Right capacity for each room" },
           { ar: "وحدة خارجية واحدة لعدة داخلية (ملتي)", en: "One outdoor unit for several indoor (multi)" },
           { ar: "تركيب نظيف وسريع", en: "Clean, fast installation" },
           { ar: "موديلات موفّرة للطاقة (إنفرتر)", en: "Energy-saving inverter models" },
           { ar: "صيانة دورية وقطع معتمدة", en: "Routine maintenance and certified parts" },
+        ],
+        useCases: [
+          { ar: 'الشقق والوحدات السكنية الصغيرة', en: 'Apartments and small residential units' },
+          { ar: 'الغرف والمكاتب المنفردة', en: 'Single rooms and offices' },
+          { ar: 'الإضافات والملاحق', en: 'Extensions and annexes' },
+          { ar: 'المحلات الصغيرة', en: 'Small shops' },
         ],
       },
       {
@@ -139,12 +181,22 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
           ar: "التهوية الجيدة لا تقل أهمية عن التبريد — نصمّم أنظمة تجديد هواء وفلترة تُدخل هواءً نقيًا وتطرد الملوّثات والرطوبة الزائدة لهواء داخلي صحي.",
           en: "Good ventilation matters as much as cooling — we design fresh-air and filtration systems that bring in clean air and remove pollutants and excess humidity for healthy indoor air.",
         },
+        body: [
+          { ar: 'جودة الهواء الداخلي لا تقل أهمية عن التبريد — فالتهوية السيّئة تعني رطوبة وروائح وملوّثات وتراكم ثاني أكسيد الكربون. نصمّم أنظمة تجديد هواء وفلترة تُدخل هواءً نقيًا وتطرد الملوّثات، لهواء داخلي صحّي ومريح.', en: 'Indoor air quality matters as much as cooling — poor ventilation means humidity, odors, pollutants and CO₂ build-up. We design fresh-air and filtration systems that bring in clean air and remove pollutants, for healthy, comfortable indoor air.' },
+          { ar: 'نستخدم وحدات مناولة الهواء (AHU) وأنظمة الاسترجاع الحراري (HRV/ERV) التي تقلّل استهلاك الطاقة أثناء تجديد الهواء، مع فلترة متعددة المراحل وتحكّم بالرطوبة والضغط — حل أساسي للمطاعم والعيادات والمساحات المزدحمة.', en: 'We use air-handling units (AHU) and heat-recovery systems (HRV/ERV) that cut energy use while renewing air, with multi-stage filtration and humidity/pressure control — essential for restaurants, clinics and busy spaces.' },
+        ],
         points: [
           { ar: "وحدات مناولة هواء (AHU) وتجديد الهواء", en: "Air-handling units (AHU) and fresh air" },
           { ar: "فلترة متعددة المراحل لهواء أنظف", en: "Multi-stage filtration for cleaner air" },
           { ar: "استرجاع حراري لتقليل الاستهلاك (HRV/ERV)", en: "Heat recovery to cut consumption (HRV/ERV)" },
           { ar: "تحكّم بالرطوبة والضغط", en: "Humidity and pressure control" },
           { ar: "مناسبة للمطاعم والعيادات والمساحات المزدحمة", en: "Suited to restaurants, clinics and busy spaces" },
+        ],
+        useCases: [
+          { ar: 'المطاعم والمطابخ التجارية', en: 'Restaurants and commercial kitchens' },
+          { ar: 'العيادات والمرافق الصحية', en: 'Clinics and health facilities' },
+          { ar: 'القاعات والمساحات المزدحمة', en: 'Halls and crowded spaces' },
+          { ar: 'المصانع والورش', en: 'Factories and workshops' },
         ],
       },
       {
@@ -154,12 +206,22 @@ export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionCont
           ar: "التحكّم الذكي يحوّل التكييف من جهاز إلى نظام — جداول ومناطق وحساسات وربط بالتطبيق تحافظ على الراحة وتخفّض الفاتورة.",
           en: "Smart control turns AC from a device into a system — schedules, zones, sensors and app control that keep comfort while cutting the bill.",
         },
+        body: [
+          { ar: 'التحكّم الذكي يحوّل التكييف من مجرد جهاز إلى نظام يفهم احتياجك: جداول تشغيل، مناطق مستقلة، حساسات إشغال وجودة هواء، وربط بالتطبيق — تحافظ على الراحة تلقائيًا وتخفّض الفاتورة دون أن تنتبه.', en: 'Smart control turns AC from a mere device into a system that understands your needs: schedules, independent zones, occupancy and air-quality sensors, and app connectivity — keeping comfort automatically and cutting the bill without you noticing.' },
+          { ar: 'نربط أنظمة التكييف بمنصّة سيلترا لايف لتعمل ضمن منظومة المنزل أو المبنى الذكي كاملة، مع تقارير استهلاك واضحة تساعدك على اتخاذ قرارات توفير حقيقية.', en: 'We connect the AC to the Syltra Life platform so it works within the full smart-home or building ecosystem, with clear consumption reports that help you make real energy-saving decisions.' },
+        ],
         points: [
           { ar: "ثيرموستات ذكي وجداول تشغيل", en: "Smart thermostats and schedules" },
           { ar: "مناطق متعددة بتحكّم مستقل", en: "Multiple zones with independent control" },
           { ar: "حساسات إشغال وجودة هواء", en: "Occupancy and air-quality sensors" },
           { ar: "ربط بمنصّة سيلترا لايف والتطبيق", en: "Integration with the Syltra Life platform and app" },
           { ar: "تقارير استهلاك تساعدك على التوفير", en: "Consumption reports that help you save" },
+        ],
+        useCases: [
+          { ar: 'المنازل والفلل الذكية', en: 'Smart homes and villas' },
+          { ar: 'المكاتب والمباني الإدارية', en: 'Offices and administrative buildings' },
+          { ar: 'الفنادق والمنشآت متعددة الغرف', en: 'Hotels and multi-room facilities' },
+          { ar: 'أي مشروع يسعى لتوفير الطاقة', en: 'Any project aiming to save energy' },
         ],
       },
     ],

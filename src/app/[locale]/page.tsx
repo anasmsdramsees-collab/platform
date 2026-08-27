@@ -3,18 +3,59 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
-import { productCatalog } from "@/lib/products";
-import HeroLightsPanel from "@/components/hero-lights-panel";
-import CurtainsOverlay from "@/components/curtains-overlay";
-import ProtocolOrbit from "@/components/protocol-orbit";
 import ParticlesBg from "@/components/ui/particles-bg";
 import { HeroCarousel } from "@/components/ui/hero-carousel";
-import { ImageSlider } from "@/components/ui/image-slider";
-import { Testimonials } from "@/components/ui/testimonials";
-import { InfoCard } from "@/components/ui/info-card";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 import { pageMetadata } from "@/lib/seo";
+import { DIVISIONS, divisionName } from "@/lib/divisions";
+
+const T = {
+  ar: {
+    eyebrow: "منظومة واحدة · ذكاء متصل",
+    title: "منظومة واحدة تربط الحياة والأعمال.",
+    subtitle:
+      "سيلترا وان شركة تقنية سعودية توحّد الحياة الذكية والبرمجيات والتكييف والأمن والمصاعد تحت علامة واحدة ومعايير واضحة.",
+    ctaExplore: "استكشف الأقسام",
+    ctaAbout: "من نحن",
+    divisionsEyebrow: "الأقسام",
+    divisionsTitle: "خمسة أقسام. مظلة واحدة.",
+    divisionsSub: "كل قسم متخصص في مجاله، ومتكامل مع البقية تحت هوية ومعايير سيلترا وان.",
+    discover: "اكتشف القسم",
+    whyEyebrow: "لماذا شركة واحدة",
+    whyTitle: "تكامل حقيقي، لا موردون متفرقون.",
+    why: [
+      { n: "01", t: "مسؤولية واحدة", d: "جهة واحدة تدير التصميم والتنفيذ والصيانة عبر كل الأنظمة." },
+      { n: "02", t: "معايير موحّدة", d: "الجودة والتوثيق والدعم بنفس المستوى في كل قسم." },
+      { n: "03", t: "أنظمة تتحدّث مع بعضها", d: "المنزل والتكييف والأمن والمصاعد في منظومة واحدة متكاملة." },
+    ],
+    ctaTitle: "عندك مشروع يشمل أكثر من قسم؟",
+    ctaSub: "نجمع أقسام سيلترا وان في خطة واحدة واضحة — من الدراسة حتى التشغيل والصيانة.",
+    ctaBtn: "تواصل معنا",
+  },
+  en: {
+    eyebrow: "One Group · Connected Intelligence",
+    title: "One group that connects living and business.",
+    subtitle:
+      "Syltra One is a Saudi technology group uniting smart living, software, HVAC, security and elevators under one brand and clear standards.",
+    ctaExplore: "Explore divisions",
+    ctaAbout: "About us",
+    divisionsEyebrow: "Divisions",
+    divisionsTitle: "Five divisions. One umbrella.",
+    divisionsSub: "Each division is a specialist in its field, integrated with the rest under Syltra One's identity and standards.",
+    discover: "Explore division",
+    whyEyebrow: "Why one company",
+    whyTitle: "Real integration, not scattered vendors.",
+    why: [
+      { n: "01", t: "One accountability", d: "A single party owning design, execution and maintenance across every system." },
+      { n: "02", t: "Unified standards", d: "Quality, documentation and support at the same level in every division." },
+      { n: "03", t: "Systems that talk", d: "Home, climate, security and elevators in one integrated ecosystem." },
+    ],
+    ctaTitle: "A project that spans more than one division?",
+    ctaSub: "We bring Syltra One's divisions into one clear plan — from study to operation and maintenance.",
+    ctaBtn: "Contact us",
+  },
+} as const;
 
 export async function generateMetadata({
   params,
@@ -23,8 +64,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
-  const dict = getDictionary(locale);
-  return pageMetadata({ locale, path: "", title: dict.meta.titleHome, description: dict.meta.description });
+  const t = T[locale];
+  return pageMetadata({ locale, path: "", title: `Syltra One | ${t.title}`, description: t.subtitle });
 }
 
 export default async function HomePage({
@@ -34,78 +75,17 @@ export default async function HomePage({
 }) {
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
-  const dict = getDictionary(locale);
+  const t = T[locale];
 
-  const heroSlides =
-    locale === "ar"
-      ? [
-          {
-            src: "/hero/home-dashboard.jpg",
-            label: "سيلترا هوم",
-            title: "كل غرفة. شاشة واحدة.",
-            caption: "خريطة حية لبيتك، ومشاهد جاهزة تعمل بلمسة واحدة.",
-          },
-          {
-            src: "/hero/home-arrive.jpg",
-            label: "سيلترا هوم",
-            title: "يستقبلك البيت جاهزًا.",
-            caption: "الإضاءة مضاءة والتكييف مضبوط قبل أن تفتح الباب.",
-          },
-          {
-            src: "/hero/tv-interface.jpg",
-            label: "سيلترا تي في",
-            title: "شاشة تدير البيت كله.",
-            caption: "قنواتك وأفلامك، والإضاءة والمناخ في متناول يدك.",
-          },
-          {
-            src: "/hero/tv-family.jpg",
-            label: "سيلترا تي في",
-            title: "ليلة فيلم بمشهد واحد.",
-            caption: "تخفت الإضاءة، وتُغلق الستائر، ويبدأ العرض.",
-          },
-          {
-            src: "/hero/home-remote.jpg",
-            label: "سيلترا هوم",
-            title: "بيتك معك أينما كنت.",
-            caption: "اطمئن عليه وتحكم فيه من أي مدينة في العالم.",
-          },
-        ]
-      : [
-          {
-            src: "/hero/home-dashboard.jpg",
-            label: "Syltra Home",
-            title: "Every room. One screen.",
-            caption: "A live map of your home, with scenes that run at a tap.",
-          },
-          {
-            src: "/hero/home-arrive.jpg",
-            label: "Syltra Home",
-            title: "The house is ready before you are.",
-            caption: "Lights on and the air cooled before you reach the door.",
-          },
-          {
-            src: "/hero/tv-interface.jpg",
-            label: "Syltra TV",
-            title: "The screen that runs the house.",
-            caption: "Your channels and films, with lights and climate in reach.",
-          },
-          {
-            src: "/hero/tv-family.jpg",
-            label: "Syltra TV",
-            title: "Movie night in one scene.",
-            caption: "Lights dim, curtains close, and the film begins.",
-          },
-          {
-            src: "/hero/home-remote.jpg",
-            label: "Syltra Home",
-            title: "Home travels with you.",
-            caption: "Check in and take control from any city in the world.",
-          },
-        ];
+  const heroSlides = DIVISIONS.map((d) => ({
+    src: d.image,
+    label: divisionName(d, locale),
+    title: locale === "ar" ? d.label.ar : d.label.en,
+    caption: locale === "ar" ? d.tagline.ar : d.tagline.en,
+  }));
 
   return (
     <>
-      <CurtainsOverlay dict={dict.lightsPanel} />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-hairline">
         <ParticlesBg
@@ -125,246 +105,128 @@ export default async function HomePage({
           }}
         />
         <div className="relative z-20 mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
-          <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
-            {dict.hero.eyebrow}
-          </p>
+          <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{t.eyebrow}</p>
           <h1 className="font-display mt-5 text-balance text-4xl font-bold leading-[1.1] text-platinum sm:text-6xl">
-            {dict.hero.title}
+            {t.title}
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-balance text-base text-chrome-dim sm:text-lg">
-            {dict.hero.subtitle}
+            {t.subtitle}
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <HoverBorderGradientLink
-              href={`/${locale}/products`}
-              className="bg-platinum text-void"
-              containerClassName="gap-0"
-            >
-              {dict.hero.ctaProducts}
+            <HoverBorderGradientLink href={`/${locale}#divisions`} className="bg-platinum text-void" containerClassName="gap-0">
+              {t.ctaExplore}
             </HoverBorderGradientLink>
-            <HoverBorderGradientLink
-              href={`/${locale}/about`}
-              className="bg-void text-platinum"
-              containerClassName="gap-0"
-            >
-              {dict.hero.ctaAbout}
+            <HoverBorderGradientLink href={`/${locale}/about`} className="bg-void text-platinum" containerClassName="gap-0">
+              {t.ctaAbout}
             </HoverBorderGradientLink>
-          </div>
-
-          <div className="relative z-[35] mt-10">
-            <HeroLightsPanel dict={dict.lightsPanel} locale={locale} />
           </div>
         </div>
 
-        {/* Hero carousel */}
+        {/* Hero carousel — divisions */}
         <div className="relative z-0 mt-4 w-full sm:mt-10">
           <HeroCarousel slides={heroSlides} rtl={locale === "ar"} />
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="border-b border-hairline">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-5 py-12 sm:grid-cols-4 sm:px-8">
-          {dict.stats.map((stat) => (
-            <InfoCard key={stat.label} className="px-5 py-8 text-center">
-              <p className="font-mono text-2xl font-medium text-ion sm:text-3xl">{stat.value}</p>
-              <p className="mt-2 text-xs text-chrome-dim sm:text-sm">{stat.label}</p>
-            </InfoCard>
-          ))}
-        </div>
-      </section>
-
-      {/* Ecosystem */}
-      <section className="border-b border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+      {/* Divisions grid */}
+      <section id="divisions" className="border-b border-hairline scroll-mt-24">
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
-              {dict.ecosystem.eyebrow}
-            </p>
-            <h2 className="font-display mt-3 text-3xl font-bold text-platinum sm:text-4xl">
-              {dict.ecosystem.title}
+            <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{t.divisionsEyebrow}</p>
+            <h2 className="font-display mt-3 text-balance text-3xl font-bold text-platinum sm:text-4xl">
+              {t.divisionsTitle}
             </h2>
-            <p className="mt-4 text-chrome-dim">{dict.ecosystem.subtitle}</p>
+            <p className="mt-4 text-chrome-dim">{t.divisionsSub}</p>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {dict.ecosystem.pillars.map((pillar, i) => (
-              <InfoCard key={pillar.name}>
-                <p className="font-mono text-xs text-ion">{String(i + 1).padStart(2, "0")}</p>
-                <p className="mt-3 font-semibold leading-snug text-platinum">{pillar.name}</p>
-                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{pillar.desc}</p>
-              </InfoCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Syltra */}
-      <section className="border-b border-hairline">
-        <div className="mx-auto max-w-4xl px-5 py-20 sm:px-8">
-          <p className="text-center font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
-            {dict.why.eyebrow}
-          </p>
-          <h2 className="font-display mt-3 text-balance text-center text-3xl font-bold text-platinum sm:text-4xl">
-            {dict.why.title}
-          </h2>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2">
-            {dict.why.items.map((item, i) => (
-              <InfoCard key={item.name}>
-                <span className="font-mono text-xs text-ion">{String(i + 1).padStart(2, "0")}</span>
-                <p className="mt-3 font-semibold leading-snug text-platinum">{item.name}</p>
-                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{item.desc}</p>
-              </InfoCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Product categories */}
-      <section className="border-b border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
-                {dict.categories.eyebrow}
-              </p>
-              <h2 className="font-display mt-3 text-3xl font-bold text-platinum sm:text-4xl">
-                {dict.categories.title}
-              </h2>
-              <p className="mt-3 max-w-lg text-chrome-dim">{dict.categories.subtitle}</p>
-            </div>
-            <Link
-              href={`/${locale}/products`}
-              className="font-mono text-sm text-ion transition-opacity hover:opacity-80"
-            >
-              {dict.categories.cta} →
-            </Link>
-          </div>
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {productCatalog.map((category) => {
-              const copy = locale === "ar" ? category.ar : category.en;
-              return (
-                <Link
-                  key={category.key}
-                  href={`/${locale}/products#${category.key}`}
-                  className="group rounded-lg border border-hairline p-6 transition-colors hover:border-hairline-strong hover:bg-graphite"
-                >
-                  <p className="font-semibold text-platinum">{copy.name}</p>
-                  <p className="mt-2 text-sm text-chrome-dim">{copy.desc}</p>
-                  <p className="mt-4 font-mono text-xs text-slate">
-                    {category.items.length} {locale === "ar" ? "منتجات" : "products"}
-                  </p>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Protocols */}
-      <section className="border-b border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
-              {dict.protocols.eyebrow}
-            </p>
-            <h2 className="font-display mt-3 text-3xl font-bold text-platinum sm:text-4xl">
-              {dict.protocols.title}
-            </h2>
-            <p className="mt-4 text-chrome-dim">{dict.protocols.subtitle}</p>
-          </div>
-          <ProtocolOrbit items={dict.protocols.items} coreLabel={locale === "ar" ? "محرك سيلترا التكيفي" : "SYLTRA ADAPTIVE"} />
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {dict.protocols.items.map((p) => (
-              <InfoCard key={p.name}>
-                <p className="font-mono text-sm font-semibold text-platinum">{p.name}</p>
-                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{p.desc}</p>
-              </InfoCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Apps teaser */}
-      <section className="border-b border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
-              {dict.appsPage.eyebrow}
-            </p>
-            <h2 className="font-display mt-3 text-3xl font-bold text-platinum sm:text-4xl">
-              {dict.appsPage.title}
-            </h2>
-            <p className="mt-4 text-chrome-dim">{dict.appsPage.subtitle}</p>
-          </div>
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {dict.appsPage.cards.map((card) => (
-              <div
-                key={card.slug}
-                className="overflow-hidden rounded-2xl border border-hairline bg-graphite/70 transition-colors duration-300 hover:border-hairline-strong"
+          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {DIVISIONS.map((d) => (
+              <Link
+                key={d.key}
+                href={`/${locale}${d.href}`}
+                className="group relative overflow-hidden rounded-2xl border border-hairline bg-graphite/40 transition-colors duration-300 hover:border-hairline-strong"
               >
-                <div className="relative aspect-video overflow-hidden border-b border-hairline">
-                  <ImageSlider
-                    images={
-                      card.slug === "home-assistant"
-                        ? ["/hero/home-dashboard.jpg", "/hero/home-arrive.jpg", "/hero/home-remote.jpg"]
-                        : ["/hero/tv-interface.jpg", "/hero/tv-family.jpg"]
-                    }
-                    alt={card.name}
-                    offset={card.slug === "home-assistant" ? 0 : 2200}
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={assetPath(d.image)}
+                    alt={divisionName(d, locale)}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(11,12,14,0.95) 8%, rgba(11,12,14,0.35) 45%, rgba(11,12,14,0.05) 80%)",
+                    }}
+                  />
+                  <span
+                    className="absolute inset-x-0 top-0 h-[3px]"
+                    style={{ background: d.color }}
+                    aria-hidden
                   />
                 </div>
-                <div className="p-6 sm:p-8">
-                  <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
-                    {card.status}
-                  </p>
-                  <div className="mt-4 flex items-center gap-3">
-                    <Image
-                      src={assetPath(
-                        card.slug === "home-assistant"
-                          ? "/brand/app-icon-home.png"
-                          : "/brand/app-icon-tv.png"
-                      )}
-                      alt=""
-                      width={64}
-                      height={64}
-                      className="h-8 w-8 rounded-md"
-                    />
-                    <p className="font-display text-xl font-bold text-platinum">{card.name}</p>
+                <div className="relative -mt-14 p-6">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full" style={{ background: d.color }} aria-hidden />
+                    <p className="font-display text-lg font-bold text-platinum">{divisionName(d, locale)}</p>
                   </div>
-                  <p className="mt-2 text-sm text-chrome-dim">{card.tagline}</p>
+                  <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-slate">
+                    {locale === "ar" ? d.label.ar : d.label.en}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-chrome-dim">
+                    {locale === "ar" ? d.tagline.ar : d.tagline.en}
+                  </p>
+                  <span
+                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity group-hover:opacity-80"
+                    style={{ color: d.color }}
+                  >
+                    {t.discover}
+                    <span aria-hidden>{locale === "ar" ? "←" : "→"}</span>
+                  </span>
                 </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why one company */}
+      <section className="border-b border-hairline">
+        <div className="mx-auto max-w-4xl px-5 py-20 sm:px-8">
+          <p className="text-center font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{t.whyEyebrow}</p>
+          <h2 className="font-display mt-3 text-balance text-center text-3xl font-bold text-platinum sm:text-4xl">
+            {t.whyTitle}
+          </h2>
+          <div className="mt-12 grid gap-4 sm:grid-cols-3">
+            {t.why.map((w) => (
+              <div key={w.n} className="rounded-lg border border-hairline p-6">
+                <span className="font-mono text-xs text-ion">{w.n}</span>
+                <p className="mt-3 font-semibold leading-snug text-platinum">{w.t}</p>
+                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{w.d}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <Testimonials
-        eyebrow={dict.testimonials.eyebrow}
-        title={dict.testimonials.title}
-        subtitle={dict.testimonials.subtitle}
-        testimonials={dict.testimonials.items}
-      />
-
       {/* CTA */}
       <section>
         <div className="mx-auto max-w-3xl px-5 py-24 text-center sm:px-8">
-          <h2 className="font-display text-balance text-3xl font-bold text-platinum sm:text-4xl">
-            {dict.homeCta.title}
-          </h2>
-          <p className="mt-4 text-chrome-dim">{dict.homeCta.subtitle}</p>
+          <h2 className="font-display text-balance text-3xl font-bold text-platinum sm:text-4xl">{t.ctaTitle}</h2>
+          <p className="mt-4 text-chrome-dim">{t.ctaSub}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href={`/${locale}/quote`}
+              href={`/${locale}/contact`}
               className="rounded-md bg-platinum px-7 py-3 text-sm font-semibold text-void transition-opacity hover:opacity-90"
             >
-              {dict.nav.quote}
+              {t.ctaBtn}
             </Link>
             <Link
-              href={`/${locale}/contact`}
+              href={`/${locale}#divisions`}
               className="rounded-md border border-hairline-strong px-7 py-3 text-sm font-semibold text-platinum transition-colors hover:border-ion"
             >
-              {dict.homeCta.button}
+              {t.ctaExplore}
             </Link>
           </div>
         </div>

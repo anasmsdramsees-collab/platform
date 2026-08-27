@@ -14,7 +14,10 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
   const otherLocale: Locale = locale === "en" ? "ar" : "en";
   const otherHref = `/${otherLocale}${rest}`;
 
+  const divisionsLabel = locale === "ar" ? "الأقسام" : "Divisions";
+
   const links = [
+    { href: `/${locale}#divisions`, label: divisionsLabel },
     { href: `/${locale}/products`, label: dict.nav.products },
     { href: `/${locale}/store`, label: dict.nav.store },
     { href: `/${locale}/builder`, label: dict.nav.builder },

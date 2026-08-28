@@ -102,6 +102,10 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               <p className={headCls}>{dict.footer.contact}</p>
               <a href="https://wa.me/966550098550" target="_blank" rel="noopener noreferrer" className={`mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum`}>WhatsApp</a>
               <a href="tel:0550098550" className={linkCls}>0550098550</a>
+              <a href="https://www.linkedin.com/company/syltra-one" target="_blank" rel="noopener noreferrer" className={linkCls}>LinkedIn</a>
+              <a href="https://x.com/syltraone" target="_blank" rel="noopener noreferrer" className={linkCls}>X (Twitter)</a>
+              <a href="https://www.instagram.com/syltrahome/" target="_blank" rel="noopener noreferrer" className={linkCls}>Instagram</a>
+              <a href="https://www.tiktok.com/@syltra.home" target="_blank" rel="noopener noreferrer" className={linkCls}>TikTok</a>
             </div>
           </div>
         )}

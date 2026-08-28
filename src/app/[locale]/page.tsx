@@ -214,11 +214,11 @@ export default async function HomePage({
           <h2 className="font-display mt-3 text-balance text-center text-3xl font-bold text-platinum sm:text-4xl">
             {t.whyTitle}
           </h2>
-          <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          <div className="mt-12 grid gap-x-8 gap-y-8 sm:grid-cols-3">
             {t.why.map((w) => (
-              <div key={w.n} className="rounded-lg border border-hairline p-6">
-                <span className="font-mono text-xs" style={{ color: ONE }}>{w.n}</span>
-                <p className="mt-3 font-semibold leading-snug text-platinum">{w.t}</p>
+              <div key={w.n} className="border-t border-hairline pt-5">
+                <span className="block h-px w-8" style={{ background: ONE }} aria-hidden />
+                <p className="mt-4 font-semibold leading-snug text-platinum">{w.t}</p>
                 <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{w.d}</p>
               </div>
             ))}

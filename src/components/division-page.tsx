@@ -100,11 +100,13 @@ export default function DivisionPage({
           </h2>
           <div className="mt-12 grid grid-cols-1 border-l border-t border-hairline sm:grid-cols-2 lg:grid-cols-3">
             {c.services.map((s, i) => (
-              <div key={i} className="border-b border-r border-hairline p-7 transition-colors hover:bg-graphite/40">
-                <span className="font-display text-xl font-bold tabular-nums" style={{ color: accent }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <p className="mt-4 font-semibold leading-snug text-platinum">{pick(s.title, locale)}</p>
+              <div key={i} className="group border-b border-r border-hairline p-7 transition-colors hover:bg-graphite/40">
+                <span
+                  className="block h-px w-8 transition-[width] duration-500 group-hover:w-14"
+                  style={{ background: accent }}
+                  aria-hidden
+                />
+                <p className="mt-5 font-semibold leading-snug text-platinum">{pick(s.title, locale)}</p>
                 <p className="mt-2 text-sm leading-relaxed text-chrome-dim">{pick(s.desc, locale)}</p>
               </div>
             ))}

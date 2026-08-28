@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { InfoCard } from "@/components/ui/info-card";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { pageMetadata } from "@/lib/seo";
@@ -50,12 +49,12 @@ export default async function AboutPage({
 
       {/* Facts strip */}
       <section className="border-b border-hairline">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-5 py-10 sm:grid-cols-4 sm:px-8">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 border-s border-t border-hairline px-0 sm:grid-cols-4">
           {a.facts.map((fact) => (
-            <InfoCard key={fact.label} className="px-5 py-8 text-center">
-              <p className="font-mono text-xl font-medium sm:text-2xl" style={{ color: ONE }}>{fact.value}</p>
+            <div key={fact.label} className="border-b border-e border-hairline px-5 py-9 text-center">
+              <p className="font-display text-2xl font-bold sm:text-3xl" style={{ color: ONE }}>{fact.value}</p>
               <p className="mt-2 text-xs text-chrome-dim sm:text-sm">{fact.label}</p>
-            </InfoCard>
+            </div>
           ))}
         </div>
       </section>
@@ -79,23 +78,21 @@ export default async function AboutPage({
 
       {/* Mission / Vision */}
       <section className="border-b border-hairline">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-5 py-16 sm:grid-cols-2 sm:px-8">
-          <InfoCard className="p-8 sm:p-10">
-            <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
-              {a.mission.label}
-            </p>
-            <p className="font-display mt-4 text-balance text-xl font-semibold text-platinum sm:text-2xl">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-x-12 gap-y-12 px-5 py-20 sm:grid-cols-2 sm:px-8">
+          <div>
+            <span className="block h-px w-10" style={{ background: ONE }} aria-hidden />
+            <p className="mt-5 font-mono text-[11px] uppercase tracking-widest text-slate">{a.mission.label}</p>
+            <p className="font-display mt-4 text-balance text-xl font-semibold leading-relaxed text-platinum sm:text-2xl">
               {a.mission.text}
             </p>
-          </InfoCard>
-          <InfoCard className="p-8 sm:p-10">
-            <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
-              {a.vision.label}
-            </p>
-            <p className="font-display mt-4 text-balance text-xl font-semibold text-platinum sm:text-2xl">
+          </div>
+          <div>
+            <span className="block h-px w-10" style={{ background: ONE }} aria-hidden />
+            <p className="mt-5 font-mono text-[11px] uppercase tracking-widest text-slate">{a.vision.label}</p>
+            <p className="font-display mt-4 text-balance text-xl font-semibold leading-relaxed text-platinum sm:text-2xl">
               {a.vision.text}
             </p>
-          </InfoCard>
+          </div>
         </div>
       </section>
 
@@ -154,13 +151,13 @@ export default async function AboutPage({
               {a.values.title}
             </h2>
           </div>
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {a.values.items.map((v, i) => (
-              <InfoCard key={v.name}>
-                <p className="font-mono text-xs" style={{ color: ONE }}>{String(i + 1).padStart(2, "0")}</p>
-                <p className="mt-3 font-semibold text-platinum">{v.name}</p>
+          <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+            {a.values.items.map((v) => (
+              <div key={v.name} className="border-t border-hairline pt-5">
+                <span className="block h-px w-8" style={{ background: ONE }} aria-hidden />
+                <p className="mt-4 font-semibold text-platinum">{v.name}</p>
                 <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{v.desc}</p>
-              </InfoCard>
+              </div>
             ))}
           </div>
         </div>
@@ -172,14 +169,12 @@ export default async function AboutPage({
           <p className="text-center font-mono text-[12px] tracking-[0.14em] text-slate uppercase">
             {a.chairman.eyebrow}
           </p>
-          <InfoCard className="mt-8 p-8 text-center sm:p-12">
-            <blockquote className="font-display text-balance text-xl font-medium leading-relaxed text-platinum sm:text-2xl">
+          <div className="mt-10 text-center">
+            <blockquote className="font-display text-balance text-2xl font-medium leading-relaxed text-platinum sm:text-3xl">
               “{a.chairman.quote}”
             </blockquote>
-            <div className="mt-8">
-              <p className="text-sm text-chrome-dim">{a.chairman.role}</p>
-            </div>
-          </InfoCard>
+            <p className="mt-8 font-mono text-[12px] uppercase tracking-widest text-slate">{a.chairman.role}</p>
+          </div>
         </div>
       </section>
 
@@ -195,12 +190,12 @@ export default async function AboutPage({
           <h2 className="font-display mt-3 text-3xl font-bold text-platinum sm:text-4xl">
             {a.roadmap.title}
           </h2>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          <div className="mt-10 border-t border-hairline">
             {a.roadmap.items.map((item) => (
-              <InfoCard key={item.year}>
-                <span className="font-mono text-xs" style={{ color: ONE }}>{item.year}</span>
-                <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{item.text}</p>
-              </InfoCard>
+              <div key={item.year} className="flex items-baseline gap-6 border-b border-hairline py-5">
+                <span className="font-display text-lg font-bold tabular-nums" style={{ color: ONE }}>{item.year}</span>
+                <p className="text-sm leading-relaxed text-chrome-dim">{item.text}</p>
+              </div>
             ))}
           </div>
         </div>

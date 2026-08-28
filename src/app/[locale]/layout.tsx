@@ -113,6 +113,7 @@ export default async function LocaleLayout({
                   "https://www.instagram.com/syltrahome/",
                   "https://www.tiktok.com/@syltra.home",
                   "https://www.linkedin.com/company/syltra-one",
+                  "https://x.com/syltraone",
                 ],
                 contactPoint: {
                   "@type": "ContactPoint",
@@ -145,6 +146,7 @@ export default async function LocaleLayout({
                   "https://www.instagram.com/syltrahome/",
                   "https://www.tiktok.com/@syltra.home",
                   "https://www.linkedin.com/company/syltra-one",
+                  "https://x.com/syltraone",
                 ],
                 parentOrganization: { "@id": `${siteUrl}/#organization` },
               },

@@ -115,20 +115,24 @@ export default async function AboutPage({
               <Link
                 key={d.key}
                 href={`/${locale}${d.href}`}
-                className="group flex items-center gap-4 rounded-xl border border-hairline p-4 transition-colors hover:border-hairline-strong hover:bg-graphite/40"
+                className="group flex items-center gap-4 py-3"
               >
-                <div className="relative h-14 w-20 flex-none overflow-hidden rounded-lg">
+                <div
+                  className="relative h-16 w-24 flex-none overflow-hidden border-s-2"
+                  style={{ borderColor: d.color }}
+                >
                   <Image
                     src={assetPath(d.image)}
                     alt={divisionName(d, locale)}
                     fill
-                    sizes="80px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="96px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: d.color }} aria-hidden />
                 </div>
                 <div>
-                  <p className="font-semibold text-platinum">{divisionName(d, locale)}</p>
+                  <p className="font-display font-bold text-platinum transition-opacity group-hover:opacity-80">
+                    {divisionName(d, locale)}
+                  </p>
                   <p className="mt-0.5 font-mono text-[11px] text-slate">
                     {locale === "ar" ? d.label.ar : d.label.en}
                   </p>

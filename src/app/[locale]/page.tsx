@@ -168,39 +168,25 @@ export default async function HomePage({
             </h2>
             <p className="mt-4 text-chrome-dim">{t.divisionsSub}</p>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {DIVISIONS.map((d) => (
-              <Link
-                key={d.key}
-                href={`/${locale}${d.href}`}
-                className="group relative overflow-hidden rounded-2xl border border-hairline bg-graphite/40 transition-colors duration-300 hover:border-hairline-strong"
-              >
+              <Link key={d.key} href={`/${locale}${d.href}`} className="group block">
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
                     src={assetPath(d.image)}
                     alt={divisionName(d, locale)}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
                   />
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(11,12,14,0.95) 8%, rgba(11,12,14,0.35) 45%, rgba(11,12,14,0.05) 80%)",
-                    }}
-                  />
+                </div>
+                <div className="mt-4">
                   <span
-                    className="absolute inset-x-0 top-0 h-[3px]"
+                    className="block h-px w-8 transition-[width] duration-500 group-hover:w-14"
                     style={{ background: d.color }}
                     aria-hidden
                   />
-                </div>
-                <div className="relative -mt-14 p-6">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full" style={{ background: d.color }} aria-hidden />
-                    <p className="font-display text-lg font-bold text-platinum">{divisionName(d, locale)}</p>
-                  </div>
+                  <p className="font-display mt-4 text-lg font-bold text-platinum">{divisionName(d, locale)}</p>
                   <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-slate">
                     {locale === "ar" ? d.label.ar : d.label.en}
                   </p>

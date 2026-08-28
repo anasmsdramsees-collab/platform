@@ -30,7 +30,7 @@ export default function FaqSection({
 
   return (
     <section id="faq" className="scroll-mt-20 border-b border-hairline">
-      <div className="mx-auto max-w-4xl px-5 py-24 sm:px-8">
+      <div className="mx-auto max-w-4xl px-5 py-14 sm:px-8 sm:py-24">
         <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
           {eyebrow ?? (locale === "ar" ? "الأسئلة الشائعة" : "FAQ")}
         </p>

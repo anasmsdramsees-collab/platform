@@ -54,7 +54,7 @@ export default function DivisionPage({
             mixBlendMode: "screen",
           }}
         />
-        <div className="relative z-20 mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
+        <div className="relative z-20 mx-auto max-w-4xl px-5 py-14 text-center sm:px-8 sm:py-32">
           <div dir="ltr" className="mx-auto mb-5 flex items-center justify-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={assetPath("/brand/divisions/word.png")} alt="SYLTRA" className="h-6 w-auto sm:h-7" />
@@ -93,7 +93,7 @@ export default function DivisionPage({
 
       {/* Services, matrix grid */}
       <section id="services" className="scroll-mt-20 border-b border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-24">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{pick(c.servicesEyebrow, locale)}</p>
           <h2 className="font-display mt-3 max-w-3xl text-balance text-3xl font-bold text-platinum sm:text-4xl">
             {pick(c.servicesTitle, locale)}
@@ -116,7 +116,7 @@ export default function DivisionPage({
 
       {/* Systems / solutions, gallery */}
       <section id="solutions" className="scroll-mt-20 border-b border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-24">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{pick(c.systemsEyebrow, locale)}</p>
           <h2 className="font-display mt-3 max-w-3xl text-balance text-3xl font-bold text-platinum sm:text-4xl">
             {pick(c.systemsTitle, locale)}
@@ -179,7 +179,7 @@ export default function DivisionPage({
 
       {/* Statement band */}
       <section style={{ background: accent }}>
-        <div className="mx-auto max-w-5xl px-5 py-20 sm:px-8">
+        <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-20">
           <h2 className="font-display text-balance text-3xl font-extrabold leading-tight sm:text-5xl" style={{ color: "#0b0c0e" }}>
             {pick(c.statementTitle, locale)}
           </h2>
@@ -191,7 +191,7 @@ export default function DivisionPage({
 
       {/* Flow, editorial timeline */}
       <section id="flow" className="scroll-mt-20 border-b border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-24">
           <p className="font-mono text-[12px] tracking-[0.14em] text-slate uppercase">{pick(c.flowEyebrow, locale)}</p>
           <h2 className="font-display mt-3 max-w-3xl text-balance text-3xl font-bold text-platinum sm:text-4xl">
             {pick(c.flowTitle, locale)}
@@ -211,7 +211,7 @@ export default function DivisionPage({
       {/* Articles from the blog */}
       {articles.length ? (
         <section className="border-b border-hairline">
-          <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-24">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
@@ -247,7 +247,7 @@ export default function DivisionPage({
 
       {/* CTA */}
       <section id="contact" className="scroll-mt-20">
-        <div className="mx-auto max-w-3xl px-5 py-24 text-center sm:px-8">
+        <div className="mx-auto max-w-3xl px-5 py-14 text-center sm:px-8 sm:py-24">
           <h2 className="font-display text-balance text-3xl font-bold text-platinum sm:text-4xl">{pick(c.ctaTitle, locale)}</h2>
           <p className="mt-4 text-chrome-dim">{pick(c.ctaBody, locale)}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

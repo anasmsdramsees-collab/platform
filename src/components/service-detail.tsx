@@ -63,7 +63,7 @@ export default function ServiceDetail({
             />
           </div>
         ) : null}
-        <div className="relative z-10 mx-auto max-w-5xl px-5 py-24 sm:px-8 sm:py-32">
+        <div className="relative z-10 mx-auto max-w-5xl px-5 py-14 sm:px-8 sm:py-32">
           <nav className="flex items-center gap-2 font-mono text-[11px] text-slate">
             <Link href={`/${locale}${division.href}`} className="transition-colors hover:text-platinum" style={{ color: accent }}>
               {dName}
@@ -97,7 +97,7 @@ export default function ServiceDetail({
       {/* Overview */}
       {service.body?.length ? (
         <section className="border-b border-hairline">
-          <div className="mx-auto max-w-3xl px-5 py-20 sm:px-8">
+          <div className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-20">
             <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
               {locale === "ar" ? "نظرة عامة" : "Overview"}
             </p>
@@ -113,7 +113,7 @@ export default function ServiceDetail({
       {/* Points */}
       {service.points?.length ? (
         <section className="border-b border-hairline">
-          <div className="mx-auto max-w-5xl px-5 py-20 sm:px-8">
+          <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-20">
             <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
               {locale === "ar" ? "ما نقدّمه" : "What we offer"}
             </p>
@@ -132,7 +132,7 @@ export default function ServiceDetail({
       {/* Applications */}
       {service.useCases?.length ? (
         <section className="border-b border-hairline">
-          <div className="mx-auto max-w-5xl px-5 py-20 sm:px-8">
+          <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-20">
             <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
               {locale === "ar" ? "أين يناسب" : "Where it fits"}
             </p>
@@ -151,7 +151,7 @@ export default function ServiceDetail({
       {/* Related services */}
       {related.length ? (
         <section className="border-b border-hairline">
-          <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+          <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-20">
             <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-slate">
               {locale === "ar" ? `المزيد من ${dName}` : `More from ${dName}`}
             </p>
@@ -174,7 +174,7 @@ export default function ServiceDetail({
 
       {/* CTA */}
       <section>
-        <div className="mx-auto max-w-3xl px-5 py-24 text-center sm:px-8">
+        <div className="mx-auto max-w-3xl px-5 py-14 text-center sm:px-8 sm:py-24">
           <h2 className="font-display text-balance text-3xl font-bold text-platinum sm:text-4xl">
             {locale === "ar" ? "ابدأ بمعاينة ودراسة." : "Start with a survey and study."}
           </h2>

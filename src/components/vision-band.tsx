@@ -42,7 +42,7 @@ export default function VisionBand({ locale }: { locale: Locale }) {
         style={{ background: "radial-gradient(70% 120% at 50% 0%, rgba(191,198,208,0.10), transparent 62%)" }}
         aria-hidden
       />
-      <div className="relative mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-8 px-5 py-20 sm:py-24 lg:flex-nowrap lg:gap-10 lg:px-8">
+      <div className="relative mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-8 px-5 py-14 sm:py-24 lg:flex-nowrap lg:gap-10 lg:px-8">
         <div className="order-2 flex w-[42%] justify-center lg:order-1 lg:w-auto">
           <Portrait
             src="/brand/king.jpg"

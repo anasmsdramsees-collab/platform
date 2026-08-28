@@ -11,7 +11,6 @@ import ParticlesBg from "@/components/ui/particles-bg";
 import { HeroCarousel } from "@/components/ui/hero-carousel";
 import { ImageSlider } from "@/components/ui/image-slider";
 import { Testimonials } from "@/components/ui/testimonials";
-import { InfoCard } from "@/components/ui/info-card";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 import { pageMetadata } from "@/lib/seo";
@@ -166,12 +165,12 @@ export default async function LifePage({
 
       {/* Stats */}
       <section className="border-b border-hairline">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-5 py-12 sm:grid-cols-4 sm:px-8">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 border-s border-t border-hairline sm:grid-cols-4">
           {dict.stats.map((stat) => (
-            <InfoCard key={stat.label} className="px-5 py-8 text-center">
-              <p className="font-mono text-2xl font-medium text-ion sm:text-3xl">{stat.value}</p>
+            <div key={stat.label} className="border-b border-e border-hairline px-5 py-9 text-center">
+              <p className="font-display text-2xl font-bold text-ion sm:text-3xl">{stat.value}</p>
               <p className="mt-2 text-xs text-chrome-dim sm:text-sm">{stat.label}</p>
-            </InfoCard>
+            </div>
           ))}
         </div>
       </section>
@@ -188,13 +187,13 @@ export default async function LifePage({
             </h2>
             <p className="mt-4 text-chrome-dim">{dict.ecosystem.subtitle}</p>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {dict.ecosystem.pillars.map((pillar, i) => (
-              <InfoCard key={pillar.name}>
-                <p className="font-mono text-xs text-ion">{String(i + 1).padStart(2, "0")}</p>
-                <p className="mt-3 font-semibold leading-snug text-platinum">{pillar.name}</p>
+          <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
+            {dict.ecosystem.pillars.map((pillar) => (
+              <div key={pillar.name} className="border-t border-hairline pt-5">
+                <span className="block h-px w-8 bg-ion" aria-hidden />
+                <p className="mt-4 font-semibold leading-snug text-platinum">{pillar.name}</p>
                 <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{pillar.desc}</p>
-              </InfoCard>
+              </div>
             ))}
           </div>
         </div>
@@ -209,13 +208,13 @@ export default async function LifePage({
           <h2 className="font-display mt-3 text-balance text-center text-3xl font-bold text-platinum sm:text-4xl">
             {dict.why.title}
           </h2>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2">
-            {dict.why.items.map((item, i) => (
-              <InfoCard key={item.name}>
-                <span className="font-mono text-xs text-ion">{String(i + 1).padStart(2, "0")}</span>
-                <p className="mt-3 font-semibold leading-snug text-platinum">{item.name}</p>
+          <div className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+            {dict.why.items.map((item) => (
+              <div key={item.name} className="border-t border-hairline pt-5">
+                <span className="block h-px w-8 bg-ion" aria-hidden />
+                <p className="mt-4 font-semibold leading-snug text-platinum">{item.name}</p>
                 <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{item.desc}</p>
-              </InfoCard>
+              </div>
             ))}
           </div>
         </div>
@@ -241,16 +240,17 @@ export default async function LifePage({
               {dict.categories.cta} →
             </Link>
           </div>
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 border-s border-t border-hairline sm:grid-cols-2 lg:grid-cols-3">
             {productCatalog.map((category) => {
               const copy = locale === "ar" ? category.ar : category.en;
               return (
                 <Link
                   key={category.key}
                   href={`/${locale}/products#${category.key}`}
-                  className="group rounded-lg border border-hairline p-6 transition-colors hover:border-hairline-strong hover:bg-graphite"
+                  className="group border-b border-e border-hairline p-6 transition-colors hover:bg-graphite/40"
                 >
-                  <p className="font-semibold text-platinum">{copy.name}</p>
+                  <span className="block h-px w-8 bg-ion transition-[width] duration-500 group-hover:w-14" aria-hidden />
+                  <p className="mt-4 font-semibold text-platinum">{copy.name}</p>
                   <p className="mt-2 text-sm text-chrome-dim">{copy.desc}</p>
                   <p className="mt-4 font-mono text-xs text-slate">
                     {category.items.length} {locale === "ar" ? "منتجات" : "products"}
@@ -275,12 +275,13 @@ export default async function LifePage({
             <p className="mt-4 text-chrome-dim">{dict.protocols.subtitle}</p>
           </div>
           <ProtocolOrbit items={dict.protocols.items} coreLabel={locale === "ar" ? "محرك سيلترا التكيفي" : "SYLTRA ADAPTIVE"} />
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
             {dict.protocols.items.map((p) => (
-              <InfoCard key={p.name}>
-                <p className="font-mono text-sm font-semibold text-platinum">{p.name}</p>
+              <div key={p.name} className="border-t border-hairline pt-5">
+                <span className="block h-px w-8 bg-ion" aria-hidden />
+                <p className="mt-4 font-mono text-sm font-semibold text-platinum">{p.name}</p>
                 <p className="mt-2.5 text-sm leading-relaxed text-chrome-dim">{p.desc}</p>
-              </InfoCard>
+              </div>
             ))}
           </div>
         </div>
@@ -300,11 +301,8 @@ export default async function LifePage({
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
             {dict.appsPage.cards.map((card) => (
-              <div
-                key={card.slug}
-                className="overflow-hidden rounded-2xl border border-hairline bg-graphite/70 transition-colors duration-300 hover:border-hairline-strong"
-              >
-                <div className="relative aspect-video overflow-hidden border-b border-hairline">
+              <div key={card.slug} className="group">
+                <div className="relative aspect-video overflow-hidden">
                   <ImageSlider
                     images={
                       card.slug === "home-assistant"
@@ -315,11 +313,11 @@ export default async function LifePage({
                     offset={card.slug === "home-assistant" ? 0 : 2200}
                   />
                 </div>
-                <div className="p-6 sm:p-8">
+                <div className="mt-5">
                   <p className="font-mono text-[11px] uppercase tracking-widest text-slate">
                     {card.status}
                   </p>
-                  <div className="mt-4 flex items-center gap-3">
+                  <div className="mt-3 flex items-center gap-3">
                     <Image
                       src={assetPath(
                         card.slug === "home-assistant"

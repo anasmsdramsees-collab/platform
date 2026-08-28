@@ -69,7 +69,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               <Link href={`/${locale}/contact`} className={`mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum`}>{dict.nav.contact}</Link>
               <Link href={`/${locale}/quote`} className={linkCls}>{dict.nav.quote}</Link>
               <a href="https://www.instagram.com/syltrahome/" target="_blank" rel="noopener noreferrer" className={linkCls}>Instagram</a>
-              <a href="https://www.tiktok.com/@syltra.home" target="_blank" rel="noopener noreferrer" className={linkCls}>TikTok</a>
+              <a href="https://www.tiktok.com/@syltra.one" target="_blank" rel="noopener noreferrer" className={linkCls}>TikTok</a>
               <a href="https://www.linkedin.com/company/syltra-one" target="_blank" rel="noopener noreferrer" className={linkCls}>LinkedIn</a>
               <a href="https://x.com/syltraone" target="_blank" rel="noopener noreferrer" className={linkCls}>X (Twitter)</a>
               <a href="https://wa.me/966550098550" target="_blank" rel="noopener noreferrer" className={linkCls}>WhatsApp</a>
@@ -105,7 +105,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               <a href="https://www.linkedin.com/company/syltra-one" target="_blank" rel="noopener noreferrer" className={linkCls}>LinkedIn</a>
               <a href="https://x.com/syltraone" target="_blank" rel="noopener noreferrer" className={linkCls}>X (Twitter)</a>
               <a href="https://www.instagram.com/syltrahome/" target="_blank" rel="noopener noreferrer" className={linkCls}>Instagram</a>
-              <a href="https://www.tiktok.com/@syltra.home" target="_blank" rel="noopener noreferrer" className={linkCls}>TikTok</a>
+              <a href="https://www.tiktok.com/@syltra.one" target="_blank" rel="noopener noreferrer" className={linkCls}>TikTok</a>
             </div>
           </div>
         )}

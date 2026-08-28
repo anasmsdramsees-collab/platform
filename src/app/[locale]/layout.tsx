@@ -111,7 +111,7 @@ export default async function LocaleLayout({
                 knowsLanguage: ["ar", "en"],
                 sameAs: [
                   "https://www.instagram.com/syltrahome/",
-                  "https://www.tiktok.com/@syltra.home",
+                  "https://www.tiktok.com/@syltra.one",
                   "https://www.linkedin.com/company/syltra-one",
                   "https://x.com/syltraone",
                 ],
@@ -144,7 +144,7 @@ export default async function LocaleLayout({
                 knowsLanguage: ["ar", "en"],
                 sameAs: [
                   "https://www.instagram.com/syltrahome/",
-                  "https://www.tiktok.com/@syltra.home",
+                  "https://www.tiktok.com/@syltra.one",
                   "https://www.linkedin.com/company/syltra-one",
                   "https://x.com/syltraone",
                 ],

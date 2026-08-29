@@ -480,7 +480,7 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
-        graphic: "ring",
+        graphic: "scene",
         eyebrow: { ar: "التكاملات", en: "Integrations" },
         headline: { ar: "منظومة صحية واحدة. متصلة.", en: "One health ecosystem. Connected." },
         body: {

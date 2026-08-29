@@ -10,6 +10,10 @@ import HealthLogo from "./health-logo";
 export default function HealthNav({ locale }: { locale: Locale }) {
   const pathname = usePathname() || `/${locale}/health`;
   const [open, setOpen] = useState(false);
+
+  // The admin area renders its own chrome.
+  if (pathname.includes("/health/admin")) return null;
+
   const ar = locale === "ar";
   const base = `/${locale}/health`;
   const other: Locale = locale === "ar" ? "en" : "ar";

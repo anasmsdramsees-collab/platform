@@ -1,10 +1,16 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n/config";
 import { siteUrl } from "@/lib/site-config";
 import { HEALTH, HEALTH_BRAND, HEALTH_NAV, HEALTH_SOCIAL } from "@/lib/health-content";
 import HealthLogo from "./health-logo";
 
 export default function HealthFooter({ locale }: { locale: Locale }) {
+  const pathname = usePathname() || "";
+  if (pathname.includes("/health/admin")) return null;
+
   const ar = locale === "ar";
   const year = new Date().getFullYear();
   const base = `/${locale}/health`;

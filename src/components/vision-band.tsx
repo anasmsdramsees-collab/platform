@@ -5,7 +5,7 @@ import { assetPath } from "@/lib/base-path";
  * Prominent "Aligned with Saudi Vision 2030" band, flanked by the official
  * portraits of the King and the Crown Prince. Center band + side portraits.
  */
-export default function VisionBand({ locale }: { locale: Locale }) {
+export default function VisionBand({ locale, accent = "#BFC6D0" }: { locale: Locale; accent?: string }) {
   const ar = locale === "ar";
 
   const fade =
@@ -52,7 +52,7 @@ export default function VisionBand({ locale }: { locale: Locale }) {
         </div>
 
         <div className="order-1 w-full max-w-xl text-center lg:order-2 lg:w-auto">
-          <p className="font-mono text-[12px] uppercase tracking-[0.14em]" style={{ color: "#BFC6D0" }}>
+          <p className="font-mono text-[12px] uppercase tracking-[0.14em]" style={{ color: accent }}>
             {ar ? "التزام وطني" : "National commitment"}
           </p>
           {/* eslint-disable-next-line @next/next/no-img-element */}

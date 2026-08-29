@@ -5,6 +5,7 @@ import { HEALTH, HEALTH_BRAND, pickH } from "@/lib/health-content";
 import { HEALTH_FAQ } from "@/lib/health-faq";
 import HealthBlocks from "./health-blocks";
 import FaqSection from "@/components/faq-section";
+import VisionBand from "@/components/vision-band";
 
 /** Renders one HEALTH page from its slug key. `faq` adds the FAQ accordion. */
 export default function HealthPageView({
@@ -37,6 +38,7 @@ export default function HealthPageView({
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
       <HealthBlocks blocks={page.blocks} locale={locale} />
+      {(slugKey === "" || slugKey === "about") && <VisionBand locale={locale} accent="var(--color-slate)" />}
       {faq && (
         <FaqSection
           items={HEALTH_FAQ}

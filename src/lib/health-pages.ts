@@ -190,27 +190,58 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         kind: "hero",
         graphic: "scene",
         image: "/brand/health-hero-how.jpg",
-        headline: { ar: "من بيانات متفرقة إلى صورة مترابطة.", en: "From scattered data to one connected picture." },
+        headline: { ar: "من الإشارات إلى الاستجابة.", en: "From signals to response." },
         body: {
-          ar: "تربط سيلترا هيلث مصادر البيانات التي يوافق عليها المستخدم، وتنظمها زمنياً، ثم تعرضها في تجربة واضحة قابلة للمشاركة.",
-          en: "SYLTRA HEALTH connects the data sources approved by the user, organizes them over time and presents them in a clear, shareable experience.",
+          ar: "تربط سيلترا هيلث بيانات جسمك بمحيطك بعد موافقتك، تتعلّم نمطك، تهيّئ بيئتك، ثم تحوّل التغيّرات المهمة إلى تحقّق واستجابة وفق خطتك.",
+          en: "With your consent, SYLTRA HEALTH connects your body's data with your surroundings, learns your pattern, adapts your environment, then turns meaningful changes into verification and response under your plan.",
         },
         buttons: [CTA_EARLY],
       },
       {
         kind: "steps",
         steps: [
-          { title: { ar: "اربط", en: "Connect" }, body: { ar: "اختر الأجهزة والتطبيقات والحساسات المتوافقة التي ترغب في ربطها. لا يبدأ الربط من دون موافقتك.", en: "Choose the compatible devices, apps and sensors you want to connect. Connection does not begin without your permission." } },
-          { title: { ar: "اجمع", en: "Bring Together" }, body: { ar: "تجمع المنصة الإشارات المختارة في خط زمني واحد بدلاً من بقائها داخل تطبيقات منفصلة.", en: "The platform brings selected signals into one timeline instead of leaving them inside separate apps." } },
-          { title: { ar: "افهم", en: "Understand" }, body: { ar: "تعرض التجربة التغيرات والأنماط اليومية بصورة مبسطة، مع توضيح مصدر كل معلومة.", en: "The experience presents daily changes and patterns in a simpler way while showing where each data point came from." } },
-          { title: { ar: "شارك", en: "Share" }, body: { ar: "أنشئ ملخصاً للفترة التي تختارها وشاركه مع الأسرة أو فريق الرعاية، ثم أوقف المشاركة متى رغبت.", en: "Create a summary for the period you choose, share it with family or a care team and stop sharing whenever you want." } },
+          { title: { ar: "اربط", en: "Connect" }, body: { ar: "اختر الأجهزة والتطبيقات والحساسات المتوافقة. لا يبدأ الربط من دون موافقتك، ولكل نوع بيانات موافقة محددة.", en: "Choose the compatible devices, apps and sensors. Connection does not begin without your permission, with specific consent for each data type." } },
+          { title: { ar: "تعلّم نمطك", en: "Learn your pattern" }, body: { ar: "تبني المنصة خطك الأساسي: أوقات نومك، حركتك المعتادة، والبيئة المنزلية المرتبطة براحتك.", en: "The platform builds your baseline: sleep times, usual movement, and the home environment tied to your comfort." } },
+          { title: { ar: "هيّئ بيئتك", en: "Adapt your space" }, body: { ar: "ينفّذ المنزل إعدادات وافقت عليها مسبقًا: ضبط الحرارة، تحسين التهوية، إضاءة مناسبة، وتذكير بالحركة أو القياس.", en: "The home runs settings you approved in advance: temperature, better ventilation, suitable lighting, and reminders to move or measure." } },
+          { title: { ar: "تحقّق واستجب", en: "Verify and respond" }, body: { ar: "عند تغيّر مهم، يتحقق منك أولًا، ثم يصل إلى الشخص الموثوق الأنسب وفق خطة الاستجابة التي اخترتها.", en: "On a meaningful change, it checks in with you first, then reaches the most suitable trusted person under the response plan you chose." } },
+        ],
+      },
+      {
+        kind: "cards",
+        headline: { ar: "مسار الاستجابة الذكية.", en: "How intelligent response works." },
+        body: {
+          ar: "عند ظهور تغيّر غير معتاد، لا يعتمد النظام على قراءة منفردة، بل يمرّ بخطوات واضحة وقابلة للتفسير.",
+          en: "When an unusual change appears, the system never relies on a single reading. It follows clear, explainable steps.",
+        },
+        items: [
+          { title: { ar: "جمع الإشارات", en: "Collect signals" }, body: { ar: "المؤشرات الصحية والحركة ووجود الأشخاص وبيئة المنزل في اللحظة نفسها.", en: "Health signals, movement, presence and home environment at the same moment." } },
+          { title: { ar: "المقارنة بالنمط", en: "Compare to baseline" }, body: { ar: "مقارنة الإشارات بنمطك الشخصي وسجلك السابق لتقدير مستوى التنبيه.", en: "Comparing signals to your personal baseline and history to gauge the alert level." } },
+          { title: { ar: "التحقّق منك", en: "Check in with you" }, body: { ar: "سؤال مباشر على الهاتف أو الساعة أو شاشة المنزل: هل أنت بخير؟", en: "A direct check-in on your phone, watch or home screen: are you okay?" } },
+          { title: { ar: "انتظار الاستجابة", en: "Wait for a response" }, body: { ar: "الانتظار خلال المدة التي حدّدتها قبل أي خطوة تالية.", en: "Waiting for the period you defined before any next step." } },
+          { title: { ar: "اختيار الأنسب", en: "Choose the right person" }, body: { ar: "اختيار الشخص الموثوق الأنسب وفق القرب وزمن الوصول والقبول.", en: "Selecting the most suitable trusted person by proximity, arrival time and acceptance." } },
+          { title: { ar: "تصعيد معتمد", en: "Approved escalation" }, body: { ar: "تصعيد وفق الخطة التي اعتمدتها مسبقًا، مع الحد الأدنى من المعلومات.", en: "Escalating under the plan you approved in advance, with minimal information." } },
+        ],
+      },
+      {
+        kind: "cards",
+        headline: { ar: "المكوّنات الأساسية.", en: "The core components." },
+        body: {
+          ar: "خمس طبقات تعمل معًا. الاستجابة الذكية ليست ميزة منفصلة، بل النتيجة التي تعمل لأجلها كل الطبقات.",
+          en: "Five layers working together. Intelligent response is not a separate feature, it is the outcome all the layers work toward.",
+        },
+        items: [
+          { title: { ar: "الصحة المتصلة", en: "Connected Health" }, body: { ar: "ربط بيانات الصحة واللياقة من المصادر المعتمدة والمصرّح بها.", en: "Connecting health and fitness data from approved, authorized sources." } },
+          { title: { ar: "وعي المنزل", en: "Home Awareness" }, body: { ar: "فهم الحركة والوجود والبيئة المنزلية.", en: "Understanding movement, presence and the home environment." } },
+          { title: { ar: "النمط الشخصي", en: "Personal Baseline" }, body: { ar: "تعلّم النمط الطبيعي لكل مستخدم مع مرور الوقت.", en: "Learning each user's normal pattern over time." } },
+          { title: { ar: "البيئة المتكيّفة", en: "Adaptive Environment" }, body: { ar: "تكييف بيئة المنزل وفق الإعدادات الصحية والروتين.", en: "Adapting the home environment to health settings and routine." } },
+          { title: { ar: "الاستجابة الذكية", en: "Intelligent Response" }, body: { ar: "تحويل التغيّرات المهمة إلى تحقّق وتنبيه وتصعيد شخصي.", en: "Turning meaningful changes into verification, alerting and personal escalation." } },
         ],
       },
       {
         kind: "safety",
         text: {
-          ar: "سيلترا هيلث لا تستبدل الطبيب، ولا تقدم تشخيصاً تلقائياً. وظيفتها تنظيم البيانات اليومية ودعم الفهم والمتابعة.",
-          en: "SYLTRA HEALTH does not replace a clinician or provide automated diagnosis. Its role is to organize everyday data and support understanding and follow-up.",
+          ar: "سيلترا هيلث لا تقدّم تشخيصًا مستقلاً وليست خدمة طوارئ، ولا تضمن وصول المساعدة ولا تتصل بالإسعاف تلقائيًا. تبدأ النسخة الأولى بقواعد واضحة قابلة للاختبار، ثم يُضاف التعلّم الشخصي لاكتشاف الانحراف عن النمط.",
+          en: "SYLTRA HEALTH does not provide an independent diagnosis and is not an emergency service. It does not guarantee help arrives or auto-dial emergency services. The first version starts with clear, testable rules, then adds personal learning to detect deviation from the pattern.",
         },
       },
     ],
@@ -271,6 +302,15 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
           en: "SYLTRA HEALTH gives older adults a simpler view of their day and allows selected information to be shared with family or a care provider through clear consent.",
         },
         buttons: [{ label: { ar: "سجّل اهتمامك بحلول كبار السن", en: "Register Interest in Older Adult Solutions" }, href: "/health/contact", primary: true }],
+      },
+      {
+        kind: "section",
+        eyebrow: { ar: "سيناريو", en: "Scenario" },
+        headline: { ar: "عندما يختلف صباحٌ معتاد.", en: "When a usual morning is different." },
+        body: {
+          ar: "مستخدم كبير في السن لديه نمط حركة صباحي ثابت داخل المنزل. في أحد الأيام لم تسجّل الحساسات حركته في الوقت المعتاد، وسجّلت الساعة تغيّرًا في النبض، ولم يستجب للتنبيه. تراجع المنصة: هل هو داخل المنزل؟ هل عدم الحركة طبيعي في هذا التوقيت؟ هل توجد قراءة مختلفة عن نمطه؟ هل يوجد أحد من الأسرة؟ من أقرب شخص موثوق يستطيع الوصول؟ وبعد التحقق، تشغّل مستوى الاستجابة المناسب بدلًا من إرسال إنذار عام لكل الأسرة.",
+          en: "An older user has a steady morning movement pattern at home. One day the sensors do not record movement at the usual time, the watch notes a change in pulse, and there is no response to the check-in. The platform reviews: is the user home? Is this stillness normal for this hour? Is there a reading unlike their pattern? Is any family member present? Who is the nearest trusted person who can reach them? After verifying, it triggers the appropriate level of response instead of a general alarm to the whole family.",
+        },
       },
       {
         kind: "section",
@@ -399,6 +439,15 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
           en: "Bring glucose readings from compatible devices together with activity, sleep and daily context in an organized view that supports follow-up with your care team.",
         },
         buttons: [{ label: { ar: "سجّل اهتمامك بمتابعة السكري", en: "Register Interest in Diabetes Tracking" }, href: "/health/contact", primary: true }],
+      },
+      {
+        kind: "section",
+        eyebrow: { ar: "سيناريو", en: "Scenario" },
+        headline: { ar: "عند انخفاض القراءة وأنت وحدك.", en: "When a reading drops and you are alone." },
+        body: {
+          ar: "يسجّل جهاز السكر المتصل قراءة منخفضة، وفي الوقت نفسه تلاحظ حساسات المنزل توقفًا غير معتاد عن الحركة. تقارن سيلترا هيلث هذه الإشارات بنمطك السابق وتتحقق من وجودك، ثم ترسل تنبيهًا على الساعة والهاتف وشاشة المنزل: رصدنا تغيّرًا غير معتاد، هل أنت بخير؟ مع خيارات واضحة. وإذا لم تستجب خلال المدة المحددة، تصل إلى الشخص الموثوق الأنسب بأقل قدر ضروري من المعلومات والموقع. لا يصف النظام الحالة تشخيصًا مؤكدًا، بل يستخدم صياغة دقيقة مثل: رصدنا قراءة منخفضة مع توقف غير معتاد عن الحركة وعدم استجابة.",
+          en: "A connected glucose device logs a low reading while home sensors notice unusual stillness. SYLTRA HEALTH compares these signals to your baseline, confirms your presence, then sends a check-in to your watch, phone and home screen: we noticed an unusual change, are you okay? With clear options. If you do not respond within the set time, it reaches the most suitable trusted person with the minimum necessary information and location. The system never calls it a confirmed diagnosis. It uses precise wording such as: a low reading with unusual stillness and no response.",
+        },
       },
       {
         kind: "list",

@@ -53,7 +53,7 @@ export default function HealthHeroGraphic({ className = "" }: { className?: stri
         })}
       </svg>
 
-      {/* ecosystem tiles */}
+      {/* ecosystem tiles — home nodes (emphasis) are highlighted as the foundation */}
       {NODES.map((n, i) => (
         <div
           key={i}
@@ -61,12 +61,20 @@ export default function HealthHeroGraphic({ className = "" }: { className?: stri
           style={{ left: `${n.x}%`, top: `${n.y}%` }}
         >
           <div
-            className="flex w-[92px] flex-col items-center gap-2 rounded-2xl border border-hairline-strong bg-void-2/80 p-3 backdrop-blur sm:w-[108px]"
-            style={{ boxShadow: `0 10px 30px -12px rgba(${HEALTH.rgb},0.35)` }}
+            className={`flex flex-col items-center gap-2 rounded-2xl border p-3 backdrop-blur ${n.emphasis ? "w-[100px] bg-void-2/90 sm:w-[118px]" : "w-[92px] border-hairline-strong bg-void-2/80 sm:w-[108px]"}`}
+            style={
+              n.emphasis
+                ? { borderColor: HEALTH.accent, boxShadow: `0 0 0 3px rgba(${HEALTH.rgb},0.14), 0 14px 34px -10px rgba(${HEALTH.rgb},0.55)` }
+                : { boxShadow: `0 10px 30px -12px rgba(${HEALTH.rgb},0.35)` }
+            }
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={assetPath(n.icon)} alt={n.label} className="h-9 w-9 sm:h-10 sm:w-10" />
-            <span className="text-center font-mono text-[9.5px] leading-tight text-chrome sm:text-[10.5px]" dir="ltr">
+            <img src={assetPath(n.icon)} alt={n.label} className={n.emphasis ? "h-10 w-10 sm:h-11 sm:w-11" : "h-9 w-9 sm:h-10 sm:w-10"} />
+            <span
+              className="text-center font-mono text-[9.5px] leading-tight sm:text-[10.5px]"
+              style={{ color: n.emphasis ? HEALTH.accent : "var(--color-chrome)" }}
+              dir="ltr"
+            >
               {n.label}
             </span>
           </div>

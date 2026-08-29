@@ -88,15 +88,15 @@ export const ECOSYSTEMS: Ecosystem[] = [
 ];
 
 /**
- * Six-node orbit shown in the hero graphic (label + app icon file).
- * Includes SYLTRA LIFE (smart home) and Home Sensors so the graphic shows the
- * platform's link to the home system and its sensors, not only wearables.
+ * Six-node orbit shown in the hero graphic. The smart home is the foundation:
+ * SYLTRA LIFE and Home Sensors sit at the top and are emphasised, with
+ * wearables and health apps orbiting around the connected home.
  */
-export const HERO_NODES: { label: string; icon: string }[] = [
+export const HERO_NODES: { label: string; icon: string; emphasis?: boolean }[] = [
+  { label: "SYLTRA LIFE", icon: "/brand/health-icons/syltra-life.svg", emphasis: true },
   { label: "Apple Health", icon: "/brand/health-icons/apple-health.svg" },
-  { label: "Health Connect", icon: "/brand/health-icons/health-connect.svg" },
   { label: "Samsung Health", icon: "/brand/health-icons/samsung-health.svg" },
-  { label: "SYLTRA LIFE", icon: "/brand/health-icons/syltra-life.svg" },
-  { label: "Home Sensors", icon: "/brand/health-icons/home-sensors.svg" },
+  { label: "Home Sensors", icon: "/brand/health-icons/home-sensors.svg", emphasis: true },
   { label: "WHOOP", icon: "/brand/health-icons/whoop.svg" },
+  { label: "Health Connect", icon: "/brand/health-icons/health-connect.svg" },
 ];

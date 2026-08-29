@@ -540,6 +540,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-privacy.jpg",
         eyebrow: { ar: "الخصوصية وأمن البيانات", en: "Privacy & Data Security" },
         headline: { ar: "بياناتك. قرارك.", en: "Your data. Your decision." },
         body: {

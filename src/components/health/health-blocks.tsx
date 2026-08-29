@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n/config";
+import { assetPath } from "@/lib/base-path";
 import { HEALTH } from "@/lib/health-content";
 import type { Block, HButton } from "@/lib/health-pages";
 import HealthHeroGraphic from "./health-hero-graphic";
@@ -50,7 +51,48 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
         switch (block.kind) {
           // ---------------------------------------------------------- HERO
           case "hero": {
-            const withGraphic = !!block.graphic;
+            const withGraphic = block.graphic === "connect" || block.graphic === "ring";
+            if (block.graphic === "scene") {
+              return (
+                <section key={i} className="relative overflow-hidden border-b border-hairline">
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{ background: `radial-gradient(60% 70% at 50% 0%, rgba(${HEALTH.rgb},0.10), transparent 65%)` }}
+                    aria-hidden
+                  />
+                  <div className="relative mx-auto max-w-4xl px-5 pt-16 text-center sm:px-8 sm:pt-24">
+                    {block.eyebrow && (
+                      <p className="font-mono text-[12px] uppercase tracking-[0.16em]" style={{ color: HEALTH.accent }}>
+                        {t(block.eyebrow)}
+                      </p>
+                    )}
+                    <h1 className="font-display mx-auto mt-4 max-w-3xl text-balance text-4xl font-bold leading-[1.05] text-platinum sm:text-5xl lg:text-6xl">
+                      {t(block.headline)}
+                    </h1>
+                    <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-chrome-dim sm:text-lg">
+                      {t(block.body)}
+                    </p>
+                    {block.buttons && (
+                      <div className="flex justify-center">
+                        <Buttons locale={locale} buttons={block.buttons} center />
+                      </div>
+                    )}
+                  </div>
+                  <div className="relative mx-auto mt-12 max-w-6xl px-5 pb-16 sm:px-8 sm:pb-24">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={assetPath("/brand/health-hero.jpg")}
+                      alt={ar ? "لوحة سيلترا هيلث على الحائط مع الساعات والأجهزة القابلة للارتداء في منزل ذكي" : "SYLTRA HEALTH wall dashboard with watches and wearables in a connected smart home"}
+                      className="w-full rounded-2xl border border-hairline shadow-2xl"
+                    />
+                    <p className="mt-5 flex items-center justify-center gap-2 font-mono text-[12px] text-slate">
+                      <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: HEALTH.accent }} aria-hidden />
+                      {ar ? "تكامل مستهدف · قيد التطوير" : "Target integrations · In development"}
+                    </p>
+                  </div>
+                </section>
+              );
+            }
             return (
               <section key={i} className="relative overflow-hidden border-b border-hairline">
                 <div

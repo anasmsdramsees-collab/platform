@@ -5,7 +5,7 @@ export type HButton = { label: L; href: string; primary?: boolean };
 
 /** Content blocks a HEALTH page is composed of. Rendered by <HealthBlocks />. */
 export type Block =
-  | { kind: "hero"; eyebrow?: L; headline: L; body: L; buttons?: HButton[]; graphic?: "connect" | "ring" }
+  | { kind: "hero"; eyebrow?: L; headline: L; body: L; buttons?: HButton[]; graphic?: "connect" | "ring" | "scene" }
   | { kind: "section"; eyebrow?: L; headline?: L; body?: L }
   | { kind: "cards"; headline?: L; body?: L; items: { title: L; body: L }[] }
   | { kind: "list"; headline?: L; body?: L; items: L[] }
@@ -39,7 +39,7 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
-        graphic: "connect",
+        graphic: "scene",
         eyebrow: { ar: "صحة متجذّرة في بيتك الذكي", en: "Health rooted in your smart home" },
         headline: { ar: "بيتك الذكي. أساس صحتك.", en: "Your smart home. The foundation of your health." },
         body: {

@@ -87,6 +87,19 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         ],
       },
       {
+        kind: "cards",
+        headline: { ar: "متصلة ببيتك الذكي وحسّاساته.", en: "Connected to your smart home and its sensors." },
+        body: {
+          ar: "ما يميّز سيلترا هيلث أنها لا تقرأ جسدك فقط، بل بيئتك أيضًا. عند الربط مع منظومة سيلترا لايف للمنزل الذكي وحسّاساتها، تظهر جودة الهواء والحرارة والرطوبة بجانب نومك ونشاطك، لتفهم الصورة في سياقها الكامل.",
+          en: "What sets SYLTRA HEALTH apart is that it reads not just your body but your environment. Connected to the SYLTRA LIFE smart-home system and its sensors, air quality, temperature and humidity appear beside your sleep and activity, so you see the full context.",
+        },
+        items: [
+          { title: { ar: "حسّاسات المنزل", en: "Home sensors" }, body: { ar: "جودة الهواء والحرارة والرطوبة داخل مساحتك، لحظة بلحظة.", en: "Air quality, temperature and humidity in your space, moment to moment." } },
+          { title: { ar: "تكامل سيلترا لايف", en: "SYLTRA LIFE integration" }, body: { ar: "بيانات المنزل الذكي تظهر داخل تجربتك الصحية بعد موافقتك.", en: "Smart-home data appears inside your health experience, with your consent." } },
+          { title: { ar: "إجراءات منزلية", en: "Home actions" }, body: { ar: "إعدادات يوافق عليها المستخدم مثل ضبط التكييف والتهوية بعد اعتماد الأجهزة.", en: "User-approved settings such as air-conditioning and ventilation once devices are verified." } },
+        ],
+      },
+      {
         kind: "section",
         eyebrow: { ar: "الخصوصية", en: "Privacy" },
         headline: { ar: "بياناتك الصحية تحت سيطرتك.", en: "Your health data, under your control." },

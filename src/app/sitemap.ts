@@ -90,6 +90,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
+  // Note: SYLTRA HEALTH lives on health.syltraone.com (separate Pages project)
+  // and is intentionally excluded from this (syltraone.com) sitemap.
+
   for (const landing of landings) {
     const path = `/l/${landing.slug}`;
     for (const locale of locales) {

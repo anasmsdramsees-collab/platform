@@ -80,6 +80,79 @@ body {
   }
 }
 
+/* ============================================================
+   SYLTRA HEALTH — scoped light/dark theming.
+   The health section flips the site's dark tokens inside
+   .health-scope, driven by data-theme (toggle) or system.
+   ============================================================ */
+.health-scope {
+  color-scheme: light dark;
+  background: var(--color-void);
+  color: var(--color-platinum);
+}
+
+/* Light palette values, reused by explicit + system rules below. */
+.health-scope[data-theme="light"] {
+  --color-void: #f7f9f8;
+  --color-void-2: #eef1f0;
+  --color-graphite: #e9edeb;
+  --color-graphite-2: #dfe4e2;
+  --color-chrome: #2b322f;
+  --color-chrome-dim: #4c544f;
+  --color-platinum: #0c1512;
+  --color-slate: #6d746f;
+  --color-hairline: rgba(12, 21, 18, 0.1);
+  --color-hairline-strong: rgba(12, 21, 18, 0.2);
+}
+@media (prefers-color-scheme: light) {
+  .health-scope:not([data-theme="dark"]) {
+    --color-void: #f7f9f8;
+    --color-void-2: #eef1f0;
+    --color-graphite: #e9edeb;
+    --color-graphite-2: #dfe4e2;
+    --color-chrome: #2b322f;
+    --color-chrome-dim: #4c544f;
+    --color-platinum: #0c1512;
+    --color-slate: #6d746f;
+    --color-hairline: rgba(12, 21, 18, 0.1);
+    --color-hairline-strong: rgba(12, 21, 18, 0.2);
+  }
+}
+/* Forced dark keeps the site's dark palette even if the OS prefers light. */
+.health-scope[data-theme="dark"] {
+  --color-void: #0b0c0e;
+  --color-void-2: #0e1013;
+  --color-graphite: #17181c;
+  --color-graphite-2: #1f2126;
+  --color-chrome: #c7ccd3;
+  --color-chrome-dim: #8b9099;
+  --color-platinum: #ecedef;
+  --color-slate: #6b707a;
+  --color-hairline: rgba(199, 204, 211, 0.14);
+  --color-hairline-strong: rgba(199, 204, 211, 0.28);
+}
+
+/* SYLTRA HEALTH — connected-graph glow + node pulse */
+@keyframes health-dash {
+  to { stroke-dashoffset: -240; }
+}
+@keyframes health-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+.health-link {
+  stroke-dasharray: 6 10;
+  animation: health-dash 3.2s linear infinite;
+}
+.health-node-dot {
+  animation: health-pulse 2.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .health-link, .health-node-dot { animation: none !important; }
+}
+
 /* Syla wake-word overlay (Siri-style wave) */
 @keyframes syla-bounce {
   0%, 100% { transform: scaleY(0.35); }

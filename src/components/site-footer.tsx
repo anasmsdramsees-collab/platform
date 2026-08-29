@@ -25,6 +25,9 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
   const seg = pathname.replace(/^\/(en|ar)/, "").split("/").filter(Boolean)[0] || "";
   const isLife = LIFE_SEGMENTS.has(seg);
 
+  // The HEALTH section ships its own footer (see health/layout).
+  if (seg === "health") return null;
+
   const linkCls =
     "mt-2 block text-sm text-chrome-dim transition-colors hover:text-platinum";
   const headCls = "font-mono text-[11px] uppercase tracking-widest text-slate";

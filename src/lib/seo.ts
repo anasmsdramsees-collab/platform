@@ -13,6 +13,7 @@ export function pageMetadata({
   description,
   image = "/brand/og-default.jpg",
   keywords,
+  baseUrl = siteUrl,
 }: {
   locale: Locale;
   path: string;
@@ -20,20 +21,22 @@ export function pageMetadata({
   description: string;
   image?: string;
   keywords?: string[];
+  /** Override the origin for canonical/hreflang/OG (e.g. the HEALTH subdomain). */
+  baseUrl?: string;
 }): Metadata {
-  const url = `${siteUrl}/${locale}${path}`;
+  const url = `${baseUrl}/${locale}${path}`;
   const languages = Object.fromEntries(
-    locales.map((l) => [l === "ar" ? "ar-SA" : "en", `${siteUrl}/${l}${path}`])
+    locales.map((l) => [l === "ar" ? "ar-SA" : "en", `${baseUrl}/${l}${path}`])
   );
 
   return {
-    metadataBase: new URL(siteUrl),
+    metadataBase: new URL(baseUrl),
     title,
     description,
     ...(keywords && keywords.length ? { keywords } : {}),
     alternates: {
       canonical: url,
-      languages: { ...languages, "x-default": `${siteUrl}/en${path}` },
+      languages: { ...languages, "x-default": `${baseUrl}/en${path}` },
     },
     openGraph: {
       type: "website",

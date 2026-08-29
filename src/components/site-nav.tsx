@@ -30,6 +30,9 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
   const [divOpen, setDivOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // The HEALTH section ships its own green-accented chrome (see health/layout).
+  if (seg === "health") return null;
+
   const t = {
     divisions: locale === "ar" ? "الأقسام" : "Divisions",
     services: locale === "ar" ? "الخدمات" : "Services",

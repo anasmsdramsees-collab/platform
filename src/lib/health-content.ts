@@ -26,6 +26,16 @@ export const HEALTH_BRAND = {
   } as L,
 };
 
+/**
+ * SYLTRA HEALTH social channels. Replace the `#` placeholders with the real
+ * profile URLs once available (single source of truth for nav/footer).
+ */
+export const HEALTH_SOCIAL: { name: string; href: string }[] = [
+  { name: "LinkedIn", href: "#" },
+  { name: "X", href: "#" },
+  { name: "Instagram", href: "#" },
+];
+
 /** Primary navigation for the HEALTH section (locale-less paths under /health). */
 export const HEALTH_NAV: { href: string; label: L }[] = [
   { href: "", label: { ar: "الرئيسية", en: "Home" } },

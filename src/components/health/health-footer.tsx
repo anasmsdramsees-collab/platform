@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n/config";
 import { siteUrl } from "@/lib/site-config";
-import { HEALTH, HEALTH_BRAND, HEALTH_NAV } from "@/lib/health-content";
+import { HEALTH, HEALTH_BRAND, HEALTH_NAV, HEALTH_SOCIAL } from "@/lib/health-content";
 import HealthLogo from "./health-logo";
 
 export default function HealthFooter({ locale }: { locale: Locale }) {
@@ -53,6 +53,21 @@ export default function HealthFooter({ locale }: { locale: Locale }) {
             ))}
             <Link href={`${base}/contact`} className={linkCls}>{ar ? "تواصل معنا" : "Contact"}</Link>
             <a href="mailto:info@syltraone.com" className={linkCls}>info@syltraone.com</a>
+          </div>
+
+          <p className="mt-6 font-mono text-[11px] uppercase tracking-widest text-slate">{ar ? "تابعنا" : "Follow"}</p>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+            {HEALTH_SOCIAL.map((s) => (
+              <a
+                key={s.name}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-chrome-dim transition-colors hover:text-platinum"
+              >
+                {s.name}
+              </a>
+            ))}
           </div>
         </div>
       </div>

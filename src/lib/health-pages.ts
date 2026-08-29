@@ -378,6 +378,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-sleep.jpg",
         eyebrow: { ar: "النوم والتعافي", en: "Sleep & Recovery" },
         headline: { ar: "نوم أهدأ. يوم أوضح.", en: "Better sleep. Clearer days." },
         body: {

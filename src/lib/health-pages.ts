@@ -238,6 +238,20 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         ],
       },
       {
+        kind: "journey",
+        headline: { ar: "كيف تبدأ.", en: "How you get started." },
+        body: {
+          ar: "أنت تضبط التجربة من البداية، وتجرّبها بأمان قبل تفعيل أي تنبيه حقيقي.",
+          en: "You set the experience up from the start, and try it safely before any real alert is active.",
+        },
+        steps: [
+          { label: { ar: "اضبط موافقاتك", en: "Set your consents" }, body: { ar: "اربط المصادر التي تريدها فقط، ولكل نوع بيانات موافقة محددة يمكن سحبها.", en: "Connect only the sources you want, with specific, revocable consent per data type." } },
+          { label: { ar: "ابنِ دائرتك الموثوقة", en: "Build your trusted circle" }, body: { ar: "أضف الأشخاص الذين تثق بهم وحدّد لكل واحد علاقته وأولويته وما يراه.", en: "Add the people you trust and set each one's relationship, priority and what they see." } },
+          { label: { ar: "اختر خطة الاستجابة", en: "Choose your response plan" }, body: { ar: "حدّد متى يتحقق النظام، ومدة الانتظار، ومن يُنبَّه في كل مستوى.", en: "Decide when the system checks in, how long it waits, and who is alerted at each level." } },
+          { label: { ar: "جرّب في وضع الاختبار", en: "Try it in test mode" }, body: { ar: "شغّل محاكاة تريك كيف تعمل الاستجابة دون إرسال أي تنبيه حقيقي.", en: "Run a simulation that shows how the response works without sending any real alert." } },
+        ],
+      },
+      {
         kind: "safety",
         text: {
           ar: "سيلترا هيلث لا تقدّم تشخيصًا مستقلاً وليست خدمة طوارئ، ولا تضمن وصول المساعدة ولا تتصل بالإسعاف تلقائيًا. تبدأ النسخة الأولى بقواعد واضحة قابلة للاختبار، ثم يُضاف التعلّم الشخصي لاكتشاف الانحراف عن النمط.",

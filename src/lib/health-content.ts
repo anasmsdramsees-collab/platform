@@ -47,6 +47,7 @@ export const HEALTH_NAV: { href: string; label: L }[] = [
   { href: "/home-wellness", label: { ar: "صحة المنزل", en: "Home Wellness" } },
   { href: "/care-providers", label: { ar: "لمقدمي الرعاية", en: "For Care Providers" } },
   { href: "/integrations", label: { ar: "التكاملات", en: "Integrations" } },
+  { href: "/blog", label: { ar: "المدونة", en: "Journal" } },
   { href: "/privacy", label: { ar: "الخصوصية", en: "Privacy" } },
   { href: "/about", label: { ar: "عن سيلترا هيلث", en: "About" } },
 ];

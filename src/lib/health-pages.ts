@@ -40,11 +40,11 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
       {
         kind: "hero",
         graphic: "scene",
-        eyebrow: { ar: "صحة متأصّلة في بيتك الذكي", en: "Health rooted in your smart home" },
-        headline: { ar: "بيتك الذكي. أساس صحتك.", en: "Your smart home. The foundation of your health." },
+        eyebrow: { ar: "طبقة الذكاء الصحي في بيتك", en: "The health intelligence layer for your home" },
+        headline: { ar: "بيتك يعرف لما يتغيّر شيء.", en: "Your home knows when something changes." },
         body: {
-          ar: "تبني سيلترا هيلث على منظومة سيلترا لايف للمنزل الذكي وحسّاساتها، الهواء والحرارة والرطوبة والحركة، ثم تربط ساعاتك وقراءاتك اليومية، ليُفهم محيطك وجسدك معًا في تجربة واحدة.",
-          en: "SYLTRA HEALTH builds on the SYLTRA LIFE smart home and its sensors, air, temperature, humidity and movement, then connects your wearables and daily readings, so your environment and your body are understood together in one experience.",
+          ar: "تربط سيلترا هيلث بيانات جسمك بحركة المنزل وبيئته، لتفهم نمطك اليومي، تهيّئ المساحة من حولك، وتساعد في الوصول إلى الشخص الأنسب عندما تحتاجه.",
+          en: "SYLTRA HEALTH connects your body's data with your home's movement and environment. It learns your daily pattern, adapts the space around you, and helps reach the right person when you need them.",
         },
         buttons: [CTA_EARLY, CTA_HOW],
       },
@@ -109,11 +109,59 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
       },
       {
         kind: "section",
-        eyebrow: { ar: "الخصوصية", en: "Privacy" },
-        headline: { ar: "بياناتك الصحية تحت سيطرتك.", en: "Your health data, under your control." },
+        eyebrow: { ar: "من البيانات إلى الفهم", en: "From data to understanding" },
+        headline: { ar: "تتعلّم نمطك الطبيعي.", en: "It learns your normal pattern." },
         body: {
-          ar: "يختار المستخدم البيانات التي يربطها، والأشخاص الذين يشاركها معهم، ووقت إيقاف المشاركة. تُبنى التجربة على الموافقة الواضحة وتقليل البيانات والشفافية.",
-          en: "Users choose what they connect, who they share with and when sharing stops. The experience is built around clear consent, data minimization and transparency.",
+          ar: "لا تعرض المنصة أرقامًا متفرقة فقط. تبني خطًا أساسيًا لكل مستخدم: أوقات النوم والاستيقاظ، الحركة المعتادة خلال اليوم، والبيئة المنزلية المرتبطة براحته. فتلاحظ عندما تختلف الحركة أو القراءات أو البيئة عن المعتاد.",
+          en: "The platform does not just show scattered numbers. It builds a personal baseline for each user: sleep and wake times, usual daytime movement, and the home environment tied to their comfort. So it notices when movement, readings or environment differ from the norm.",
+        },
+      },
+      {
+        kind: "section",
+        eyebrow: { ar: "من الفهم إلى الاستجابة", en: "From understanding to response" },
+        headline: { ar: "لا يكتفي بأن يعرف. يستجيب.", en: "It does more than know. It responds." },
+        body: {
+          ar: "يهيّئ المنزل بيئته وفق إعداداتك، ويتحقق منك عند ظهور تغيّر مهم، ثم ينبّه الشخص الموثوق الأنسب وفق خطة الاستجابة التي اخترتها. لا يعتمد على قراءة منفردة، بل يجمع المؤشرات الصحية والحركة ووجود الأشخاص وبيئة المنزل قبل أي خطوة.",
+          en: "The home adapts its environment to your settings, checks in with you when a meaningful change appears, then alerts the most suitable trusted person under the response plan you chose. It never relies on a single reading. It brings together health signals, movement, presence and home environment before any step.",
+        },
+      },
+      {
+        kind: "cards",
+        headline: { ar: "مستويات الاستجابة.", en: "Levels of response." },
+        body: {
+          ar: "تبدأ الاستجابة من الأخف، ولا تتصاعد إلا عند اجتماع مؤشرات تستحق ذلك، وبموافقتك المسبقة في كل مستوى.",
+          en: "Response starts at the lightest level and only escalates when signals genuinely warrant it, under your prior consent at each level.",
+        },
+        items: [
+          { title: { ar: "دعم يومي", en: "Everyday support" }, body: { ar: "تذكير بالحركة أو القياس أو الماء، وتهيئة إعدادات الراحة.", en: "Reminders to move, measure or hydrate, and comfort-setting adjustments." } },
+          { title: { ar: "تحقّق", en: "Check-in" }, body: { ar: "سؤال مباشر لك عند وجود تغيّر ملحوظ في النمط أو القراءة.", en: "A direct check-in when there is a noticeable change in pattern or reading." } },
+          { title: { ar: "تنبيه شخص موثوق", en: "Alert a trusted person" }, body: { ar: "تنبيه الشخص الأنسب عند طلبك المساعدة أو عدم استجابتك مع مؤشرات متزامنة.", en: "Alerting the most suitable person when you ask for help, or do not respond while signals coincide." } },
+          { title: { ar: "تصعيد معتمد", en: "Approved escalation" }, body: { ar: "إجراء إضافي ضمن خطة موثّقة، بعد توفر التكاملات والاعتمادات الرسمية.", en: "A further step within a documented plan, once official integrations and approvals are in place." } },
+        ],
+      },
+      {
+        kind: "section",
+        eyebrow: { ar: "الدائرة الموثوقة", en: "Trusted circle" },
+        headline: { ar: "لو ما رديت، يعرف من الأقرب.", en: "If you do not answer, it knows who is closest." },
+        body: {
+          ar: "تنشئ دائرة من أشخاص تثق بهم، وتحدّد لكل شخص علاقته وأولويته وما يراه وأوقات توفّره. عند الحاجة يختار النظام الأنسب وفق زمن الوصول والقرب والقبول، ويشارك أقل قدر ضروري من المعلومات والموقع، لا إشعارًا عامًا للجميع.",
+          en: "You build a circle of people you trust and set each person's relationship, priority, what they see and when they are available. When needed, the system picks the most suitable one by arrival time, proximity and acceptance, and shares the minimum necessary information and location, not a broadcast to everyone.",
+        },
+      },
+      {
+        kind: "safety",
+        text: {
+          ar: "سيلترا هيلث لا تقدّم تشخيصًا طبيًا مستقلاً، وليست خدمة طوارئ، ولا تضمن وصول المساعدة، ولا تتصل بالإسعاف تلقائيًا. تكتشف تغيّرات غير معتادة في البيانات المتاحة، وتساعد في التحقق وتنبيه الأشخاص الموثوقين وفق خطتك.",
+          en: "SYLTRA HEALTH does not provide an independent medical diagnosis, is not an emergency service, does not guarantee help arrives, and does not auto-dial emergency services. It detects unusual changes in the available data and helps with verification and alerting trusted people under your plan.",
+        },
+      },
+      {
+        kind: "section",
+        eyebrow: { ar: "الخصوصية", en: "Privacy" },
+        headline: { ar: "أنت تحدّد من يعرف ماذا.", en: "You decide who knows what." },
+        body: {
+          ar: "تختار الأجهزة المتصلة، والبيانات المسموح باستخدامها، والأشخاص الموثوقين، والمعلومات التي يرونها، ووقت إيقاف المشاركة. لا تُجمع البيانات لمجرد توفّرها، وتُشارك أقل كمية لازمة فقط.",
+          en: "You choose the connected devices, the data allowed to be used, the trusted people, what they see and when sharing stops. Data is not collected just because it is available, and only the minimum necessary is shared.",
         },
       },
       { kind: "integrations" },

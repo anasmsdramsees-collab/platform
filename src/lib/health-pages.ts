@@ -458,6 +458,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-care-providers.jpg",
         eyebrow: { ar: "لمقدمي الرعاية", en: "For Care Providers" },
         headline: { ar: "صورة يومية أوضح بين الزيارات.", en: "A clearer daily picture between visits." },
         body: {

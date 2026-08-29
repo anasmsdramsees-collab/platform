@@ -14,4 +14,4 @@ ALLOWED_ORIGINS = "https://health.syltraone.com,https://syltra-health.pages.dev,
 [[d1_databases]]
 binding = "DB"
 database_name = "syltra-health"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "6f968709-e9ba-456b-8ae7-050ab666e330"

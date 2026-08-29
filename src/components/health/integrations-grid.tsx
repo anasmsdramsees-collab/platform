@@ -28,25 +28,23 @@ export default function IntegrationsGrid({ locale }: { locale: Locale }) {
             : "SYLTRA HEALTH is targeting integration with leading health and wearable ecosystems to reduce fragmented data and give users one view after permission is granted."}
         </p>
 
-        <div className="mt-10 border-t border-hairline">
+        <div className="mt-10 grid gap-x-10 gap-y-9 sm:grid-cols-2">
           {ECOSYSTEMS.map((e) => (
-            <div key={e.key} className="grid gap-4 border-b border-hairline py-7 sm:grid-cols-[minmax(200px,16rem)_1fr] sm:gap-12 sm:py-8">
-              <div>
-                <div className="inline-flex items-center bg-white px-3 py-2" dir="ltr">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={assetPath(ECOSYSTEM_LOGOS[e.key] ?? "")}
-                    alt={e.name}
-                    title={e.name}
-                    className="h-7 w-auto object-contain sm:h-8"
-                  />
-                </div>
-                <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-slate">
-                  {locale === "ar" ? e.status.ar : e.status.en}
-                </p>
+            <div key={e.key} className="border-t-2 border-hairline-strong pt-5">
+              <div className="inline-flex items-center bg-white px-3 py-2" dir="ltr">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={assetPath(ECOSYSTEM_LOGOS[e.key] ?? "")}
+                  alt={e.name}
+                  title={e.name}
+                  className="h-7 w-auto object-contain sm:h-8"
+                />
               </div>
-              <p className="max-w-2xl text-[15px] leading-relaxed text-chrome-dim">
+              <p className="mt-4 text-[15px] leading-relaxed text-chrome-dim">
                 {ar ? e.ar : e.en}
+              </p>
+              <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-slate">
+                {locale === "ar" ? e.status.ar : e.status.en}
               </p>
             </div>
           ))}

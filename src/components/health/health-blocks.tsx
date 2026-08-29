@@ -98,7 +98,7 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                     {/* left scrim keeps the copy legible over the wall */}
                     <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(to right, rgba(247,249,248,0.92) 0%, rgba(247,249,248,0.55) 34%, rgba(247,249,248,0) 58%)" }} aria-hidden />
                     <div className="absolute inset-0">
-                      <div dir="ltr" className="mx-auto flex h-full max-w-6xl items-center px-5 sm:px-8">
+                      <div dir="ltr" className="flex h-full items-center ps-4 pe-2 sm:ps-8 lg:ps-14">
                         {overlay}
                       </div>
                     </div>

@@ -53,42 +53,55 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
           case "hero": {
             const withGraphic = block.graphic === "connect" || block.graphic === "ring";
             if (block.graphic === "scene") {
+              const alt = ar
+                ? "لوحة سيلترا هيلث على الحائط مع الساعات والأجهزة القابلة للارتداء في منزل ذكي"
+                : "SYLTRA HEALTH wall dashboard with watches and wearables in a connected smart home";
+              const heroImg = assetPath("/brand/health-hero.jpg");
+              // Text always sits over the light, empty left area of the image,
+              // so it uses fixed dark colours regardless of the page theme.
+              const overlay = (
+                <div dir={ar ? "rtl" : "ltr"} className="max-w-[15rem] sm:max-w-xs md:max-w-md">
+                  {block.eyebrow && (
+                    <p className="font-mono text-[10px] uppercase tracking-[0.16em] sm:text-[12px]" style={{ color: HEALTH.accentDim }}>
+                      {t(block.eyebrow)}
+                    </p>
+                  )}
+                  <h1 className="font-display mt-2 text-balance text-xl font-bold leading-[1.05] sm:mt-4 sm:text-4xl lg:text-5xl" style={{ color: "#0c1512" }}>
+                    {t(block.headline)}
+                  </h1>
+                  <p className="mt-2 hidden max-w-sm text-sm leading-relaxed sm:mt-5 sm:block" style={{ color: "#3a423f" }}>
+                    {t(block.body)}
+                  </p>
+                  {block.buttons && (
+                    <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 sm:mt-7">
+                      {block.buttons.map((b, k) =>
+                        b.primary ? (
+                          <Link key={k} href={href(locale, b.href)} className="inline-flex items-center rounded-full px-4 py-2 text-[13px] font-semibold text-white sm:px-6 sm:py-3 sm:text-sm" style={{ backgroundColor: HEALTH.accentDim }}>
+                            {t(b.label)}
+                          </Link>
+                        ) : (
+                          <Link key={k} href={href(locale, b.href)} className="group inline-flex items-center gap-2 text-[13px] font-semibold sm:text-sm" style={{ color: "#0c1512" }}>
+                            {t(b.label)}
+                            <span className="h-px w-6 transition-all group-hover:w-10" style={{ backgroundColor: HEALTH.accentDim }} />
+                          </Link>
+                        )
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
               return (
-                <section key={i} className="relative overflow-hidden border-b border-hairline">
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{ background: `radial-gradient(60% 70% at 50% 0%, rgba(${HEALTH.rgb},0.10), transparent 65%)` }}
-                    aria-hidden
-                  />
-                  <div className="relative mx-auto max-w-4xl px-5 pt-16 text-center sm:px-8 sm:pt-24">
-                    {block.eyebrow && (
-                      <p className="font-mono text-[12px] uppercase tracking-[0.16em]" style={{ color: HEALTH.accent }}>
-                        {t(block.eyebrow)}
-                      </p>
-                    )}
-                    <h1 className="font-display mx-auto mt-4 max-w-3xl text-balance text-4xl font-bold leading-[1.05] text-platinum sm:text-5xl lg:text-6xl">
-                      {t(block.headline)}
-                    </h1>
-                    <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-chrome-dim sm:text-lg">
-                      {t(block.body)}
-                    </p>
-                    {block.buttons && (
-                      <div className="flex justify-center">
-                        <Buttons locale={locale} buttons={block.buttons} center />
-                      </div>
-                    )}
-                  </div>
-                  <div className="relative mx-auto mt-12 max-w-6xl px-5 pb-16 sm:px-8 sm:pb-24">
+                <section key={i} className="w-full border-b border-hairline">
+                  <div className="relative w-full">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={assetPath("/brand/health-hero.jpg")}
-                      alt={ar ? "لوحة سيلترا هيلث على الحائط مع الساعات والأجهزة القابلة للارتداء في منزل ذكي" : "SYLTRA HEALTH wall dashboard with watches and wearables in a connected smart home"}
-                      className="w-full rounded-2xl border border-hairline shadow-2xl"
-                    />
-                    <p className="mt-5 flex items-center justify-center gap-2 font-mono text-[12px] text-slate">
-                      <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: HEALTH.accent }} aria-hidden />
-                      {ar ? "تكامل مستهدف · قيد التطوير" : "Target integrations · In development"}
-                    </p>
+                    <img src={heroImg} alt={alt} className="h-full w-full object-cover" style={{ objectPosition: "left center" }} />
+                    {/* left scrim keeps the copy legible over the wall */}
+                    <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(to right, rgba(247,249,248,0.92) 0%, rgba(247,249,248,0.55) 34%, rgba(247,249,248,0) 58%)" }} aria-hidden />
+                    <div className="absolute inset-0">
+                      <div dir="ltr" className="mx-auto flex h-full max-w-6xl items-center px-5 sm:px-8">
+                        {overlay}
+                      </div>
+                    </div>
                   </div>
                 </section>
               );

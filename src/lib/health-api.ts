@@ -1,7 +1,8 @@
 // Base URL of the SYLTRA HEALTH API worker. Set NEXT_PUBLIC_HEALTH_API in the
 // health Pages project (e.g. https://syltra-health-api.<subdomain>.workers.dev
 // or a custom route like https://api.health.syltraone.com). Empty = not wired.
-export const HEALTH_API = process.env.NEXT_PUBLIC_HEALTH_API ?? "";
+export const HEALTH_API =
+  process.env.NEXT_PUBLIC_HEALTH_API ?? "https://syltra-health-api.syltratech.workers.dev";
 
 const TOKEN_KEY = "syltra-health-admin-token";
 

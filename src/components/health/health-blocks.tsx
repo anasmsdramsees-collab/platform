@@ -182,11 +182,11 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                   {block.body && (
                     <p className="mt-4 max-w-2xl text-sm leading-relaxed text-chrome-dim sm:text-base">{t(block.body)}</p>
                   )}
-                  <div className="mt-10 grid grid-cols-1 border-s border-t border-hairline sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="mt-10 border-t border-hairline">
                     {block.items.map((it, k) => (
-                      <div key={k} className="border-b border-e border-hairline p-6 sm:p-8">
+                      <div key={k} className="grid gap-1.5 border-b border-hairline py-7 sm:grid-cols-[minmax(200px,16rem)_1fr] sm:gap-12 sm:py-8">
                         <h3 className="font-display text-lg font-bold text-platinum">{t(it.title)}</h3>
-                        <p className="mt-3 text-sm leading-relaxed text-chrome-dim">{t(it.body)}</p>
+                        <p className="max-w-2xl text-[15px] leading-relaxed text-chrome-dim">{t(it.body)}</p>
                       </div>
                     ))}
                   </div>
@@ -223,11 +223,11 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                     <h2 className="font-display max-w-2xl text-balance text-3xl font-bold text-platinum sm:text-4xl">{t(block.headline)}</h2>
                   )}
                   {block.body && <p className="mt-4 max-w-2xl text-sm leading-relaxed text-chrome-dim sm:text-base">{t(block.body)}</p>}
-                  <ol className="mt-10 grid grid-cols-1 gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-4">
+                  <ol className="mt-10 border-t border-hairline">
                     {block.steps.map((s, k) => (
-                      <li key={k} className="bg-void p-6 sm:p-7">
-                        <h3 className="font-display text-base font-bold text-platinum">{t(s.label)}</h3>
-                        <p className="mt-2 text-sm leading-relaxed text-chrome-dim">{t(s.body)}</p>
+                      <li key={k} className="grid gap-1.5 border-b border-hairline py-7 sm:grid-cols-[minmax(200px,16rem)_1fr] sm:gap-12 sm:py-8">
+                        <h3 className="font-display text-lg font-bold text-platinum">{t(s.label)}</h3>
+                        <p className="max-w-2xl text-[15px] leading-relaxed text-chrome-dim">{t(s.body)}</p>
                       </li>
                     ))}
                   </ol>

@@ -33,8 +33,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     slug: "",
     seoTitle: { ar: "سيلترا هيلث | تقنيات الصحة والرفاه المتصل", en: "SYLTRA HEALTH | Connected Health and Wellness Technology" },
     seoDescription: {
-      ar: "منصة صحية تبني على المنزل الذكي وحسّاساته (سيلترا لايف) — الهواء والحرارة والرطوبة والحركة — ثم تربط الساعات والقراءات في رؤية يومية واحدة للأفراد والأسر وفرق الرعاية.",
-      en: "A health platform built on the smart home and its sensors (SYLTRA LIFE) — air, temperature, humidity and movement — then connecting wearables and readings in one daily view for people, families and care teams.",
+      ar: "منصة صحية تبني على المنزل الذكي وحسّاساته (سيلترا لايف), الهواء والحرارة والرطوبة والحركة، ثم تربط الساعات والقراءات في رؤية يومية واحدة للأفراد والأسر وفرق الرعاية.",
+      en: "A health platform built on the smart home and its sensors (SYLTRA LIFE), air, temperature, humidity and movement, then connecting wearables and readings in one daily view for people, families and care teams.",
     },
     blocks: [
       {
@@ -43,8 +43,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         eyebrow: { ar: "صحة متأصّلة في بيتك الذكي", en: "Health rooted in your smart home" },
         headline: { ar: "بيتك الذكي. أساس صحتك.", en: "Your smart home. The foundation of your health." },
         body: {
-          ar: "تبني سيلترا هيلث على منظومة سيلترا لايف للمنزل الذكي وحسّاساتها — الهواء والحرارة والرطوبة والحركة — ثم تربط ساعاتك وقراءاتك اليومية، ليُفهم محيطك وجسدك معًا في تجربة واحدة.",
-          en: "SYLTRA HEALTH builds on the SYLTRA LIFE smart home and its sensors — air, temperature, humidity and movement — then connects your wearables and daily readings, so your environment and your body are understood together in one experience.",
+          ar: "تبني سيلترا هيلث على منظومة سيلترا لايف للمنزل الذكي وحسّاساتها، الهواء والحرارة والرطوبة والحركة، ثم تربط ساعاتك وقراءاتك اليومية، ليُفهم محيطك وجسدك معًا في تجربة واحدة.",
+          en: "SYLTRA HEALTH builds on the SYLTRA LIFE smart home and its sensors, air, temperature, humidity and movement, then connects your wearables and daily readings, so your environment and your body are understood together in one experience.",
         },
         buttons: [CTA_EARLY, CTA_HOW],
       },
@@ -52,12 +52,12 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         kind: "cards",
         headline: { ar: "يبدأ من البيت.", en: "It starts at home." },
         body: {
-          ar: "منظومة سيلترا لايف للمنزل الذكي وحسّاساتها هي الأساس الذي تُبنى عليه سيلترا هيلث. البيت يرى محيطك على مدار اليوم — الهواء، الحرارة، الرطوبة، والحركة — فيصبح السياق الذي تُفهم فيه صحتك.",
-          en: "The SYLTRA LIFE smart home and its sensors are the foundation SYLTRA HEALTH is built on. The home sees your environment around the clock — air, temperature, humidity and movement — becoming the context in which your health is understood.",
+          ar: "منظومة سيلترا لايف للمنزل الذكي وحسّاساتها هي الأساس الذي تُبنى عليه سيلترا هيلث. البيت يرى محيطك على مدار اليوم، الهواء، الحرارة، الرطوبة، والحركة، فيصبح السياق الذي تُفهم فيه صحتك.",
+          en: "The SYLTRA LIFE smart home and its sensors are the foundation SYLTRA HEALTH is built on. The home sees your environment around the clock, air, temperature, humidity and movement, becoming the context in which your health is understood.",
         },
         items: [
           { title: { ar: "حسّاسات البيئة", en: "Environmental sensors" }, body: { ar: "جودة الهواء والحرارة والرطوبة داخل مساحتك، لحظة بلحظة.", en: "Air quality, temperature and humidity in your space, moment to moment." } },
-          { title: { ar: "حسّاسات الحركة", en: "Motion sensors" }, body: { ar: "تساعد على ملاحظة أنماط النشاط والخمول غير المعتادة، لتنبيه الأسرة أسرع ودعم المتابعة — وليست بديلاً عن خدمات الطوارئ.", en: "Help surface unusual activity or inactivity patterns, so family is reached faster and follow-up is supported — not a replacement for emergency services." } },
+          { title: { ar: "حسّاسات الحركة", en: "Motion sensors" }, body: { ar: "تساعد على ملاحظة أنماط النشاط والخمول غير المعتادة، لتنبيه الأسرة أسرع ودعم المتابعة، وليست بديلاً عن خدمات الطوارئ.", en: "Help surface unusual activity or inactivity patterns, so family is reached faster and follow-up is supported, not a replacement for emergency services." } },
           { title: { ar: "تكامل سيلترا لايف", en: "SYLTRA LIFE integration" }, body: { ar: "بيانات المنزل الذكي تظهر داخل تجربتك الصحية بعد موافقتك.", en: "Smart-home data appears inside your health experience, with your consent." } },
           { title: { ar: "إجراءات منزلية", en: "Home actions" }, body: { ar: "إعدادات يوافق عليها المستخدم مثل ضبط التكييف والتهوية بعد اعتماد الأجهزة.", en: "User-approved settings such as air-conditioning and ventilation once devices are verified." } },
         ],
@@ -134,8 +134,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     slug: "/how-it-works",
     seoTitle: { ar: "كيف تعمل سيلترا هيلث | SYLTRA HEALTH", en: "How It Works | SYLTRA HEALTH" },
     seoDescription: {
-      ar: "من بيانات متفرقة إلى صورة مترابطة: اربط، اجمع، افهم، وشارك — بموافقتك وتحت سيطرتك.",
-      en: "From scattered data to one connected picture: connect, bring together, understand and share — with your consent and under your control.",
+      ar: "من بيانات متفرقة إلى صورة مترابطة: اربط، اجمع، افهم، وشارك، بموافقتك وتحت سيطرتك.",
+      en: "From scattered data to one connected picture: connect, bring together, understand and share, with your consent and under your control.",
     },
     blocks: [
       {

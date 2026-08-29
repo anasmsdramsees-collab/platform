@@ -32,7 +32,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`SYLTRA HEALTH — Early Access — ${form.name || "Interest"}`);
+    const subject = encodeURIComponent(`SYLTRA HEALTH, Early Access, ${form.name || "Interest"}`);
     const bodyLines = [
       `Name: ${form.name}`,
       `Email: ${form.email}`,
@@ -51,8 +51,8 @@ export default function ContactForm({ locale }: { locale: Locale }) {
 
   if (sent) {
     return (
-      <div className="rounded-xl border border-hairline p-8" style={{ background: `rgba(${HEALTH.rgb},0.05)` }}>
-        <p className="font-mono text-[12px] uppercase tracking-widest" style={{ color: HEALTH.accent }}>
+      <div className="border-s-2 border-hairline-strong ps-5 py-1">
+        <p className="font-mono text-[12px] uppercase tracking-widest text-slate">
           {ar ? "تم الاستلام" : "Received"}
         </p>
         <p className="mt-3 text-[15px] leading-relaxed text-chrome">
@@ -66,10 +66,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
 
   return (
     <form onSubmit={onSubmit} className="grid gap-5">
-      <div
-        className="border-s-2 p-4 text-sm text-chrome"
-        style={{ borderColor: HEALTH.accent, background: `rgba(${HEALTH.rgb},0.05)` }}
-      >
+      <div className="border-s-2 border-hairline-strong ps-4 py-1 text-sm text-chrome">
         {ar ? "لا تكتب أي تشخيص أو قراءة صحية أو تقرير طبي داخل هذا النموذج." : "Do not enter a diagnosis, health reading or medical report in this form."}
       </div>
 

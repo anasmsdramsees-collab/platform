@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n/config";
 import { HEALTH, HEALTH_NAV } from "@/lib/health-content";
 import HealthLogo from "./health-logo";
-import { HealthThemeToggle } from "./health-theme";
 
 export default function HealthNav({ locale }: { locale: Locale }) {
   const pathname = usePathname() || `/${locale}/health`;
@@ -46,7 +45,6 @@ export default function HealthNav({ locale }: { locale: Locale }) {
         </nav>
 
         <div className="flex items-center gap-3">
-          <HealthThemeToggle compact />
           <Link
             href={`/${other}/health${pathname.replace(/^\/(en|ar)\/health/, "") || ""}`}
             className="hidden font-mono text-[12px] uppercase tracking-widest text-slate transition-colors hover:text-platinum sm:inline"

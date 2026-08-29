@@ -4,18 +4,37 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Locale } from "@/lib/i18n/config";
 import { HEALTH } from "@/lib/health-content";
+import { adminLogin, setToken, HEALTH_API } from "@/lib/health-api";
 
-/** Admin sign-in shell (UI only — authentication is wired to the backend later). */
+/** Admin sign-in — authenticates against the SYLTRA HEALTH API worker. */
 export default function AdminLogin({ locale }: { locale: Locale }) {
   const router = useRouter();
   const ar = locale === "ar";
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder: navigate to the dashboard shell. Real auth comes later.
-    router.push(`/${locale}/health/admin/dashboard`);
+    setError("");
+    if (!HEALTH_API) {
+      setError(ar ? "الـAPI غير مهيّأ بعد." : "API is not configured yet.");
+      return;
+    }
+    setBusy(true);
+    try {
+      const token = await adminLogin(user, pass);
+      if (!token) {
+        setError(ar ? "بيانات الدخول غير صحيحة." : "Invalid credentials.");
+      } else {
+        setToken(token);
+        router.push(`/${locale}/health/admin/dashboard`);
+      }
+    } catch {
+      setError(ar ? "تعذّر الاتصال بالخادم." : "Could not reach the server.");
+    }
+    setBusy(false);
   };
 
   const field =
@@ -42,17 +61,19 @@ export default function AdminLogin({ locale }: { locale: Locale }) {
             <span className="text-[13px] text-chrome-dim">{ar ? "كلمة المرور" : "Password"}</span>
             <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" className={field} dir="ltr" autoComplete="current-password" />
           </label>
+          {error && <p className="text-sm" style={{ color: "#d64545" }}>{error}</p>}
           <button
             type="submit"
-            className="mt-2 inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold text-white"
+            disabled={busy}
+            className="mt-2 inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
             style={{ backgroundColor: HEALTH.accentDim }}
           >
-            {ar ? "تسجيل الدخول" : "Sign in"}
+            {busy ? (ar ? "جارٍ الدخول…" : "Signing in…") : ar ? "تسجيل الدخول" : "Sign in"}
           </button>
         </form>
 
         <p className="mt-8 text-center font-mono text-[11px] text-slate">
-          {ar ? "واجهة أولية — الربط بقاعدة البيانات لاحقًا." : "Shell only — connected to the backend later."}
+          {ar ? "دخول خاص بفريق سيلترا هيلث." : "For the SYLTRA HEALTH team only."}
         </p>
       </div>
     </main>

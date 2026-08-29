@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Locale } from "@/lib/i18n/config";
 import { HEALTH, HEALTH_BRAND } from "@/lib/health-content";
+import { registerInterest } from "@/lib/health-api";
 
 const USER_TYPES: { ar: string; en: string }[] = [
   { ar: "فرد", en: "Individual" },
@@ -30,19 +31,32 @@ export default function ContactForm({ locale }: { locale: Locale }) {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  const onSubmit = (e: React.FormEvent) => {
+  const [busy, setBusy] = useState(false);
+
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`SYLTRA HEALTH, Early Access, ${form.name || "Interest"}`);
-    const bodyLines = [
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      `Phone: ${form.phone}`,
-      `User Type: ${form.type}`,
-      `Area of Interest: ${form.interest}`,
-      "",
-      form.message,
-    ];
-    window.location.href = `mailto:info@syltraone.com?subject=${subject}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+    setBusy(true);
+    // Prefer the API; fall back to a prefilled email if it is not configured.
+    let ok = false;
+    try {
+      ok = await registerInterest(form);
+    } catch {
+      ok = false;
+    }
+    if (!ok) {
+      const subject = encodeURIComponent(`SYLTRA HEALTH, Early Access, ${form.name || "Interest"}`);
+      const bodyLines = [
+        `Name: ${form.name}`,
+        `Email: ${form.email}`,
+        `Phone: ${form.phone}`,
+        `User Type: ${form.type}`,
+        `Area of Interest: ${form.interest}`,
+        "",
+        form.message,
+      ];
+      window.location.href = `mailto:info@syltraone.com?subject=${subject}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+    }
+    setBusy(false);
     setSent(true);
   };
 
@@ -105,10 +119,11 @@ export default function ContactForm({ locale }: { locale: Locale }) {
 
       <button
         type="submit"
-        className="mt-2 inline-flex w-fit items-center rounded-full px-7 py-3 text-sm font-semibold text-void transition-transform hover:scale-[1.02]"
+        disabled={busy}
+        className="mt-2 inline-flex w-fit items-center rounded-full px-7 py-3 text-sm font-semibold text-void transition-transform hover:scale-[1.02] disabled:opacity-60"
         style={{ backgroundColor: HEALTH.accent }}
       >
-        {ar ? "أرسل اهتمامك" : "Submit interest"}
+        {busy ? (ar ? "جارٍ الإرسال…" : "Sending…") : ar ? "أرسل اهتمامك" : "Submit interest"}
       </button>
 
       <p className="font-mono text-[11px] text-slate">

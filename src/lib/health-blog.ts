@@ -153,6 +153,146 @@ export const HEALTH_POSTS: HealthPost[] = [
     },
   },
   {
+    slug: "what-a-personal-baseline-is-and-why-one-reading-is-not-enough",
+    date: "2026-08-26",
+    category: { ar: "النمط الشخصي", en: "Personal Baseline" },
+    image: "/brand/health-hero-chronic.jpg",
+    title: {
+      ar: "ما هو النمط الشخصي، ولماذا لا تكفي قراءة واحدة",
+      en: "What a personal baseline is, and why one reading is not enough",
+    },
+    excerpt: {
+      ar: "القراءة المنفردة لحظة واحدة في يوم كامل. النمط الشخصي هو ما يجعل التغيّر مفهومًا.",
+      en: "A single reading is one moment in a whole day. A personal baseline is what makes a change meaningful.",
+    },
+    body: {
+      ar: [
+        "الرقم وحده لا يعني الكثير. نبض 95 قد يكون طبيعيًا بعد صعود الدرج، وقد يكون لافتًا أثناء الجلوس الهادئ. الفرق ليس في الرقم، بل في مقارنته بما هو معتاد لك في هذا الوقت وهذا السياق.",
+        "النمط الشخصي هو خطك الأساسي: أوقات نومك واستيقاظك، حركتك المعتادة خلال اليوم، فترات هدوئك الطبيعية، والبيئة المنزلية المرتبطة براحتك. تُبنى هذه الصورة مع الوقت، لا من يوم واحد.",
+        "عندما يعرف النظام نمطك، يصبح قادرًا على ملاحظة الانحراف عنه: حركة غائبة في وقت اعتدت فيه النشاط، أو قراءة تختلف عن معدّلك المعتاد. هذا الانحراف، لا الرقم المطلق، هو ما يستحق الانتباه.",
+        "لهذا لا تعتمد سيلترا هيلث على قراءة منفردة. تجمع الإشارات المتزامنة وتقارنها بنمطك قبل أي خطوة، فتقلّل الإنذارات غير الضرورية وتجعل التنبيه، حين يأتي، ذا معنى.",
+      ],
+      en: [
+        "A number on its own does not mean much. A pulse of 95 can be normal after climbing stairs, and notable during quiet sitting. The difference is not the number, but how it compares to what is usual for you at this time and context.",
+        "A personal baseline is your normal: your sleep and wake times, your usual daytime movement, your natural quiet periods, and the home environment tied to your comfort. This picture is built over time, not from a single day.",
+        "Once the system knows your pattern, it can notice deviation from it: movement missing at a time you are usually active, or a reading unlike your typical range. That deviation, not the absolute number, is what deserves attention.",
+        "This is why SYLTRA HEALTH never relies on a single reading. It gathers coinciding signals and compares them to your baseline before any step, reducing needless alerts and making an alert, when it comes, meaningful.",
+      ],
+    },
+  },
+  {
+    slug: "building-a-trusted-circle-who-your-home-reaches",
+    date: "2026-08-25",
+    category: { ar: "الدائرة الموثوقة", en: "Trusted Circle" },
+    image: "/brand/health-hero-older.jpg",
+    title: {
+      ar: "الدائرة الموثوقة: من يصل إليه بيتك، وكيف",
+      en: "Building a trusted circle: who your home reaches, and how",
+    },
+    excerpt: {
+      ar: "الهدف ليس إشعار الجميع، بل الوصول إلى الشخص الأنسب بأقل قدر ضروري من المعلومات.",
+      en: "The goal is not to notify everyone. It is to reach the most suitable person with the minimum necessary information.",
+    },
+    body: {
+      ar: [
+        "عند الحاجة إلى مساعدة، الإنذار العام لكل الأسرة ليس الحل الأفضل. قد يزعج من لا يستطيع الوصول، ويؤخّر من يستطيع. الأفضل أن يصل التنبيه إلى الشخص الأنسب في تلك اللحظة.",
+        "في سيلترا هيلث تنشئ دائرة من أشخاص تثق بهم، وتحدّد لكل واحد علاقته وأولويته، وما البيانات التي يراها، وأوقات توفّره، وهل يستطيع دخول المنزل. أنت من يرسم هذه الحدود.",
+        "عند الحاجة، يختار النظام وفق عوامل عملية: زمن الوصول المتوقع، القرب، حالة الاتصال، الأولوية، والقبول. وإن لم يقبل الأول، ينتقل إلى التالي وفق خطتك.",
+        "وتُشارك أقل كمية لازمة فقط: ما يكفي ليعرف الشخص أن هناك حاجة وأين، دون كشف تفاصيل لا لزوم لها. الخصوصية والوصول السريع ليسا على طرفي نقيض هنا.",
+      ],
+      en: [
+        "When help is needed, a general alarm to the whole family is not the best answer. It can disturb those who cannot reach you and delay those who can. It is better for the alert to reach the most suitable person at that moment.",
+        "In SYLTRA HEALTH you build a circle of people you trust and set each one's relationship and priority, what data they see, when they are available, and whether they can enter the home. You draw these boundaries.",
+        "When needed, the system chooses by practical factors: expected arrival time, proximity, connection status, priority and acceptance. If the first does not accept, it moves to the next under your plan.",
+        "And only the minimum necessary is shared: enough for the person to know there is a need and where, without revealing details that are not required. Privacy and fast access are not opposites here.",
+      ],
+    },
+  },
+  {
+    slug: "test-mode-trying-a-response-plan-before-it-is-needed",
+    date: "2026-08-24",
+    category: { ar: "الأمان أولًا", en: "Safety First" },
+    image: "/brand/health-hero-privacy.jpg",
+    title: {
+      ar: "وضع الاختبار: جرّب خطة الاستجابة قبل أن تحتاجها",
+      en: "Test mode: trying a response plan before it is needed",
+    },
+    excerpt: {
+      ar: "أفضل وقت لتفهم كيف تعمل الاستجابة هو قبل الحاجة إليها، وبدون إرسال أي تنبيه حقيقي.",
+      en: "The best time to understand how response works is before you need it, without sending any real alert.",
+    },
+    body: {
+      ar: [
+        "الثقة في أي نظام استجابة تأتي من رؤيته يعمل. لكن لا أحد يريد أن يجرّب ذلك في لحظة حقيقية. لهذا يبدأ الإعداد بوضع اختبار يحاكي الحالة دون تنبيه فعلي لأحد.",
+        "في وضع الاختبار ترى كيف يتحقق النظام منك، كم ينتظر، ومن سيُنبَّه في كل مستوى لو لم تستجب. تفهم الرحلة كاملة وأنت مطمئن أن لا شيء يُرسل خارج شاشتك.",
+        "هذا يمنحك فرصة لضبط خطتك: ربما تريد مدة انتظار أطول، أو ترتيبًا مختلفًا لأشخاص دائرتك، أو معلومات أقل تُشارك. تعدّل قبل أن تعتمد الخطة.",
+        "الأمان أولًا يعني أيضًا أن النسخة الأولى تبدأ بقواعد واضحة قابلة للاختبار، لا بقرارات تلقائية عن الطوارئ. تفهم ما يفعله النظام ولماذا، خطوة بخطوة.",
+      ],
+      en: [
+        "Trust in any response system comes from seeing it work. But no one wants to try that in a real moment. So setup begins with a test mode that simulates the situation without actually alerting anyone.",
+        "In test mode you see how the system checks in with you, how long it waits, and who would be alerted at each level if you did not respond. You understand the full journey, reassured that nothing leaves your screen.",
+        "This is a chance to tune your plan: perhaps a longer wait, a different order for your circle, or less information shared. You adjust before you commit the plan.",
+        "Safety first also means the first version starts with clear, testable rules, not automated emergency decisions. You understand what the system does and why, step by step.",
+      ],
+    },
+  },
+  {
+    slug: "when-the-home-adapts-to-you",
+    date: "2026-08-23",
+    category: { ar: "البيئة المتكيّفة", en: "Adaptive Environment" },
+    image: "/brand/health-hero-home-wellness.jpg",
+    title: {
+      ar: "عندما يتكيّف البيت معك، لا العكس",
+      en: "When the home adapts to you, not the other way round",
+    },
+    excerpt: {
+      ar: "المنزل الذكي الحقيقي لا ينتظر أوامرك فقط. يهيّئ بيئته وفق حالتك وروتينك بموافقتك.",
+      en: "A truly smart home does not just wait for your commands. It adapts to your state and routine, with your consent.",
+    },
+    body: {
+      ar: [
+        "معظم أنظمة المنزل الذكي تنفّذ ما تطلبه: أطفئ الضوء، اضبط الحرارة. مفيد، لكنه يبقى رد فعل لأوامرك. الخطوة التالية أن يراعي البيت حالتك دون أن تطلب.",
+        "عند ربط بيانات صحتك ببيئة المنزل، تصبح إعدادات وافقت عليها مسبقًا ممكنة: تعديل الحرارة إلى نطاق راحتك قبل النوم، تحسين التهوية عند انخفاض جودة الهواء، إضاءة خافتة عند الحركة الليلية، وتذكير لطيف بالحركة أو الماء.",
+        "المفتاح هنا الموافقة المسبقة. البيت لا يقرّر عنك، بل ينفّذ ما اخترته مسبقًا في السياق المناسب. تبقى السيطرة لك، ويبقى الإجراء داعمًا للراحة لا بديلًا عن قرار طبي.",
+        "النتيجة بيئة تعمل بهدوء في الخلفية لصالحك، فتقلّل التعب الصغير المتكرر الذي لا نلاحظه، وتترك لك طاقة أكثر لما يهم.",
+      ],
+      en: [
+        "Most smart-home systems do what you ask: turn off the light, set the temperature. Useful, but still a reaction to your commands. The next step is a home that considers your state without being asked.",
+        "When your health data connects with the home environment, settings you approved in advance become possible: bringing the temperature to your comfort range before sleep, improving ventilation when air quality drops, dim lighting on night movement, and a gentle reminder to move or hydrate.",
+        "The key here is prior consent. The home does not decide for you. It runs what you chose earlier, in the right context. Control stays with you, and the action supports comfort rather than replacing a medical decision.",
+        "The result is an environment that quietly works in your favor, reducing the small recurring friction we rarely notice, and leaving you more energy for what matters.",
+      ],
+    },
+  },
+  {
+    slug: "consent-first-connecting-only-what-you-choose",
+    date: "2026-08-22",
+    category: { ar: "الخصوصية", en: "Privacy" },
+    image: "/brand/health-hero-individuals.jpg",
+    title: {
+      ar: "الموافقة أولًا: تربط فقط ما تختاره",
+      en: "Consent first: connecting only what you choose",
+    },
+    excerpt: {
+      ar: "لا تُجمع البيانات لمجرد توفّرها. كل مصدر يبدأ باختيار واضح، ويمكن إيقافه في أي لحظة.",
+      en: "Data is not collected just because it is available. Every source starts with a clear choice, and can be stopped at any moment.",
+    },
+    body: {
+      ar: [
+        "في الصحة تحديدًا، ليست القاعدة أن نجمع كل ما نستطيع. القاعدة أن نجمع ما تحتاجه التجربة فعلًا، وبموافقتك على كل نوع على حدة.",
+        "قبل ربط أي جهاز، تعرف ما البيانات التي ستُستخدم ولماذا. تربط ما تريد فقط، وتترك الباقي. وكل ربط إضافي هو بيانات إضافية يجب أن يكون لها سبب واضح.",
+        "التحكم مستمر لا لحظي: تستطيع مراجعة الصلاحيات، تعديل من يرى ماذا، إيقاف مشاركة الموقع، سحب الموافقة، وحذف بياناتك، ومراجعة سجل التنبيهات والمشاركة.",
+        "هذه ليست فقرة قانونية في نهاية الصفحة، بل جزء من تصميم التجربة نفسها. حين تُبنى الثقة على الموافقة الواضحة وتقليل البيانات، تصبح نتيجة طبيعية لا وعدًا.",
+      ],
+      en: [
+        "In health especially, the rule is not to collect everything we can. The rule is to collect what the experience genuinely needs, with your consent for each type separately.",
+        "Before connecting any device, you know what data will be used and why. You connect only what you want and leave the rest. Every extra connection is extra data that should have a clear reason.",
+        "Control is ongoing, not a one-time step: you can review permissions, change who sees what, stop location sharing, withdraw consent, delete your data, and review the alert and sharing log.",
+        "This is not a legal paragraph at the bottom of the page. It is part of the design of the experience itself. When trust is built on clear consent and data minimization, it becomes a natural result, not a promise.",
+      ],
+    },
+  },
+  {
     slug: "building-a-privacy-first-health-routine",
     date: "2026-08-04",
     category: { ar: "الخصوصية", en: "Privacy" },

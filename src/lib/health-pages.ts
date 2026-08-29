@@ -43,8 +43,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         eyebrow: { ar: "طبقة الذكاء الصحي في بيتك", en: "The health intelligence layer for your home" },
         headline: { ar: "بيتك يعرف لما يتغيّر شيء.", en: "Your home knows when something changes." },
         body: {
-          ar: "تربط سيلترا هيلث بيانات جسمك بحركة المنزل وبيئته، لتفهم نمطك اليومي، تهيّئ المساحة من حولك، وتساعد في الوصول إلى الشخص الأنسب عندما تحتاجه.",
-          en: "SYLTRA HEALTH connects your body's data with your home's movement and environment. It learns your daily pattern, adapts the space around you, and helps reach the right person when you need them.",
+          ar: "بيتك يعرفك: متى تنام، كيف تتحرّك، وكيف يبدو يومك الجيد. سيلترا هيلث تجمع إحساس بيتك ببياناتك الصحية، فتهيّئ لك مساحة أهدأ، وتبقى قريبة حين تحتاج من يطمئن عليك.",
+          en: "Your home gets to know you: when you sleep, how you move, what a good day feels like. SYLTRA HEALTH brings that sense of home together with your health data, shapes a calmer space around you, and stays close for the moment you need someone to check in.",
         },
         buttons: [CTA_EARLY, CTA_HOW],
       },
@@ -52,8 +52,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         kind: "cards",
         headline: { ar: "يبدأ من البيت.", en: "It starts at home." },
         body: {
-          ar: "منظومة سيلترا لايف للمنزل الذكي وحسّاساتها هي الأساس الذي تُبنى عليه سيلترا هيلث. البيت يرى محيطك على مدار اليوم، الهواء، الحرارة، الرطوبة، والحركة، فيصبح السياق الذي تُفهم فيه صحتك.",
-          en: "The SYLTRA LIFE smart home and its sensors are the foundation SYLTRA HEALTH is built on. The home sees your environment around the clock, air, temperature, humidity and movement, becoming the context in which your health is understood.",
+          ar: "صحتك لا تعيش داخل جهاز على معصمك. تتأثر بالهواء الذي تتنفّسه، بحرارة غرفتك ليلًا، وبإيقاع حركتك في البيت. لهذا نبدأ من حيث تقضي معظم وقتك: بيتك، الذي يبقى معك طوال اليوم.",
+          en: "Your health does not live inside a device on your wrist. It is shaped by the air you breathe, how warm your room feels at night, and the rhythm of how you move at home. So we start where you spend most of your time: your home, which is with you all day.",
         },
         items: [
           { title: { ar: "حسّاسات البيئة", en: "Environmental sensors" }, body: { ar: "جودة الهواء والحرارة والرطوبة داخل مساحتك، لحظة بلحظة.", en: "Air quality, temperature and humidity in your space, moment to moment." } },
@@ -110,19 +110,19 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
       {
         kind: "section",
         eyebrow: { ar: "من البيانات إلى الفهم", en: "From data to understanding" },
-        headline: { ar: "تتعلّم نمطك الطبيعي.", en: "It learns your normal pattern." },
+        headline: { ar: "يتعلّم إيقاعك.", en: "It learns your rhythm." },
         body: {
-          ar: "لا تعرض المنصة أرقامًا متفرقة فقط. تبني خطًا أساسيًا لكل مستخدم: أوقات النوم والاستيقاظ، الحركة المعتادة خلال اليوم، والبيئة المنزلية المرتبطة براحته. فتلاحظ عندما تختلف الحركة أو القراءات أو البيئة عن المعتاد.",
-          en: "The platform does not just show scattered numbers. It builds a personal baseline for each user: sleep and wake times, usual daytime movement, and the home environment tied to their comfort. So it notices when movement, readings or environment differ from the norm.",
+          ar: "الأرقام وحدها باردة. سيلترا هيلث تتعرّف على إيقاعك: متى تنام، كيف تمرّ ساعاتك، والجو الذي يريحك في بيتك. ومع الوقت تعرف الفرق بين يومٍ عادي ويومٍ يختلف عنك، فتنتبه فقط حين يستحق الأمر الانتباه.",
+          en: "Numbers on their own feel cold. SYLTRA HEALTH gets to know your rhythm: when you sleep, how your hours pass, and the setting that puts you at ease at home. Over time it learns the difference between an ordinary day and one that is unlike you, so it pays attention only when it truly matters.",
         },
       },
       {
         kind: "section",
         eyebrow: { ar: "من الفهم إلى الاستجابة", en: "From understanding to response" },
-        headline: { ar: "لا يكتفي بأن يعرف. يستجيب.", en: "It does more than know. It responds." },
+        headline: { ar: "لا يكتفي بأن يعرف. يهتمّ.", en: "It does more than know. It cares." },
         body: {
-          ar: "يهيّئ المنزل بيئته وفق إعداداتك، ويتحقق منك عند ظهور تغيّر مهم، ثم ينبّه الشخص الموثوق الأنسب وفق خطة الاستجابة التي اخترتها. لا يعتمد على قراءة منفردة، بل يجمع المؤشرات الصحية والحركة ووجود الأشخاص وبيئة المنزل قبل أي خطوة.",
-          en: "The home adapts its environment to your settings, checks in with you when a meaningful change appears, then alerts the most suitable trusted person under the response plan you chose. It never relies on a single reading. It brings together health signals, movement, presence and home environment before any step.",
+          ar: "أن يعرف بيتك أنك لست على ما يُرام شيء، وأن يتصرّف بلطف شيء آخر. يهيّئ لك جوًا أنسب، ويسألك باطمئنان حين يلاحظ اختلافًا، وإن لم تردّ، يصل بهدوء إلى أقرب شخص تثق به وفق خطة رسمتها أنت. لا يتسرّع بقراءة واحدة، بل يتمهّل ويتأكّد أولًا.",
+          en: "There is a difference between your home knowing you are unwell and it doing something kind about it. It shapes a calmer setting for you, checks in gently when it notices something is off, and if you do not answer, it quietly reaches the closest person you trust, under a plan you set. It does not rush on a single reading. It takes a breath and makes sure first.",
         },
       },
       {
@@ -144,8 +144,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         eyebrow: { ar: "الدائرة الموثوقة", en: "Trusted circle" },
         headline: { ar: "لو ما رديت، يعرف من الأقرب.", en: "If you do not answer, it knows who is closest." },
         body: {
-          ar: "تنشئ دائرة من أشخاص تثق بهم، وتحدّد لكل شخص علاقته وأولويته وما يراه وأوقات توفّره. عند الحاجة يختار النظام الأنسب وفق زمن الوصول والقرب والقبول، ويشارك أقل قدر ضروري من المعلومات والموقع، لا إشعارًا عامًا للجميع.",
-          en: "You build a circle of people you trust and set each person's relationship, priority, what they see and when they are available. When needed, the system picks the most suitable one by arrival time, proximity and acceptance, and shares the minimum necessary information and location, not a broadcast to everyone.",
+          ar: "الأشخاص الذين نحبّهم لا نريد إزعاجهم بلا داعٍ، لكن نريدهم قريبين وقت الحاجة. تختار دائرتك الموثوقة، وتحدّد من الأقرب ومن يرى ماذا. وحين يلزم الأمر، يصل التنبيه إلى الشخص الأنسب فقط، بأقل ما يلزم من المعلومات، لا رسالة قلق تصل الجميع.",
+          en: "The people we love, we do not want to worry for no reason, yet we want them near when it counts. You choose your trusted circle and set who is closest and who sees what. When it matters, the alert reaches only the most suitable person, with the least information needed, not a wave of worry sent to everyone.",
         },
       },
       {

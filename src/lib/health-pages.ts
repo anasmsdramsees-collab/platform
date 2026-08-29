@@ -212,6 +212,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-older.jpg",
         eyebrow: { ar: "كبار السن", en: "Older Adults" },
         headline: { ar: "استقلالية أكبر. اطمئنان أقرب.", en: "Greater independence. Closer reassurance." },
         body: {
@@ -260,6 +262,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-chronic.jpg",
         eyebrow: { ar: "الحالات المزمنة", en: "Chronic Conditions" },
         headline: { ar: "متابعة يومية. صورة أوضح.", en: "Daily tracking. A clearer picture." },
         body: {

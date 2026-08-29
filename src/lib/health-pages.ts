@@ -424,6 +424,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-home-wellness.jpg",
         eyebrow: { ar: "صحة المنزل", en: "Home Wellness" },
         headline: { ar: "بيتك جزء من صحتك.", en: "Your home is part of your health." },
         body: {

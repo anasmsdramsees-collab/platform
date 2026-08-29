@@ -711,15 +711,15 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         eyebrow: { ar: "عن سيلترا هيلث", en: "About" },
         headline: { ar: "التقنية الصحية التي تربط الإنسان ببيئته.", en: "Health technology connecting people with their environment." },
         body: {
-          ar: "سيلترا هيلث هي شركة تقنيات صحية ضمن سيلترا وان. نبني تجربة تربط بيانات المستخدم الشخصية بالأجهزة القابلة للارتداء والقراءات الصحية المنزلية وحساسات البيئة، حتى تصبح المعلومات اليومية أكثر وضوحاً وفائدة.",
-          en: "SYLTRA HEALTH is a health technology company within SYLTRA ONE. We build an experience that connects personal data with wearables, home health readings and environmental sensors so everyday information becomes clearer and more useful.",
+          ar: "بدأنا بسؤال بسيط: لماذا يعرف بيتك متى تصل، ولا يعرف كيف حالك؟ سيلترا هيلث، من عائلة سيلترا وان، تربط ما يقوله جسمك بما يراه بيتك، فتصبح المعلومة اليومية أقرب إلى إنسان، لا مجرد رقم على شاشة.",
+          en: "We started with a simple question: why does your home know when you arrive, but not how you are doing? SYLTRA HEALTH, part of the SYLTRA ONE family, connects what your body says with what your home sees, so everyday information feels closer to a person, not just a number on a screen.",
         },
       },
       {
         kind: "section",
         body: {
-          ar: "نعمل عند نقطة التقاء الصحة الرقمية، الذكاء الاصطناعي، إنترنت الأشياء والبيوت الذكية. هدفنا ليس إضافة تطبيق جديد إلى هاتف المستخدم، بل تقليل التشتت وبناء صورة مترابطة يحكم المستخدم الوصول إليها.",
-          en: "We work at the intersection of digital health, artificial intelligence, the Internet of Things and smart living. Our goal is not to add another disconnected app to a user's phone. It is to reduce fragmentation and build one connected picture controlled by the user.",
+          ar: "نعمل حيث تلتقي الصحة والذكاء والبيت الذكي. لكن ما نبنيه ليس تطبيقًا آخر يزاحم شاشتك. نبنيه ليفهمك بيتك، يخفّف عنك الفوضى، ويبقى قريبًا منك ومن أحبّتك حين يتغيّر شيء.",
+          en: "We work where health, intelligence and the smart home meet. But what we build is not another app crowding your screen. We build it so your home understands you, eases the clutter, and stays close to you and the people you love when something changes.",
         },
       },
       {

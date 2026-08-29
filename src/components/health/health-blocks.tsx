@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n/config";
 import { assetPath } from "@/lib/base-path";
-import { HEALTH } from "@/lib/health-content";
+import { HEALTH, WORKS_WITH } from "@/lib/health-content";
 import type { Block, HButton } from "@/lib/health-pages";
 import HealthHeroGraphic from "./health-hero-graphic";
 import IntegrationsGrid from "./integrations-grid";
@@ -100,6 +100,20 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                     <div className="absolute inset-0">
                       <div dir="ltr" className="flex h-full items-center ps-4 pe-2 sm:ps-8 lg:ps-14">
                         {overlay}
+                      </div>
+                    </div>
+                  </div>
+                  {/* Works-with logo strip (white band so every brand mark stays visible) */}
+                  <div className="border-t border-hairline" style={{ backgroundColor: "#ffffff" }}>
+                    <div className="mx-auto max-w-6xl px-5 py-6 sm:px-8 sm:py-7">
+                      <p className="text-center font-mono text-[11px] uppercase tracking-[0.14em]" style={{ color: "#6d746f" }}>
+                        {ar ? "مصمّمة للربط مع" : "Designed to connect with"}
+                      </p>
+                      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-5 sm:gap-x-12">
+                        {WORKS_WITH.map((l) => (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img key={l.name} src={assetPath(l.icon)} alt={l.name} title={l.name} className="h-6 w-auto object-contain sm:h-8" />
+                        ))}
                       </div>
                     </div>
                   </div>

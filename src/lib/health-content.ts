@@ -41,6 +41,20 @@ export const HEALTH_NAV: { href: string; label: L }[] = [
   { href: "/about", label: { ar: "عن سيلترا هيلث", en: "About" } },
 ];
 
+/**
+ * "Works with" logo strip shown under the hero copy. Drop official brand files
+ * at these same paths to replace the stylized placeholders automatically.
+ */
+export const WORKS_WITH: { name: string; icon: string }[] = [
+  { name: "Apple Health", icon: "/brand/logos/apple-health.svg" },
+  { name: "Google Health Connect", icon: "/brand/logos/google-health-connect.png" },
+  { name: "Samsung Health", icon: "/brand/logos/samsung-health.jpg" },
+  { name: "Fitbit", icon: "/brand/logos/fitbit.png" },
+  { name: "WHOOP", icon: "/brand/logos/whoop.webp" },
+  { name: "HUAWEI Health", icon: "/brand/logos/huawei-health.webp" },
+  { name: "Nike Run Club", icon: "/brand/logos/nike-run-club.jpg" },
+];
+
 /** The four target ecosystems used across hero graphics and the integrations page. */
 export type Ecosystem = {
   key: string;

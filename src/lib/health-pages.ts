@@ -179,6 +179,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-individuals.jpg",
         eyebrow: { ar: "للأفراد", en: "For Individuals" },
         headline: { ar: "تجربة صحية أقرب إلى حياتك.", en: "A health experience closer to real life." },
         body: {
@@ -589,6 +591,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-about.jpg",
         eyebrow: { ar: "عن سيلترا هيلث", en: "About" },
         headline: { ar: "التقنية الصحية التي تربط الإنسان ببيئته.", en: "Health technology connecting people with their environment." },
         body: {

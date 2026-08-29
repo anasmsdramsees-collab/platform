@@ -121,13 +121,8 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
               );
             }
             return (
-              <section key={i} className="relative overflow-hidden border-b border-hairline">
-                <div
-                  className="pointer-events-none absolute inset-0"
-                  style={{ background: `radial-gradient(60% 90% at ${ar ? "80%" : "20%"} 0%, rgba(${HEALTH.rgb},0.10), transparent 60%)` }}
-                  aria-hidden
-                />
-                <div className={`relative mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 sm:px-8 sm:py-24 ${withGraphic ? "lg:grid-cols-2 lg:gap-8" : ""}`}>
+              <section key={i} className="border-b border-hairline">
+                <div className={`mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 sm:px-8 sm:py-24 ${withGraphic ? "lg:grid-cols-2 lg:gap-8" : ""}`}>
                   <div>
                     {block.eyebrow && (
                       <p className="font-mono text-[12px] uppercase tracking-[0.16em]" style={{ color: HEALTH.accent }}>
@@ -141,12 +136,6 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                       {t(block.body)}
                     </p>
                     {block.buttons && <Buttons locale={locale} buttons={block.buttons} />}
-                    {withGraphic && (
-                      <p className="mt-8 flex items-center gap-2 font-mono text-[12px] text-slate">
-                        <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: HEALTH.accent }} aria-hidden />
-                        {ar ? "تكامل مستهدف · قيد التطوير" : "Target integrations · In development"}
-                      </p>
-                    )}
                   </div>
                   {withGraphic && (
                     <div className="relative">
@@ -168,7 +157,6 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                       {t(block.eyebrow)}
                     </p>
                   )}
-                  <div className="mt-4 h-px w-8" style={{ backgroundColor: HEALTH.accent }} />
                   {block.headline && (
                     <h2 className="font-display mt-6 text-balance text-3xl font-bold text-platinum sm:text-4xl">
                       {t(block.headline)}
@@ -197,8 +185,7 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                   <div className="mt-10 grid grid-cols-1 border-s border-t border-hairline sm:grid-cols-2 lg:grid-cols-3">
                     {block.items.map((it, k) => (
                       <div key={k} className="border-b border-e border-hairline p-6 sm:p-8">
-                        <div className="h-px w-8" style={{ backgroundColor: HEALTH.accent }} />
-                        <h3 className="font-display mt-5 text-lg font-bold text-platinum">{t(it.title)}</h3>
+                        <h3 className="font-display text-lg font-bold text-platinum">{t(it.title)}</h3>
                         <p className="mt-3 text-sm leading-relaxed text-chrome-dim">{t(it.body)}</p>
                       </div>
                     ))}
@@ -218,8 +205,7 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                   {block.body && <p className="mt-4 max-w-2xl text-sm leading-relaxed text-chrome-dim">{t(block.body)}</p>}
                   <ul className="mt-8 border-t border-hairline">
                     {block.items.map((it, k) => (
-                      <li key={k} className="flex items-start gap-4 border-b border-hairline py-4">
-                        <span className="mt-2 h-px w-6 flex-none" style={{ backgroundColor: HEALTH.accent }} aria-hidden />
+                      <li key={k} className="border-b border-hairline py-4">
                         <span className="text-[15px] leading-relaxed text-chrome">{t(it)}</span>
                       </li>
                     ))}
@@ -240,8 +226,7 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                   <ol className="mt-10 grid grid-cols-1 gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-4">
                     {block.steps.map((s, k) => (
                       <li key={k} className="bg-void p-6 sm:p-7">
-                        <span className="font-mono text-sm" style={{ color: HEALTH.accent }}>{String(k + 1).padStart(2, "0")}</span>
-                        <h3 className="font-display mt-3 text-base font-bold text-platinum">{t(s.label)}</h3>
+                        <h3 className="font-display text-base font-bold text-platinum">{t(s.label)}</h3>
                         <p className="mt-2 text-sm leading-relaxed text-chrome-dim">{t(s.body)}</p>
                       </li>
                     ))}
@@ -257,12 +242,9 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                 <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8 sm:py-24">
                   <div className="border-t border-hairline">
                     {block.steps.map((s, k) => (
-                      <div key={k} className="grid grid-cols-[auto_1fr] gap-x-6 border-b border-hairline py-8 sm:grid-cols-[120px_1fr]">
-                        <span className="font-mono text-2xl font-bold" style={{ color: HEALTH.accent }}>{String(k + 1).padStart(2, "0")}</span>
-                        <div>
-                          <h3 className="font-display text-xl font-bold text-platinum">{t(s.title)}</h3>
-                          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-chrome-dim sm:text-base">{t(s.body)}</p>
-                        </div>
+                      <div key={k} className="border-b border-hairline py-8">
+                        <h3 className="font-display text-xl font-bold text-platinum">{t(s.title)}</h3>
+                        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-chrome-dim sm:text-base">{t(s.body)}</p>
                       </div>
                     ))}
                   </div>
@@ -275,11 +257,8 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
             return (
               <section key={i} className="border-b border-hairline">
                 <div className="mx-auto max-w-4xl px-5 py-10 sm:px-8">
-                  <div
-                    className="border-s-2 p-6"
-                    style={{ borderColor: HEALTH.accent, background: `rgba(${HEALTH.rgb},0.05)` }}
-                  >
-                    <p className="font-mono text-[11px] uppercase tracking-[0.14em]" style={{ color: HEALTH.accent }}>
+                  <div className="border-s-2 border-hairline-strong ps-5">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-slate">
                       {ar ? "ملاحظة سلامة" : "Safety note"}
                     </p>
                     <p className="mt-3 text-sm leading-relaxed text-chrome">{t(block.text)}</p>
@@ -301,9 +280,8 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                       <Link
                         key={k}
                         href={href(locale, it.href)}
-                        className="inline-flex items-center gap-2 rounded-full border border-hairline-strong px-5 py-2.5 text-sm text-platinum transition-colors hover:text-platinum"
+                        className="inline-flex items-center border-b border-hairline-strong pb-1 text-sm text-platinum transition-colors hover:border-platinum"
                       >
-                        <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: HEALTH.accent }} aria-hidden />
                         {t(it.label)}
                       </Link>
                     ))}

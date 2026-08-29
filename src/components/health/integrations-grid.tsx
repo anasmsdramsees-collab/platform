@@ -1,5 +1,14 @@
 import type { Locale } from "@/lib/i18n/config";
+import { assetPath } from "@/lib/base-path";
 import { HEALTH, ECOSYSTEMS } from "@/lib/health-content";
+
+/** Official brand marks per ecosystem key (shown instead of a text heading). */
+const ECOSYSTEM_LOGOS: Record<string, string> = {
+  apple: "/brand/logos/apple-health.svg",
+  google: "/brand/logos/google-health-connect.png",
+  samsung: "/brand/logos/samsung-health.jpg",
+  whoop: "/brand/logos/whoop.webp",
+};
 
 /** The four target ecosystems, editorial hairline matrix + status + disclosure. */
 export default function IntegrationsGrid({ locale }: { locale: Locale }) {
@@ -22,17 +31,16 @@ export default function IntegrationsGrid({ locale }: { locale: Locale }) {
         <div className="mt-10 grid grid-cols-1 border-s border-t border-hairline sm:grid-cols-2">
           {ECOSYSTEMS.map((e) => (
             <div key={e.key} className="border-b border-e border-hairline p-6 sm:p-8">
-              <div className="flex items-center gap-3">
-                <span
-                  className="inline-block h-2.5 w-2.5 flex-none rounded-full"
-                  style={{ backgroundColor: HEALTH.accent }}
-                  aria-hidden
+              <div className="inline-flex items-center rounded-lg bg-white px-3 py-2" dir="ltr">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={assetPath(ECOSYSTEM_LOGOS[e.key] ?? "")}
+                  alt={e.name}
+                  title={e.name}
+                  className="h-7 w-auto object-contain sm:h-8"
                 />
-                <h3 className="font-display text-lg font-bold text-platinum" dir="ltr">
-                  {e.name}
-                </h3>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-chrome-dim">
+              <p className="mt-4 text-sm leading-relaxed text-chrome-dim">
                 {ar ? e.ar : e.en}
               </p>
               <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.12em] text-slate">

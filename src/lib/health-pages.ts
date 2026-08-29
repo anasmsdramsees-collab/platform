@@ -40,7 +40,7 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
       {
         kind: "hero",
         graphic: "scene",
-        eyebrow: { ar: "صحة متجذّرة في بيتك الذكي", en: "Health rooted in your smart home" },
+        eyebrow: { ar: "صحة متأصّلة في بيتك الذكي", en: "Health rooted in your smart home" },
         headline: { ar: "بيتك الذكي. أساس صحتك.", en: "Your smart home. The foundation of your health." },
         body: {
           ar: "تبني سيلترا هيلث على منظومة سيلترا لايف للمنزل الذكي وحسّاساتها — الهواء والحرارة والرطوبة والحركة — ثم تربط ساعاتك وقراءاتك اليومية، ليُفهم محيطك وجسدك معًا في تجربة واحدة.",

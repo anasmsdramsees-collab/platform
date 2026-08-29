@@ -56,7 +56,7 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
               const alt = ar
                 ? "لوحة سيلترا هيلث على الحائط مع الساعات والأجهزة القابلة للارتداء في منزل ذكي"
                 : "SYLTRA HEALTH wall dashboard with watches and wearables in a connected smart home";
-              const heroImg = assetPath("/brand/health-hero.jpg");
+              const heroImg = assetPath(block.image ?? "/brand/health-hero.jpg");
               // Text always sits over the light, empty left area of the image,
               // so it uses fixed dark colours regardless of the page theme.
               const overlay = (

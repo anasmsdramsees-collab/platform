@@ -5,7 +5,7 @@ export type HButton = { label: L; href: string; primary?: boolean };
 
 /** Content blocks a HEALTH page is composed of. Rendered by <HealthBlocks />. */
 export type Block =
-  | { kind: "hero"; eyebrow?: L; headline: L; body: L; buttons?: HButton[]; graphic?: "connect" | "ring" | "scene" }
+  | { kind: "hero"; eyebrow?: L; headline: L; body: L; buttons?: HButton[]; graphic?: "connect" | "ring" | "scene"; image?: string }
   | { kind: "section"; eyebrow?: L; headline?: L; body?: L }
   | { kind: "cards"; headline?: L; body?: L; items: { title: L; body: L }[] }
   | { kind: "list"; headline?: L; body?: L; items: L[] }
@@ -140,6 +140,8 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     blocks: [
       {
         kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-how.jpg",
         headline: { ar: "من بيانات متفرقة إلى صورة مترابطة.", en: "From scattered data to one connected picture." },
         body: {
           ar: "تربط سيلترا هيلث مصادر البيانات التي يوافق عليها المستخدم، وتنظمها زمنياً، ثم تعرضها في تجربة واضحة قابلة للمشاركة.",
@@ -481,6 +483,7 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
       {
         kind: "hero",
         graphic: "scene",
+        image: "/brand/health-hero-integrations.jpg",
         eyebrow: { ar: "التكاملات", en: "Integrations" },
         headline: { ar: "منظومة صحية واحدة. متصلة.", en: "One health ecosystem. Connected." },
         body: {

@@ -14,7 +14,7 @@ export type Block =
   | { kind: "safety"; text: L }
   | { kind: "links"; headline?: L; items: HButton[] }
   | { kind: "integrations" }
-  | { kind: "appshowcase"; eyebrow?: L; headline: L; body: L; image: string; buttons?: HButton[] }
+  | { kind: "appshowcase"; eyebrow?: L; headline: L; body: L; image: string; buttons?: HButton[]; overlay?: boolean }
   | { kind: "cta"; headline: L; body?: L; buttons: HButton[] };
 
 export type HealthPage = {
@@ -167,14 +167,15 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
       },
       {
         kind: "appshowcase",
+        overlay: true,
+        image: "/brand/health-app-hero.jpg",
         eyebrow: { ar: "التطبيق", en: "The app" },
         headline: { ar: "صحتك. بيتك. دائرتك.", en: "Your health. Your home. Your circle." },
         body: {
           ar: "كل شيء ضمن سياق واحد: نمط يومك، بيئة بيتك، ودائرتك الموثوقة، في تطبيق واحد هادئ.",
           en: "Everything in one context: your day's pattern, your home's environment, and your trusted circle, in one calm app.",
         },
-        image: "/brand/health-app-showcase.jpg",
-        buttons: [CTA_EARLY],
+        buttons: [{ label: { ar: "شوف التطبيق", en: "See the app" }, href: "/health/app", primary: true }],
       },
       { kind: "integrations" },
       {

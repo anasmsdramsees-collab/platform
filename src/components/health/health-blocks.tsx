@@ -295,7 +295,40 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
             return <IntegrationsGrid key={i} locale={locale} />;
 
           // --------------------------------------------------- APP SHOWCASE
-          case "appshowcase":
+          case "appshowcase": {
+            const appAlt = ar ? "واجهات تطبيق سيلترا هيلث" : "SYLTRA HEALTH app screens";
+            // overlay: full-bleed image with the heading over the empty area
+            if (block.overlay) {
+              return (
+                <section key={i} className="w-full border-b border-hairline">
+                  <div className="relative w-full">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={assetPath(block.image)} alt={appAlt} className="h-full w-full object-cover" style={{ objectPosition: "right center" }} />
+                    <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(to right, rgba(247,249,248,0.94) 0%, rgba(247,249,248,0.6) 34%, rgba(247,249,248,0) 60%)" }} aria-hidden />
+                    <div className="absolute inset-0">
+                      <div dir="ltr" className="flex h-full items-center ps-4 pe-2 sm:ps-8 lg:ps-14">
+                        <div dir={ar ? "rtl" : "ltr"} className="max-w-[15rem] sm:max-w-xs md:max-w-md">
+                          {block.eyebrow && (
+                            <p className="font-mono text-[10px] uppercase tracking-[0.16em] sm:text-[12px]" style={{ color: HEALTH.accentDim }}>{t(block.eyebrow)}</p>
+                          )}
+                          <h2 className="font-display mt-2 text-balance text-xl font-bold leading-[1.05] sm:mt-4 sm:text-4xl lg:text-5xl" style={{ color: "#0c1512" }}>{t(block.headline)}</h2>
+                          <p className="mt-2 hidden max-w-sm text-sm leading-relaxed sm:mt-5 sm:block" style={{ color: "#3a423f" }}>{t(block.body)}</p>
+                          {block.buttons && (
+                            <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 sm:mt-7">
+                              {block.buttons.map((b, k) => (
+                                <Link key={k} href={href(locale, b.href)} className="inline-flex items-center rounded-full px-4 py-2 text-[13px] font-semibold text-white sm:px-6 sm:py-3 sm:text-sm" style={{ backgroundColor: HEALTH.accentDim }}>
+                                  {t(b.label)}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              );
+            }
             return (
               <section key={i} className="border-b border-hairline">
                 <div className="mx-auto max-w-4xl px-5 pt-16 text-center sm:px-8 sm:pt-24">
@@ -316,14 +349,11 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                 </div>
                 <div className="mx-auto mt-12 max-w-6xl px-5 pb-16 sm:px-8 sm:pb-24">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={assetPath(block.image)}
-                    alt={ar ? "واجهات تطبيق سيلترا هيلث" : "SYLTRA HEALTH app screens"}
-                    className="w-full"
-                  />
+                  <img src={assetPath(block.image)} alt={appAlt} className="w-full" />
                 </div>
               </section>
             );
+          }
 
           // ----------------------------------------------------------- CTA
           case "cta":

@@ -223,6 +223,7 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
           { title: { ar: "النمط", en: "Pattern" }, body: { ar: "إيقاعك عبر الأيام: نومك، حركتك، وقراءاتك، ومتى تختلف عن المعتاد.", en: "Your rhythm across days: sleep, movement and readings, and when they differ from normal." } },
           { title: { ar: "بيتك حولك", en: "Your home" }, body: { ar: "حرارة غرفتك ورطوبتها وجودة هوائها، وإعدادات تتكيّف بموافقتك.", en: "Your room's temperature, humidity and air quality, with settings that adapt on your consent." } },
           { title: { ar: "دائرتك الموثوقة", en: "Your circle" }, body: { ar: "من تثق بهم ومن الأقرب، وما يرونه، ومتى يصلهم تنبيه.", en: "The people you trust and who is closest, what they see, and when an alert reaches them." } },
+          { title: { ar: "أدويتي", en: "Medications" }, body: { ar: "جدول أدويتك وتذكير بمواعيدها وتأكيد التناول، بلطف.", en: "Your medication schedule, timely reminders and a gentle confirmation." } },
           { title: { ar: "الإعدادات", en: "Settings" }, body: { ar: "موافقاتك وخطة استجابتك ووضع الاختبار، تحت يدك دائمًا.", en: "Your consents, response plan and test mode, always in your hands." } },
         ],
       },
@@ -234,6 +235,17 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
           { title: { ar: "يفهم", en: "It understands" }, body: { ar: "يتعلّم نمطك الطبيعي، فيعرف الفرق بين يوم عادي ويوم يختلف عنك.", en: "It learns your normal pattern, so it knows an ordinary day from one unlike you." } },
           { title: { ar: "يستجيب", en: "It responds" }, body: { ar: "يهيّئ بيئتك، يتحقق منك عند التغيّر، ويصل إلى الأنسب إن احتجت.", en: "It adapts your space, checks in on a change, and reaches the right person if you need." } },
         ],
+      },
+      {
+        kind: "appshowcase",
+        overlay: true,
+        image: "/brand/health-app-meds.jpg",
+        eyebrow: { ar: "أدويتي", en: "Medications" },
+        headline: { ar: "دواؤك في وقته، بلطف.", en: "Your medication, on time, gently." },
+        body: {
+          ar: "تذكير بمواعيد أدويتك وتأكيد التناول، عبر جوالك أو ساعتك أو شاشة البيت. تذكير لطيف يساعدك على الالتزام، ولا يغيّر جرعتك أو خطتك العلاجية.",
+          en: "Reminders for your medication times and a quick confirmation, on your phone, watch or home screen. A gentle nudge that helps you stay consistent, without changing your dose or treatment plan.",
+        },
       },
       {
         kind: "appshowcase",

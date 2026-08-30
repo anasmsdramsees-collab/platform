@@ -294,6 +294,37 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
           case "integrations":
             return <IntegrationsGrid key={i} locale={locale} />;
 
+          // --------------------------------------------------- APP SHOWCASE
+          case "appshowcase":
+            return (
+              <section key={i} className="border-b border-hairline">
+                <div className="mx-auto max-w-4xl px-5 pt-16 text-center sm:px-8 sm:pt-24">
+                  {block.eyebrow && (
+                    <p className="font-mono text-[12px] uppercase tracking-[0.16em]" style={{ color: HEALTH.accent }}>
+                      {t(block.eyebrow)}
+                    </p>
+                  )}
+                  <h2 className="font-display mx-auto mt-4 max-w-2xl text-balance text-3xl font-bold text-platinum sm:text-4xl">
+                    {t(block.headline)}
+                  </h2>
+                  <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-chrome-dim">{t(block.body)}</p>
+                  {block.buttons && (
+                    <div className="flex justify-center">
+                      <Buttons locale={locale} buttons={block.buttons} center />
+                    </div>
+                  )}
+                </div>
+                <div className="mx-auto mt-12 max-w-6xl px-5 pb-16 sm:px-8 sm:pb-24">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={assetPath(block.image)}
+                    alt={ar ? "واجهات تطبيق سيلترا هيلث" : "SYLTRA HEALTH app screens"}
+                    className="w-full"
+                  />
+                </div>
+              </section>
+            );
+
           // ----------------------------------------------------------- CTA
           case "cta":
             return (

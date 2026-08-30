@@ -203,11 +203,11 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         kind: "hero",
         graphic: "scene",
         image: "/brand/health-hero-accessibility.jpg",
-        eyebrow: { ar: "أصحاب الهمم", en: "People of Determination" },
+        eyebrow: { ar: "نمط الوصول · أصحاب الهمم", en: "Access Mode · People of Determination" },
         headline: { ar: "بيت يتكيّف مع طريقتك.", en: "A home that adapts to your way." },
         body: {
-          ar: "لكل شخص طريقته في التحكم والتواصل. سيلترا هيلث تتكيّف معك: تتحكّم بالصوت، ترى تنبيهًا بدل أن تسمعه، أو تسمعه بدل أن تراه، وتبقى دائرتك الموثوقة قريبة حين تحتاجها.",
-          en: "Everyone has their own way of controlling and communicating. SYLTRA HEALTH adapts to you: control by voice, see an alert instead of hearing it, or hear it instead of seeing it, and keep your trusted circle close when you need them.",
+          ar: "نمط الوصول واجهة اختيارية داخل سيلترا هيلث، تتكيّف مع طريقة حركتك وتواصلك: تتحكّم بالصوت، ترى تنبيهًا بدل أن تسمعه أو تسمعه بدل أن تراه، ويبقى التحكم والخصوصية والقرار في يدك، ودائرتك الموثوقة قريبة عند الحاجة.",
+          en: "Access Mode is an optional interface inside SYLTRA HEALTH that adapts to how you move and communicate: control by voice, see an alert instead of hearing it or hear it instead of seeing it. Control, privacy and decisions stay in your hands, with your trusted circle close when needed.",
         },
         buttons: [CTA_EARLY, CTA_HOW],
       },
@@ -224,6 +224,33 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
           { title: { ar: "قراءة صوتية", en: "Spoken readouts" }, body: { ar: "للمكفوفين وضعاف البصر: قراءة الحالة والتنبيهات صوتيًا، وتوافق مع قارئ الشاشة.", en: "For blind and low-vision users: status and alerts read aloud, with screen-reader support." } },
           { title: { ar: "واجهة مبسّطة", en: "Simpler interface" }, body: { ar: "أزرار كبيرة، تباين عالٍ، ولغة واضحة تقلّل التعقيد.", en: "Large buttons, high contrast and plain language that reduce complexity." } },
           { title: { ar: "دائرتك الموثوقة", en: "Your trusted circle" }, body: { ar: "من تثق بهم قريبون، ويصلهم تنبيه بالطريقة التي اخترتها عند الحاجة.", en: "The people you trust stay close, reached your chosen way when needed." } },
+        ],
+      },
+      {
+        kind: "cards",
+        headline: { ar: "ملفات جاهزة تناسب احتياجك.", en: "Ready profiles that fit your need." },
+        body: {
+          ar: "تبدأ بإعدادات مقترحة حسب احتياجك، وتعدّلها كما تحب. لا تصنيف يُفرض عليك.",
+          en: "Start with suggested settings for your need, and adjust them however you like. No label is forced on you.",
+        },
+        items: [
+          { title: { ar: "الحركة", en: "Motion" }, body: { ar: "أزرار كبيرة، تحكّم صوتي، أوامر منزلية سريعة، وزمن ضغط أطول.", en: "Large buttons, voice control, quick home commands and a longer press time." } },
+          { title: { ar: "الرؤية", en: "Vision" }, body: { ar: "قارئ صوتي، أوامر صوتية، تباين مرتفع، ووصف منطوق لحالة المنزل.", en: "Screen reader, voice commands, high contrast and a spoken description of the home." } },
+          { title: { ar: "السمع", en: "Hearing" }, body: { ar: "تنبيه ضوئي واهتزازي، نصوص فورية، وربط الإنذارات بشاشات المنزل.", en: "Visual and vibration alerts, live captions, and alarms mirrored to home screens." } },
+          { title: { ar: "الإدراك", en: "Cognition" }, body: { ar: "خطوات قصيرة، صور واضحة، روتين ثابت، وخيارات أقل في كل شاشة.", en: "Short steps, clear visuals, steady routine and fewer choices per screen." } },
+          { title: { ar: "الحساسية الحسية", en: "Sensory sensitivity" }, body: { ar: "وضع هادئ، تقليل الحركة البصرية، وخفض الصوت والإضاءة تلقائيًا.", en: "A quiet mode, reduced motion, and automatically lowered sound and light." } },
+          { title: { ar: "مخصّص", en: "Custom" }, body: { ar: "اختيار يدوي لكل إعداد دون ربطه بتصنيف محدّد.", en: "Set each option by hand, tied to no particular category." } },
+        ],
+      },
+      {
+        kind: "cards",
+        headline: { ar: "مشاهد سريعة، بلمسة واحدة.", en: "Quick scenes, in one touch." },
+        items: [
+          { title: { ar: "أنا داخل", en: "I am home" }, body: { ar: "يفتح مسار الحركة ويضبط الإضاءة والحرارة على راحتك.", en: "Opens your path and sets lighting and temperature to your comfort." } },
+          { title: { ar: "الوضع الهادئ", en: "Quiet mode" }, body: { ar: "يخفض الصوت والإضاءة ويوقف التنبيهات غير الضرورية.", en: "Lowers sound and light and pauses non-essential alerts." } },
+          { title: { ar: "وقت الدواء", en: "Medication time" }, body: { ar: "تنبيه بالقناة المفضّلة وزر تأكيد واضح.", en: "An alert on your preferred channel and a clear confirm button." } },
+          { title: { ar: "أحتاج مساعدة", en: "I need help" }, body: { ar: "يحدّد الشخص الأنسب من دائرتك ويبدأ التواصل.", en: "Finds the most suitable person in your circle and starts reaching them." } },
+          { title: { ar: "أنا بخير", en: "I am okay" }, body: { ar: "يغلق حالة التحقق ويسجّل استجابتك.", en: "Closes the check-in and records your response." } },
         ],
       },
       {

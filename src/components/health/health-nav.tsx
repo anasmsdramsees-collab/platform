@@ -20,7 +20,7 @@ export default function HealthNav({ locale }: { locale: Locale }) {
 
   // Primary links kept short on the bar; the rest live in the mobile sheet.
   const primary = HEALTH_NAV.filter((n) =>
-    ["", "/how-it-works", "/integrations", "/privacy"].includes(n.href)
+    ["", "/how-it-works", "/app", "/accessibility", "/integrations", "/privacy"].includes(n.href)
   );
 
   const isActive = (href: string) => {

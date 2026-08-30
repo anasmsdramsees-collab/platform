@@ -47,6 +47,7 @@ export const HEALTH_NAV: { href: string; label: L }[] = [
   { href: "/sleep-recovery", label: { ar: "النوم والتعافي", en: "Sleep & Recovery" } },
   { href: "/home-wellness", label: { ar: "صحة المنزل", en: "Home Wellness" } },
   { href: "/care-providers", label: { ar: "لمقدمي الرعاية", en: "For Care Providers" } },
+  { href: "/accessibility", label: { ar: "أصحاب الهمم", en: "People of Determination" } },
   { href: "/app", label: { ar: "التطبيق", en: "The App" } },
   { href: "/integrations", label: { ar: "التكاملات", en: "Integrations" } },
   { href: "/blog", label: { ar: "المدونة", en: "Journal" } },

@@ -190,6 +190,67 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     ],
   },
 
+  // -------------------------------------------------- PEOPLE OF DETERMINATION
+  accessibility: {
+    slug: "/accessibility",
+    seoTitle: { ar: "أصحاب الهمم | سيلترا هيلث", en: "People of Determination | SYLTRA HEALTH" },
+    seoDescription: {
+      ar: "بيت يتكيّف مع طريقتك: تحكّم بالصوت، تنبيهات مرئية، قراءة صوتية، وواجهة مبسّطة، مع دائرتك الموثوقة القريبة عند الحاجة.",
+      en: "A home that adapts to your way: voice control, visual alerts, spoken readouts and a simpler interface, with your trusted circle close when needed.",
+    },
+    blocks: [
+      {
+        kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-hero-accessibility.jpg",
+        eyebrow: { ar: "أصحاب الهمم", en: "People of Determination" },
+        headline: { ar: "بيت يتكيّف مع طريقتك.", en: "A home that adapts to your way." },
+        body: {
+          ar: "لكل شخص طريقته في التحكم والتواصل. سيلترا هيلث تتكيّف معك: تتحكّم بالصوت، ترى تنبيهًا بدل أن تسمعه، أو تسمعه بدل أن تراه، وتبقى دائرتك الموثوقة قريبة حين تحتاجها.",
+          en: "Everyone has their own way of controlling and communicating. SYLTRA HEALTH adapts to you: control by voice, see an alert instead of hearing it, or hear it instead of seeing it, and keep your trusted circle close when you need them.",
+        },
+        buttons: [CTA_EARLY, CTA_HOW],
+      },
+      {
+        kind: "cards",
+        headline: { ar: "طرق وصول تناسبك.", en: "Access that fits you." },
+        body: {
+          ar: "اختر ما يناسبك من نمط الوصول، وبدّله متى شئت. لا طريقة واحدة تناسب الجميع.",
+          en: "Choose the access mode that suits you, and change it anytime. No single way fits everyone.",
+        },
+        items: [
+          { title: { ar: "تحكّم بالصوت", en: "Voice control" }, body: { ar: "أدر بيتك وتطبيقك بأوامر صوتية بسيطة بالعربية.", en: "Run your home and app with simple spoken commands in Arabic." } },
+          { title: { ar: "تنبيه مرئي", en: "Visual alerts" }, body: { ar: "للصمّ وضعاف السمع: إشعارات وومضات واضحة بدل الصوت.", en: "For deaf and hard-of-hearing users: clear on-screen alerts and flashes instead of sound." } },
+          { title: { ar: "قراءة صوتية", en: "Spoken readouts" }, body: { ar: "للمكفوفين وضعاف البصر: قراءة الحالة والتنبيهات صوتيًا، وتوافق مع قارئ الشاشة.", en: "For blind and low-vision users: status and alerts read aloud, with screen-reader support." } },
+          { title: { ar: "واجهة مبسّطة", en: "Simpler interface" }, body: { ar: "أزرار كبيرة، تباين عالٍ، ولغة واضحة تقلّل التعقيد.", en: "Large buttons, high contrast and plain language that reduce complexity." } },
+          { title: { ar: "دائرتك الموثوقة", en: "Your trusted circle" }, body: { ar: "من تثق بهم قريبون، ويصلهم تنبيه بالطريقة التي اخترتها عند الحاجة.", en: "The people you trust stay close, reached your chosen way when needed." } },
+        ],
+      },
+      {
+        kind: "section",
+        eyebrow: { ar: "الفكرة", en: "The idea" },
+        headline: { ar: "استقلالية أكبر. اطمئنان أقرب.", en: "Greater independence. Closer reassurance." },
+        body: {
+          ar: "الهدف أن يمنحك البيت استقلالية أكثر لا رقابة أكثر. أنت تحدّد طريقتك، وما يُشارك، ومن يعرف، ومتى. والتقنية تعمل بهدوء في الخلفية لتخدمك، لا لتراقبك.",
+          en: "The goal is a home that gives you more independence, not more surveillance. You set your way, what is shared, who knows and when. The technology works quietly in the background to serve you, not to watch you.",
+        },
+      },
+      {
+        kind: "safety",
+        text: {
+          ar: "سيلترا هيلث تدعم الوصول والراحة والمتابعة العامة. ليست خدمة طوارئ ولا تقدّم تشخيصًا، ولا تستبدل أجهزة أو خدمات الرعاية المتخصّصة عند الحاجة.",
+          en: "SYLTRA HEALTH supports access, comfort and general follow-up. It is not an emergency service, does not diagnose, and does not replace specialised care devices or services when needed.",
+        },
+      },
+      {
+        kind: "cta",
+        headline: { ar: "نبنيه معكم.", en: "We are building it with you." },
+        body: { ar: "هذا القسم قيد التطوير مع مختصين وأصحاب الهمم. شاركنا رأيك أو سجّل اهتمامك.", en: "This section is being developed with specialists and people of determination. Share your input or register your interest." },
+        buttons: [CTA_EARLY, CTA_PILOT],
+      },
+    ],
+  },
+
   // ------------------------------------------------------------------ APP
   app: {
     slug: "/app",

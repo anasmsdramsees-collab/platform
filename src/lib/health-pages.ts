@@ -189,6 +189,77 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
     ],
   },
 
+  // ------------------------------------------------------------------ APP
+  app: {
+    slug: "/app",
+    seoTitle: { ar: "التطبيق | سيلترا هيلث", en: "The App | SYLTRA HEALTH" },
+    seoDescription: {
+      ar: "تطبيق سيلترا هيلث: نمط يومك، بيئة بيتك، ودائرتك الموثوقة في مكان واحد هادئ. يراقب، يفهم، ويستجيب وفق خطتك.",
+      en: "The SYLTRA HEALTH app: your day's pattern, your home's environment and your trusted circle in one calm place. It watches, understands and responds under your plan.",
+    },
+    blocks: [
+      {
+        kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-app-hero.jpg",
+        eyebrow: { ar: "التطبيق", en: "The App" },
+        headline: { ar: "تطبيق يفهمك، لا يزعجك.", en: "An app that understands you, without the noise." },
+        body: {
+          ar: "كل ما يقوله جسمك، وكل ما يراه بيتك، ودائرتك الموثوقة، في مكان واحد هادئ. تفتحه فتعرف حالك بلمحة، لا قائمة أرقام تلاحقك.",
+          en: "Everything your body says, everything your home sees, and your trusted circle, in one calm place. Open it and know how you are at a glance, not a list of numbers chasing you.",
+        },
+        buttons: [CTA_EARLY, CTA_HOW],
+      },
+      {
+        kind: "cards",
+        headline: { ar: "شاشات قليلة. سياق واحد.", en: "A few screens. One context." },
+        body: {
+          ar: "لا نُغرقك بالتبويبات. كل شاشة تجيب عن سؤال بسيط عن يومك.",
+          en: "We do not drown you in tabs. Each screen answers one simple question about your day.",
+        },
+        items: [
+          { title: { ar: "اليوم", en: "Today" }, body: { ar: "كيف حالك الآن، ضمن نمطك المعتاد، بجملة واحدة قبل الأرقام.", en: "How you are right now, within your usual pattern, in one line before any numbers." } },
+          { title: { ar: "النمط", en: "Pattern" }, body: { ar: "إيقاعك عبر الأيام: نومك، حركتك، وقراءاتك، ومتى تختلف عن المعتاد.", en: "Your rhythm across days: sleep, movement and readings, and when they differ from normal." } },
+          { title: { ar: "بيتك حولك", en: "Your home" }, body: { ar: "حرارة غرفتك ورطوبتها وجودة هوائها، وإعدادات تتكيّف بموافقتك.", en: "Your room's temperature, humidity and air quality, with settings that adapt on your consent." } },
+          { title: { ar: "دائرتك الموثوقة", en: "Your circle" }, body: { ar: "من تثق بهم ومن الأقرب، وما يرونه، ومتى يصلهم تنبيه.", en: "The people you trust and who is closest, what they see, and when an alert reaches them." } },
+          { title: { ar: "الإعدادات", en: "Settings" }, body: { ar: "موافقاتك وخطة استجابتك ووضع الاختبار، تحت يدك دائمًا.", en: "Your consents, response plan and test mode, always in your hands." } },
+        ],
+      },
+      {
+        kind: "cards",
+        headline: { ar: "ثلاث كلمات تختصر الفكرة.", en: "Three words that say it all." },
+        items: [
+          { title: { ar: "يراقب", en: "It watches" }, body: { ar: "يجمع إشارات جسمك وبيتك بهدوء في الخلفية، بموافقتك.", en: "It gathers your body and home signals quietly in the background, with your consent." } },
+          { title: { ar: "يفهم", en: "It understands" }, body: { ar: "يتعلّم نمطك الطبيعي، فيعرف الفرق بين يوم عادي ويوم يختلف عنك.", en: "It learns your normal pattern, so it knows an ordinary day from one unlike you." } },
+          { title: { ar: "يستجيب", en: "It responds" }, body: { ar: "يهيّئ بيئتك، يتحقق منك عند التغيّر، ويصل إلى الأنسب إن احتجت.", en: "It adapts your space, checks in on a change, and reaches the right person if you need." } },
+        ],
+      },
+      {
+        kind: "appshowcase",
+        eyebrow: { ar: "من داخل التطبيق", en: "Inside the app" },
+        headline: { ar: "صحتك. بيتك. دائرتك.", en: "Your health. Your home. Your circle." },
+        body: {
+          ar: "لقطات حقيقية من الشاشات الأساسية، بتصميم عربي أولًا وواضح.",
+          en: "Real captures of the core screens, in a clear, Arabic-first design.",
+        },
+        image: "/brand/health-app-showcase.jpg",
+      },
+      {
+        kind: "safety",
+        text: {
+          ar: "التطبيق يدعم الوعي والمتابعة العامة، وليس خدمة طوارئ ولا يقدّم تشخيصًا. تبقى القرارات الطبية بينك وبين مختص الرعاية.",
+          en: "The app supports awareness and general follow-up. It is not an emergency service and does not diagnose. Medical decisions stay between you and a care professional.",
+        },
+      },
+      {
+        kind: "cta",
+        headline: { ar: "كن أول من يجرّبه.", en: "Be the first to try it." },
+        body: { ar: "انضم إلى قائمة الوصول المبكر، ونطمئنك أول ما يجهز.", en: "Join the early-access list and we will reach out the moment it is ready." },
+        buttons: [CTA_EARLY],
+      },
+    ],
+  },
+
   // -------------------------------------------------------- HOW IT WORKS
   "how-it-works": {
     slug: "/how-it-works",

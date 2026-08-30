@@ -177,6 +177,18 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         },
         buttons: [{ label: { ar: "شوف التطبيق", en: "See the app" }, href: "/health/app", primary: true }],
       },
+      {
+        kind: "appshowcase",
+        overlay: true,
+        image: "/brand/health-hero-accessibility.jpg",
+        eyebrow: { ar: "نمط الوصول · أصحاب الهمم", en: "Access Mode · People of Determination" },
+        headline: { ar: "بيت يتكيّف مع طريقتك.", en: "A home that adapts to your way." },
+        body: {
+          ar: "تحكّم بالصوت، تنبيهات مرئية، قراءة صوتية، وواجهة مبسّطة، مع دائرتك الموثوقة القريبة عند الحاجة. أنت تحدّد طريقتك.",
+          en: "Voice control, visual alerts, spoken readouts and a simpler interface, with your trusted circle close when needed. You set your way.",
+        },
+        buttons: [{ label: { ar: "اكتشف نمط الوصول", en: "Explore Access Mode" }, href: "/health/accessibility", primary: true }],
+      },
       { kind: "integrations" },
       {
         kind: "cta",

@@ -14,7 +14,7 @@ export const HEALTH = {
 };
 
 export const HEALTH_BRAND = {
-  tagline: { ar: "بيتك يعرف لما يتغيّر شيء", en: "Your home knows when something changes" } as L,
+  tagline: { ar: "ذكاء متصل لصحة أفضل", en: "Connected Intelligence for Better Health" } as L,
   coreSentence: { ar: "منزل يفهم صحتك، ويعرف متى تحتاج أحداً.", en: "A home that understands your health and knows when you need someone." } as L,
   endorsement: { ar: "إحدى شركات سيلترا وان", en: "A SYLTRA ONE Company" } as L,
   category: {

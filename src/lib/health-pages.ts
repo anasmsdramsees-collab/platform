@@ -346,6 +346,7 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
           ar: "تذكير بمواعيد أدويتك وتأكيد التناول، عبر جوالك أو ساعتك أو شاشة البيت. تذكير لطيف يساعدك على الالتزام، ولا يغيّر جرعتك أو خطتك العلاجية.",
           en: "Reminders for your medication times and a quick confirmation, on your phone, watch or home screen. A gentle nudge that helps you stay consistent, without changing your dose or treatment plan.",
         },
+        buttons: [{ label: { ar: "دواؤك لا ينقطع", en: "Your medication never runs out" }, href: "/health/medication" }],
       },
       {
         kind: "appshowcase",
@@ -369,6 +370,83 @@ export const HEALTH_PAGES: Record<string, HealthPage> = {
         headline: { ar: "كن أول من يجرّبه.", en: "Be the first to try it." },
         body: { ar: "انضم إلى قائمة الوصول المبكر، ونطمئنك أول ما يجهز.", en: "Join the early-access list and we will reach out the moment it is ready." },
         buttons: [CTA_EARLY],
+      },
+    ],
+  },
+
+  medication: {
+    slug: "/medication",
+    seoTitle: { ar: "دواؤك لا ينقطع | سيلترا هيلث", en: "Your Medication Never Runs Out | SYLTRA HEALTH" },
+    seoDescription: {
+      ar: "فكرة نعمل عليها ضمن سيلترا هيلث: تاريخ نفاد الدواء معلومة محسوبة، فيصل التنبيه قبل أن ينقطع، ومن يرعاك يعرف قبلك. خدمة تقنية لا تشخيص ولا تعديل جرعة.",
+      en: "An idea we are building inside SYLTRA HEALTH: a medication's run-out date is a calculated fact, so an alert arrives before it runs out, and the person who cares for you knows first. A technical service, not diagnosis or dose changes.",
+    },
+    blocks: [
+      {
+        kind: "hero",
+        graphic: "scene",
+        image: "/brand/health-app-meds.jpg",
+        eyebrow: { ar: "قريبًا · الالتزام الدوائي", en: "Coming soon · Medication adherence" },
+        headline: { ar: "دواؤك لا ينقطع.", en: "Your medication never runs out." },
+        body: {
+          ar: "فكرة نعمل عليها: من يهتم بك يعرف قبل أن ينقطع دواؤك. المريض المزمن يشتري الدواء نفسه كل شهر لسنوات، ومع ذلك تحدث فجوات انقطاع، لا لأن الدواء غير متوفر، بل لأن لا أحد يعرف متى سينتهي.",
+          en: "An idea we are building: the person who cares for you knows before your medication runs out. A chronic patient buys the same medication every month for years, yet gaps still happen, not because the medication is unavailable, but because no one knows when it will run out.",
+        },
+        buttons: [CTA_EARLY, CTA_HOW],
+      },
+      {
+        kind: "section",
+        eyebrow: { ar: "الفكرة", en: "The idea" },
+        headline: { ar: "تاريخ النفاد معلومة محسوبة، لا مجهولة.", en: "The run-out date is a calculated fact, not a mystery." },
+        body: {
+          ar: "نعرف كم وحدة في العبوة، وكم الجرعة اليومية، ومتى صُرفت. من هذه المعطيات يُحسب تاريخ النفاد، فيصل تنبيه واحد قبله بأيام، ونسخة لطيفة لمن يرعاك وفق إعداداتك. لا استنتاج طبي هنا، بل حساب بسيط كان غائبًا فقط.",
+          en: "We know how many units are in a pack, the daily dose, and when it was dispensed. From these the run-out date is computed, so a single alert arrives a few days ahead, with a gentle copy for the person who cares for you, under your settings. No medical inference here, just a simple calculation that was merely missing.",
+        },
+      },
+      {
+        kind: "cards",
+        headline: { ar: "ثلاثة أطراف، كلٌّ يربح.", en: "Three people, each one gains." },
+        body: {
+          ar: "الشاري في الغالب ليس المريض، بل من يرعاه. كل شاشة تُكتب بهذا في الاعتبار.",
+          en: "The buyer is often not the patient, but the person who cares for them. Every screen is written with that in mind.",
+        },
+        items: [
+          { title: { ar: "المريض المزمن", en: "The chronic patient" }, body: { ar: "لا ينقطع دواؤه، دون أن يحمل عبء تتبّع المواعيد والكميات بنفسه.", en: "Their medication never lapses, without carrying the burden of tracking dates and quantities themselves." } },
+          { title: { ar: "من يرعاه", en: "The caregiver" }, body: { ar: "ابن أو بنت أو زوج يطمئن ويقدر يتصرّف من مكانه، قبل أن يحدث الانقطاع لا بعده.", en: "A son, daughter or spouse who feels reassured and can act from wherever they are, before a gap happens, not after." } },
+          { title: { ar: "الصيدلية الشريكة", en: "The partner pharmacy" }, body: { ar: "زبون متكرر مؤكد وتخطيط مخزون أدق، عبر صيدلية مرخّصة تصرف وفق وصفة صالحة.", en: "A confirmed recurring customer and sharper stock planning, through a licensed pharmacy that dispenses against a valid prescription." } },
+        ],
+      },
+      {
+        kind: "steps",
+        headline: { ar: "كيف ستعمل، خطوة بخطوة.", en: "How it will work, step by step." },
+        steps: [
+          { title: { ar: "تُدخل دواءك", en: "You add your medication" }, body: { ar: "الاسم، الوحدات في العبوة، الجرعة اليومية، وتاريخ الصرف. مرة واحدة.", en: "The name, units per pack, daily dose and dispense date. Once." } },
+          { title: { ar: "يُحسب تاريخ النفاد", en: "The run-out date is computed" }, body: { ar: "يُعرض لك لتؤكده أو تعدّله. تأكيد الجرعات اليومي اختياري ويرفع الدقة.", en: "It is shown for you to confirm or adjust. Optional daily dose confirmation improves accuracy." } },
+          { title: { ar: "يصل تنبيه مبكر", en: "An early alert arrives" }, body: { ar: "تنبيه واحد قبل النفاد بالنافذة المحددة، ونسخة لمن يرعاك وفق إعداداتك.", en: "A single alert before run-out within your chosen window, and a copy for your caregiver under your settings." } },
+          { title: { ar: "أنت تؤكد، لا النظام", en: "You confirm, not the system" }, body: { ar: "بتأكيد صريح منك أو من راعٍ مفوَّض يتحوّل إلى طلب لدى صيدلية شريكة، مع نافذة إلغاء. لا شيء يُشحن دون إذنك.", en: "With an explicit confirmation from you or an authorized caregiver it becomes an order at a partner pharmacy, with a cancel window. Nothing is shipped without your permission." } },
+        ],
+      },
+      {
+        kind: "section",
+        eyebrow: { ar: "الوعد وحدوده", en: "The promise and its limits" },
+        headline: { ar: "خدمة تقنية، لا استشارة دوائية.", en: "A technical service, not pharmaceutical advice." },
+        body: {
+          ar: "لا تشخّص، ولا تعدّل جرعة، ولا تقرر متى يُصرف الدواء، فالصيدلي يصرف وفق وصفة صالحة. ولا نشارك بيانات التزامك مع أي جهة تسعّر خدمة أو تغطية. مقابل خدمة تقنية فقط، لا نسبة من قيمة الدواء ولا عمولة إحالة.",
+          en: "It does not diagnose, does not change a dose, and does not decide when medication is dispensed, the pharmacist dispenses against a valid prescription. And we never share your adherence data with any entity that prices a service or coverage. For a technical service only, not a share of the medication's value or a referral commission.",
+        },
+      },
+      {
+        kind: "safety",
+        text: {
+          ar: "هذه الميزة قيد التطوير ضمن سيلترا هيلث، وليست خدمة طوارئ ولا بديلًا عن الطبيب أو الصيدلي. تبقى القرارات الطبية بينك وبين مختص الرعاية.",
+          en: "This feature is under development within SYLTRA HEALTH. It is not an emergency service and not a substitute for a doctor or pharmacist. Medical decisions stay between you and a care professional.",
+        },
+      },
+      {
+        kind: "cta",
+        headline: { ar: "تريد أن تجرّبه أول الناس؟", en: "Want to be among the first to try it?" },
+        body: { ar: "انضم للوصول المبكر، أو ناقش معنا شراكة صيدلية تجريبية.", en: "Join early access, or discuss a pilot pharmacy partnership with us." },
+        buttons: [CTA_EARLY, CTA_PILOT],
       },
     ],
   },

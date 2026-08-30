@@ -13,7 +13,7 @@ const USER_TYPES: { ar: string; en: string }[] = [
   { ar: "شريك تقني", en: "Technology Partner" },
 ];
 const INTERESTS: { ar: string; en: string }[] = [
-  { ar: "الصحة اليومية", en: "Everyday Wellness" },
+  { ar: "الصحة اليومية والرياضة واللياقة", en: "Everyday Wellness, Sport & Fitness" },
   { ar: "كبار السن", en: "Older Adults" },
   { ar: "الأمراض المزمنة (السكري، الضغط، القلب)", en: "Chronic Conditions (diabetes, blood pressure, heart)" },
   { ar: "أصحاب الهمم", en: "People of Determination" },

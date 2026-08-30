@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "db:init": "wrangler d1 execute syltra-health --file=./schema.sql --remote"
+    "db:init": "wrangler d1 execute syltra-health --file=./schema.sql --remote",
+    "db:init:app": "wrangler d1 execute syltra-health --file=./schema-app.sql --remote",
+    "db:init:app:local": "wrangler d1 execute syltra-health --file=./schema-app.sql --local"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240909.0",

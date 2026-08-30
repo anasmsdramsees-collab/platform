@@ -1,0 +1,44 @@
+name: sella
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    environment:
+      SYLTRA_BASE_URL: ${SYLTRA_BASE_URL:-http://host.docker.internal:8088}
+      SYLTRA_TOKEN: ${SYLTRA_TOKEN:-}
+      SYLTRA_HOME_ID: ${SYLTRA_HOME_ID:-home_dev_001}
+      LLM_PROVIDER: ${LLM_PROVIDER:-mock}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      MOCK_PROVIDERS: ${MOCK_PROVIDERS:-true}
+      ENABLE_HIGH_RISK_TOOLS: "false"
+      DATABASE_URL: postgresql://sella:sella@postgres:5432/sella
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8090:8090"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sella
+      POSTGRES_PASSWORD: sella
+      POSTGRES_DB: sella
+    volumes:
+      - sella_pg:/var/lib/postgresql/data
+      - ../db/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sella"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+
+volumes:
+  sella_pg:

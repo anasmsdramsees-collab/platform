@@ -1,0 +1,54 @@
+[project]
+name = "sella"
+version = "0.1.0"
+description = "SELLA, the voice and operator layer inside SYLTRA"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.5",
+    "httpx>=0.27",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.7",
+    "mypy>=1.13",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "S", "N", "RUF", "BLE"]
+ignore = [
+    "S101",
+    # The product speaks Arabic. RUF001-003 flag every Arabic letter as a
+    # lookalike for a Latin one, which would mean silencing them on every
+    # string the household actually reads.
+    "RUF001",
+    "RUF002",
+    "RUF003",
+    # PermissionRefused says what happened. PermissionRefusedError says it twice.
+    "N818",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["sella_core", "providers", "integrations", "policies", "tools", "audit", "apps", "observability"]
+
+[[tool.mypy.overrides]]
+# The Anthropic SDK is optional: the project runs, and its tests pass, without
+# it installed.
+module = "anthropic.*"
+ignore_missing_imports = true

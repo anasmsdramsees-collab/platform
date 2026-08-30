@@ -21,6 +21,7 @@ export async function generateMetadata({
       ? "سجّل اهتمامك بالتجربة المبكرة، أو تواصل معنا لمناقشة شراكة مع عيادة أو مقدم رعاية أو جهة مؤسسية."
       : "Register your interest in early access or contact us to discuss a partnership with a clinic, care provider or organization.",
     baseUrl: healthUrl,
+    image: "/brand/health-og.jpg",
   });
 }
 

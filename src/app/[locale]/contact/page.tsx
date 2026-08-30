@@ -34,7 +34,7 @@ export default async function ContactPage({
     { name: "Instagram", image: "/social/instagram.svg", href: "https://www.instagram.com/syltrahome/" },
     { name: "X", image: "/social/x.svg" },
     { name: "LinkedIn", image: "/social/linkedin.svg" },
-    { name: "TikTok", image: "/social/tiktok.svg", href: "https://www.tiktok.com/@syltra.home" },
+    { name: "TikTok", image: "/social/tiktok.svg", href: "https://www.tiktok.com/@syltra.one" },
   ];
 
   const rows = [

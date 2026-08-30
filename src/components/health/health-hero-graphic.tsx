@@ -53,7 +53,7 @@ export default function HealthHeroGraphic({ className = "" }: { className?: stri
         })}
       </svg>
 
-      {/* ecosystem tiles — home nodes (emphasis) are highlighted as the foundation */}
+      {/* ecosystem tiles, home nodes (emphasis) are highlighted as the foundation */}
       {NODES.map((n, i) => (
         <div
           key={i}

@@ -38,8 +38,8 @@ const BASE_KEYWORDS: Record<Locale, string[]> = {
 /** Metadata for one HEALTH page, keyed by its locale-less slug ("" = home). */
 export function healthMetadata(slugKey: string, locale: Locale): Metadata {
   const page = HEALTH_PAGES[slugKey];
-  const hero = page.blocks.find((b) => b.kind === "hero");
-  const image = hero && "image" in hero && hero.image ? hero.image : "/brand/og-default.jpg";
+  // Branded share card (SYLTRA HEALTH mark) for all marketing pages.
+  const image = "/brand/health-og.jpg";
   const titleWords = pickH(page.seoTitle, locale)
     .replace(/[|,.]/g, " ")
     .split(/\s+/)

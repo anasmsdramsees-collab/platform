@@ -15,8 +15,8 @@ const USER_TYPES: { ar: string; en: string }[] = [
 const INTERESTS: { ar: string; en: string }[] = [
   { ar: "الصحة اليومية", en: "Everyday Wellness" },
   { ar: "كبار السن", en: "Older Adults" },
-  { ar: "ضغط الدم", en: "Blood Pressure" },
-  { ar: "السكري", en: "Diabetes" },
+  { ar: "الأمراض المزمنة (السكري، الضغط، القلب)", en: "Chronic Conditions (diabetes, blood pressure, heart)" },
+  { ar: "أصحاب الهمم", en: "People of Determination" },
   { ar: "النوم والتعافي", en: "Sleep and Recovery" },
   { ar: "صحة المنزل", en: "Home Wellness" },
   { ar: "شراكة مؤسسية", en: "Institutional Partnership" },

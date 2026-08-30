@@ -13,6 +13,202 @@ export type HealthPost = {
 /** Original SYLTRA HEALTH articles (no em-dashes, AR/EN). */
 export const HEALTH_POSTS: HealthPost[] = [
   {
+    slug: "growing-older-at-home-technology-that-respects-the-person",
+    date: "2026-08-30",
+    category: { ar: "كبار السن", en: "Older Adults" },
+    image: "/brand/health-hero-older.jpg",
+    title: {
+      ar: "أن تكبر في بيتك: تقنية تحترم الإنسان قبل الرقم",
+      en: "Growing older at home: technology that respects the person",
+    },
+    excerpt: {
+      ar: "أغلب كبار السن يريدون شيئًا واحدًا بسيطًا: أن يبقوا في بيوتهم بكرامة. دور التقنية أن تسند هذه الرغبة، لا أن تصادرها.",
+      en: "Most older adults want one simple thing: to stay in their own home with dignity. Technology should support that wish, not take it over.",
+    },
+    body: {
+      ar: [
+        "حين يكبر أحد والدينا، يتغيّر شكل القلق في البيت. مكالمة لا تُرد، صوت لم نسمعه منذ الصباح، درجة تأخذ وقتًا أطول من المعتاد. لا نريد أن نراقب، ونخاف في الوقت نفسه أن نغفل. هذه المسافة بين الاطمئنان والتطفّل هي ما يجب أن تفهمه التقنية أولًا.",
+        "الفكرة ليست كاميرا في كل زاوية. الفكرة أن يتعلّم البيت نمط اليوم المعتاد: متى يستيقظ، متى يتحرك في المطبخ، متى يهدأ في المساء. حين يغيب نشاط اعتاد أن يحدث، يلاحظ النظام الفرق بهدوء، ويبدأ بالسؤال عن الشخص نفسه قبل أن يزعج أحدًا.",
+        "الكرامة تعني أن يبقى صاحب البيت هو صاحب القرار. هو من يحدّد من يرى ماذا، ومتى يصل التنبيه، وما المعلومة التي تُشارك. الابن الذي يسكن بعيدًا قد يرى أن الأمور على ما يرام، دون أن يطّلع على تفاصيل يومه الصغيرة.",
+        "ومن الأمانة أن نكون واضحين في الحدود. هذه أدوات تدعم الطمأنينة والمتابعة، وليست خدمة طوارئ ولا بديلًا عن رعاية. عند الحاجة الحقيقية يبقى الاتصال بالطوارئ أو مقدم الرعاية هو الخطوة الصحيحة. أفضل تقنية لكبار السن هي التي لا تُشعرهم بأنهم مراقَبون، بل بأنهم غير وحيدين.",
+      ],
+      en: [
+        "When a parent grows older, worry changes shape at home. A call that goes unanswered, a voice we have not heard since morning, a step that takes longer than it used to. We do not want to watch over them, and at the same time we fear missing something. That distance between reassurance and intrusion is what technology has to understand first.",
+        "The idea is not a camera in every corner. It is a home that learns the shape of an ordinary day: when someone wakes, when they move in the kitchen, when they settle in the evening. When an activity that usually happens is missing, the system notices the difference quietly and starts by checking in with the person themselves before disturbing anyone else.",
+        "Dignity means the person stays the one who decides. They set who sees what, when an alert travels, and which information is shared. A son living far away can see that things are fine without being handed the small details of a day.",
+        "And it is only honest to be clear about limits. These are tools that support reassurance and follow-up. They are not an emergency service and not a substitute for care. When help is genuinely needed, calling emergency services or a care provider remains the right step. The best technology for older adults is the kind that does not make them feel watched, but makes them feel less alone.",
+      ],
+    },
+  },
+  {
+    slug: "when-movement-is-hard-a-home-that-meets-you-halfway",
+    date: "2026-08-29",
+    category: { ar: "أصحاب الهمم: الإعاقة الحركية", en: "People of Determination: Motor" },
+    image: "/brand/health-hero-accessibility.jpg",
+    title: {
+      ar: "حين تكون الحركة صعبة: بيت يقطع نصف الطريق إليك",
+      en: "When movement is hard: a home that meets you halfway",
+    },
+    excerpt: {
+      ar: "بالنسبة لمن تكون الحركة عنده جهدًا محسوبًا، كل خطوة غير ضرورية مكسب. البيت الذكي هنا ليس رفاهية، بل استقلالية.",
+      en: "For someone whose movement is measured effort, every unnecessary step saved is a gain. A smart home here is not luxury, it is independence.",
+    },
+    body: {
+      ar: [
+        "من يعيش مع إعاقة حركية يعرف أن اليوم سلسلة من الحسابات الصغيرة: هل أقوم الآن أم أجمع مهامي معًا، هل الطريق إلى المفتاح يستحق العناء، كم تبقّى لي من طاقة. حين يفهم البيت هذه المعادلة، يتغيّر معنى المكان نفسه.",
+        "أشياء بسيطة تصنع فرقًا كبيرًا: إضاءة وحرارة وستائر وأبواب يتحكم بها الصوت أو لمسة واحدة، دون الحاجة للوصول الجسدي إلى كل جهاز. الهدف أن يبقى المجهود لما تختاره أنت، لا لما يفرضه ترتيب الغرفة.",
+        "الجانب الصحي لا يقل أهمية. الجلوس الطويل أو نمط حركة ثابت قد يحتاج إلى تذكير لطيف بتغيير الوضعية، أو إلى بيئة تُضبط مسبقًا لتقليل الإجهاد. هذه تفاصيل يوافق عليها المستخدم مسبقًا، وتعمل في الخلفية لصالحه.",
+        "وحين تأتي لحظة يحتاج فيها إلى مساعدة، لا ينبغي أن تكون الاستجابة مرهقة. طلب واحد واضح، ووصول إلى الشخص الأنسب من دائرته الموثوقة، بأقل قدر ضروري من المعلومات. التقنية الجيدة هنا لا تلفت الانتباه إلى الإعاقة، بل تزيح العقبات بهدوء وتترك القرار كاملًا لصاحبه.",
+      ],
+      en: [
+        "Anyone living with a motor disability knows the day is a string of small calculations: do I get up now or gather my tasks together, is the trip to the switch worth the effort, how much energy is left. When a home understands this arithmetic, the meaning of the space itself changes.",
+        "Simple things make a large difference: light, temperature, curtains and doors controlled by voice or a single touch, without needing to physically reach every device. The aim is to keep effort for what you choose, not for what the layout of a room imposes.",
+        "The health side matters just as much. Long sitting or a fixed movement pattern may call for a gentle reminder to shift position, or an environment set in advance to reduce strain. These are details the user approves beforehand, working in the background in their favor.",
+        "And when a moment of needing help arrives, the response should not be exhausting. One clear request, reaching the most suitable person in a trusted circle, with the minimum necessary information. Good technology here does not draw attention to the disability. It quietly removes obstacles and leaves the decision fully with the person.",
+      ],
+    },
+  },
+  {
+    slug: "a-home-you-can-see-when-you-cannot-hear-it",
+    date: "2026-08-28",
+    category: { ar: "أصحاب الهمم: الإعاقة السمعية", en: "People of Determination: Hearing" },
+    image: "/brand/health-hero-accessibility.jpg",
+    title: {
+      ar: "بيت تراه حين لا تستطيع سماعه",
+      en: "A home you can see when you cannot hear it",
+    },
+    excerpt: {
+      ar: "معظم التنبيهات في بيوتنا صوتية. لمن لا يسمع، الحل ليس رفع الصوت، بل تحويل المعلومة إلى شكل يُرى ويُحسّ.",
+      en: "Most alerts in our homes are sound. For someone who does not hear, the answer is not a louder tone, it is turning information into something seen and felt.",
+    },
+    body: {
+      ar: [
+        "جرّس الباب، صفير الجهاز، إنذار الدخان، رنين الهاتف. البيت مليء بالأصوات التي نعتمد عليها دون أن ننتبه. من يعيش مع إعاقة سمعية يفقد هذه الطبقة كاملة، ومعها قدر من الأمان والاستقلال.",
+        "الحل أن تُترجم كل إشارة صوتية إلى قناة أخرى: وميض ضوئي بلون متفق عليه، اهتزاز في الساعة أو الهاتف، إشعار واضح على الشاشة يقول ما الذي حدث وأين. المعلومة نفسها تصل، لكن بلغة يفهمها الجسد.",
+        "الأهم أن تبقى هذه الترجمة متسقة ومفهومة. لون معيّن لجرس الباب، نمط اهتزاز مختلف للتنبيه المهم، بحيث يتعلّمها المستخدم بسهولة ويثق بها. الوضوح هنا شرط للطمأنينة.",
+        "وفي لحظة الحاجة، لا يجب أن يعتمد طلب المساعدة على مكالمة صوتية. التواصل النصي والمرئي مع الدائرة الموثوقة، مع تأكيد بصري بأن الرسالة وصلت وأن أحدًا في الطريق، يمنح ثقة لا تقل عن أي صوت. البيت الذي يُرى بوضوح يمكن أن يكون آمنًا تمامًا كالبيت الذي يُسمع.",
+      ],
+      en: [
+        "The doorbell, an appliance beep, a smoke alarm, a ringing phone. A home is full of sounds we rely on without noticing. Someone living with a hearing disability loses this entire layer, and with it a measure of safety and independence.",
+        "The answer is to translate every sound into another channel: a light flash in an agreed color, a vibration in a watch or phone, a clear on-screen notice that says what happened and where. The same information arrives, but in a language the body understands.",
+        "What matters most is that this translation stays consistent and legible. A specific color for the doorbell, a distinct vibration pattern for an important alert, so the user learns them easily and trusts them. Clarity here is a condition for reassurance.",
+        "And in a moment of need, asking for help should not depend on a voice call. Text and visual contact with the trusted circle, with a visual confirmation that the message arrived and someone is on the way, gives confidence no less than any sound. A home that is clearly seen can be every bit as safe as a home that is heard.",
+      ],
+    },
+  },
+  {
+    slug: "being-understood-without-speaking-a-word",
+    date: "2026-08-27",
+    category: { ar: "أصحاب الهمم: الإعاقة الصوتية والنطقية", en: "People of Determination: Speech" },
+    image: "/brand/health-hero-accessibility.jpg",
+    title: {
+      ar: "أن تُفهَم دون أن تنطق كلمة",
+      en: "Being understood without speaking a word",
+    },
+    excerpt: {
+      ar: "كثير من الأنظمة اليوم تنتظر أمرًا صوتيًا. لمن لا يستطيع الكلام أو يجد فيه صعوبة، يجب أن يكون هناك طريق آخر بنفس الكرامة.",
+      en: "Many systems today wait for a spoken command. For someone who cannot speak, or finds it hard, there must be another path with the same dignity.",
+    },
+    body: {
+      ar: [
+        "صار الصوت واجهة أساسية للتقنية: قل هذا، اطلب ذاك. لكن حين تكون القدرة على الكلام محدودة، تتحول هذه الراحة إلى حاجز. المشكلة ليست في المستخدم، بل في نظام لا يفترض إلا طريقة واحدة للتعبير.",
+        "البيت الذي يحترم الجميع يقدّم أكثر من مدخل: لمسة، إيماءة، اختيار من شاشة، أزرار مخصصة لمهام متكررة، أو رسائل جاهزة يُكوّنها المستخدم مسبقًا ليعبّر بها بسرعة. الفكرة أن يكون لكل نية طريق واضح لا يمر بالصوت بالضرورة.",
+        "في التواصل مع الآخرين، يصنع هذا فرقًا كبيرًا. القدرة على إرسال رسالة محددة بلمسة واحدة، أو تشغيل تسلسل متفق عليه، تعني أن يعبّر الإنسان عن حاجته دون أن يُرهق نفسه أو ينتظر من يترجم عنه.",
+        "وفي لحظة الطوارئ خصوصًا، لا يصح أن تكون الاستجابة معلّقة على جملة منطوقة. طلب صامت وواضح، يصل إلى الدائرة الموثوقة بمعلومة كافية، قد يكون أسرع وأأمن. أن تُفهَم دون أن تتكلم ليس ترفًا، بل شكل من أشكال الاحترام.",
+      ],
+      en: [
+        "Voice has become a primary interface for technology: say this, ask for that. But when the ability to speak is limited, this convenience turns into a barrier. The problem is not the user, it is a system that assumes only one way to express intent.",
+        "A home that respects everyone offers more than one input: a touch, a gesture, a choice on a screen, buttons dedicated to frequent tasks, or ready phrases the user composes in advance to express something quickly. The idea is that every intention has a clear path that does not necessarily pass through the voice.",
+        "In communicating with others, this makes a real difference. Being able to send a specific message with a single touch, or trigger an agreed sequence, means a person expresses a need without exhausting themselves or waiting for someone to translate.",
+        "And in an emergency especially, response should never hang on a spoken sentence. A silent, clear request that reaches the trusted circle with enough information can be faster and safer. To be understood without speaking is not a luxury, it is a form of respect.",
+      ],
+    },
+  },
+  {
+    slug: "a-home-that-speaks-when-the-eyes-cannot-read-it",
+    date: "2026-08-26",
+    category: { ar: "أصحاب الهمم: الإعاقة البصرية", en: "People of Determination: Vision" },
+    image: "/brand/health-hero-accessibility.jpg",
+    title: {
+      ar: "بيت ينطق حين لا تقرؤه العين",
+      en: "A home that speaks when the eyes cannot read it",
+    },
+    excerpt: {
+      ar: "الواجهات المرئية تفترض أنك تنظر. لمن لا يرى، يجب أن تصل المعلومة نفسها عبر الصوت واللمس بترتيب واضح يمكن الاعتماد عليه.",
+      en: "Visual interfaces assume you are looking. For someone who does not see, the same information must arrive through sound and touch, in a clear order you can rely on.",
+    },
+    body: {
+      ar: [
+        "معظم الأجهزة الذكية تتحدث بلغة الشاشة: أيقونات، ألوان، قوائم. من يعيش مع إعاقة بصرية لا يحتاج إلى شاشة أوضح، بل إلى طريق مختلف للمعلومة نفسها، طريق مسموع ومحسوس ومنظّم.",
+        "هذا يعني تصميمًا يعمل بالكامل مع قارئ الشاشة، وأوامر صوتية موثوقة، وردودًا منطوقة تصف الحالة بدقة: الباب مغلق، الحرارة مضبوطة، جودة الهواء جيدة. الوصف الجيد ليس زخرفة، بل هو الواجهة كلها.",
+        "الترتيب والثبات مهمان بقدر الصوت. حين يكون لكل شيء مكان متوقع وتسمية واضحة لا تتغيّر، يبني المستخدم خريطة ذهنية للبيت يثق بها. المفاجآت في التصميم عبء إضافي على من يعتمد على الذاكرة والسمع.",
+        "وفي الحالات المهمة، يجب أن يُعلَن التنبيه بوضوح صوتيًا، وأن تكون الاستجابة قابلة للتنفيذ دون نظر: تأكيد منطوق بأن الرسالة وصلت، ومن سيصل، ومتى. حين يتكلم البيت بلغة واضحة، يصبح مكانًا يُدار بثقة لا بتخمين.",
+      ],
+      en: [
+        "Most smart devices speak the language of the screen: icons, colors, menus. Someone living with a visual disability does not need a clearer screen, they need a different path to the same information, a path that is heard, felt and ordered.",
+        "This means a design that works fully with a screen reader, reliable voice commands, and spoken responses that describe state precisely: the door is locked, the temperature is set, the air quality is good. Good description is not decoration, it is the whole interface.",
+        "Order and consistency matter as much as sound. When everything has a predictable place and a clear, unchanging name, the user builds a mental map of the home they can trust. Surprises in design are an extra burden on someone relying on memory and hearing.",
+        "And in important situations, an alert must be announced clearly in sound, and the response must be actionable without sight: a spoken confirmation that the message arrived, who is coming, and when. When a home speaks a clear language, it becomes a place managed with confidence, not guesswork.",
+      ],
+    },
+  },
+  {
+    slug: "a-calmer-home-for-a-sensitive-nervous-system",
+    date: "2026-08-25",
+    category: { ar: "أصحاب الهمم: الحساسية الحسية", en: "People of Determination: Sensory" },
+    image: "/brand/health-hero-accessibility.jpg",
+    title: {
+      ar: "بيت أهدأ لجهاز عصبي أكثر حساسية",
+      en: "A calmer home for a sensitive nervous system",
+    },
+    excerpt: {
+      ar: "لبعض الناس، الضوء القوي والصوت المفاجئ ليسا إزعاجًا عابرًا، بل إجهاد حقيقي. البيت يمكن أن يكون مصدر هدوء لا مصدر تحفيز زائد.",
+      en: "For some people, harsh light and sudden sound are not a passing annoyance, they are real strain. A home can be a source of calm rather than overload.",
+    },
+    body: {
+      ar: [
+        "الحساسية الحسية تجربة يعيشها كثيرون بصمت: إضاءة قوية تؤلم، صوت مفاجئ يربك، تغيّر حاد في المحيط يستهلك طاقة كبيرة لاستعادة التوازن. ما يبدو عاديًا للبعض قد يكون مرهقًا لآخرين، وهذا فرق يستحق الاحترام لا التقليل.",
+        "البيت يمكن أن يخفّف هذا العبء. انتقالات هادئة في الإضاءة بدل التغيّر المفاجئ، تنبيهات ألطف وأقل حدة، بيئة صوتية وحرارية مستقرة يمكن ضبطها مسبقًا لتناسب حدود المستخدم لا معدّلات عامة.",
+        "الثبات هو الراحة هنا. حين يعرف الإنسان أن محيطه لن يفاجئه، ينخفض التوتر الكامن الذي يستهلكه طوال اليوم. الأنماط المتوقعة والانتقالات المتدرجة تمنح شعورًا بالأمان أكثر مما تمنحه أي ميزة لامعة.",
+        "وكل هذا يبقى في يد صاحبه. هو من يحدّد ما المريح وما المزعج، ويضبط بيئته على مقاسه. حين يُصمَّم البيت حول حدود الإنسان الحسية، يتحول من مساحة تتطلب تحمّلًا مستمرًا إلى مكان يمكن أن يرتاح فيه فعلًا.",
+      ],
+      en: [
+        "Sensory sensitivity is an experience many live with quietly: strong light that hurts, a sudden sound that unsettles, a sharp change in surroundings that costs real energy to recover from. What seems ordinary to some can be exhausting to others, and that difference deserves respect, not dismissal.",
+        "A home can ease this load. Gentle transitions in lighting instead of abrupt change, softer and less jarring alerts, a stable sound and temperature environment that can be set in advance to fit the user's limits rather than general averages.",
+        "Consistency is comfort here. When a person knows their surroundings will not startle them, the underlying tension that drains them all day drops. Predictable patterns and gradual transitions give a sense of safety more than any flashy feature.",
+        "And all of this stays in the person's hands. They decide what is soothing and what is disturbing, and tune their environment to their own measure. When a home is designed around a person's sensory limits, it turns from a space that demands constant endurance into a place they can genuinely rest in.",
+      ],
+    },
+  },
+  {
+    slug: "gentle-structure-for-memory-and-focus",
+    date: "2026-08-24",
+    category: { ar: "أصحاب الهمم: الإعاقة الذهنية والإدراكية", en: "People of Determination: Cognitive" },
+    image: "/brand/health-hero-accessibility.jpg",
+    title: {
+      ar: "بنية لطيفة تسند الذاكرة والتركيز",
+      en: "Gentle structure for memory and focus",
+    },
+    excerpt: {
+      ar: "الدعم الإدراكي الجيد لا يقرّر عن الإنسان، بل يبسّط عليه القرار. تذكير في وقته وخطوة واحدة واضحة أثمن من قائمة طويلة.",
+      en: "Good cognitive support does not decide for a person, it makes deciding simpler. A timely reminder and one clear step are worth more than a long list.",
+    },
+    body: {
+      ar: [
+        "من يعيش مع صعوبات في الذاكرة أو التركيز لا ينقصه الذكاء، بل يثقله الحمل: خطوات كثيرة، مواعيد متشابكة، قرارات صغيرة متتالية تستنزف الطاقة. الدعم الحقيقي يبدأ بتقليل هذا الحمل، لا بإضافة نظام معقّد آخر.",
+        "البيت يمكن أن يسند بهدوء: تذكير لطيف بالدواء أو الماء في وقته، تسلسل مسائي يهيّئ الغرفة للنوم بخطوة واحدة، تنبيه بسيط إن بقي الموقد مشتعلًا أو الباب مفتوحًا. الهدف روتين متوقع يخفّف الحاجة إلى تذكّر كل شيء.",
+        "التصميم نفسه جزء من الدعم. لغة واضحة، خطوة واحدة في كل مرة، خيارات قليلة بدل قوائم مزدحمة. حين تكون الواجهة بسيطة ومتسقة، تتحول من عبء إضافي إلى يد ممدودة.",
+        "وتبقى الكرامة والاختيار في القلب. الدعم يقترح ويذكّر ويسهّل، لكنه لا يسلب القرار ولا يعامل الإنسان كطفل. حين تُبنى التقنية حول احترام الاستقلالية، تصبح البنية اللطيفة سندًا يمنح ثقة، لا قيدًا يذكّر بالعجز.",
+      ],
+      en: [
+        "Someone living with difficulties in memory or focus does not lack intelligence, they are weighed down by load: too many steps, tangled schedules, a run of small decisions that drains energy. Real support begins by reducing that load, not by adding another complicated system.",
+        "A home can quietly assist: a gentle reminder for medication or water at the right time, an evening sequence that prepares the room for sleep in a single step, a simple alert if the stove is still on or a door is left open. The aim is a predictable routine that eases the need to remember everything.",
+        "The design itself is part of the support. Clear language, one step at a time, few options instead of crowded menus. When an interface is simple and consistent, it turns from an extra burden into an extended hand.",
+        "And dignity and choice stay at the heart of it. Support suggests, reminds and simplifies, but it does not take the decision away or treat a person like a child. When technology is built around respect for independence, gentle structure becomes a support that gives confidence, not a constraint that reminds someone of limitation.",
+      ],
+    },
+  },
+  {
     slug: "your-home-is-the-missing-piece-in-everyday-health",
     date: "2026-08-20",
     category: { ar: "الصحة المتصلة", en: "Connected Health" },

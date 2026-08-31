@@ -68,7 +68,7 @@ export const WORKS_WITH: { name: string; icon: string }[] = [
   { name: "WHOOP", icon: "/brand/logos/whoop.webp" },
   { name: "HUAWEI Health", icon: "/brand/logos/huawei-health.webp" },
   { name: "Nike Run Club", icon: "/brand/logos/nike-run-club.jpg" },
-  { name: "Mi Fitness", icon: "/brand/logos/mi-fitness.svg" },
+  { name: "Apple Home", icon: "/brand/logos/apple-home.png" },
   { name: "Google Home", icon: "/brand/logos/google-home.png" },
   { name: "Home Assistant", icon: "/brand/logos/home-assistant.svg" },
 ];

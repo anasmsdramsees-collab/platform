@@ -92,6 +92,16 @@ export default function HealthNav({ locale }: { locale: Locale }) {
               </Link>
             ))}
             <Link
+              href={`/${other}/health${pathname.replace(/^\/(en|ar)\/health/, "") || ""}`}
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between border-b border-hairline py-3 text-[15px] text-chrome transition-colors hover:text-platinum"
+            >
+              <span>{ar ? "اللغة" : "Language"}</span>
+              <span className="font-mono text-[13px] uppercase tracking-widest" style={{ color: HEALTH.accent }}>
+                {locale === "ar" ? "English" : "العربية"}
+              </span>
+            </Link>
+            <Link
               href={`${base}/contact`}
               onClick={() => setOpen(false)}
               className="mt-3 inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-void"

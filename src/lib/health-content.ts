@@ -34,7 +34,7 @@ export const HEALTH_BRAND = {
 export const HEALTH_SOCIAL: { name: string; href: string }[] = [
   { name: "LinkedIn", href: "#" },
   { name: "X", href: "#" },
-  { name: "Instagram", href: "#" },
+  { name: "Instagram", href: "https://www.instagram.com/syltrahealth" },
 ];
 
 /** Primary navigation for the HEALTH section (locale-less paths under /health). */

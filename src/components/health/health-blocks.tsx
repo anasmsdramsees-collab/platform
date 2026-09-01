@@ -54,53 +54,31 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
             const withGraphic = block.graphic === "connect" || block.graphic === "ring";
             if (block.graphic === "scene") {
               const alt = ar
-                ? "لوحة سيلترا هيلث على الحائط مع الساعات والأجهزة القابلة للارتداء في منزل ذكي"
-                : "SYLTRA HEALTH wall dashboard with watches and wearables in a connected smart home";
+                ? "سيلترا هيلث في منزل ذكي مع الساعات والأجهزة القابلة للارتداء"
+                : "SYLTRA HEALTH in a connected smart home with watches and wearables";
               const heroImg = assetPath(block.image ?? "/brand/health-hero.jpg");
-              // Text always sits over the light, empty left area of the image,
-              // so it uses fixed dark colours regardless of the page theme.
-              const overlay = (
-                <div dir={ar ? "rtl" : "ltr"} className="max-w-[15rem] sm:max-w-xs md:max-w-md">
-                  {block.eyebrow && (
-                    <p className="font-mono text-[10px] uppercase tracking-[0.16em] sm:text-[12px]" style={{ color: HEALTH.accentDim }}>
-                      {t(block.eyebrow)}
-                    </p>
-                  )}
-                  <h1 className="font-display mt-2 text-balance text-xl font-bold leading-[1.05] sm:mt-4 sm:text-4xl lg:text-5xl" style={{ color: "#0c1512" }}>
-                    {t(block.headline)}
-                  </h1>
-                  <p className="mt-2 hidden max-w-sm text-sm leading-relaxed sm:mt-5 sm:block" style={{ color: "#3a423f" }}>
-                    {t(block.body)}
-                  </p>
-                  {block.buttons && (
-                    <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 sm:mt-7">
-                      {block.buttons.map((b, k) =>
-                        b.primary ? (
-                          <Link key={k} href={href(locale, b.href)} className="inline-flex items-center rounded-full px-4 py-2 text-[13px] font-semibold text-white sm:px-6 sm:py-3 sm:text-sm" style={{ backgroundColor: HEALTH.accentDim }}>
-                            {t(b.label)}
-                          </Link>
-                        ) : (
-                          <Link key={k} href={href(locale, b.href)} className="group inline-flex items-center gap-2 text-[13px] font-semibold sm:text-sm" style={{ color: "#0c1512" }}>
-                            {t(b.label)}
-                            <span className="h-px w-6 transition-all group-hover:w-10" style={{ backgroundColor: HEALTH.accentDim }} />
-                          </Link>
-                        )
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
+              // Split hero: copy sits in its own clean panel beside the image,
+              // never overlaid on it, so the headline stays legible on every page.
               return (
                 <section key={i} className="w-full border-b border-hairline">
-                  <div className="relative w-full">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={heroImg} alt={alt} className="h-full w-full object-cover" style={{ objectPosition: "left center" }} />
-                    {/* left scrim keeps the copy legible over the wall */}
-                    <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(to right, rgba(247,249,248,0.92) 0%, rgba(247,249,248,0.55) 34%, rgba(247,249,248,0) 58%)" }} aria-hidden />
-                    <div className="absolute inset-0">
-                      <div dir="ltr" className="flex h-full items-center ps-4 pe-2 sm:ps-8 lg:ps-14">
-                        {overlay}
-                      </div>
+                  <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
+                    <div dir={ar ? "rtl" : "ltr"}>
+                      {block.eyebrow && (
+                        <p className="font-mono text-[11px] uppercase tracking-[0.16em] sm:text-[12px]" style={{ color: HEALTH.accent }}>
+                          {t(block.eyebrow)}
+                        </p>
+                      )}
+                      <h1 className="font-display mt-4 text-balance text-3xl font-bold leading-[1.08] text-platinum sm:text-4xl lg:text-5xl">
+                        {t(block.headline)}
+                      </h1>
+                      <p className="mt-5 max-w-xl text-base leading-relaxed text-chrome-dim sm:text-lg">
+                        {t(block.body)}
+                      </p>
+                      {block.buttons && <Buttons locale={locale} buttons={block.buttons} />}
+                    </div>
+                    <div className="overflow-hidden rounded-3xl border border-hairline shadow-[0_20px_50px_rgba(12,30,22,0.10)]" style={{ aspectRatio: "4 / 3" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={heroImg} alt={alt} className="h-full w-full object-cover" />
                     </div>
                   </div>
                   {/* Works-with logo strip (white band so every brand mark stays visible) */}

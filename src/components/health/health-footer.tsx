@@ -16,6 +16,33 @@ export default function HealthFooter({ locale }: { locale: Locale }) {
   const base = `/${locale}/health`;
   const linkCls = "text-sm text-chrome-dim transition-colors hover:text-platinum";
 
+  const navLabel = (h: string) => {
+    const n = HEALTH_NAV.find((x) => x.href === h);
+    return n ? (ar ? n.label.ar : n.label.en) : h;
+  };
+  const lnk = (h: string) => ({ label: navLabel(h), href: h === "" ? base : `${base}${h}`, external: false });
+  const columns: { title: { ar: string; en: string }; links: { label: string; href: string; external: boolean }[] }[] = [
+    {
+      title: { ar: "المنصّة", en: "Platform" },
+      links: [lnk(""), lnk("/how-it-works"), lnk("/app"), lnk("/integrations"), lnk("/medication")],
+    },
+    {
+      title: { ar: "لمن", en: "For You" },
+      links: [lnk("/individuals"), lnk("/older-adults"), lnk("/chronic-conditions"), lnk("/sleep-recovery"), lnk("/home-wellness"), lnk("/accessibility"), lnk("/care-providers")],
+    },
+    {
+      title: { ar: "الشركة", en: "Company" },
+      links: [lnk("/about"), lnk("/blog"), lnk("/privacy"), { label: ar ? "تواصل معنا" : "Contact", href: `${base}/contact`, external: false }],
+    },
+    {
+      title: { ar: "تابعنا", en: "Follow" },
+      links: [
+        ...HEALTH_SOCIAL.map((s) => ({ label: s.name, href: s.href, external: true })),
+        { label: "info@syltraone.com", href: "mailto:info@syltraone.com", external: true },
+      ],
+    },
+  ];
+
   return (
     <footer className="border-t border-hairline">
       {/* Permanent trust line */}
@@ -27,54 +54,38 @@ export default function HealthFooter({ locale }: { locale: Locale }) {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.2fr_1fr_1fr]">
-        <div className="max-w-xs">
-          <HealthLogo locale={locale} />
-          <p className="mt-4 font-mono text-[12.5px] text-slate">
-            {ar ? HEALTH_BRAND.tagline.ar : HEALTH_BRAND.tagline.en}
-          </p>
-          <Link href={`/${locale}`} className="mt-4 inline-block text-[12.5px] text-chrome-dim transition-colors hover:text-platinum">
+      {/* Sitemap columns (Apple-style) */}
+      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+          {columns.map((col) => (
+            <div key={col.title.en}>
+              <p className="font-mono text-[11px] uppercase tracking-widest text-slate">{ar ? col.title.ar : col.title.en}</p>
+              <div className="mt-4 grid gap-2.5">
+                {col.links.map((l) =>
+                  l.external ? (
+                    <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className={linkCls}>
+                      {l.label}
+                    </a>
+                  ) : (
+                    <Link key={l.label} href={l.href} className={linkCls}>
+                      {l.label}
+                    </Link>
+                  )
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Brand row */}
+        <div className="mt-12 flex flex-col items-start gap-4 border-t border-hairline pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <HealthLogo locale={locale} />
+            <span className="font-mono text-[12px] text-slate">{ar ? HEALTH_BRAND.tagline.ar : HEALTH_BRAND.tagline.en}</span>
+          </div>
+          <Link href={`/${locale}`} className="text-[12.5px] text-chrome-dim transition-colors hover:text-platinum">
             {ar ? HEALTH_BRAND.endorsement.ar : HEALTH_BRAND.endorsement.en} ↗
           </Link>
-        </div>
-
-        <div>
-          <p className="font-mono text-[11px] uppercase tracking-widest text-slate">{ar ? "الأقسام" : "Sections"}</p>
-          <div className="mt-3 grid gap-2">
-            {HEALTH_NAV.slice(0, 7).map((n) => (
-              <Link key={n.href} href={n.href === "" ? base : `${base}${n.href}`} className={linkCls}>
-                {ar ? n.label.ar : n.label.en}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <p className="font-mono text-[11px] uppercase tracking-widest text-slate">{ar ? "روابط" : "More"}</p>
-          <div className="mt-3 grid gap-2">
-            {HEALTH_NAV.slice(7).map((n) => (
-              <Link key={n.href} href={n.href === "" ? base : `${base}${n.href}`} className={linkCls}>
-                {ar ? n.label.ar : n.label.en}
-              </Link>
-            ))}
-            <Link href={`${base}/contact`} className={linkCls}>{ar ? "تواصل معنا" : "Contact"}</Link>
-            <a href="mailto:info@syltraone.com" className={linkCls}>info@syltraone.com</a>
-          </div>
-
-          <p className="mt-6 font-mono text-[11px] uppercase tracking-widest text-slate">{ar ? "تابعنا" : "Follow"}</p>
-          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-            {HEALTH_SOCIAL.map((s) => (
-              <a
-                key={s.name}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-chrome-dim transition-colors hover:text-platinum"
-              >
-                {s.name}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
 

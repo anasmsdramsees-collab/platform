@@ -95,6 +95,19 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
     });
   }
 
+  // SILA face reflects the assistant's current state.
+  const last = messages[messages.length - 1];
+  const expr = speech.listening
+    ? "02_listening"
+    : loading
+    ? "03_following"
+    : last?.role === "assistant"
+    ? last.isError
+      ? "05_not_understood"
+      : "12_reassuring"
+    : "01_welcome";
+  const silaSrc = assetPath(`/brand/sila/${expr}.png`);
+
   return (
     <div className="fixed bottom-5 end-5 z-50">
       {open && (
@@ -102,9 +115,10 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
           {/* Header */}
           <div className="flex items-center justify-between border-b border-hairline px-4 py-3">
             <div className="flex items-center gap-2.5">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ion opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-ion" />
+              <span className="relative flex h-9 w-9 overflow-hidden rounded-full border border-hairline-strong bg-void-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={silaSrc} alt="" className="h-full w-full object-cover" style={{ objectPosition: "50% 12%" }} />
+                <span className="absolute bottom-0 end-0 h-2.5 w-2.5 rounded-full border-2 border-graphite bg-ion" />
               </span>
               <div>
                 <p className="font-display text-sm font-bold text-platinum">{dict.title}</p>
@@ -151,6 +165,14 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
 
           {/* Messages */}
           <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            {messages.length === 0 && (
+              <div className="flex flex-col items-center gap-2 pb-1">
+                <span className="h-20 w-20 overflow-hidden rounded-full border border-hairline-strong bg-void-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={assetPath("/brand/sila/01_welcome.png")} alt="" className="h-full w-full object-cover" style={{ objectPosition: "50% 10%" }} />
+                </span>
+              </div>
+            )}
             <div className="flex justify-start">
               <p className="max-w-[85%] rounded-lg rounded-ss-sm bg-void-2 px-3 py-2 text-sm text-platinum">
                 {dict.greeting}
@@ -245,9 +267,10 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={assetPath("/brand/syla-icon.png?v=2")}
+              src={silaSrc}
               alt=""
-              className="h-16 w-16 rounded-full"
+              className="h-16 w-16 rounded-full object-cover"
+              style={{ objectPosition: "50% 10%" }}
             />
           )}
         </button>

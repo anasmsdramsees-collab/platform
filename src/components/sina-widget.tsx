@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/config";
 import { useSpeechRecognition } from "@/lib/hooks/use-speech-recognition";
@@ -25,6 +25,7 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
+  const pathname = usePathname() || "";
   const { applyAction } = useHomeControls();
   const speechLang = locale === "ar" ? "ar-SA" : "en-US";
   const speech = useSpeechRecognition(speechLang);
@@ -107,6 +108,9 @@ export default function SinaWidget({ dict, locale }: { dict: Dictionary["sina"];
       : "12_reassuring"
     : "01_welcome";
   const silaSrc = assetPath(`/brand/sila/${expr}.png`);
+
+  // SYLTRA HEALTH has its own separate assistant; keep the general SILA off it.
+  if (pathname.includes("/health")) return null;
 
   return (
     <div className="fixed bottom-5 end-5 z-50">

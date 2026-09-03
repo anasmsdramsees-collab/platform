@@ -168,8 +168,8 @@ export default async function LocaleLayout({
             <SiteFooter locale={locale} dict={dict} />
           </HideOnBuilder>
           <EnergyReminder dict={dict.energyReminder} />
+          <SinaWidget dict={dict.sina} locale={locale} />
           <LifeOnly>
-            <SinaWidget dict={dict.sina} locale={locale} />
             <SylaWake locale={locale} />
           </LifeOnly>
           <WhatsappCta locale={locale} />

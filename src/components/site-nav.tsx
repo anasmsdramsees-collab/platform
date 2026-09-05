@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
-import { DIVISIONS, divisionName, type DivisionMeta } from "@/lib/divisions";
+import { DIVISIONS, VISIBLE_DIVISIONS, divisionName, type DivisionMeta } from "@/lib/divisions";
 import Logo from "./logo";
 
 // Path segments that belong to the Life division (its own product world).
@@ -104,7 +104,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
                 {locale === "ar" ? "سيلترا وان — الرئيسية" : "Syltra One — Home"}
               </span>
             </Link>
-            {DIVISIONS.map((d) => (
+            {VISIBLE_DIVISIONS.map((d) => (
               <Link
                 key={d.key}
                 href={`/${locale}${d.href}`}
@@ -183,7 +183,7 @@ export default function SiteNav({ locale, dict }: { locale: Locale; dict: Dictio
             {mode !== "life" && (
               <div className="mb-2 border-b border-hairline pb-3">
                 <p className="mb-1 font-mono text-[11px] uppercase tracking-widest text-slate">{t.divisions}</p>
-                {DIVISIONS.map((d) => (
+                {VISIBLE_DIVISIONS.map((d) => (
                   <Link
                     key={d.key}
                     href={`/${locale}${d.href}`}

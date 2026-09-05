@@ -1,6 +1,6 @@
 import type { Locale } from "@/lib/i18n/config";
 
-export type DivisionKey = "life" | "climate" | "glide" | "shield" | "os";
+export type DivisionKey = "life" | "climate" | "glide" | "shield" | "os" | "health";
 
 export interface DivisionMeta {
   key: DivisionKey;
@@ -94,6 +94,37 @@ export const DIVISIONS: DivisionMeta[] = [
       en: "Ready products, custom systems and AI solutions, from idea to operation.",
     },
   },
+];
+
+/**
+ * SYLTRA HEALTH is a separate branded property (health.syltraone.com / the
+ * /health section), not one of the engineering divisions above, but it is
+ * surfaced on the parent site alongside LIFE.
+ */
+export const HEALTH_DIVISION: DivisionMeta = {
+  key: "health",
+  color: "#1aa653",
+  rgb: "26, 166, 83",
+  href: "/health",
+  image: "/brand/health-og.jpg",
+  logo: "/brand/health-lockup.png",
+  name: { ar: "سيلترا هيلث", en: "Syltra Health" },
+  label: { ar: "الصحة والعافية المتصلة", en: "Connected health & wellness" },
+  tagline: {
+    ar: "منزل يفهم صحتك ويعرف متى تحتاج أحداً، مع سوار وتطبيق ومتابعة هادئة على مدار اليوم.",
+    en: "A home that understands your health and knows when you need someone, with a band, an app and calm all-day follow-up.",
+  },
+};
+
+/**
+ * The offerings shown on the parent SYLTRA ONE site. The engineering divisions
+ * other than LIFE are currently hidden from all navigation; their routes still
+ * exist but are unlinked. LIFE stays reachable from the parent site, and HEALTH
+ * is presented beside it.
+ */
+export const VISIBLE_DIVISIONS: DivisionMeta[] = [
+  DIVISIONS.find((d) => d.key === "life")!,
+  HEALTH_DIVISION,
 ];
 
 export function divisionName(d: DivisionMeta, locale: Locale) {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
-import { DIVISIONS, divisionName } from "@/lib/divisions";
+import { VISIBLE_DIVISIONS, divisionName } from "@/lib/divisions";
 import Logo from "./logo";
 import { assetPath } from "@/lib/base-path";
 
@@ -89,7 +89,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               >
                 {locale === "ar" ? "سيلترا وان — الرئيسية" : "Syltra One — Home"}
               </Link>
-              {DIVISIONS.map((d) => (
+              {VISIBLE_DIVISIONS.map((d) => (
                 <Link key={d.key} href={`/${locale}${d.href}`} className={linkCls}>
                   {divisionName(d, locale)}
                 </Link>

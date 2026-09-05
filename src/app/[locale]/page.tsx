@@ -8,7 +8,7 @@ import { HeroCarousel } from "@/components/ui/hero-carousel";
 import { HoverBorderGradientLink } from "@/components/hover-border-gradient";
 import { assetPath } from "@/lib/base-path";
 import { pageMetadata } from "@/lib/seo";
-import { DIVISIONS, divisionName } from "@/lib/divisions";
+import { VISIBLE_DIVISIONS, divisionName } from "@/lib/divisions";
 import VisionBand from "@/components/vision-band";
 import FaqSection from "@/components/faq-section";
 import { GENERAL_FAQ } from "@/lib/faq";
@@ -22,19 +22,19 @@ const T = {
     eyebrow: "منظومة واحدة · ذكاء متصل",
     title: "منظومة واحدة تربط الحياة والأعمال.",
     subtitle:
-      "سيلترا وان شركة تقنية سعودية توحّد الحياة الذكية والبرمجيات والتكييف والأمن والمصاعد تحت علامة واحدة ومعايير واضحة.",
-    ctaExplore: "استكشف الأقسام",
+      "سيلترا وان شركة تقنية سعودية توحّد الحياة الذكية والصحة المتصلة تحت علامة واحدة ومعايير واضحة.",
+    ctaExplore: "استكشف علاماتنا",
     ctaAbout: "من نحن",
-    divisionsEyebrow: "الأقسام",
-    divisionsTitle: "خمسة أقسام. مظلة واحدة.",
-    divisionsSub: "كل قسم متخصص في مجاله، ومتكامل مع البقية تحت هوية ومعايير سيلترا وان.",
-    discover: "اكتشف القسم",
+    divisionsEyebrow: "علاماتنا",
+    divisionsTitle: "علامتان. مظلة واحدة.",
+    divisionsSub: "سيلترا لايف للبيوت والمباني الذكية، وسيلترا هيلث للصحة المتصلة، تحت هوية ومعايير سيلترا وان.",
+    discover: "اكتشف",
     whyEyebrow: "لماذا شركة واحدة",
     whyTitle: "تكامل حقيقي، لا موردون متفرقون.",
     why: [
       { n: "01", t: "مسؤولية واحدة", d: "جهة واحدة تدير التصميم والتنفيذ والصيانة عبر كل الأنظمة." },
       { n: "02", t: "معايير موحّدة", d: "الجودة والتوثيق والدعم بنفس المستوى في كل قسم." },
-      { n: "03", t: "أنظمة تتحدّث مع بعضها", d: "المنزل والتكييف والأمن والمصاعد في منظومة واحدة متكاملة." },
+      { n: "03", t: "أنظمة تتحدّث مع بعضها", d: "المنزل الذكي والصحة المتصلة في منظومة واحدة متكاملة." },
     ],
     ctaTitle: "عندك مشروع يشمل أكثر من قسم؟",
     ctaSub: "نجمع أقسام سيلترا وان في خطة واحدة واضحة، من الدراسة حتى التشغيل والصيانة.",
@@ -44,19 +44,19 @@ const T = {
     eyebrow: "One Group · Connected Intelligence",
     title: "One group that connects living and business.",
     subtitle:
-      "Syltra One is a Saudi technology group uniting smart living, software, HVAC, security and elevators under one brand and clear standards.",
-    ctaExplore: "Explore divisions",
+      "Syltra One is a Saudi technology group uniting smart living and connected health under one brand and clear standards.",
+    ctaExplore: "Explore our brands",
     ctaAbout: "About us",
-    divisionsEyebrow: "Divisions",
-    divisionsTitle: "Five divisions. One umbrella.",
-    divisionsSub: "Each division is a specialist in its field, integrated with the rest under Syltra One's identity and standards.",
-    discover: "Explore division",
+    divisionsEyebrow: "Our brands",
+    divisionsTitle: "Two brands. One umbrella.",
+    divisionsSub: "Syltra Life for smart homes and buildings, and Syltra Health for connected health, under Syltra One's identity and standards.",
+    discover: "Explore",
     whyEyebrow: "Why one company",
     whyTitle: "Real integration, not scattered vendors.",
     why: [
       { n: "01", t: "One accountability", d: "A single party owning design, execution and maintenance across every system." },
       { n: "02", t: "Unified standards", d: "Quality, documentation and support at the same level in every division." },
-      { n: "03", t: "Systems that talk", d: "Home, climate, security and elevators in one integrated ecosystem." },
+      { n: "03", t: "Systems that talk", d: "The smart home and connected health in one integrated ecosystem." },
     ],
     ctaTitle: "A project that spans more than one division?",
     ctaSub: "We bring Syltra One's divisions into one clear plan, from study to operation and maintenance.",
@@ -88,17 +88,12 @@ export default async function HomePage({
   // each division, ordered to alternate scene and colour.
   const heroPicks: { div: string; img: string }[] = [
     { div: "life", img: "/divisions/life.jpg" },
-    { div: "climate", img: "/divisions/climate.jpg" },
-    { div: "glide", img: "/divisions/glide.jpg" },
-    { div: "shield", img: "/divisions/shield.jpg" },
-    { div: "os", img: "/divisions/os-1.jpg" },
-    { div: "climate", img: "/divisions/climate-2.jpg" },
-    { div: "glide", img: "/divisions/glide-2.jpg" },
-    { div: "shield", img: "/divisions/shield-1.jpg" },
-    { div: "os", img: "/divisions/os-2.jpg" },
+    { div: "health", img: "/brand/health-hero.jpg" },
+    { div: "life", img: "/divisions/life.jpg" },
+    { div: "health", img: "/brand/health-app-hero.jpg" },
   ];
   const heroSlides = heroPicks.map(({ div, img }) => {
-    const d = DIVISIONS.find((x) => x.key === div)!;
+    const d = VISIBLE_DIVISIONS.find((x) => x.key === div)!;
     return {
       src: img,
       label: divisionName(d, locale),
@@ -168,8 +163,8 @@ export default async function HomePage({
             </h2>
             <p className="mt-4 text-chrome-dim">{t.divisionsSub}</p>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {DIVISIONS.map((d) => (
+          <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2">
+            {VISIBLE_DIVISIONS.map((d) => (
               <Link key={d.key} href={`/${locale}${d.href}`} className="group block">
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
@@ -243,8 +238,12 @@ export default async function HomePage({
             </Link>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {[...POSTS].sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 3).map((post) => {
-              const d = DIVISIONS.find((x) => x.key === post.division);
+            {[...POSTS]
+              .filter((p) => !p.division || VISIBLE_DIVISIONS.some((v) => v.key === p.division))
+              .sort((a, b) => (a.date < b.date ? 1 : -1))
+              .slice(0, 3)
+              .map((post) => {
+              const d = VISIBLE_DIVISIONS.find((x) => x.key === post.division);
               const accent = d?.color ?? ONE;
               return (
                 <Link key={post.slug} href={`/${locale}/blog/${post.slug}`} className="group block">

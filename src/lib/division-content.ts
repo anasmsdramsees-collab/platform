@@ -49,7 +49,7 @@ export function pick(b: Bi, locale: Locale) {
   return locale === "ar" ? b.ar : b.en;
 }
 
-export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life">, DivisionContent> = {
+export const DIVISION_CONTENT: Record<Exclude<DivisionKey, "life" | "health">, DivisionContent> = {
   climate: {
     h1: { ar: "مناخ ذكي. راحة محسوبة.", en: "Smart climate. Measured comfort." },
     intro: {

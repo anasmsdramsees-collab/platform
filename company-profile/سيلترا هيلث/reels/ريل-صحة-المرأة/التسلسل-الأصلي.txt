@@ -1,0 +1,22 @@
+SYLTRA HEALTH — WOMEN'S HEALTH REEL
+
+Format: 9:16 vertical
+Recommended total duration: 22–26 seconds
+
+01  Filler: morning curtain              0.8 sec
+02  Main: she notices a change           1.6 sec
+03  Filler: physical discomfort          0.8 sec
+04  Main: fatigue affects her work       1.6 sec
+05  Filler: work detail                  0.7 sec
+06  Main: SYLTRA reads her signals       2.0 sec
+07  Main: health summary on phone        2.2 sec
+08  Filler: hydration and recovery       0.8 sec
+09  Main: recovery and movement          1.6 sec
+10  Main: fertility window               2.2 sec
+11  Filler: couple anticipation          0.8 sec
+12  Filler: positive pregnancy test      1.0 sec
+13  Main: pregnancy joy                  2.0 sec
+14  Main: clean product end frame        3.0 sec
+
+Product invariant:
+The black woven center divides one metal chassis into two visible parallel silver rails. The optical sensor is on the rear of the same chassis against the skin.

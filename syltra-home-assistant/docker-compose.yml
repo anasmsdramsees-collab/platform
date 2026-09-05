@@ -38,6 +38,9 @@ services:
       - "127.0.0.1:8123:8123" # dev diagnostic UI
     volumes:
       - ./config/home-assistant:/config
+      # The integration under active development. Read-only: this container
+      # consumes it, never writes into the source tree (ADR-001).
+      - ./home-assistant/custom_components:/config/custom_components:ro
     environment:
       TZ: ${TZ:-UTC}
     healthcheck:

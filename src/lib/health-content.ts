@@ -32,7 +32,7 @@ export const HEALTH_BRAND = {
  * profile URLs once available (single source of truth for nav/footer).
  */
 export const HEALTH_SOCIAL: { name: string; href: string }[] = [
-  { name: "LinkedIn", href: "#" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/syltra-health" },
   { name: "X", href: "#" },
   { name: "Instagram", href: "https://www.instagram.com/syltrahealth" },
 ];

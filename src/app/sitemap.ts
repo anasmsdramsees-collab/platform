@@ -3,7 +3,7 @@ import { siteUrl } from "@/lib/site-config";
 import { locales } from "@/lib/i18n/config";
 import { productCatalog } from "@/lib/products";
 import { landings } from "@/lib/landing";
-import { VISIBLE_DIVISIONS } from "@/lib/divisions";
+import { DIVISIONS } from "@/lib/divisions";
 import { DIVISION_CONTENT } from "@/lib/division-content";
 import { POSTS } from "@/lib/blog";
 
@@ -49,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   // Division pages + their service detail pages.
-  for (const division of VISIBLE_DIVISIONS) {
+  for (const division of DIVISIONS) {
     for (const locale of locales) {
       entries.push({
         url: `${siteUrl}/${locale}${division.href}`,

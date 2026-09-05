@@ -22,7 +22,7 @@ export function bt(v: Bi, locale: Locale) {
   return locale === "ar" ? v.ar : v.en;
 }
 
-export const POSTS: Post[] = [
+const ALL_POSTS: Post[] = [
   {
     slug: "how-to-choose-ac-system-saudi",
     division: "climate",
@@ -549,6 +549,15 @@ export const POSTS: Post[] = [
     ],
   },
 ];
+
+/**
+ * Only the currently active brands publish on the parent-site journal. The
+ * hidden engineering divisions (climate, glide, shield, os) still have their
+ * division pages, but their articles are removed from the blog, its routes and
+ * the sitemap. Update this set to re-expose a division's posts.
+ */
+const BLOG_DIVISIONS = new Set(["life", "one", "health"]);
+export const POSTS: Post[] = ALL_POSTS.filter((p) => BLOG_DIVISIONS.has(p.division));
 
 export function postsForDivision(key: string) {
   return POSTS.filter((p) => p.division === key);

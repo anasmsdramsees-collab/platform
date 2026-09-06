@@ -61,25 +61,31 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
               // never overlaid on it, so the headline stays legible on every page.
               return (
                 <section key={i} className="w-full border-b border-hairline">
-                  <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
-                    <div dir={ar ? "rtl" : "ltr"}>
-                      {block.eyebrow && (
-                        <p className="font-mono text-[11px] uppercase tracking-[0.16em] sm:text-[12px]" style={{ color: HEALTH.accent }}>
-                          {t(block.eyebrow)}
-                        </p>
-                      )}
-                      <h1 className="font-display mt-4 text-balance text-3xl font-bold leading-[1.08] text-platinum sm:text-4xl lg:text-5xl">
-                        {t(block.headline)}
-                      </h1>
-                      <p className="mt-5 max-w-xl text-base leading-relaxed text-chrome-dim sm:text-lg">
-                        {t(block.body)}
+                  {/* Copy sits in its own clean, centered band above the image, so it
+                      never overlaps the photo. */}
+                  <div className="mx-auto max-w-3xl px-5 pt-12 pb-8 text-center sm:px-8 sm:pt-16 sm:pb-10" dir={ar ? "rtl" : "ltr"}>
+                    {block.eyebrow && (
+                      <p className="font-mono text-[11px] uppercase tracking-[0.16em] sm:text-[12px]" style={{ color: HEALTH.accent }}>
+                        {t(block.eyebrow)}
                       </p>
-                      {block.buttons && <Buttons locale={locale} buttons={block.buttons} />}
-                    </div>
-                    <div className="overflow-hidden rounded-3xl border border-hairline shadow-[0_20px_50px_rgba(12,30,22,0.10)]" style={{ aspectRatio: "16 / 9" }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={heroImg} alt={alt} className="h-full w-full object-cover" />
-                    </div>
+                    )}
+                    <h1 className="font-display mt-4 text-balance text-3xl font-bold leading-[1.08] text-platinum sm:text-4xl lg:text-5xl">
+                      {t(block.headline)}
+                    </h1>
+                    <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-chrome-dim sm:text-lg">
+                      {t(block.body)}
+                    </p>
+                    {block.buttons && (
+                      <div className="flex justify-center">
+                        <Buttons locale={locale} buttons={block.buttons} />
+                      </div>
+                    )}
+                  </div>
+                  {/* Full-bleed hero image: spans the full page width at its natural
+                      panoramic ratio, no crop. */}
+                  <div className="w-full">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={heroImg} alt={alt} className="block h-auto w-full" />
                   </div>
                   {/* Works-with logo strip (white band so every brand mark stays visible) */}
                   <div className="border-t border-hairline" style={{ backgroundColor: "#ffffff" }}>

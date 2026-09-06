@@ -76,7 +76,7 @@ export default function HealthBlocks({ blocks, locale }: { blocks: Block[]; loca
                       </p>
                       {block.buttons && <Buttons locale={locale} buttons={block.buttons} />}
                     </div>
-                    <div className="overflow-hidden rounded-3xl border border-hairline shadow-[0_20px_50px_rgba(12,30,22,0.10)]" style={{ aspectRatio: "4 / 3" }}>
+                    <div className="overflow-hidden rounded-3xl border border-hairline shadow-[0_20px_50px_rgba(12,30,22,0.10)]" style={{ aspectRatio: "16 / 9" }}>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={heroImg} alt={alt} className="h-full w-full object-cover" />
                     </div>

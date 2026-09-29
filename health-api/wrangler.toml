@@ -1,12 +1,18 @@
 # SYLTRA HEALTH API — Cloudflare Worker + D1
-# Secrets (set with `wrangler secret put <NAME>`): ADMIN_USER, ADMIN_PASSWORD, ADMIN_SECRET
+# Secrets (set with `wrangler secret put <NAME>`): ADMIN_USER, ADMIN_PASSWORD,
+#   ADMIN_SECRET, and — for email notifications — ZEPTOMAIL_TOKEN.
 name = "syltra-health-api"
 main = "src/index.ts"
 compatibility_date = "2026-08-01"
 
-# Allowed browser origins for CORS (comma-separated).
+# Allowed browser origins for CORS (comma-separated), plus email-notification
+# settings (Zoho ZeptoMail). NOTIFY_* are safe to keep here; only the token is a
+# secret. Leave the token unset and email is simply skipped.
 [vars]
 ALLOWED_ORIGINS = "https://health.syltraone.com,https://syltra-health.pages.dev,http://localhost:3500"
+NOTIFY_TO = "info@syltraone.com"
+NOTIFY_FROM = "noreply@syltraone.com"
+ZEPTOMAIL_API = "https://api.zeptomail.com/v1.1/email"
 
 # D1 database binding. Create with:
 #   wrangler d1 create syltra-health

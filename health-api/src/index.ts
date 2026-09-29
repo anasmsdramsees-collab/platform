@@ -21,6 +21,69 @@ export interface Env {
   ADMIN_USER: string;
   ADMIN_PASSWORD: string;
   ADMIN_SECRET: string;
+  // Email notifications via Zoho ZeptoMail (all optional; email is skipped
+  // entirely if ZEPTOMAIL_TOKEN is unset, so the API still works without it).
+  ZEPTOMAIL_TOKEN?: string; // secret: the ZeptoMail "Send Mail" token (without the "Zoho-enczapikey " prefix)
+  ZEPTOMAIL_API?: string; // e.g. https://api.zeptomail.com/v1.1/email (or .eu / .in per your Zoho region)
+  NOTIFY_TO?: string; // inbox that receives the notification, e.g. info@syltraone.com
+  NOTIFY_FROM?: string; // a verified ZeptoMail sender on your domain, e.g. noreply@syltraone.com
+}
+
+const esc = (s: string) =>
+  String(s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
+
+/**
+ * Send an early-access registration notification through Zoho ZeptoMail's HTTP
+ * API. No-ops (returns false) when email is not configured, and never throws,
+ * so a mail failure can never break the registration itself.
+ */
+async function sendRegistrationEmail(env: Env, r: Record<string, string>): Promise<boolean> {
+  const token = env.ZEPTOMAIL_TOKEN;
+  const to = env.NOTIFY_TO;
+  const from = env.NOTIFY_FROM;
+  if (!token || !to || !from) return false;
+  const api = env.ZEPTOMAIL_API || "https://api.zeptomail.com/v1.1/email";
+  const rows: [string, string][] = [
+    ["الاسم / Name", r.name],
+    ["البريد / Email", r.email],
+    ["الهاتف / Phone", r.phone || "—"],
+    ["النوع / Type", r.type || "—"],
+    ["الاهتمام / Interest", r.interest || "—"],
+    ["الرسالة / Message", r.message || "—"],
+  ];
+  const html =
+    `<div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#0c1512">` +
+    `<h2 style="color:#1aa653;margin:0 0 12px">SYLTRA HEALTH — تسجيل اهتمام جديد</h2>` +
+    `<table style="border-collapse:collapse">` +
+    rows
+      .map(
+        ([k, v]) =>
+          `<tr><td style="padding:6px 12px;color:#6b707a;white-space:nowrap;vertical-align:top">${esc(k)}</td>` +
+          `<td style="padding:6px 12px;font-weight:600">${esc(v).replace(/\n/g, "<br>")}</td></tr>`,
+      )
+      .join("") +
+    `</table></div>`;
+  try {
+    const res = await fetch(api, {
+      method: "POST",
+      headers: {
+        Authorization: `Zoho-enczapikey ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        from: { address: from, name: "SYLTRA HEALTH" },
+        to: [{ email_address: { address: to, name: "SYLTRA" } }],
+        // Replies go straight to the person who registered.
+        reply_to: r.email ? [{ address: r.email, name: r.name || r.email }] : undefined,
+        subject: `SYLTRA HEALTH · تسجيل اهتمام: ${r.name || r.email}`,
+        htmlbody: html,
+      }),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 const enc = new TextEncoder();
@@ -666,6 +729,9 @@ export default {
         )
           .bind(name.slice(0, 200), email.slice(0, 200), (b.phone || "").slice(0, 60), (b.type || "").slice(0, 80), (b.interest || "").slice(0, 120), (b.message || "").slice(0, 2000))
           .run();
+        // Notify the team by email (Zoho ZeptoMail). Never blocks the response
+        // outcome: a mail failure still returns a successful registration.
+        await sendRegistrationEmail(env, { name, email, phone: b.phone, type: b.type, interest: b.interest, message: b.message });
         return json({ ok: true }, 201, ch);
       }
 

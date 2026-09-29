@@ -16,6 +16,7 @@ export async function generateMetadata({
 }
 
 const EMAIL = "info@syltraone.com";
+const JOBS_EMAIL = "jobs@syltraone.com";
 const WHATSAPP = "966550098550";
 const WEB = "www.syltraone.com";
 
@@ -40,6 +41,7 @@ export default async function ContactPage({
   const rows = [
     { label: c.hqLabel, value: c.hqValue, href: undefined },
     { label: c.emailLabel, value: EMAIL, href: `mailto:${EMAIL}` },
+    { label: locale === "ar" ? "الوظائف" : "Careers", value: JOBS_EMAIL, href: `mailto:${JOBS_EMAIL}` },
     { label: c.webLabel, value: WEB, href: `https://${WEB}` },
     { label: c.corporateLabel, value: c.corporateValue, href: `tel:${c.corporateValue.replace(/[^+\d]/g, "")}` },
   ];

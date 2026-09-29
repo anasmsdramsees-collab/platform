@@ -100,7 +100,7 @@ export default function SiteFooter({ locale, dict }: { locale: Locale; dict: Dic
               <Link href={`/${locale}/about`} className={`mt-3 block text-sm text-chrome-dim transition-colors hover:text-platinum`}>{dict.nav.about}</Link>
               <Link href={`/${locale}/blog`} className={linkCls}>{locale === "ar" ? "المدونة" : "Blog"}</Link>
               <Link href={`/${locale}/contact`} className={linkCls}>{dict.nav.contact}</Link>
-              <a href="mailto:jobs@syltraone.com" className={linkCls}>{locale === "ar" ? "الوظائف" : "Careers"}</a>
+              <a href="mailto:job@syltraone.com" className={linkCls}>{locale === "ar" ? "الوظائف" : "Careers"}</a>
             </div>
             <div>
               <p className={headCls}>{dict.footer.contact}</p>

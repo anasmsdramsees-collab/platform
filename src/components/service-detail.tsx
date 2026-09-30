@@ -34,8 +34,8 @@ export default function ServiceDetail({
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      name: `${pick(service.title, locale)} — ${dName}`,
-      serviceType: service.en || pick(service.title, locale),
+      name: `${(pick(service.title, locale) || service.en)} — ${dName}`,
+      serviceType: service.en || (pick(service.title, locale) || service.en),
       provider: { "@type": "Organization", name: "Syltra One" },
       areaServed: "SA",
       description: service.lead ? pick(service.lead, locale) : undefined,
@@ -45,7 +45,7 @@ export default function ServiceDetail({
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: dName, item: `/${locale}${division.href}` },
-        { "@type": "ListItem", position: 2, name: pick(service.title, locale) },
+        { "@type": "ListItem", position: 2, name: (pick(service.title, locale) || service.en) },
       ],
     },
   ];
@@ -56,7 +56,7 @@ export default function ServiceDetail({
       <section className="relative overflow-hidden border-b border-hairline">
         {service.img ? (
           <div className="absolute inset-0">
-            <Image src={assetPath(service.img)} alt={pick(service.title, locale)} fill priority sizes="100vw" className="object-cover" />
+            <Image src={assetPath(service.img)} alt={(pick(service.title, locale) || service.en)} fill priority sizes="100vw" className="object-cover" />
             <div
               className="absolute inset-0"
               style={{ background: `linear-gradient(${locale === "ar" ? 270 : 90}deg, rgba(11,12,14,0.94) 0%, rgba(11,12,14,0.8) 34%, rgba(11,12,14,0.25) 70%)` }}
@@ -69,10 +69,10 @@ export default function ServiceDetail({
               {dName}
             </Link>
             <span aria-hidden>/</span>
-            <span>{pick(service.title, locale)}</span>
+            <span>{(pick(service.title, locale) || service.en)}</span>
           </nav>
           <h1 className="font-display mt-4 max-w-3xl text-balance text-4xl font-bold leading-[1.12] text-platinum sm:text-5xl">
-            {pick(service.title, locale)}
+            {(pick(service.title, locale) || service.en)}
           </h1>
           {service.lead ? (
             <p className="mt-6 max-w-2xl text-balance text-base leading-relaxed text-chrome-dim sm:text-lg">

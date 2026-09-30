@@ -24,7 +24,7 @@ export async function generateMetadata({
   const found = findService(DIVISION, service);
   if (!found) return {};
   const name = divisionName(division, locale);
-  const title = `${pick(found.service.title, locale)} | ${name}`;
+  const title = `${(pick(found.service.title, locale) || found.service.en)} | ${name}`;
   const description = found.service.lead ? pick(found.service.lead, locale) : title;
   const geo = locale === "ar" ? ["السعودية", "الرياض"] : ["Saudi Arabia", "Riyadh"];
   const keywords = [

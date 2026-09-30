@@ -12,13 +12,16 @@ Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git
 - **Framework preset:** None
 - **Build command:**
   ```
-  STATIC_EXPORT=1 npx next build && printf '/  /en/health  302\n/en  /en/health  302\n/ar  /ar/health  302\n' > out/_redirects
+  bash scripts/build-health.sh
   ```
 - **Build output directory:** `out`
 - **Root directory:** `syltra smart` (نفس ما في المشروع الأساسي إن كان الريبو يحوي مجلدات)
 
-> السطر الأخير ينشئ `out/_redirects` في هذا المشروع فقط (لأنه جزء من أمر بنائه)،
-> فلا يؤثّر على المشروع الأساسي syltraone.com.
+> `scripts/build-health.sh` يبني الموقع، ثم **يستبدل** `out/sitemap.xml` و`out/robots.txt`
+> بنسخة خاصة بموقع الصحة (روابط على `health.syltraone.com`، وHost صحيح، واستثناء
+> `/health/admin`)، ثم ينشئ `out/_redirects` لتحويل جذر الـsubdomain إلى صفحة HEALTH.
+> كل هذا داخل أمر بناء هذا المشروع فقط، فلا يؤثّر على المشروع الأساسي syltraone.com
+> (الذي يبقى على `STATIC_EXPORT=1 npx next build`، وsitemap يستثني /health عمداً).
 
 ## 3) ربط الدومين
 - في المشروع الجديد → Custom domains → Set up a domain → `health.syltraone.com`.
